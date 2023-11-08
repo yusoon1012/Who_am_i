@@ -61,6 +61,7 @@
   <ItemGroup>
     <None Include="Assets\Firebase\Plugins\x86_64\FirebaseCppApp-11_6_0.dll" />
     <None Include="Assets\Firebase\Plugins\Firebase.Analytics.dll" />
+    <None Include="Assets\Firebase\Plugins\x86_64\FirebaseCppDatabase.dll" />
     <None Include="Assets\Firebase\Plugins\iOS\Firebase.Analytics.dll" />
     <None Include="Assets\Firebase\Plugins\Firebase.App.dll" />
     <None Include="Assets\Firebase\Plugins\x86_64\FirebaseCppAnalytics.dll" />
@@ -68,10 +69,13 @@
     <None Include="Assets\Firebase\Plugins\Firebase.TaskExtension.dll" />
     <None Include="Assets\Firebase\m2repository\com\google\firebase\firebase-app-unity\maven-metadata.xml" />
     <None Include="Assets\Firebase\Plugins\Firebase.Auth.dll" />
+    <None Include="Assets\Firebase\Plugins\Firebase.Database.dll" />
     <None Include="Assets\Firebase\m2repository\com\google\firebase\firebase-analytics-unity\maven-metadata.xml" />
     <None Include="Assets\Firebase\m2repository\com\google\firebase\firebase-auth-unity\maven-metadata.xml" />
     <None Include="Assets\Firebase\Plugins\iOS\Firebase.Auth.dll" />
+    <None Include="Assets\Firebase\Plugins\iOS\Firebase.Database.dll" />
     <None Include="Assets\Firebase\Plugins\Firebase.Platform.dll" />
+    <None Include="Assets\Firebase\m2repository\com\google\firebase\firebase-database-unity\maven-metadata.xml" />
     <None Include="Assets\Firebase\Plugins\Google.MiniJson.dll" />
     <None Include="Assets\Firebase\Plugins\iOS\Firebase.App.dll" />
   </ItemGroup>
@@ -342,6 +346,9 @@
     </Reference>
     <Reference Include="Firebase.Auth">
       <HintPath>Assets\Firebase\Plugins\Firebase.Auth.dll</HintPath>
+    </Reference>
+    <Reference Include="Firebase.Database">
+      <HintPath>Assets\Firebase\Plugins\Firebase.Database.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Android.Types">
       <HintPath>C:\Program Files\Unity 2021.3.27f1\Editor\Data\PlaybackEngines\AndroidPlayer\Unity.Android.Types.dll</HintPath>
