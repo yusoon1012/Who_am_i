@@ -25,7 +25,7 @@ public class TeleportSystem : MonoBehaviour
     }
 
     /// <summary>
-    /// 텔레포트홀 좌표 딕셔너리 세팅
+    /// (초기 세팅)텔레포트홀 좌표 딕셔너리 세팅
     /// </summary>
     private void GetHallPos()
     {
@@ -54,6 +54,7 @@ public class TeleportSystem : MonoBehaviour
                 break;
 
             case "CityHall": // 도시맵 이동
+                Debug.Log("도시맵으로 이동!");
                 teleportPos = hallPos["CityHall"];
                 break;
 

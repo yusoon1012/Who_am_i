@@ -16,6 +16,7 @@ public struct PlayerStat
     public float fullness; // 포만감 최대치
     public float poo; // 배출 최대치
     public float speed; // 플레이어 이동 스피드
+    public float teleportDistance; // 텔레포트 가능 거리(레이저 거리)
     public float jumpForce; // 점프력
     public float hungerTime; // 배고픔 타이머
     public float getHunger; // 배고픔 수치
@@ -24,12 +25,13 @@ public struct PlayerStat
 public class Player_Status : MonoBehaviour
 {
     #region 필드
-    PlayerStat playerStat;
+    public static PlayerStat playerStat;
 
     public static float m_fullness = default; // 현재 포만감
     public static float m_poo = default; // 현재 배출도
 
     public static float m_speed = default;
+    public static float m_teleportDistance = default;
     public static float m_jumpForce = default;
 
     private bool metabolism = false; // 소화기 활성화
@@ -49,9 +51,13 @@ public class Player_Status : MonoBehaviour
         StartCoroutine(GetHunger());
     }
 
+    /// <summary>
+    /// static 필드 초기화
+    /// </summary>
     private void SetStartStat() 
     {
         m_fullness = playerStat.fullness; // 포만도 가득 찬 상태로 시작
+        m_poo = 0; // 배출 0부터 시작
         m_speed = playerStat.speed; // 이동 속도
         m_jumpForce = playerStat.jumpForce; // 점프력
     }

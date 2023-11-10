@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using System;
+using Meta.WitAi;
+using UnityEditor.Experimental.GraphView;
 
 /// <summary>
 /// 플레이어 시스템
@@ -16,6 +18,8 @@ public class PlayerSystem : MonoBehaviour
     [SerializeField] private GameObject rHand = default;
     // 우측 컨트롤러
     [SerializeField] private GameObject rController = default;
+    // 손활성화 여부
+    public bool handActivate = false;
     #endregion
 
     private void Start()
@@ -23,8 +27,9 @@ public class PlayerSystem : MonoBehaviour
         ManageEvent(); // 이벤트 구독
     }
 
+    #region 초기 세팅
     /// <summary>
-    /// 각 스크립트에서 이벤트를 받아 기능 구현
+    /// (초기 세팅)각 스크립트에서 이벤트를 받아 기능 구현
     /// </summary>
     private void ManageEvent()
     {
@@ -33,28 +38,30 @@ public class PlayerSystem : MonoBehaviour
         // 플레이어 배출 이벤트
         Player_Status.playerPoo += PlayerPoo;
     }
+    #endregion
 
     private void Update()
     {
         if (Player_State.playerState == Player_State.PlayerState.IDLE) // 평시에만 컨트롤러 교체 가능
         {
             ChangeController();
+            CheckController();
         }
     }
 
     /// <summary>
-    /// 컨트롤러 형식 교체
+    /// (구현)컨트롤러 형식 교체
     /// </summary>
     private void ChangeController()
     {
         if (OVRInput.GetDown(OVRInput.Button.Two)) // 우측 컨트롤러 B버튼 클릭
         {
-            if (rHand.activeSelf) // 손 활성화 시
+            if (rHand.activeSelf) // 손이 활성화되어 있을 때
             {
                 rHand.SetActive(false);
                 rController.SetActive(true);
             }
-            else // 손 비활성화 시
+            else if (!rHand.activeSelf)// 손이 비활성화 되어 있을 때 
             {
                 rHand.SetActive(true);
                 rController.SetActive(false);
@@ -63,7 +70,16 @@ public class PlayerSystem : MonoBehaviour
     }
 
     /// <summary>
-    /// 플레이어 배출
+    /// (구현)컨트롤러 모델 체크
+    /// </summary>
+    private void CheckController()
+    {
+        if (rHand.activeSelf) { handActivate = true; }
+        else if (!rHand.activeSelf) { handActivate = false; }
+    }
+
+    /// <summary>
+    /// (구현)플레이어 배출
     /// </summary>
     private void PlayerPoo(object sender, EventArgs e)
     {
@@ -72,7 +88,7 @@ public class PlayerSystem : MonoBehaviour
     }
 
     /// <summary>
-    /// 플레이어 사망 
+    /// (구현)플레이어 사망 
     /// </summary>
     private void PlayerDefeat(object sender, EventArgs e)
     {

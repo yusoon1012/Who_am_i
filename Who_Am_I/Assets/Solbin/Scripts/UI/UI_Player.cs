@@ -8,6 +8,7 @@ using UnityEngine;
 /// </summary>
 public class UI_Player : MonoBehaviour
 {
+    #region 필드
     [SerializeField] Transform fullnessGage = default;
     [SerializeField] Transform pooGage = default;
     // 포만감 게이지 구성 수
@@ -18,9 +19,7 @@ public class UI_Player : MonoBehaviour
     GameObject[] fullnessArray = default;
     // 배출 게이지 배열
     GameObject[] pooArray = default;
-
-    ///<Point> m_fullness와 fullnessGage의 childCount는 나누어 떨어져야 한다.
-    // m_fullness / fullnessGage 자식 = 25 / 5 = 5개, 20 / 5 = 4개, 15 / 5 = 3개, 10 / 5 = 2개, 5 / 5 = 1개, 0 / 5 = 0개 
+    #endregion
 
     private void Start()
     {
@@ -48,15 +47,25 @@ public class UI_Player : MonoBehaviour
         }
     }
 
+    #region 게이지 업데이트
     /// <summary>
     /// 포만감 게이지 업데이트
     /// </summary>
     private void FollowUp_Fullness()
     {
-        int quotient = (int)(Player_Status.m_fullness / fullnessCount); // 몫 (남은 게이지 비례)
-        float remainder = Player_Status.m_fullness % fullnessCount; // 나머지 (게이지 업데이트 시점)
+        float maxFullness = Player_Status.playerStat.fullness; // 매직넘버
 
-        // TODO: 포만감, 배출 수치 UI에 반영 
+        for (int i = 0; i < fullnessCount; i++)
+        {
+            if (i < Player_Status.m_fullness / ( maxFullness / fullnessCount))
+            {
+                fullnessArray[i].SetActive(true);
+            }
+            else
+            {
+                fullnessArray[i].SetActive(false);
+            }
+        }
     }
 
     /// <summary>
@@ -64,8 +73,21 @@ public class UI_Player : MonoBehaviour
     /// </summary>
     private void FollowUp_Poo()
     {
+        float maxPoo = Player_Status.playerStat.poo; // 매직넘버
 
+        for (int i = 0; i < pooCount; i++)
+        {
+            if (i < Player_Status.m_poo / (maxPoo / pooCount))
+            {
+                pooArray[i].SetActive(true);
+            }
+            else
+            {
+                pooArray[i].SetActive(false);
+            }
+        }
     }
+    #endregion
 
     private void Update()
     {

@@ -94,6 +94,9 @@ public class LaserPointer : OVRCursor
         lineRenderer.SetPosition(0, _startPoint);
         if (_hitTarget)
         {
+            // ===수정
+            lineRenderer.enabled = true;
+            // ===
             lineRenderer.SetPosition(1, _endPoint);
             UpdateLaserBeam(_startPoint, _endPoint);
             if (cursorVisual)
@@ -105,7 +108,11 @@ public class LaserPointer : OVRCursor
         else
         {
             UpdateLaserBeam(_startPoint, _startPoint + maxLength * _forward);
-            lineRenderer.SetPosition(1, _startPoint + maxLength * _forward);
+            // LEGACY
+            //lineRenderer.SetPosition(1, _startPoint + maxLength * _forward);
+            // 수정===
+            lineRenderer.enabled = false;
+            // ===
             if (cursorVisual) cursorVisual.SetActive(false);
         }
     }
