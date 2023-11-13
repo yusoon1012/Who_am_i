@@ -18,8 +18,10 @@ public class PlayerSystem : MonoBehaviour
     [SerializeField] private GameObject rHand = default;
     // 우측 컨트롤러
     [SerializeField] private GameObject rController = default;
-    // 손활성화 여부
+    // 오른손 활성화 여부
     public bool handActivate = false;
+    // 전체 풀포지션
+    public static Vector3 poolPos = new Vector3(0, -10, 0);
     #endregion
 
     private void Start()

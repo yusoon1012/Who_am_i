@@ -294,6 +294,7 @@ public class OVRGrabber : MonoBehaviour
                 //    m_grabbedObjectPosOff += snapOffset;
                 //}
 
+                // === (喻樂綴 熱薑)
                 if (m_grabbedObj.snapOffset)
                 {
                     Vector3 snapOffset = -m_grabbedObj.snapOffset.localPosition;
@@ -309,6 +310,7 @@ public class OVRGrabber : MonoBehaviour
                 {
                     m_grabbedObjectPosOff = Vector3.zero;
                 }
+                // ===
             }
             else
             {
@@ -326,6 +328,7 @@ public class OVRGrabber : MonoBehaviour
                 //    m_grabbedObjectRotOff = m_grabbedObj.snapOffset.rotation * m_grabbedObjectRotOff;
                 //}
 
+                // === (喻樂綴 熱薑)
                 if (m_grabbedObj.snapOffset)
                 {
                     m_grabbedObjectRotOff = Quaternion.Inverse(m_grabbedObj.snapOffset.localRotation);
@@ -334,6 +337,7 @@ public class OVRGrabber : MonoBehaviour
                 {
                     m_grabbedObjectRotOff = Quaternion.identity;
                 }
+                // ===
             }
             else
             {
