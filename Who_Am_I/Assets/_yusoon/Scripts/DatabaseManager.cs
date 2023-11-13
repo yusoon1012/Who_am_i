@@ -37,7 +37,7 @@ public class DatabaseManager : MonoBehaviour
     void Start()
     {
         FirebaseApp.DefaultInstance.Options.DatabaseUrl = new System.Uri( databaseUrl);
-        m_Reference = FirebaseDatabase.DefaultInstance.RootReference;
+        m_Reference = FirebaseDatabase.DefaultInstance.GetReference("users");
         ReadUserData();
     }
 
@@ -48,29 +48,52 @@ public class DatabaseManager : MonoBehaviour
     }
     public void ReadUserData()
     {
-        FirebaseDatabase.DefaultInstance.GetReference("users").GetValueAsync().ContinueWithOnMainThread(task =>
+        DatabaseReference userDB=FirebaseDatabase.DefaultInstance.GetReference("users");
+        userDB.GetValueAsync().ContinueWithOnMainThread(task =>
         {
-            if (task.IsFaulted)
+            Debug.Log("들어옴?");
+            if (task.IsFaulted) 
             {
-
+                Debug.LogError("READ ERROR"+task.Exception);
             }
-            else if (task.IsCompleted)
+            else if(task.IsCompleted)
             {
-                DataSnapshot snapshot = task.Result; 
-                for (int i = 0; i < snapshot.ChildrenCount; i++)
+                DataSnapshot snapshot = task.Result;
+                Debug.Log("ChildrenCount : "+snapshot.ChildrenCount);
+                foreach(var user_ in snapshot.Children)
                 {
-                    Debug.Log(snapshot.Child(i.ToString()).Child("username").Value);
+                    Debug.Log(user_.Key + " " + user_.Value);
+                    
+
                 }
             }
-        }
-        );
+        });
     }
     public void WriteUserData(string userId_, string userName_)
     {
-        var data=new UserData(userId_, userName_);
-        string jsondata=JsonUtility.ToJson(data);
-        m_Reference.Child("users").Child(userId_).SetRawJsonValueAsync(jsondata)
-        .ContinueWith(task =>
+        //UserData data =new UserData(userId_, userName_);
+        //string jsondata=JsonUtility.ToJson(data);
+        //DatabaseReference userDB = FirebaseDatabase.DefaultInstance.GetReference("users");
+
+        //userDB.Push().SetRawJsonValueAsync(jsondata).ContinueWith(task =>
+        //{
+        //    if (task.IsFaulted)
+        //    {
+        //        Debug.LogError("WriteUserData 실패: " + task.Exception);
+        //    }
+        //    else if (task.IsCompleted)
+        //    {
+        //        Debug.Log(jsondata + " 전송완료");
+        //    }
+        //});
+        UserData data = new UserData(userId_, userName_);
+        string jsondata = JsonUtility.ToJson(data);
+        DatabaseReference userDB = FirebaseDatabase.DefaultInstance.GetReference("users");
+
+        string userUID = Firebase.Auth.FirebaseAuth.DefaultInstance.CurrentUser.UserId; // 사용자의 UID 가져오기
+        DatabaseReference userRef = userDB.Child(userUID); // 사용자의 UID로 레퍼런스 생성
+
+        userRef.SetRawJsonValueAsync(jsondata).ContinueWith(task =>
         {
             if (task.IsFaulted)
             {
@@ -81,6 +104,7 @@ public class DatabaseManager : MonoBehaviour
                 Debug.Log(jsondata + " 전송완료");
             }
         });
+
     }
     
 }
