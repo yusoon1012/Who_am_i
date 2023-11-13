@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-3174620319639136289
+--- !u!114 &-1317711968563480947
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}
@@ -20,12 +20,12 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Ocean
-  m_Shader: {fileID: -6465566751694194690, guid: f493d13db92ee13408a77fa163254af9,
+  m_Name: WaterWave
+  m_Shader: {fileID: -6465566751694194690, guid: 43a72eff0ac823145ae39e5968110768,
     type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords: []
-  m_LightmapFlags: 2
+  m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
@@ -34,6 +34,14 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - _MainTexture:
+        m_Texture: {fileID: 2800000, guid: 111c39d81d2cf8c4097faf8de99a72fe, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Mask:
+        m_Texture: {fileID: 2800000, guid: 13090df92f15ca643bc428ed3af621fc, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -48,19 +56,15 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _FoamOffset: 10
-    - _Metallic: 0.1
-    - _NormalStrength: 0.5
+    - _ColorStrength: -2
+    - _DissolveAmount: 0.848
+    - _DissolvePower: 3.5
+    - _DistortionAmount: 0.097
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _RipplesDissolve: 5
-    - _RipplesScale: 50
-    - _RipplesSpeed: 0.75
-    - _Smooth: 1.3
-    - _Transparency: 0.5
+    - _VoronolScale: 10
     m_Colors:
-    - _BaseColor: {r: 0.003921569, g: 0.46666667, b: 0.8509804, a: 0}
-    - _FoamColor: {r: 0.40392157, g: 0.827451, b: 0.9529412, a: 0}
-    - _NormalSpeed: {r: 0.05, g: -0.01, b: 0, a: 0}
-    - _RipplesColor: {r: 0.36078432, g: 0.7058824, b: 0.9529412, a: 0}
+    - _Color: {r: 0.361, g: 0.7045834, b: 0.95, a: 0}
+    - _ScrollSpeed: {r: 0, g: 0.2, b: 0, a: 0}
+    - _VoronoiSpeed: {r: 0, g: 0.4, b: 0, a: 0}
   m_BuildTextureStacks: []
