@@ -98,22 +98,98 @@ public class MeshControllerEditor : Editor
         /*
          * verticesValue에 2가 들어갔을 경우 sqrt(11) * 2 - 1 이므로 setValue 에는 21값이 저장된다.
          */
-        int setValue = sqrt * verticesValue.intValue - 1;
+        int setValue = (sqrt - 1) * verticesValue.intValue + 1;
 
         // 새로 변화될 총 Vertice 갯수 만큼의 배열을 생성한다. 
-        Vector3[] setVertices = new Vector3[setValue * setValue];
+        //Vector3[] setVertices = new Vector3[setValue * setValue];
 
-        // 분할하게 될 두점 사이의 거리를 이용하여 새로 변화될 Vertice의 위치 생성
-        for (int y = 0; y < setValue; y++)
+        Vector3 startPos = mesh.vertices[0];
+        Vector3 endPos = mesh.vertices[originVerticesCount - 1];
+
+        Vector3[] oneSetVertices = new Vector3[setValue * setValue];
+        Vector3[,] twoSetVertices = new Vector3[setValue, setValue];
+
+        for (int i = 0; i < setValue; i++)
         {
-            for (int x = 0; x < setValue; x++)
+            for (int j = 0; j < setValue; j++)
             {
-                setVertices[y * setValue + x] = mesh.vertices[0] + new Vector3(-lerpLength * x, 0.0f, -lerpLength * y);
+                twoSetVertices[j, i] =
+                        new Vector3(Mathf.Lerp(startPos.x, endPos.x, (float)j / (float)(verticesValue.intValue * (sqrt - 1))), 0.0f,
+                        Mathf.Lerp(startPos.z, endPos.z, (float)i / (float)(verticesValue.intValue * (sqrt - 1))));
             }
         }
 
+        for (int i = 0; i < setValue; i++)
+        {
+            for (int j = 0; j < setValue; j++)
+            {
+                oneSetVertices[i * setValue + j] = twoSetVertices[j, i];
+                Debug.Log(oneSetVertices[i * j + j]);
+            }
+        }
+
+        // Legacy:
+        // 분할하게 될 두점 사이의 거리를 이용하여 새로 변화될 Vertice의 위치 생성
+        //for (int y = 0; y < setValue; y++)
+        //{
+        //    for (int x = 0; x < setValue; x++)
+        //    {
+        //        setVertices[y * setValue + x] = mesh.vertices[0] + new Vector3(-lerpLength * x, 0.0f, -lerpLength * y);
+        //    }
+        //}
+
+        // Legacy:
+        //for (int w = 0; w < sqrt; w++)
+        //{
+        //    if (w == sqrt - 1)
+        //    {
+        //        int z = 0;
+
+        //        for (int y = 0; y < sqrt; y++)
+        //        {
+        //            if (y == sqrt - 1)
+        //            {
+        //                setVertices[(sqrt - 1) * verticesValue.intValue * (w * verticesValue.intValue + z + 1) + w * verticesValue.intValue + z] =
+        //                   new Vector3(mesh.vertices[w * sqrt + y].x, 0.0f, mesh.vertices[w * sqrt].z);
+        //            }
+        //            else
+        //            {
+        //                for (int x = 0; x < verticesValue.intValue; x++)
+        //                {
+        //                    setVertices[((sqrt - 1) * verticesValue.intValue * (w * verticesValue.intValue + z + 1) + w * verticesValue.intValue + z) - (setValue - 1) + y * verticesValue.intValue + x] =
+        //                        new Vector3(Mathf.Lerp(mesh.vertices[w * sqrt + y].x, mesh.vertices[w * sqrt + y + 1].x, ((float)x / (float)verticesValue.intValue)), 0.0f,
+        //                        mesh.vertices[w * sqrt].z);
+        //                }
+        //            }
+        //        }
+        //    }
+        //    else
+        //    {
+        //        for (int z = 0; z < verticesValue.intValue; z++)
+        //        {
+        //            for (int y = 0; y < sqrt; y++)
+        //            {
+        //                if (y == sqrt - 1)
+        //                {
+        //                    setVertices[(sqrt - 1) * verticesValue.intValue * (w * verticesValue.intValue + z + 1) + w * verticesValue.intValue + z] =
+        //                    new Vector3(mesh.vertices[w * sqrt + y].x, 0.0f, Mathf.Lerp(mesh.vertices[w * sqrt].z, mesh.vertices[(w + 1) * sqrt].z, ((float)z / (float)verticesValue.intValue)));
+        //                }
+        //                else
+        //                {
+        //                    for (int x = 0; x < verticesValue.intValue; x++)
+        //                    {
+        //                        setVertices[((sqrt - 1) * verticesValue.intValue * (w * verticesValue.intValue + z + 1) + w * verticesValue.intValue + z) - (setValue - 1) + y * verticesValue.intValue + x] =
+        //                            new Vector3(Mathf.Lerp(mesh.vertices[w * sqrt + y].x, mesh.vertices[w * sqrt + y + 1].x, ((float)x / (float)verticesValue.intValue)), 0.0f,
+        //                            Mathf.Lerp(mesh.vertices[w * sqrt].z, mesh.vertices[(w + 1) * sqrt].z, ((float)z / (float)verticesValue.intValue)));
+        //                    }
+        //                }
+        //            }
+        //        }
+        //    }
+        //}
+
         // 새로 변화된 Vertice로 mesh 갱신
-        mesh.vertices = setVertices;
+        mesh.vertices = oneSetVertices;
 
         // 새로 변화될 Mesh의 Triangle 총 개수 저장
         /*
