@@ -8,7 +8,7 @@ public class Climbing_FixGrabbable : MonoBehaviour
     private Vector3 defaultPosition;
     private OVRGrabbable grabbable;
 
-    private void Awake()
+    private void Start()
     {
         defaultRotation = transform.rotation;
         defaultPosition = transform.position;
@@ -20,12 +20,5 @@ public class Climbing_FixGrabbable : MonoBehaviour
     {
         transform.rotation = defaultRotation;
         transform.position = defaultPosition;
-
-        // TODO: 왜 왼손이 물체를 잡았을 때와 오른손이 물체를 잡았을 때 고정 정도가 다른지 알아내서 수정해야 한다. 
-        // => Physics 적용 vs. 스크립트 조정 방식 고려해보기
-        if (grabbable.isGrabbed)
-        {
-            Debug.Log("잡았다.");
-        }
     }
 }

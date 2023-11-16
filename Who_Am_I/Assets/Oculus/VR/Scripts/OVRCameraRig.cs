@@ -338,7 +338,7 @@ public class OVRCameraRig : MonoBehaviour
                     OVRInput.GetActiveControllerForHand(OVRInput.Handedness.LeftHanded);
                 OVRInput.Controller rightActiveController =
                     OVRInput.GetActiveControllerForHand(OVRInput.Handedness.RightHanded);
-
+                    
                 // it's possible for niether hands or controllers to be active, in that case
                 // manually calculate which one we care about giving hands priority.
                 if (leftActiveController == OVRInput.Controller.None)

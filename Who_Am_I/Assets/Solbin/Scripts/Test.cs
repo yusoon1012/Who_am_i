@@ -4,12 +4,11 @@ using UnityEngine;
 
 public class Test : OVRGrabber
 {
-    private void FixedUpdate()
+    new private void Update()
     {
-        if (m_grabbedObj != null)
+        if (Input.GetKeyDown(KeyCode.K))
         {
-            Debug.LogFormat("{0}를 잡음!", m_grabbedObj.name);
+            m_moveHandPosition = false;
         }
-        else { Debug.Log("물체를 잡지 못함"); }
     }
 }

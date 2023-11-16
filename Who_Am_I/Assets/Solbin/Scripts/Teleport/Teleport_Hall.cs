@@ -20,7 +20,6 @@ public class Teleport_Hall : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            Debug.Log("È¦¿¡ ÁøÀÔ!");
             ActivateHall();
         }
     }
@@ -29,7 +28,6 @@ public class Teleport_Hall : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            Debug.Log("È¦¿¡¼­ ³ª°¨");
             DeactivateHall();
         }
     }
@@ -40,7 +38,6 @@ public class Teleport_Hall : MonoBehaviour
     {
         if (other.CompareTag("Player")) 
         {
-            Debug.Log("È¦¿¡ ÁøÀÔ!");
             ActivateHall(); 
         }
     }
@@ -49,7 +46,6 @@ public class Teleport_Hall : MonoBehaviour
     {
         if (other.CompareTag("Player")) 
         {
-            Debug.Log("È¦¿¡¼­ ³ª°¨");
             DeactivateHall();
         }
     }

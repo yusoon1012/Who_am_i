@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using OVR;
 
 public class Player_State : MonoBehaviour
 {
@@ -17,9 +18,15 @@ public class Player_State : MonoBehaviour
 
     public static PlayerState playerState;
 
+    private void Start()
+    {
+        playerState = PlayerState.IDLE;
+    }
+
     /// <summary>
     /// 플레이어 상태 변경 (등반 기준)
     /// </summary>
     /// <param name="_state">플레이어 상태</param>
     public void ChangeState(PlayerState _state) { playerState = _state; }
 }
+

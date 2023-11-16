@@ -14,7 +14,7 @@ public class Tool_NerfGun : MonoBehaviour
     // 포인터(크로스 헤어)
     [SerializeField] Transform pointer = default;
     // 수렵 가능 여부(동물 조준)
-    private bool aimingPrey = false;
+    //private bool aimingPrey = false;
     // 너프건 궤적
     [SerializeField] LineRenderer trajectory = default;
 
@@ -80,5 +80,7 @@ public class Tool_NerfGun : MonoBehaviour
     {
         trajectory.SetPosition(0, PlayerSystem.poolPos);
         trajectory.SetPosition(1, PlayerSystem.poolPos);
+
+        pointer.position = PlayerSystem.poolPos; // 포인터는 풀에
     }
 }

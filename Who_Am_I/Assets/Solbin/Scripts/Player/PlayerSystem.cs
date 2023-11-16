@@ -13,7 +13,7 @@ public class PlayerSystem : MonoBehaviour
 {
     #region 필드
     // OVRCameraRig
-    [SerializeField] private Transform player = default;
+    //[SerializeField] private Transform player = default;
     // 오른손
     [SerializeField] private GameObject rHand = default;
     // 우측 컨트롤러
