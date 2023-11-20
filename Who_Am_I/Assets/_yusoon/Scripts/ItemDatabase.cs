@@ -5,10 +5,8 @@ using Firebase;
 using Firebase.Auth;
 using Firebase.Database;
 using Firebase.Extensions;
-using static UnityEngine.UIElements.UxmlAttributeDescription;
-using JetBrains.Annotations;
 using System;
-using Unity.VisualScripting;
+
 
 public class ItemDatabase : MonoBehaviour
 {
@@ -73,7 +71,7 @@ public class ItemDatabase : MonoBehaviour
     public void WriteItemInfo(string itemType_, string itemcode_, int itemCount_)
     {
         m_Reference = FirebaseDatabase.DefaultInstance.GetReference("users");
-        Inventory inventory = new Inventory(itemcode_, itemCount_);
+        InventoryDB inventory = new InventoryDB(itemcode_, itemCount_);
         string addItem = JsonUtility.ToJson(inventory);
         m_Reference.Child(auth.CurrentUser.UserId).Child("Inventory").Child(itemType_).Child(itemcode_).SetRawJsonValueAsync(addItem);
     }
@@ -86,11 +84,11 @@ public class ItemDatabase : MonoBehaviour
         {
             if (task.IsFaulted)
             {
-                Debug.Log("ÀĞ¾î¿À±â ½ÇÆĞ");
+                Debug.Log("ì½ì–´ì˜¤ê¸° ì‹¤íŒ¨");
             }
             else if (task.IsCanceled)
             {
-                Debug.Log("task Ãë¼ÒµÊ");
+                Debug.Log("task ì·¨ì†Œë¨");
             }
             else if (task.IsCompleted)
             {
@@ -197,35 +195,35 @@ public class ItemDatabase : MonoBehaviour
     }
     public void ShowInventory()
     {
-        // Food µñ¼Å³Ê¸®
-        Debug.Log("Food µñ¼Å³Ê¸®:");
+        // Food ë”•ì…”ë„ˆë¦¬
+        Debug.Log("Food ë”•ì…”ë„ˆë¦¬:");
         foreach (KeyValuePair<string, int> item in foodDict)
         {
-            Debug.LogFormat("¾ÆÀÌÅÛ: {0}, °³¼ö: {1}", item.Key, item.Value);
+            Debug.LogFormat("ì•„ì´í…œ: {0}, ê°œìˆ˜: {1}", item.Key, item.Value);
         }
 
-        // Stuff µñ¼Å³Ê¸®
-        Debug.Log("Stuff µñ¼Å³Ê¸®:");
+        // Stuff ë”•ì…”ë„ˆë¦¬
+        Debug.Log("Stuff ë”•ì…”ë„ˆë¦¬:");
         foreach (KeyValuePair<string, int> item in stuffDict)
         {
-            Debug.LogFormat("¾ÆÀÌÅÛ: {0}, °³¼ö: {1}", item.Key, item.Value);
+            Debug.LogFormat("ì•„ì´í…œ: {0}, ê°œìˆ˜: {1}", item.Key, item.Value);
         }
 
-        // Equipment µñ¼Å³Ê¸®
-        Debug.Log("Equipment µñ¼Å³Ê¸®:");
+        // Equipment ë”•ì…”ë„ˆë¦¬
+        Debug.Log("Equipment ë”•ì…”ë„ˆë¦¬:");
         foreach (KeyValuePair<string, int> item in equipmentDict)
         {
-            Debug.LogFormat("¾ÆÀÌÅÛ: {0}, °³¼ö: {1}", item.Key, item.Value);
+            Debug.LogFormat("ì•„ì´í…œ: {0}, ê°œìˆ˜: {1}", item.Key, item.Value);
         }
     }
 }
 
 
-public class Inventory
+public class InventoryDB
 {
     public string itemCode;
     public int itemCount;
-    public Inventory(string itemCode, int itemCount)
+    public InventoryDB(string itemCode, int itemCount)
     {
         this.itemCode = itemCode;
         this.itemCount = itemCount;
