@@ -2,12 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class DebugCanvas : MonoBehaviour
 {
     Dictionary<string, string> debugLogs = new Dictionary<string, string>();
 
-    public Text display;
+    public TMP_Text display;
 
     private void OnEnable()
     {
@@ -21,7 +22,7 @@ public class DebugCanvas : MonoBehaviour
 
     void HandleLog(string logString, string stackTrace, LogType type)
     {
-        if (type == LogType.Log)
+        if (type == LogType.Warning)
         {
             string[] splitString = logString.Split(char.Parse(":"));
             string debugKey = splitString[0];

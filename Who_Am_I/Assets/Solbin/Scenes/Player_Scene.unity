@@ -674,7 +674,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 102364307}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.1484, y: -0.043, z: -0.25}
+  m_LocalPosition: {x: -0.1869, y: -0.043, z: -0.25}
   m_LocalScale: {x: 0.02, y: 0.02, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1231,6 +1231,39 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1386831527}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &190875894
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 190875895}
+  m_Layer: 0
+  m_Name: Climbing
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &190875895
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 190875894}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 872263332}
+  - {fileID: 1539937713}
+  m_Father: {fileID: 1729299908}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &194829906
 GameObject:
@@ -4732,6 +4765,66 @@ MonoBehaviour:
   m_ShadowLayerMask: 1
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
+--- !u!1 &872263331
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 872263332}
+  - component: {fileID: 872263334}
+  - component: {fileID: 872263333}
+  m_Layer: 0
+  m_Name: Left
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &872263332
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 872263331}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 190875895}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &872263333
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 872263331}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d50267ec31587ce44aa14ed1b1fce55f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  activateJump: 0
+  jumpPos: {x: 0, y: 0, z: 0}
+--- !u!65 &872263334
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 872263331}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.5, y: 1, z: 0.5}
+  m_Center: {x: -0.5, y: 1, z: 0}
 --- !u!1 &874683281
 GameObject:
   m_ObjectHideFlags: 0
@@ -5324,7 +5417,6 @@ GameObject:
   - component: {fileID: 946814287}
   - component: {fileID: 946814292}
   - component: {fileID: 946814291}
-  - component: {fileID: 946814290}
   - component: {fileID: 946814289}
   - component: {fileID: 946814288}
   m_Layer: 5
@@ -5367,7 +5459,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0263767cd5dbe940988e66f5a1073f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  display: {fileID: 0}
+  display: {fileID: 1457965920}
 --- !u!114 &946814289
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5387,20 +5479,6 @@ MonoBehaviour:
     m_Bits: 4294967295
   pointer: {fileID: 0}
   sortOrder: 0
---- !u!114 &946814290
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 946814286}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b64f8e85d4c2c8a498568ff10530ea22, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  fullnessGage: {fileID: 0}
-  pooGage: {fileID: 0}
 --- !u!114 &946814291
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9367,7 +9445,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 0, y: 0, z: -265.86948, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -9777,6 +9855,66 @@ Transform:
   m_Father: {fileID: 1475745447}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1539937712
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1539937713}
+  - component: {fileID: 1539937715}
+  - component: {fileID: 1539937714}
+  m_Layer: 0
+  m_Name: Right
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1539937713
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1539937712}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 190875895}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1539937714
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1539937712}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d50267ec31587ce44aa14ed1b1fce55f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  activateJump: 0
+  jumpPos: {x: 0, y: 0, z: 0}
+--- !u!65 &1539937715
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1539937712}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.5, y: 1, z: 0.5}
+  m_Center: {x: 0.5, y: 1, z: 0}
 --- !u!1 &1560222757
 GameObject:
   m_ObjectHideFlags: 0
@@ -10832,6 +10970,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1379667515}
+  - {fileID: 190875895}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -10886,6 +11025,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07f7f23914b89d541a845a532c1e21d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  colliders: {fileID: 190875894}
 --- !u!120 &1729299919
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -11011,6 +11151,7 @@ MonoBehaviour:
   rightController_G: {fileID: 3092784100526405720}
   leftHand: {fileID: 1131107186}
   rightHand: {fileID: 1039244292}
+  climbColliders: {fileID: 190875894}
 --- !u!114 &1729299922
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11081,6 +11222,38 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 893b6c03-6252-46c9-8938-c2dd4d66844e
     m_ActionName: Player/RightGrip
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1729299921}
+        m_TargetAssemblyTypeName: Player_Climbing, Assembly-CSharp
+        m_MethodName: LeftJump
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: e1666b87-223e-4292-a612-6d377c55204e
+    m_ActionName: Player/ClimbingLeftJump
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1729299921}
+        m_TargetAssemblyTypeName: Player_Climbing, Assembly-CSharp
+        m_MethodName: RightJump
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 3ba5b783-7132-4b49-9e45-c2e20d54259b
+    m_ActionName: Player/ClimbingRightJump
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: Oculus
   m_DefaultActionMap: Player

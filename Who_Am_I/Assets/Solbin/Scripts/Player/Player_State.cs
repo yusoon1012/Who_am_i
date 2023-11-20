@@ -5,55 +5,63 @@ using OVR;
 
 public class Player_State : MonoBehaviour
 {
-    // Idle-ÇÃ·¹ÀÌ¾î ¿òÁ÷ÀÓ
+    // Idle-í”Œë ˆì´ì–´ ì›€ì§ì„ cs
     Player_Moving player_Moving = default;
+    // Climb - ì¸¡ë©´ ì í”„ë¥¼ ìœ„í•œ ì½œë¼ì´ë”
+    [SerializeField] private GameObject colliders = default;
 
     /// <summary>
-    /// ÇöÀç ÇÃ·¹ÀÌ¾î »óÅÂ
+    /// í˜„ì¬ í”Œë ˆì´ì–´ ìƒíƒœ
     /// </summary>
     public enum PlayerState
     {
-        IDLE, // Æò½Ã »óÅÂ
-        CLIMBING, // µî¹İ »óÅÂ
-        LADDER, // »ç´Ù¸® ÀÌ¿ë »óÅÂ
-        TREE // ³ª¹« Å¸±â »óÅÂ
+        IDLE, // í‰ì‹œ ìƒíƒœ
+        CLIMBING, // ë“±ë°˜ ìƒíƒœ
+        LADDER, // ì‚¬ë‹¤ë¦¬ ì´ìš© ìƒíƒœ
+        TREE // ë‚˜ë¬´ íƒ€ê¸° ìƒíƒœ
     }
 
     public static PlayerState playerState;
 
-    private void Start()
+    private void Start() { Setting(); }
+
+    private void Setting()
     {
         playerState = PlayerState.IDLE;
         player_Moving = transform.GetComponent<Player_Moving>();
     }
 
     /// <summary>
-    /// ÇÃ·¹ÀÌ¾î »óÅÂ º¯°æ (µî¹İ ±âÁØ)
+    /// í”Œë ˆì´ì–´ ìƒíƒœ ë³€ê²½ (ë“±ë°˜ ê¸°ì¤€)
     /// </summary>
-    /// <param name="_state">ÇÃ·¹ÀÌ¾î »óÅÂ</param>
+    /// <param name="_state">í”Œë ˆì´ì–´ ìƒíƒœ</param>
     public void ChangeState(PlayerState _state) 
     {
         playerState = _state;
-        Debug.LogFormat("ÇÃ·¹ÀÌ¾î »óÅÂ: {0}", playerState);
+        Debug.LogWarning($"Player State: {playerState}");
 
-        if (playerState == PlayerState.CLIMBING) { DeactivatePlayerMoving(); } // ÇÃ·¹ÀÌ¾î ¿òÁ÷ÀÓ ºñÈ°¼ºÈ­
-        else if (playerState == PlayerState.IDLE) { ActivatePlayerMoving(); } // ÇÃ·¹ÀÌ¾î ¿òÁ÷ÀÓ È°¼ºÈ­
+        if (playerState == PlayerState.CLIMBING) { ClimbingState(); } // ë“±ì‚° ìƒíƒœ
+        else if (playerState == PlayerState.IDLE) { IdleState(); } // ê¸°ë³¸ ìƒíƒœ
     }
 
     /// <summary>
-    /// Idle-ÇÃ·¹ÀÌ¾î ¿òÁ÷ÀÓ ºñÈ°¼ºÈ­
+    /// Climbing-í”Œë ˆì´ì–´ ì›€ì§ì„ ë¹„í™œì„±í™”
     /// </summary>
-    private void DeactivatePlayerMoving()
+    private void ClimbingState()
     {
-        player_Moving.enabled = false;
+        player_Moving.enabled = false; // í”Œë ˆì´ì–´ ê¸°ë³¸ ì›€ì§ì„X
+
+        colliders.SetActive(true); // ì¸¡ë©´ ì í”„ ì½œë¼ì´ë” í™œì„±í™”
     }
 
     /// <summary>
-    /// Idle-ÇÃ·¹ÀÌ¾î ¿òÁ÷ÀÓ È°¼ºÈ­
+    /// Idle-í”Œë ˆì´ì–´ ì›€ì§ì„ í™œì„±í™”
     /// </summary>
-    private void ActivatePlayerMoving()
+    private void IdleState()
     {
-        player_Moving.enabled = true;
+        player_Moving.enabled = true; // í”Œë ˆì´ì–´ ê¸°ë³¸ ì›€ì§ì„O
+
+        colliders.SetActive(false); // ì¸¡ë©´ ì í”„ ì½œë¼ì´ë” ë¹„í™œì„±í™”
     }
 }
 

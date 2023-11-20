@@ -5,21 +5,23 @@ using UnityEngine;
 
 public class Climbing_GrabCheck : MonoBehaviour
 {
-    private int climbingLayer = default; // ¼ÕÀÌ ÀâÀ» ¼ö ÀÖ´Â ·¹ÀÌ¾î
-    public bool thisHand = false; // ¾î´À ¼ÕÀÌ Á¢ÃËÇß´ÂÁö ¾Ë ¼ö ÀÖµµ·Ï ÇÔ
+    // ì†ì´ ì¡ì„ ìˆ˜ ìˆëŠ” ë ˆì´ì–´
+    private int climbingLayer = default;
+    // ì–´ëŠ ì†ì´ ì ‘ì´‰ í–ˆëŠ”ì§€ ì•Œ ìˆ˜ ìˆë„ë¡ í•¨
+    public bool thisHand = false;
 
     public Vector3 grabPos = default;
 
     private void Start()
     {
-        climbingLayer = LayerMask.NameToLayer("Climbing"); // Àâ°í ¿À¸¦ ¼ö ÀÖ´Â ·¹ÀÌ¾î ¸¶½ºÅ©
+        climbingLayer = LayerMask.NameToLayer("Climbing"); // ì¡ê³  ì˜¤ë¥¼ ìˆ˜ ìˆëŠ” ë ˆì´ì–´ ë§ˆìŠ¤í¬
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.layer == climbingLayer)
         {
-            grabPos = other.transform.GetChild(0).position; // Grab Pos À§Ä¡
+            grabPos = other.transform.GetChild(0).position; // Grab Pos ìœ„ì¹˜
         }
     }
 
