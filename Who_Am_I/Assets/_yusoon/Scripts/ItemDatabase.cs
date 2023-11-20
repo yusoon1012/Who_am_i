@@ -8,20 +8,46 @@ using Firebase.Extensions;
 using static UnityEngine.UIElements.UxmlAttributeDescription;
 using JetBrains.Annotations;
 using System;
+using Unity.VisualScripting;
 
 public class ItemDatabase : MonoBehaviour
 {
+    private static ItemDatabase _instance = default;
+    public static ItemDatabase Instance
+    {
+        get
+        {
+
+            if (_instance == null)
+            {
+                _instance = FindObjectOfType<ItemDatabase>();
+            }
+            return _instance;
+        }
+    }
     DatabaseReference m_Reference;
     FirebaseAuth auth;
     int appleCount;
-    Dictionary<string, int> equipmentDict = new Dictionary<string, int>();
-    Dictionary<string, int> foodDict = new Dictionary<string, int>();
-    Dictionary<string, int> stuffDict = new Dictionary<string, int>();
-    List<string> testList= new List<string>();
+    public Dictionary<string, int> equipmentDict = new Dictionary<string, int>();
+    public Dictionary<string, int> foodDict = new Dictionary<string, int>();
+    public Dictionary<string, int> stuffDict = new Dictionary<string, int>();
+    List<string> testList = new List<string>();
     IDictionary foodInfo;
     int tempCount = 0;
     string itemTempName = default;
     int itemTempCount = 0;
+
+    private void Awake()
+    {
+        if(_instance == null)
+        {
+            _instance = this;
+        }
+        else
+        {
+            Destroy( gameObject );
+        }
+    }
     private void Start()
     {
 
@@ -31,10 +57,11 @@ public class ItemDatabase : MonoBehaviour
     public void AddApple()
     {
 
-         WriteItemInfo("Food", "Apple", appleCount);
+        WriteItemInfo("Food", "Apple", appleCount);
+
         WriteItemInfo("Food", "Pie", 3);
-         WriteItemInfo("Equipment","Sword", 1);
-         WriteItemInfo("Stuff", "Wood", 20);
+        WriteItemInfo("Equipment", "Sword", 1);
+        WriteItemInfo("Stuff", "Wood", 20);
     }
 
     public void RemoveItem(string itemType_, string itemcode_)
@@ -61,7 +88,7 @@ public class ItemDatabase : MonoBehaviour
             {
                 Debug.Log("읽어오기 실패");
             }
-            else if(task.IsCanceled)
+            else if (task.IsCanceled)
             {
                 Debug.Log("task 취소됨");
             }
@@ -73,38 +100,38 @@ public class ItemDatabase : MonoBehaviour
                 {
                     Debug.Log(item.Key);
 
-                   
+
                     foreach (var snapshotChild in item.Children)
                     {
-                        switch(itemType)
+                        switch (itemType)
                         {
                             case "Food":
 
-                               
-                                if(snapshotChild.Value is string)
+
+                                if (snapshotChild.Value is string)
                                 {
 
-                                string value = (string)snapshotChild.Value;
-                                itemTempName=(string)snapshotChild.Value;
-                                Debug.LogFormat("itemTempName : {0}", itemTempName);
-                                                             
+                                    string value = (string)snapshotChild.Value;
+                                    itemTempName = (string)snapshotChild.Value;
+                                    Debug.LogFormat("itemTempName : {0}", itemTempName);
+
                                 }
                                 else if (snapshotChild.Value is Int64)
                                 {
-                                    Debug.Log("int일때 들어오는지");
-                                    long tempLong=(long)snapshotChild.Value;
+
+                                    long tempLong = (long)snapshotChild.Value;
 
                                     itemTempCount = (int)tempLong;
                                     Debug.LogFormat("itemTempCount : {0}", itemTempCount);
                                 }
 
                                 tempCount += 1;
-                                if(tempCount==2)
+                                if (tempCount == 2)
                                 {
                                     foodDict.Add(itemTempName, itemTempCount);
                                     tempCount = 0;
                                 }
-                               
+
                                 break;
                             case "Stuff":
                                 if (snapshotChild.Value is string)
@@ -117,7 +144,7 @@ public class ItemDatabase : MonoBehaviour
                                 }
                                 else if (snapshotChild.Value is Int64)
                                 {
-                                    Debug.Log("int일때 들어오는지");
+
                                     long tempLong = (long)snapshotChild.Value;
 
                                     itemTempCount = (int)tempLong;
@@ -142,7 +169,7 @@ public class ItemDatabase : MonoBehaviour
                                 }
                                 else if (snapshotChild.Value is Int64)
                                 {
-                                    Debug.Log("int일때 들어오는지");
+
                                     long tempLong = (long)snapshotChild.Value;
 
                                     itemTempCount = (int)tempLong;
@@ -157,13 +184,13 @@ public class ItemDatabase : MonoBehaviour
                                 }
 
                                 break;
-                                default: break;
+                            default: break;
                         }
                         //Debug.Log(snapshotChild.Key + " " + snapshotChild.Value);
-                       
+
                     }
                 }
-                
+
                 Debug.Log("Adding items to foodDict completed.");
             }
         });

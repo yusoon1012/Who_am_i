@@ -56,11 +56,19 @@
     <Analyzer Include="C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\_yusoon\Scripts\TestNPC.cs" />
     <Compile Include="Assets\_yusoon\Scripts\DatabaseManager.cs" />
+    <Compile Include="Assets\_yusoon\Scripts\Testpilot.cs" />
+    <Compile Include="Assets\_yusoon\Scripts\QuestItem.cs" />
+    <Compile Include="Assets\_yusoon\Scripts\QuestList.cs" />
+    <Compile Include="Assets\_yusoon\Scripts\LookatCamera.cs" />
+    <Compile Include="Assets\_yusoon\Scripts\QuestData.cs" />
     <Compile Include="Assets\TutorialInfo\Scripts\Readme.cs" />
     <Compile Include="Assets\_yusoon\Scripts\ItemDatabase.cs" />
     <Compile Include="Assets\_yusoon\Scripts\AuthManager.cs" />
     <Compile Include="Assets\_yusoon\Scripts\UserInfo.cs" />
+    <Compile Include="Assets\_yusoon\Scripts\Quests\GameEventManager.cs" />
+    <Compile Include="Assets\_yusoon\Scripts\Quests\MiscEvent.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
@@ -771,11 +779,11 @@
     <Reference Include="Unity.VisualScripting.State.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.VisualScripting.State.Editor.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.Burst.Editor">
-      <HintPath>Library\ScriptAssemblies\Unity.Burst.Editor.dll</HintPath>
-    </Reference>
     <Reference Include="Unity.Searcher.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.Searcher.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Burst.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.Burst.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.VisualScripting.SettingsProvider.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.VisualScripting.SettingsProvider.Editor.dll</HintPath>
@@ -839,6 +847,30 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="Febucci.TextAnimator.Editor.csproj">
+      <Project>{FCCC7AE7-31A0-66D9-61C5-5FD92651029E}</Project>
+      <Name>Febucci.TextAnimator.Editor</Name>
+    </ProjectReference>
+    <ProjectReference Include="Febucci.TextAnimator.Demo.Runtime.csproj">
+      <Project>{27814B43-4853-AE81-6126-1A49D752E2D8}</Project>
+      <Name>Febucci.TextAnimator.Demo.Runtime</Name>
+    </ProjectReference>
+    <ProjectReference Include="Febucci.TextAnimator.Runtime.csproj">
+      <Project>{1934AF4D-ED8E-9144-C6ED-3980DD3C3818}</Project>
+      <Name>Febucci.TextAnimator.Runtime</Name>
+    </ProjectReference>
+    <ProjectReference Include="Febucci.Attributes.Editor.csproj">
+      <Project>{B59D7634-3933-0C64-C847-854642336483}</Project>
+      <Name>Febucci.Attributes.Editor</Name>
+    </ProjectReference>
+    <ProjectReference Include="Febucci.Attributes.Runtime.csproj">
+      <Project>{DD55A4FF-C151-AD10-A1AA-5568ADA90BDC}</Project>
+      <Name>Febucci.Attributes.Runtime</Name>
+    </ProjectReference>
+    <ProjectReference Include="Febucci.TextAnimator.TMP.Runtime.csproj">
+      <Project>{14EC484F-ACDD-BD58-1FF7-1C2642632E1C}</Project>
+      <Name>Febucci.TextAnimator.TMP.Runtime</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />
