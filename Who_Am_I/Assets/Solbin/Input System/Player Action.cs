@@ -44,6 +44,51 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Click"",
+                    ""type"": ""Button"",
+                    ""id"": ""0c270dfa-5566-4d4f-b471-c613d14d06ab"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""LeftGrip"",
+                    ""type"": ""Button"",
+                    ""id"": ""9e38447b-f99d-40a1-8c56-ea264b40c0c1"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""RightGrip"",
+                    ""type"": ""Button"",
+                    ""id"": ""893b6c03-6252-46c9-8938-c2dd4d66844e"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ClimbingLeftJump"",
+                    ""type"": ""Button"",
+                    ""id"": ""e1666b87-223e-4292-a612-6d377c55204e"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ClimbingRightJump"",
+                    ""type"": ""Button"",
+                    ""id"": ""3ba5b783-7132-4b49-9e45-c2e20d54259b"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -66,6 +111,61 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""Oculus"",
                     ""action"": ""Rotate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6e63d156-7169-4d05-8641-1eb3f1d4d6dc"",
+                    ""path"": ""<OculusTouchController>{RightHand}/triggerPressed"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Oculus"",
+                    ""action"": ""Click"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2eac8070-a744-4483-acb5-d150649adb35"",
+                    ""path"": ""<OculusTouchController>{LeftHand}/gripPressed"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Oculus"",
+                    ""action"": ""LeftGrip"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""27ceef0f-a2b1-4b2d-b3d5-cd46d9af4f2b"",
+                    ""path"": ""<OculusTouchController>{RightHand}/gripPressed"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Oculus"",
+                    ""action"": ""RightGrip"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6e3e2f46-2572-48ad-a189-e2aebcc71d7b"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Oculus"",
+                    ""action"": ""ClimbingLeftJump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""bd405507-63a0-4b70-a66e-ed348ba96cdf"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Oculus"",
+                    ""action"": ""ClimbingRightJump"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -95,6 +195,11 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
         m_Player_Rotate = m_Player.FindAction("Rotate", throwIfNotFound: true);
+        m_Player_Click = m_Player.FindAction("Click", throwIfNotFound: true);
+        m_Player_LeftGrip = m_Player.FindAction("LeftGrip", throwIfNotFound: true);
+        m_Player_RightGrip = m_Player.FindAction("RightGrip", throwIfNotFound: true);
+        m_Player_ClimbingLeftJump = m_Player.FindAction("ClimbingLeftJump", throwIfNotFound: true);
+        m_Player_ClimbingRightJump = m_Player.FindAction("ClimbingRightJump", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -158,12 +263,22 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
     private List<IPlayerActions> m_PlayerActionsCallbackInterfaces = new List<IPlayerActions>();
     private readonly InputAction m_Player_Move;
     private readonly InputAction m_Player_Rotate;
+    private readonly InputAction m_Player_Click;
+    private readonly InputAction m_Player_LeftGrip;
+    private readonly InputAction m_Player_RightGrip;
+    private readonly InputAction m_Player_ClimbingLeftJump;
+    private readonly InputAction m_Player_ClimbingRightJump;
     public struct PlayerActions
     {
         private @PlayerAction m_Wrapper;
         public PlayerActions(@PlayerAction wrapper) { m_Wrapper = wrapper; }
         public InputAction @Move => m_Wrapper.m_Player_Move;
         public InputAction @Rotate => m_Wrapper.m_Player_Rotate;
+        public InputAction @Click => m_Wrapper.m_Player_Click;
+        public InputAction @LeftGrip => m_Wrapper.m_Player_LeftGrip;
+        public InputAction @RightGrip => m_Wrapper.m_Player_RightGrip;
+        public InputAction @ClimbingLeftJump => m_Wrapper.m_Player_ClimbingLeftJump;
+        public InputAction @ClimbingRightJump => m_Wrapper.m_Player_ClimbingRightJump;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -179,6 +294,21 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
             @Rotate.started += instance.OnRotate;
             @Rotate.performed += instance.OnRotate;
             @Rotate.canceled += instance.OnRotate;
+            @Click.started += instance.OnClick;
+            @Click.performed += instance.OnClick;
+            @Click.canceled += instance.OnClick;
+            @LeftGrip.started += instance.OnLeftGrip;
+            @LeftGrip.performed += instance.OnLeftGrip;
+            @LeftGrip.canceled += instance.OnLeftGrip;
+            @RightGrip.started += instance.OnRightGrip;
+            @RightGrip.performed += instance.OnRightGrip;
+            @RightGrip.canceled += instance.OnRightGrip;
+            @ClimbingLeftJump.started += instance.OnClimbingLeftJump;
+            @ClimbingLeftJump.performed += instance.OnClimbingLeftJump;
+            @ClimbingLeftJump.canceled += instance.OnClimbingLeftJump;
+            @ClimbingRightJump.started += instance.OnClimbingRightJump;
+            @ClimbingRightJump.performed += instance.OnClimbingRightJump;
+            @ClimbingRightJump.canceled += instance.OnClimbingRightJump;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -189,6 +319,21 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
             @Rotate.started -= instance.OnRotate;
             @Rotate.performed -= instance.OnRotate;
             @Rotate.canceled -= instance.OnRotate;
+            @Click.started -= instance.OnClick;
+            @Click.performed -= instance.OnClick;
+            @Click.canceled -= instance.OnClick;
+            @LeftGrip.started -= instance.OnLeftGrip;
+            @LeftGrip.performed -= instance.OnLeftGrip;
+            @LeftGrip.canceled -= instance.OnLeftGrip;
+            @RightGrip.started -= instance.OnRightGrip;
+            @RightGrip.performed -= instance.OnRightGrip;
+            @RightGrip.canceled -= instance.OnRightGrip;
+            @ClimbingLeftJump.started -= instance.OnClimbingLeftJump;
+            @ClimbingLeftJump.performed -= instance.OnClimbingLeftJump;
+            @ClimbingLeftJump.canceled -= instance.OnClimbingLeftJump;
+            @ClimbingRightJump.started -= instance.OnClimbingRightJump;
+            @ClimbingRightJump.performed -= instance.OnClimbingRightJump;
+            @ClimbingRightJump.canceled -= instance.OnClimbingRightJump;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -219,5 +364,10 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
     {
         void OnMove(InputAction.CallbackContext context);
         void OnRotate(InputAction.CallbackContext context);
+        void OnClick(InputAction.CallbackContext context);
+        void OnLeftGrip(InputAction.CallbackContext context);
+        void OnRightGrip(InputAction.CallbackContext context);
+        void OnClimbingLeftJump(InputAction.CallbackContext context);
+        void OnClimbingRightJump(InputAction.CallbackContext context);
     }
 }

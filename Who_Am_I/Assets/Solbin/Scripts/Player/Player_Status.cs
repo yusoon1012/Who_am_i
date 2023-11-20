@@ -25,19 +25,26 @@ public struct PlayerStat
 public class Player_Status : MonoBehaviour
 {
     #region 필드
+    // 플레이어 상태/능력치
     public static PlayerStat playerStat;
-
-    public static float m_fullness = default; // 현재 포만감
-    public static float m_poo = default; // 현재 배출도
-
+    // 현재 포만감
+    public static float m_fullness = default;
+    // 현재 배출도
+    public static float m_poo = default;
+    // 이동속도
     public static float m_speed = default;
+    // 이동가능 거리
     public static float m_teleportDistance = default;
+    // LEGACY: 점프하는 힘
     public static float m_jumpForce = default;
 
-    private bool metabolism = false; // 소화기 활성화
+    // 소화기 활성화
+    private bool metabolism = false;
 
-    public static event EventHandler playerPoo; // 배출 이벤트
-    public static event EventHandler playerDefeat; // 플레이어 사망 이벤트
+    // 배출 이벤트
+    public static event EventHandler playerPoo;
+    // 플레이어 사망 이벤트
+    public static event EventHandler playerDefeat;
     #endregion
 
     private void Awake()
@@ -57,7 +64,7 @@ public class Player_Status : MonoBehaviour
     private void SetStartStat() 
     {
         m_fullness = playerStat.fullness; // 포만도 가득 찬 상태로 시작
-        m_poo = 0; // 배출 0부터 시작
+        m_poo = 0; // 배출도는 0부터 시작
         m_speed = playerStat.speed; // 이동 속도
         m_jumpForce = playerStat.jumpForce; // 점프력
     }

@@ -8,8 +8,6 @@ using UnityEngine.InputSystem;
 public class Player_Moving : MonoBehaviour
 {
     #region 필드
-    // Input 에셋
-    PlayerAction playerAction = default;
     // 플레이어
     Transform player = default;
     #endregion

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Player_Laser : MonoBehaviour
 {
@@ -20,12 +21,15 @@ public class Player_Laser : MonoBehaviour
     private float rayDistance = default;
     // 플레이어 시스템(컨트롤러 or 손 사용 여부)
     [SerializeField] private PlayerSystem playerSystem = default;
+    // Input System
+    PlayerAction playerAction;
     #endregion
 
+    #region 초기 세팅
     private void Start() { Setting(); }
 
     /// <summary>
-    /// (초기 세팅)레이어마스크, 컴포넌트 설정
+    /// 레이어마스크, 컴포넌트 설정
     /// </summary>
     private void Setting()
     {
@@ -37,8 +41,17 @@ public class Player_Laser : MonoBehaviour
         rayDistance = Player_Status.playerStat.teleportDistance;
     }
 
+    private void OnEnable() 
+    {
+        playerAction = new PlayerAction();
+        playerAction.Enable(); 
+    }
+
+    private void OnDisable() { playerAction.Disable(); }
+    #endregion
+
     /// <summary>
-    /// (구현) 오른손에서 레이 발사
+    /// 오른손에서 레이 발사
     /// </summary>
     private void ShootRay()
     {
@@ -54,14 +67,14 @@ public class Player_Laser : MonoBehaviour
         }
         else if (Physics.Raycast(ray, out hit, rayDistance, UILayer)) // UI에 레이가 부딪혔을때
         {
-            UIRay(hit);
+            UIRay(hit); // TODO: 인벤토리에서는 비활성화 해야 한다. 
         }
         else
             lineRenderer.enabled = false; // 이외의 상황에 라인 렌더러 비활성화
     }
 
     /// <summary>
-    /// (구현) 땅레이어에 충돌
+    /// 땅레이어에 충돌
     /// </summary>
     private void GroundRay(RaycastHit _hit)
     {
@@ -74,7 +87,7 @@ public class Player_Laser : MonoBehaviour
             lineRenderer.SetPosition(1, hit.point);
             pointer.position = hit.point;
 
-            if (OVRInput.GetDown(OVRInput.Button.SecondaryIndexTrigger))
+            if (playerAction.Player.Click.triggered)
             {
                 //TODO: 텔레포트 할 위치임을 알리는 효과 추가
                 Vector3 teleportPos = hit.point;
@@ -87,7 +100,7 @@ public class Player_Laser : MonoBehaviour
     }
 
     /// <summary>
-    /// (구현) UI레이어에 충돌
+    /// UI레이어에 충돌
     /// </summary>
     private void UIRay(RaycastHit _hit)
     {

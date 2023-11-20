@@ -5,15 +5,19 @@ using UnityEngine;
 
 public class Tool_Shavel : MonoBehaviour
 {
+    // 플레이어
     private GameObject player = default;
-    Player_Item playerItem = default;
+    // User System Manager
+    [SerializeField]private GameObject userSystemManager = default;
+    // 아이템 시스템
+    ItemSystem itemSystem = default;
 
     private Vector3 rightVel = default;
 
     private void Start()
     {
         player = GameObject.Find("===Player==="); // TODO: 추후 문제가 될 수 있으니 수정 요함. 
-        playerItem = player.GetComponent<Player_Item>();
+        itemSystem = userSystemManager.GetComponent<ItemSystem>();
     }
 
     private void Update()
@@ -27,8 +31,13 @@ public class Tool_Shavel : MonoBehaviour
         {
             if (rightVel.y >= 0.3f) // 위로 삽질
             {
-                playerItem.GetCrop();
+                GetCrop(); // 작물을 얻는다. 
             }
         }
+    }
+
+    private void GetCrop()
+    {
+        // TODO: 무슨 작물을 얻는지 추가되어야 한다. 
     }
 }
