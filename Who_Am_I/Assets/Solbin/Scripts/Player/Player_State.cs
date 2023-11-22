@@ -5,8 +5,7 @@ using OVR;
 
 public class Player_State : MonoBehaviour
 {
-    // Idle-플레이어 움직임 cs
-    Player_Moving player_Moving = default;
+    [Header("Climbing Side Jump")]
     // Climb - 측면 점프를 위한 콜라이더
     [SerializeField] private GameObject colliders = default;
 
@@ -28,7 +27,6 @@ public class Player_State : MonoBehaviour
     private void Setting()
     {
         playerState = PlayerState.IDLE;
-        player_Moving = transform.GetComponent<Player_Moving>();
     }
 
     /// <summary>
@@ -38,7 +36,7 @@ public class Player_State : MonoBehaviour
     public void ChangeState(PlayerState _state) 
     {
         playerState = _state;
-        Debug.LogWarning($"Player State: {playerState}");
+        Debug.LogWarning($"Player State = {playerState}");
 
         if (playerState == PlayerState.CLIMBING) { ClimbingState(); } // 등산 상태
         else if (playerState == PlayerState.IDLE) { IdleState(); } // 기본 상태
@@ -49,8 +47,6 @@ public class Player_State : MonoBehaviour
     /// </summary>
     private void ClimbingState()
     {
-        player_Moving.enabled = false; // 플레이어 기본 움직임X
-
         colliders.SetActive(true); // 측면 점프 콜라이더 활성화
     }
 
@@ -59,8 +55,6 @@ public class Player_State : MonoBehaviour
     /// </summary>
     private void IdleState()
     {
-        player_Moving.enabled = true; // 플레이어 기본 움직임O
-
         colliders.SetActive(false); // 측면 점프 콜라이더 비활성화
     }
 }

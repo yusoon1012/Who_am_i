@@ -6,7 +6,7 @@ using TMPro;
 
 public class DebugCanvas : MonoBehaviour
 {
-    Dictionary<string, string> debugLogs = new Dictionary<string, string>();
+    Dictionary<string, int> debugLogs = new Dictionary<string, int>();
 
     public TMP_Text display;
 
@@ -17,7 +17,7 @@ public class DebugCanvas : MonoBehaviour
 
     private void OnDisable()
     {
-        Application.logMessageReceived += HandleLog;
+        Application.logMessageReceived -= HandleLog; // 이 부분 수정
     }
 
     void HandleLog(string logString, string stackTrace, LogType type)
@@ -29,15 +29,15 @@ public class DebugCanvas : MonoBehaviour
             string debugValue = splitString.Length > 1 ? splitString[1] : "";
 
             if (debugLogs.ContainsKey(debugKey))
-                debugLogs[debugKey] = debugValue;
+                debugLogs[debugKey]++;
             else
-                debugLogs.Add(debugKey, debugValue);
+                debugLogs.Add(debugKey, 1);
         }
 
         string displayText = "";
-        foreach (KeyValuePair<string, string> log in debugLogs)
+        foreach (KeyValuePair<string, int> log in debugLogs)
         {
-            if (log.Value == "")
+            if (log.Value == 1)
                 displayText += log.Key + "\n";
             else
                 displayText += log.Key + ": " + log.Value + "\n";

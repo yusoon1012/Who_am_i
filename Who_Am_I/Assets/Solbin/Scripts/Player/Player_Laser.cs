@@ -5,31 +5,35 @@ using UnityEngine.InputSystem;
 
 public class Player_Laser : MonoBehaviour
 {
-    #region ÇÊµå
+    #region í•„ë“œ
+    [Header("Reference")]
+    // í”Œë ˆì´ì–´
     private Transform player = default;
-    //¿À¸¥¼Õ À§Ä¡(ÄÁÆ®·Ñ·¯ & ¼Õ¸ğµ¨)
+    //ì˜¤ë¥¸ì† ìœ„ì¹˜(ì»¨íŠ¸ë¡¤ëŸ¬ & ì†ëª¨ë¸)
     [SerializeField] private Transform rightAnchor = default;
-    // VR Æ÷ÀÎÅÍ À§Ä¡
+    // VR í¬ì¸í„° ìœ„ì¹˜
     [SerializeField] protected Transform pointer = default;
-    // ¶¥ ·¹ÀÌ¾î
-    private int groundLayer = default;
-    // UI ·¹ÀÌ¾î
-    private int UILayer = default;
-    // ¶óÀÎ ·»´õ·¯ ÄÄÆ÷³ÍÆ®
-    private LineRenderer lineRenderer = default;
-    // ·¹ÀÌÀú ÃÖ´ë °Å¸®(ÅÚ·¹Æ÷Æ® ÃÖ´ë °Å¸®)
-    private float rayDistance = default;
-    // ÇÃ·¹ÀÌ¾î ½Ã½ºÅÛ(ÄÁÆ®·Ñ·¯ or ¼Õ »ç¿ë ¿©ºÎ)
-    [SerializeField] private PlayerSystem playerSystem = default;
     // Input System
     PlayerAction playerAction;
+
+    [Header("Essential")]
+    // ë•… ë ˆì´ì–´
+    private int groundLayer = default;
+    // UI ë ˆì´ì–´
+    private int UILayer = default;
+    // ë¼ì¸ ë Œë”ëŸ¬ ì»´í¬ë„ŒíŠ¸
+    private LineRenderer lineRenderer = default;
+    // ë ˆì´ì € ìµœëŒ€ ê±°ë¦¬(í…”ë ˆí¬íŠ¸ ìµœëŒ€ ê±°ë¦¬)
+    private float rayDistance = default;
+    // í”Œë ˆì´ì–´ ì‹œìŠ¤í…œ(ì»¨íŠ¸ë¡¤ëŸ¬ or ì† ì‚¬ìš© ì—¬ë¶€)
+    [SerializeField] private PlayerSystem playerSystem = default;
     #endregion
 
-    #region ÃÊ±â ¼¼ÆÃ
+    #region ì´ˆê¸° ì„¸íŒ…
     private void Start() { Setting(); }
 
     /// <summary>
-    /// ·¹ÀÌ¾î¸¶½ºÅ©, ÄÄÆ÷³ÍÆ® ¼³Á¤
+    /// ë ˆì´ì–´ë§ˆìŠ¤í¬, ì»´í¬ë„ŒíŠ¸ ì„¤ì •
     /// </summary>
     private void Setting()
     {
@@ -37,7 +41,7 @@ public class Player_Laser : MonoBehaviour
         groundLayer = 1 << LayerMask.NameToLayer("Ground");
         UILayer = 1 << LayerMask.NameToLayer("UI");
         lineRenderer = transform.GetComponent<LineRenderer>();
-        lineRenderer.positionCount = 2; // Á¡Àº µÎ °³
+        lineRenderer.positionCount = 2; // ì ì€ ë‘ ê°œ
         rayDistance = Player_Status.playerStat.teleportDistance;
     }
 
@@ -51,30 +55,30 @@ public class Player_Laser : MonoBehaviour
     #endregion
 
     /// <summary>
-    /// ¿À¸¥¼Õ¿¡¼­ ·¹ÀÌ ¹ß»ç
+    /// ì˜¤ë¥¸ì†ì—ì„œ ë ˆì´ ë°œì‚¬
     /// </summary>
     private void ShootRay()
     {
-        // ·¹ÀÌ ¾ÕÀ¸·Î ¹ß»ç
+        // ë ˆì´ ì•ìœ¼ë¡œ ë°œì‚¬
         lineRenderer.SetPosition(0, rightAnchor.position);
         Debug.DrawRay(rightAnchor.position, rightAnchor.forward * rayDistance, Color.green);
         Ray ray = new Ray(rightAnchor.position, rightAnchor.forward);
         RaycastHit hit;
 
-        if (Physics.Raycast(ray, out hit, rayDistance, groundLayer)) // ¶¥¿¡ ·¹ÀÌ°¡ ºÎµúÇûÀ»¶§
+        if (Physics.Raycast(ray, out hit, rayDistance, groundLayer)) // ë•…ì— ë ˆì´ê°€ ë¶€ë”ªí˜”ì„ë•Œ
         {
             GroundRay(hit);
         }
-        else if (Physics.Raycast(ray, out hit, rayDistance, UILayer)) // UI¿¡ ·¹ÀÌ°¡ ºÎµúÇûÀ»¶§
+        else if (Physics.Raycast(ray, out hit, rayDistance, UILayer)) // UIì— ë ˆì´ê°€ ë¶€ë”ªí˜”ì„ë•Œ
         {
-            UIRay(hit); // TODO: ÀÎº¥Åä¸®¿¡¼­´Â ºñÈ°¼ºÈ­ ÇØ¾ß ÇÑ´Ù. 
+            UIRay(hit); // TODO: ì¸ë²¤í† ë¦¬ì—ì„œëŠ” ë¹„í™œì„±í™” í•´ì•¼ í•œë‹¤. 
         }
         else
-            lineRenderer.enabled = false; // ÀÌ¿ÜÀÇ »óÈ²¿¡ ¶óÀÎ ·»´õ·¯ ºñÈ°¼ºÈ­
+            lineRenderer.enabled = false; // ì´ì™¸ì˜ ìƒí™©ì— ë¼ì¸ ë Œë”ëŸ¬ ë¹„í™œì„±í™”
     }
 
     /// <summary>
-    /// ¶¥·¹ÀÌ¾î¿¡ Ãæµ¹
+    /// ë•…ë ˆì´ì–´ì— ì¶©ëŒ
     /// </summary>
     private void GroundRay(RaycastHit _hit)
     {
@@ -82,14 +86,14 @@ public class Player_Laser : MonoBehaviour
         {
             RaycastHit hit = _hit;
 
-            lineRenderer.enabled = true; // ¶óÀÎ ·»´õ·¯ È°¼ºÈ­
+            lineRenderer.enabled = true; // ë¼ì¸ ë Œë”ëŸ¬ í™œì„±í™”
 
             lineRenderer.SetPosition(1, hit.point);
             pointer.position = hit.point;
 
             if (playerAction.Player.Click.triggered)
             {
-                //TODO: ÅÚ·¹Æ÷Æ® ÇÒ À§Ä¡ÀÓÀ» ¾Ë¸®´Â È¿°ú Ãß°¡
+                //TODO: í…”ë ˆí¬íŠ¸ í•  ìœ„ì¹˜ì„ì„ ì•Œë¦¬ëŠ” íš¨ê³¼ ì¶”ê°€
                 Vector3 teleportPos = hit.point;
                 teleportPos.y += 1;
 
@@ -100,18 +104,18 @@ public class Player_Laser : MonoBehaviour
     }
 
     /// <summary>
-    /// UI·¹ÀÌ¾î¿¡ Ãæµ¹
+    /// UIë ˆì´ì–´ì— ì¶©ëŒ
     /// </summary>
     private void UIRay(RaycastHit _hit)
     {
         RaycastHit hit = _hit;
 
-        lineRenderer.enabled = true; // ¶óÀÎ ·»´õ·¯ È°¼ºÈ­
+        lineRenderer.enabled = true; // ë¼ì¸ ë Œë”ëŸ¬ í™œì„±í™”
 
         lineRenderer.SetPosition(1, hit.point);
         pointer.position = hit.point;   
 
-        Debug.Log("UI Ãæµ¹ Ã¼Å©");
+        Debug.Log("UI ì¶©ëŒ ì²´í¬");
     }
 
     private void Update()
