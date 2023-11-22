@@ -165,7 +165,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &21499622
 GameObject:
@@ -266,7 +266,7 @@ Transform:
   m_Children:
   - {fileID: 1152907581}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!143 &21499627
 CharacterController:
@@ -455,7 +455,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &132577532
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -468,7 +468,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7859df3d82a4b914a876f9b9e138e7e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  QuestData: {fileID: 0}
+  questData: {fileID: 0}
   chatText: {fileID: 1818920232}
   questTitleTxt: {fileID: 1857734124}
   conditionText: {fileID: 0}
@@ -556,7 +556,7 @@ Transform:
   m_Children:
   - {fileID: 1915625363}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &162030370
 GameObject:
@@ -931,9 +931,10 @@ GameObject:
   - component: {fileID: 382616289}
   - component: {fileID: 382616292}
   - component: {fileID: 382616291}
+  - component: {fileID: 382616293}
   m_Layer: 0
-  m_Name: GameObject
-  m_TagString: Finish
+  m_Name: Apple
+  m_TagString: QuestItem
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -964,7 +965,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!23 &382616291
 MeshRenderer:
@@ -1016,6 +1017,20 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 382616288}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &382616293
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 382616288}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60f97d1e2f53a2c4fa3abcd4e3a0af38, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  questName: tutorial_01
+  itemName: Apple
 --- !u!1 &393983850
 GameObject:
   m_ObjectHideFlags: 0
@@ -1620,7 +1635,7 @@ Transform:
   m_Children:
   - {fileID: 1923429783}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &436278990
 MonoBehaviour:
@@ -1634,14 +1649,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7859df3d82a4b914a876f9b9e138e7e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  QuestData: {fileID: 11400000, guid: d2ee0466bdc94094d8913f9dba2f1aa9, type: 2}
+  questData: {fileID: 11400000, guid: f7139180713720c42847f13fd05cb3ad, type: 2}
   chatText: {fileID: 1066824405}
   questTitleTxt: {fileID: 1712094821}
   conditionText: {fileID: 0}
   acceptImg: {fileID: 1177275200}
   clearImg: {fileID: 1200354160}
   chatObj: {fileID: 747190216}
-  initQuest: tutorial_01
+  initQuest: 0
   isTalking: 0
   isAccept: 0
   isClear: 0
@@ -1870,8 +1885,8 @@ GameObject:
   - component: {fileID: 668686766}
   - component: {fileID: 668686765}
   m_Layer: 0
-  m_Name: GameObject (1)
-  m_TagString: Finish
+  m_Name: Grape
+  m_TagString: QuestItem
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1902,7 +1917,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!23 &668686765
 MeshRenderer:
@@ -2264,7 +2279,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &954195682
 Rigidbody:
@@ -2295,7 +2310,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   questName: tutorial_01
-  itemName: Apple
+  itemName: 
 --- !u!1 &998869453
 GameObject:
   m_ObjectHideFlags: 0
@@ -2948,7 +2963,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1152907578
 GameObject:
@@ -3492,6 +3507,94 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1351092924}
   m_CullTransparentMesh: 1
+--- !u!1 &1353888775
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1353888777}
+  - component: {fileID: 1353888776}
+  m_Layer: 0
+  m_Name: GameEventManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1353888776
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1353888775}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2844e7af6bc2da428a02d808c3f27f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &1353888777
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1353888775}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 2.0737977, y: 4.005725, z: -3.2835193}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 11
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1389172789
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1389172791}
+  - component: {fileID: 1389172790}
+  m_Layer: 0
+  m_Name: QuestManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1389172790
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1389172789}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e6b572acb823bb428c6ae9b4a4ecacb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &1389172791
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1389172789}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 3.5360644, y: 0.36448282, z: -3.811692}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 14
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1400724075
 GameObject:
   m_ObjectHideFlags: 0
@@ -4030,8 +4133,8 @@ GameObject:
   - component: {fileID: 1640695541}
   - component: {fileID: 1640695540}
   m_Layer: 0
-  m_Name: GameObject (3)
-  m_TagString: Finish
+  m_Name: Orange
+  m_TagString: QuestItem
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4062,7 +4165,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!23 &1640695540
 MeshRenderer:
@@ -4314,7 +4417,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1712094819
 GameObject:
@@ -5436,8 +5539,8 @@ GameObject:
   - component: {fileID: 1883627466}
   - component: {fileID: 1883627465}
   m_Layer: 0
-  m_Name: GameObject (2)
-  m_TagString: Finish
+  m_Name: Melon
+  m_TagString: QuestItem
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5468,7 +5571,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!23 &1883627465
 MeshRenderer:

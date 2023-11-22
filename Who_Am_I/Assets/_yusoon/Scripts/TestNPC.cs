@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -8,7 +9,7 @@ using static UnityEngine.Rendering.DebugUI;
 
 public class TestNPC : MonoBehaviour
 {
-    public QuestData QuestData;
+    public QuestData questData;
     public TMP_Text chatText;
     public TMP_Text questTitleTxt;
     public TMP_Text conditionText;
@@ -18,24 +19,32 @@ public class TestNPC : MonoBehaviour
     public string initQuest;
     public bool isTalking = false;
     public bool isAccept = false;
-    public bool isClear = false;   
+    public bool isClear = false;
+    private bool[] conditionClears;
     private int textIdx = 0;
     private List<string> textList = new List<string>();
     private List<string> clearList = new List<string>();
     public Dictionary<string, int> questCondition;
-    QuestList questlist = new QuestList();
+    public Dictionary<string, int> currentCondition;
+    QuestList questlist;
     Testpilot player;
     string conditionStr;
     int conditionCount;
+    int currentConditionCount;
     private void Awake()
     {
+        questlist = new QuestList();
         questlist.MainQuestList(initQuest);
-        QuestListUpdate();
+        
+
+
     }
     // Start is called before the first frame update
     void Start()
     {
         
+        GameEventManager.instance.questLoadEvent.onQuestLoaded += QuestListUpdate;
+        GameEventManager.instance.miscEvent.onItemCollected += AddQuestItem;
 
     }
 
@@ -43,6 +52,10 @@ public class TestNPC : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(Input.GetKeyDown(KeyCode.V))
+        {
+           // Debug.Log(questData.questState);
+        }
         if (isTalking)
         {
             if (Input.GetKeyDown(KeyCode.Return))
@@ -81,6 +94,40 @@ public class TestNPC : MonoBehaviour
             isAccept = false;
         }
     }
+    public void AddQuestItem()
+    {
+        Debug.Log("AddQuestItem 실행");
+        foreach(KeyValuePair<string, int> item1 in questCondition)
+        {
+            Debug.Log("foreache문 들어옴");
+            string key = item1.Key;
+            int value1, value2;
+            if(currentCondition.TryGetValue(key, out value2))
+            {
+                value1 = item1.Value;
+                if (value1 == value2)
+                {
+                    Debug.Log($"키 '{key}'의 값이 두 딕셔너리에 존재하며 같습니다.");
+                }
+                else
+                {
+                    Debug.Log($"키 '{key}'의 값이 두 딕셔너리에 존재하며 다릅니다.");
+                    currentCondition[key] += 1;
+                    Debug.Log($"키 '{key}'의 값이 증가되었습니다. 현재 값: {currentCondition[key]}");
+                }
+                
+            }
+            else
+            {
+                Debug.Log($"키 '{key}'의 값이 두 딕셔너리에 존재하지 않습니다.");
+
+            }
+        }
+    }
+    public void MeetNpc()
+    {
+
+    }
     private void OnTriggerStay(Collider other)
     {
         if (other.tag.Equals("Player"))
@@ -111,16 +158,27 @@ public class TestNPC : MonoBehaviour
         }
     }
 
-    private void QuestListUpdate()
+    public void QuestListUpdate()
     {
-        Debug.Log("����Ʈ ����Ʈ ������Ʈ");
-        textList = questlist.questScriptList;     
+        Debug.Log("퀘스트 리스트 업데이트");
+        textList = questlist.questScriptList;
+        //Debug.Log("questlist Count : " + questlist.conditionDict.Count);
+
         questCondition = questlist.conditionDict;
-        clearList = questlist.clearScriptList;
-        for(int i=0;i<clearList.Count;i++) 
+        Debug.Log("questCondition count  :"+questCondition.Count);
+        //Debug.Log("TEST NPC)questlist.conditionDict Count : " + questlist.conditionDict.Count);
+        //Debug.Log("TEST NPC) questlist.questScriptList Count : " + questlist.questScriptList);
+        currentCondition = questCondition.ToDictionary(kv => kv.Key, kv => 0); // Set all values to 0
+        Debug.Log("currentCondition Count : "+currentCondition.Count);
+        conditionClears=new bool[questCondition.Count];
+        foreach (var cond in currentCondition)
         {
-            Debug.Log(clearList[i]);
+            Debug.Log("cond key : "+cond.Key);
+            Debug.Log("cond value : "+cond.Value);
         }
+        clearList = questlist.clearScriptList;
+        
+       
     }
     public void QuestConditionInfo()
     {
@@ -128,19 +186,25 @@ public class TestNPC : MonoBehaviour
        
         foreach(var key in questCondition.Keys)
         {
-            Debug.Log($"{key}");
-            Debug.Log(key.GetType());
+            //Debug.Log($"{key}");
+           // Debug.Log(key.GetType());
             conditionStr = key;
-            Debug.Log($"{conditionStr}");
+           // Debug.Log($"{conditionStr}");
         }
         foreach (var value in questCondition.Values)
         {
-            Debug.Log($"{value}");
-           Debug.Log( value.GetType());
+           // Debug.Log($"{value}");
+          // Debug.Log( value.GetType());
             conditionCount = value;
         }
+        foreach (var value in currentCondition.Values)
+        {
+           // Debug.Log($"{value}");
+           // Debug.Log(value.GetType());
+            currentConditionCount = value;
+        }
 
-        Debug.LogFormat("{0} / {1}", conditionStr, conditionCount);
+      //  Debug.LogFormat("{0}  {1} / {2}", conditionStr, conditionCount, currentConditionCount);
     }
     private void NextIndex()
     {
@@ -150,6 +214,7 @@ public class TestNPC : MonoBehaviour
     public void AcceptQuest()
     {
         acceptImg.enabled = false;
+        questData.questState = QuestData.QuestState.IN_PROGRESS;
         clearImg.enabled = true;
         clearImg.color = Color.gray;
         chatObj.SetActive(false);

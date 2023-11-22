@@ -1,6 +1,7 @@
 using Firebase.Auth;
 using Firebase.Database;
 using Firebase.Extensions;
+using Oculus.Interaction;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,45 +14,55 @@ public class QuestList : MonoBehaviour
     public List<string> clearScriptList = new List<string>();
     public Dictionary<string,int> conditionDict = new Dictionary<string,int>();
     public string mainQuestName;
-   
+
+    private void Awake()
+    {
+    }
+    private void Start()
+    {
+        GameEventManager.instance.questLoadEvent.onQuestLoaded += QuestLoadComplete;
+
+    }
     public void MainQuestList(string questName)
     {
+        Debug.Log(questName + "ë™ê¸°í™”");
         questScriptList.Clear();
         m_Reference = FirebaseDatabase.DefaultInstance.GetReference("users");
         m_Reference.Child("Quests").Child("MainQuest").Child(questName)
              .GetValueAsync().ContinueWithOnMainThread(task =>
              {
-                 if(task.IsFaulted&&task.IsCanceled) { Debug.Log("ÀĞ¾î¿À±â ½ÇÆĞ"); }
+                 if(task.IsFaulted&&task.IsCanceled) { Debug.Log("ì½ì–´ì˜¤ê¸° ì‹¤íŒ¨"); }
                  else if(task.IsCompleted)
                  {
                      DataSnapshot snapshot=task.Result;
-                     Debug.LogFormat("snapshot ÀÇ ÀÚ½Äµ¥ÀÌÅÍ °¹¼ö : {0}", snapshot.ChildrenCount);
+                    // Debug.LogFormat("snapshot ì˜ ìì‹ë°ì´í„° ê°¯ìˆ˜ : {0}", snapshot.ChildrenCount);
                      foreach(var child in snapshot.Children)
                      {
                          if(child.Key=="questname")
                          {
-                            // Debug.Log("Äù½ºÆ®³×ÀÓ Ã£À½");
+                            // Debug.Log("í€˜ìŠ¤íŠ¸ë„¤ì„ ì°¾ìŒ");
                              mainQuestName = child.Value.ToString();
                          }
                          else if(child.Key=="questlines")
                          {
                              foreach(var scripts in child.Children)
                              {
-                                // Debug.LogFormat("Äù½ºÆ®¶óÀÎÀÇ Å° : {0}", scripts.Key.ToString());
+                                // Debug.LogFormat("í€˜ìŠ¤íŠ¸ë¼ì¸ì˜ í‚¤ : {0}", scripts.Key.ToString());
 
-                                // Debug.LogFormat("Äù½ºÆ®¶óÀÎÀÇ °ª : {0}",scripts.Value.ToString());
+                                // Debug.LogFormat("í€˜ìŠ¤íŠ¸ë¼ì¸ì˜ ê°’ : {0}",scripts.Value.ToString());
                                  
                                  questScriptList.Add(scripts.Value.ToString());
                              }
                          }
                          else if(child.Key== "condition")
                          {
-                             Debug.Log("Á¶°Ç¿¡ µé¾î¿È");
+                             Debug.Log("ì¡°ê±´ì— ë“¤ì–´ì˜´");
                              foreach(var condition  in child.Children)
                              {
                                  string keyCode=condition.Key.ToString();
                                   
-                                 long count = (long)condition.Value;
+                                 long? count = (long?)(condition.Value as long?);
+                                 Debug.Log("condition count : " + count);
                                  conditionDict.Add(condition.Key.ToString(), (int)count);
                              }
                          }
@@ -61,13 +72,31 @@ public class QuestList : MonoBehaviour
                              {
                                  string scriptvalue=script.Value.ToString();
                                  clearScriptList.Add(scriptvalue);
-                                 Debug.Log(scriptvalue);
+                                // Debug.Log(scriptvalue);
                              }
                          }
                      }
-                    // Debug.LogFormat("Äù½ºÆ®ÀÌ¸§ : {0}", mainQuestName);
+                    // Debug.LogFormat("í€˜ìŠ¤íŠ¸ì´ë¦„ : {0}", mainQuestName);
                  }
+                 else
+                 {
+                     Debug.Log("task.IsFaulted : "+task.IsFaulted);
+                     Debug.Log("task.IsCanceled : " + task.IsCanceled) ;
+
+                 }
+                 //Debug.Log("conditionDict count : " + conditionDict.Count);
+                 foreach(var conditions in conditionDict)
+                 {
+                     Debug.Log("ì €ì¥ëœ í‚¤ê°’ : " + conditions.Key);
+                     Debug.Log("ì €ì¥ëœ ë°¸ë¥˜ : "+conditions.Value);
+                 }
+                 GameEventManager.instance.questLoadEvent.QuestLoaded();
              });
+       
+    }
+    public void QuestLoadComplete()
+    {
+        Debug.Log("í€˜ìŠ¤íŠ¸ ë¡œë”© ì™„ë£Œ");
     }
     public void SavedScript()
     {
