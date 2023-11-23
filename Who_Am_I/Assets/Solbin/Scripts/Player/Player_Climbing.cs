@@ -7,6 +7,7 @@ using UnityEngine.XR;
 using UnityEngine.InputSystem;
 using Unity.VisualScripting;
 using UnityEngine.XR.LegacyInputHelpers;
+using System;
 
 public class Player_Climbing : MonoBehaviour
 {
@@ -54,10 +55,12 @@ public class Player_Climbing : MonoBehaviour
     [Header("Essential Number")]
     // 왼쪽 컨트롤러 속도값
     private Vector3 leftVel = default;
+    // 왼쪽 컨트롤러 Magnitude
+    private float leftMagnitude = default;
     // 오른쪽 컨트롤러 속도값
     private Vector3 rightVel = default;
-    // 절벽 이동 시 힘
-    private const float climbingForce = 1f;
+    // 오른쪽 컨트롤러 Magnitude 
+    private float rightMagnitude = default;
     // 그랩시 왼손 위치
     private Vector3 leftPos = default;
     // 그랩시 오른손 위치
@@ -74,9 +77,12 @@ public class Player_Climbing : MonoBehaviour
     private Climbing_SideJump rightCol = default;
     #endregion
 
+    // 추락
     bool fallDown = false;
-    bool leftSwing = false;
-    bool rightSwing = false;
+    // 상승 점프
+    bool superSwing = false;
+
+    bool sideJumping = false;
 
     private void Start()
     {
@@ -101,6 +107,8 @@ public class Player_Climbing : MonoBehaviour
 
         leftCol = climbColliders.transform.GetChild(0).GetComponent<Climbing_SideJump>();
         rightCol = climbColliders.transform.GetChild(1).GetComponent<Climbing_SideJump>();
+
+        grabCheck_Left.finishLine += LastClimbing; // 마지막 등반 이벤트 구독
     }
 
     private void OnEnable()
@@ -124,25 +132,18 @@ public class Player_Climbing : MonoBehaviour
         get
         {
             bool check = false;
-            float arm = 0.27f; // 팔 길이
 
-            if (grabCheck_Left.thisHand) // 홀더에 접촉 && 그립 버튼
+            if (grabCheck_Left.thisHand)
             {
-                if (playerAction.Player.LeftGrip.ReadValue<float>() >= 0.5f && 
-                    Vector3.Distance(leftHand_G.transform.position, leftHand.position) <= arm) // 홀더로부터 일정거리 내
+                if (playerAction.Player.LeftGrip.ReadValue<float>() >= 0.5f) // 그립을 쥐었으면
                 {
-                    check = true; // 등반 상태로 전환
-                }
-                else if (playerAction.Player.LeftGrip.ReadValue<float>() >= 0.5f && 
-                    Vector3.Distance(leftHand_G.transform.position, leftHand.position) > arm) // 홀더로부터 일정거리 바깥
-                {
-                    rigid.velocity = Vector3.zero; // 리지드바디 zero
+                    check = true; // 등반 상태 전환
                 }
             }
-            else if (!grabCheck_Left.thisHand || 
-                playerAction.Player.LeftGrip.ReadValue<float>() < 0.5f) // 접촉하지 않았거나 강하게 쥐지 않으면
+
+            if (playerAction.Player.LeftGrip.ReadValue<float>() < 0.5f) // 그립을 놓으면 어느 조건에서든
             {
-                check = false; // 평시 상태로 전환
+                check = false;
             }
 
             return check;
@@ -176,25 +177,18 @@ public class Player_Climbing : MonoBehaviour
         get
         {
             bool check = false;
-            float arm = 0.27f; // 팔 길이
 
             if (grabCheck_Right.thisHand)
             {
-                if (playerAction.Player.RightGrip.ReadValue<float>() >= 0.5f &&
-                    Vector3.Distance(rightHand_G.transform.position, rightHand.position) <= arm) // 홀더로부터 일정거리 내
+                if (playerAction.Player.RightGrip.ReadValue<float>() >= 0.5f) // 그립을 쥐었으면
                 {
-                    check = true; // 등반 상태로 전환
-                }
-                else if (playerAction.Player.RightGrip.ReadValue<float>() >= 0.5f &&
-                    Vector3.Distance(rightHand_G.transform.position, rightHand.position) > arm) // 홀더로부터 일정거리 바깥
-                {
-                    rigid.velocity = Vector3.zero; // 리지드바디 zero
+                    check = true; // 등반 상태 전환
                 }
             }
-            else if (!grabCheck_Right.thisHand ||
-                playerAction.Player.RightGrip.ReadValue<float>() < 0.5f) // 접촉하지 않았거나 강하게 쥐지 않으면
-            { 
-                check = false; // 평시 상태로 전환
+
+            if (playerAction.Player.RightGrip.ReadValue<float>() < 0.5f) // 그립을 놓으면 어느 조건에서든
+            {
+                check = false;
             }
 
             return check;
@@ -240,21 +234,74 @@ public class Player_Climbing : MonoBehaviour
     }
     #endregion
 
-    #region 구현: 등반 (Rigidbody)
+    #region 구현: 등반 (Rigidbody, Transform)
     private void Climbing()
     {
         // 왼쪽 컨트롤러 Velocity
         leftVel = OVRInput.GetLocalControllerVelocity(OVRInput.Controller.LTouch);
+        // 왼쪽 컨트롤러 Magnitude
+        leftMagnitude = Vector3.Magnitude(leftVel);
         // 오른쪽 컨트롤러 Velocity
         rightVel = OVRInput.GetLocalControllerVelocity(OVRInput.Controller.RTouch);
+        // 오른쪽 컨트롤러 Velocity
+        rightMagnitude = Vector3.Magnitude(rightVel);
 
-        if (LeftGrab) // 왼손 등반
+        // TODO: 왼손이든 오른손이든 잡고만 있다면 점프가 가능하도록 변경
+
+        //if (LeftGrab) // 왼손 등반
+        //{
+        //    if (playerAction.Player.ClimbingLeftJump.ReadValue<float>() > 0.5f) // 오르던 중 좌측 점프 버튼
+        //    {
+        //        LeftJump();
+        //    }
+        //    else // 점프 순간이 아닐 때만
+        //    {
+        //        player_State.ChangeState(Player_State.PlayerState.CLIMBING); // 플레이어 상태 전환 - 등반
+
+        //        rigid.useGravity = false; // 중력 비활성화
+        //        rigid.constraints = RigidbodyConstraints.FreezeRotation; // 축 고정
+        //        leftHand.position = leftPos;
+
+        //        AddForce(leftVel, leftMagnitude);
+        //    }
+        //}
+
+        //if (RightGrab) // 오른손 등반
+        //{
+        //    if (playerAction.Player.ClimbingRightJump.ReadValue<float>() > 0.5f) // 오르던 중 우측 점프 버튼
+        //    {
+        //        RightJump();
+        //    }
+        //    else // 점프 순간이 아닐 때만
+        //    {
+        //        player_State.ChangeState(Player_State.PlayerState.CLIMBING); // 플레이어 상태 전환 - 등반
+
+        //        rigid.useGravity = false; // 중력 비활성화
+        //        rigid.constraints = RigidbodyConstraints.FreezeRotation; // 축 고정
+        //        rightHand.position = rightPos;
+
+        //        AddForce(rightVel, rightMagnitude);
+        //    }
+        //}
+
+        if (LeftGrab || RightGrab)
         {
-            if (playerAction.Player.ClimbingLeftJump.ReadValue<float>() > 0.5f) // 오르던 중 좌측 점프 버튼
+            if (playerAction.Player.ClimbingLeftJump.triggered)
             {
+                Debug.LogWarning("Left Jump");
+                sideJumping = true;
                 LeftJump();
+                sideJumping = false;
             }
-            else // 점프 순간이 아닐 때만
+
+            if (playerAction.Player.ClimbingRightJump.triggered)
+            {
+                sideJumping = true;
+                RightJump();
+                sideJumping = false;
+            }
+
+            if (LeftGrab && !sideJumping)
             {
                 player_State.ChangeState(Player_State.PlayerState.CLIMBING); // 플레이어 상태 전환 - 등반
 
@@ -262,17 +309,10 @@ public class Player_Climbing : MonoBehaviour
                 rigid.constraints = RigidbodyConstraints.FreezeRotation; // 축 고정
                 leftHand.position = leftPos;
 
-                AddForce(leftVel);
+                AddForce(leftVel, leftMagnitude);
             }
-        }
 
-        if (RightGrab) // 오른손 등반
-        {
-            if (playerAction.Player.ClimbingRightJump.ReadValue<float>() > 0.5f) // 오르던 중 우측 점프 버튼
-            {
-                RightJump();
-            }
-            else // 점프 순간이 아닐 때만
+            if (RightGrab && !sideJumping)
             {
                 player_State.ChangeState(Player_State.PlayerState.CLIMBING); // 플레이어 상태 전환 - 등반
 
@@ -280,7 +320,7 @@ public class Player_Climbing : MonoBehaviour
                 rigid.constraints = RigidbodyConstraints.FreezeRotation; // 축 고정
                 rightHand.position = rightPos;
 
-                AddForce(rightVel);
+                AddForce(rightVel, rightMagnitude);
             }
         }
 
@@ -300,14 +340,16 @@ public class Player_Climbing : MonoBehaviour
     /// 한 손 이용시 등반
     /// </summary>
     /// <param name="_moveDir">이동 방향</param>
-    private void AddForce(Vector3 _moveDir)
+    private void AddForce(Vector3 _moveDir, float _magnitude)
     {
         rigid.useGravity = false;
 
         Vector3 moveDir = _moveDir;
         moveDir.z = 0;
 
-        rigid.AddForce(-moveDir * climbingForce); // 플레이어를 그랩으로 당긴 방향의 반대 방향으로 이동시킨다. // TODO: 다른 방법은?
+        float magnitude = _magnitude + 0.3f; // 컨트롤러 속도 절댓값 (보정값 추가)
+
+        ovrCameraRig.transform.Translate(-moveDir * magnitude * Time.deltaTime);
     }
     #endregion
 
@@ -317,8 +359,8 @@ public class Player_Climbing : MonoBehaviour
     /// </summary>
     public void LeftJump()
     {
-        float upJumpForce = 2.5f; // 위로 점프하는 힘
-        float leftJumpForce = 2f; // 좌측으로 점프하는 힘
+        float upJumpForce = 1.5f; // 위로 점프하는 힘
+        float leftJumpForce = 1f; // 좌측으로 점프하는 힘
 
         if (leftCol.activateJump) // 좌측 점프가 가능한 상태라면
         {
@@ -343,8 +385,8 @@ public class Player_Climbing : MonoBehaviour
     /// </summary>
     public void RightJump()
     {
-        float upJumpForce = 2.5f; // 위로 점프하는 힘
-        float leftJumpForce = 2f; // 좌측으로 점프하는 힘
+        float upJumpForce = 1.5f; // 위로 점프하는 힘
+        float leftJumpForce = 1f; // 좌측으로 점프하는 힘
 
         if (rightCol.activateJump) // 우측 점프가 가능한 상태라면 
         {
@@ -373,29 +415,30 @@ public class Player_Climbing : MonoBehaviour
     {
         float jumpForce = 5f;
 
-        if (LeftGrab && (leftVel.y <= -0.7f)) // 왼손 그립을 쥔 상태에서 아래로 휘두르면
+        // 두 손으로 암벽을 잡은 상태에서 아래로 강하게 휘두르면
+        if ((LeftGrab && (leftVel.y <= -1f)) && (RightGrab && (rightVel.y <= -1f)))
         {
-            leftSwing = true;
+            superSwing = true;
         }
-        // TODO: 휘두르기만 하고 그립을 놓지 않으면? => 해결 필요
-
-        if (leftSwing && playerAction.Player.LeftGrip.ReadValue<float>() < 0.5f)
+        
+        // 슈퍼 점프가 가능한 상태 
+        if (superSwing)
         {
-            rigid.AddForce(Vector3.up * jumpForce, ForceMode.Impulse); // 왼손 상승 점프
-            leftSwing = false;
-        }
+            if (playerAction.Player.LeftGrip.ReadValue<float>() <= 0.45f &&
+                playerAction.Player.RightGrip.ReadValue<float>() <= 0.45f) // 아래로 휘두르며 손을 놓았다면
+            {
+                rigid.AddForce(Vector3.up * jumpForce, ForceMode.Impulse); // 상승 점프
+                superSwing = false;
+            }
 
-        if (RightGrab && (rightVel.y <= -0.7f)) // 오른손 그립을 쥔 상태에서 아래로 휘두르면
-        {
-            rightSwing = true;
-        }
-
-        if (rightSwing && playerAction.Player.RightGrip.ReadValue<float>() < 0.5f)
-        {
-            rigid.AddForce(Vector3.up * jumpForce, ForceMode.Impulse); // 오른손 상승 점프
-            rightSwing = false;
+            Invoke("ClearHighJump", 0.7f); // 시간차 상승 점프 상태 해제 (그랩을 놓는 동작이 늦을 경우를 대비)
         }
     }
+
+    /// <summary>
+    /// 상승 점프 상태 해제 
+    /// </summary>
+    private void ClearHighJump() { superSwing = false; }
     #endregion
 
     #region 구현: 등반 중 추락
@@ -414,6 +457,61 @@ public class Player_Climbing : MonoBehaviour
                 fallDown = false;
             }
         }
+    }
+    #endregion
+
+    #region 구현: 마지막 등반 
+    /// <summary>
+    /// 마지막 등반 조건 (평지 오르기)
+    /// </summary>
+    private void LastClimbing(object sender, EventArgs e)
+    {
+        if (grabCheck_Left.finishHand && playerAction.Player.LeftGrip.ReadValue<float>() >= 0.5f)
+        {
+            if (leftVel.y <= -0.5f)
+            {
+                Vector3 grabPos = grabCheck_Left.finishGrabPos;
+                StartCoroutine(LastClimbingAction(grabPos));
+            }
+        }
+
+        if (grabCheck_Right.finishHand && playerAction.Player.RightGrip.ReadValue<float>() >= 0.5f)
+        {
+            if (rightVel.y <= -0.5f)
+            {
+                Vector3 grabPos = grabCheck_Right.finishGrabPos;
+                StartCoroutine(LastClimbingAction(grabPos));
+            }
+        }
+    }
+
+    /// <summary>
+    /// 마지막 등반 구현
+    /// </summary>
+    private IEnumerator LastClimbingAction(Vector3 _grabPos)
+    {
+        // TODO: 무한 루프가 발생해 일단 주석 처리했다. 
+
+        //rigid.useGravity = false; // 중력 해제
+        //Vector3 targetPos = _grabPos;
+        //targetPos.y += 1;
+
+        //bool climbing = true; // 평지 오르기 활성화
+
+        //while(climbing) // 등반 동작이 끝나지 않은 동안 
+        //{
+        //    ovrCameraRig.transform.Translate(targetPos * 2f * Time.smoothDeltaTime); // 위치로 이동
+
+        //    if (Vector3.Distance(ovrCameraRig.transform.position, targetPos) <= 0.1f) // 목표 위치에 거의 도착했다면
+        //    {
+        //        ovrCameraRig.transform.position = targetPos; // 위치 고정
+        //        rigid.useGravity = true; // 중력 재활성화 
+
+        //        climbing = false; // 평지 오르기 비활성화
+        //    }
+        //}
+
+        yield return null;
     }
     #endregion
 
