@@ -1,45 +1,119 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Accessibility;
 
 /// <summary>
-/// ÇÃ·¹ÀÌ¾îÀÇ ¾ÆÀÌÅÛ ÀåÂø
+/// í”Œë ˆì´ì–´ì˜ ì•„ì´í…œ ì¥ì°©
 /// </summary>
 
 public class ItemSystem : MonoBehaviour
 {
-    // ÀåÂø ¾ÆÀÌÅÛ µñ¼Å³Ê¸®
-    private Dictionary<string, GameObject> itemDic = new Dictionary<string, GameObject>();
-    // ÇÃ·¹ÀÌ¾î
-    [SerializeField] private Transform player = default;
-    // (ÀåÂø) »ğ
-    [SerializeField] private GameObject shavel = default;
-    // (ÀåÂø) ³¬½Ã´ë
-    [SerializeField] private GameObject fishingRod = default;
-    // (ÀåÂø) ³ÊÇÁ°Ç 
+    private Dictionary<string, GameObject> mountingItem = new Dictionary<string, GameObject>();
+
+    [Header("Items")]
+    // (ì¥ì°©) ë„ˆí”„ê±´ 
     [SerializeField] private GameObject nerfGun = default;
+    // (ì¥ì°©) ì‚½
+    [SerializeField] private GameObject shavel = default;
+    // (ì¥ì°©) ë‚šì‹œëŒ€
+    [SerializeField] private GameObject fishingRod = default;
+    // (ì¥ì°©) ê³¤ì¶© ì±„ì§‘ë§
+    [SerializeField] private GameObject dragonflyNet = default;
+    // LEGACY: (ì¥ì°©) ìƒˆì´
+    //[SerializeField] private GameObject slingShot = default;
 
     private void Start()
     {
         Setting();
+        DicSetting(); // ë”•ì…”ë„ˆë¦¬ ì„¸íŒ…
     }
 
+    #region ì´ˆê¸° ì„¸íŒ…
     /// <summary>
-    /// ÃÊ±â ¼¼ÆÃ
+    /// ì´ˆê¸° ì„¸íŒ…
     /// </summary>
     private void Setting()
     {
-        itemDic["Shavel"] = shavel;
-        itemDic["FishingRod"] = fishingRod;
-        itemDic["NerfGun"] = nerfGun;
+        nerfGun.SetActive(false);
+        shavel.SetActive(false);
+        fishingRod.SetActive(false);
+        dragonflyNet.SetActive(false);
     }
 
     /// <summary>
-    /// ÇÃ·¹ÀÌ¾î°¡ ¾ÆÀÌÅÛÀ» ÀåÂøÇÏ´Â ¸Ş¼Òµå
+    /// ë”•ì…”ë„ˆë¦¬ ì„¸íŒ…
     /// </summary>
-    /// <param name="_item">ÀåÂøÇÒ ¾ÆÀÌÅÛ</param>
-    public void MountingItem(GameObject _item)
+    private void DicSetting()
     {
-        GameObject item = _item;
+        mountingItem["NerfGun"] = nerfGun;
+        mountingItem["Shavel"] = shavel;
+        mountingItem["FishingRod"] = fishingRod;
+        mountingItem["DragonflyNet"] = dragonflyNet;
     }
+    #endregion
+
+    #region êµ¬í˜„: ì•„ì´í…œ ì¥ì°©/í•´ì œ ë©”ì†Œë“œ
+    /// <summary>
+    /// í”Œë ˆì´ì–´ê°€ ì•„ì´í…œì„ ì¥ì°©í•˜ëŠ” ë©”ì†Œë“œ
+    /// </summary>
+    /// <param name="_item">ì¥ì°©í•  ì•„ì´í…œ</param>
+    public void MountingItem(string _name)
+    {
+        string name = _name;
+        GameObject item = default;
+
+        switch(name)
+        {
+            case "NerfGun":
+                item = nerfGun;
+                break;
+            case "Shavel":
+                item = shavel;
+                break;
+            case "FishingRod":
+                item = fishingRod;
+                break;
+            case "DragonflyNet":
+                item = dragonflyNet;
+                break;
+            default:
+                Debug.LogError("<Solbin> Item Error");
+                break;
+        }
+
+        item.SetActive(true);
+    }
+
+    /// <summary>
+    /// í”Œë ˆì´ì–´ê°€ ì•„ì´í…œ ì¥ì°©ì„ í•´ì œí•˜ëŠ” ë©”ì†Œë“œ
+    /// </summary>
+    /// <param name="_item">í•´ì œí•  ì•„ì´í…œ</param>
+    public void ReleaseItem(string _name)
+    {
+        string name = _name;
+        GameObject item = default;
+
+        switch (name)
+        {
+            case "NerfGun":
+                item = nerfGun;
+                break;
+            case "Shavel":
+                item = shavel;
+                break;
+            case "FishingRod":
+                item = fishingRod;
+                break;
+            case "DragonflyNet":
+                item = dragonflyNet;
+                break;
+            default:
+                Debug.LogError("<Solbin> Item Error");
+                break;
+        }
+
+        item.SetActive(false);
+    }
+    #endregion
 }

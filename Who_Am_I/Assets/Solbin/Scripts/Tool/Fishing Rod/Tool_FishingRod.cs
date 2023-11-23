@@ -4,15 +4,5 @@ using UnityEngine;
 
 public class Tool_FishingRod : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    // TODO: 물가 인식은 콜라이더로 진행된다. 플레이어가 물가 콜라이더에 진입 => 낚시 기능 활성화. 
 }

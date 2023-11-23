@@ -6,65 +6,90 @@ using UnityEngine.EventSystems;
 using UnityEngine.XR;
 using UnityEngine.InputSystem;
 using Unity.VisualScripting;
+using UnityEngine.XR.LegacyInputHelpers;
+using System;
 
 public class Player_Climbing : MonoBehaviour
 {
-    #region ÇÊµå
+    #region í•„ë“œ: ì°¸ì¡°
+    [Header("Reference")]
     // OVRCameraRig
     private OVRCameraRig ovrCameraRig = default;
     // Input System
     private PlayerAction playerAction;
     // Player State.cs
     private Player_State player_State = default;
-    // ¿ŞÂÊ ¼Õ_Á¦³Ê·²(ÀÏ¹İ¿ë)
-    [SerializeField] GameObject leftHand_G = default;
-    // ¿À¸¥ÂÊ ¼Õ_Á¦³Ê·²(ÀÏ¹İ¿ë)
-    [SerializeField] GameObject rightHand_G = default;
-    // ¿À¸¥ÂÊ ÄÁÆ®·Ñ·¯_Á¦³Ê·²(ÀÏ¹İ¿ë)
-    [SerializeField] GameObject rightController_G = default;
-    // µî¹İ Àü »ç¿ëÇÏ´ø ÄÁÆ®·Ñ·¯ Á¾·ù
-    private GameObject originController_G = default;
-
-    // È°¼ºÈ­ µÈ ¿ŞÂÊ Á¦³Ê·² ¸ğµ¨
-    private GameObject leftModel_G = default;
-    // È°¼ºÈ­ µÈ ¿À¸¥ÂÊ Á¦³Ê·² ¸ğµ¨
-    private GameObject rightModel_G = default;
-
-    // ¿ŞÂÊ ¼Õ(±×·¦¿ë)
-    [SerializeField] Transform leftHand = default;
-    // ¿À¸¥ÂÊ ¼Õ(±×·¦¿ë)
-    [SerializeField] Transform rightHand = default;
-    // ¿ŞÂÊ ¼Õ(±×·¦¿ë) Ãæµ¹ Ã¼Å©
-    Climbing_GrabCheck grabCheck_Left;
-    // ¿À¸¥ÂÊ ¼Õ(±×·¦¿ë) Ãæµ¹ Ã¼Å©
-    Climbing_GrabCheck grabCheck_Right;
-    // ¿ŞÂÊ ¼Õ(±×·¦¿ë) ¸Ş½¬
-    MeshRenderer leftGrabRenderer;
-    // ¿À¸¥ÂÊ ¼Õ(±×·¦¿ë) ¸Ş½¬
-    MeshRenderer rightGrabRenderer;
-
-    // ¸®Áöµå¹Ùµğ
+    // ë¦¬ì§€ë“œë°”ë””
     Rigidbody rigid = default;
-    // ¿ŞÂÊ ÄÁÆ®·Ñ·¯ ¼Óµµ°ª
-    private Vector3 leftVel = default;
-    // ¿À¸¥ÂÊ ÄÁÆ®·Ñ·¯ ¼Óµµ°ª
-    private Vector3 rightVel = default;
-    // Àıº® ÀÌµ¿ ½Ã Èû
-    private const float climbingForce = 1f;
-    // ±×·¦½Ã ¿Ş¼Õ À§Ä¡
-    private Vector3 leftPos = default;
-    // ±×·¦½Ã ¿À¸¥¼Õ À§Ä¡
-    private Vector3 rightPos = default;
-
-    bool climbing = false;
     #endregion
+
+    #region í•„ë“œ: ì¼ë°˜ ì»¨íŠ¸ë¡¤ëŸ¬ & ì† ëª¨ë¸
+    [Header("General Controller & Hand")]
+    // ì™¼ìª½ ì†_ì œë„ˆëŸ´(ì¼ë°˜ìš©)
+    [SerializeField] GameObject leftHand_G = default;
+    // ì˜¤ë¥¸ìª½ ì†_ì œë„ˆëŸ´(ì¼ë°˜ìš©)
+    [SerializeField] GameObject rightHand_G = default;
+    // ì˜¤ë¥¸ìª½ ì»¨íŠ¸ë¡¤ëŸ¬_ì œë„ˆëŸ´(ì¼ë°˜ìš©)
+    [SerializeField] GameObject rightController_G = default;
+    // ë“±ë°˜ ì „ ì‚¬ìš©í•˜ë˜ ì»¨íŠ¸ë¡¤ëŸ¬ ì¢…ë¥˜
+    private GameObject originController_G = default;
+    #endregion
+
+    #region í•„ë“œ: ê·¸ë©ìš© ì»¨íŠ¸ë¡¤ëŸ¬ & ì† ëª¨ë¸
+    [Header("Grab Controller & Hand")]
+    // ì™¼ìª½ ì†(ê·¸ë©ìš©)
+    [SerializeField] Transform leftHand = default;
+    // ì˜¤ë¥¸ìª½ ì†(ê·¸ë©ìš©)
+    [SerializeField] Transform rightHand = default;
+    // ì™¼ìª½ ì†(ê·¸ë©ìš©) ì¶©ëŒ ì²´í¬
+    Climbing_GrabCheck grabCheck_Left;
+    // ì˜¤ë¥¸ìª½ ì†(ê·¸ë©ìš©) ì¶©ëŒ ì²´í¬
+    Climbing_GrabCheck grabCheck_Right;
+    // ì™¼ìª½ ì†(ê·¸ë©ìš©) ë©”ì‰¬
+    MeshRenderer leftGrabRenderer;
+    // ì˜¤ë¥¸ìª½ ì†(ê·¸ë©ìš©) ë©”ì‰¬
+    MeshRenderer rightGrabRenderer;
+    #endregion
+
+    #region í•„ë“œ: ì¶”ê°€ ìˆ˜ì¹˜
+    [Header("Essential Number")]
+    // ì™¼ìª½ ì»¨íŠ¸ë¡¤ëŸ¬ ì†ë„ê°’
+    private Vector3 leftVel = default;
+    // ì™¼ìª½ ì»¨íŠ¸ë¡¤ëŸ¬ Magnitude
+    private float leftMagnitude = default;
+    // ì˜¤ë¥¸ìª½ ì»¨íŠ¸ë¡¤ëŸ¬ ì†ë„ê°’
+    private Vector3 rightVel = default;
+    // ì˜¤ë¥¸ìª½ ì»¨íŠ¸ë¡¤ëŸ¬ Magnitude 
+    private float rightMagnitude = default;
+    // ê·¸ë©ì‹œ ì™¼ì† ìœ„ì¹˜
+    private Vector3 leftPos = default;
+    // ê·¸ë©ì‹œ ì˜¤ë¥¸ì† ìœ„ì¹˜
+    private Vector3 rightPos = default;
+    #endregion
+
+    #region í•„ë“œ: ë“±ë°˜ ì¤‘ ì í”„
+    [Header("Climbing Jump")]
+    // ì½œë¼ì´ë” ì†Œìœ  ìì‹ ì˜¤ë¸Œì íŠ¸
+    [SerializeField] private GameObject climbColliders = default;
+    // ì¢Œì¸¡ ì í”„ ì½œë¼ì´ë”
+    private Climbing_SideJump leftCol = default;
+    // ìš°ì¸¡ ì í”„ ì½œë¼ì´ë”
+    private Climbing_SideJump rightCol = default;
+    #endregion
+
+    // ì¶”ë½
+    bool fallDown = false;
+    // ìƒìŠ¹ ì í”„
+    bool superSwing = false;
+
+    bool sideJumping = false;
 
     private void Start()
     {
         Setting(); 
     }
 
-    #region ÃÊ±â ¼¼ÆÃ
+    #region ì´ˆê¸° ì„¸íŒ…
     private void Setting()
     {
         ovrCameraRig = transform.GetChild(0).GetComponent<OVRCameraRig>();
@@ -75,10 +100,15 @@ public class Player_Climbing : MonoBehaviour
         leftGrabRenderer = leftHand.GetComponent<MeshRenderer>();
         rightGrabRenderer = rightHand.GetComponent<MeshRenderer>();
 
-        leftGrabRenderer.enabled = false; // µî¹İ ½Ã¿¡¸¸ È°¼ºÈ­ µÇ¾îÀÖ¾î¾ß ÇÑ´Ù
+        leftGrabRenderer.enabled = false; // ë“±ë°˜ ì‹œì—ë§Œ í™œì„±í™” ë˜ì–´ìˆì–´ì•¼ í•œë‹¤
         rightGrabRenderer.enabled = false;
 
         rigid = transform.GetChild(0).GetComponent<Rigidbody>();
+
+        leftCol = climbColliders.transform.GetChild(0).GetComponent<Climbing_SideJump>();
+        rightCol = climbColliders.transform.GetChild(1).GetComponent<Climbing_SideJump>();
+
+        grabCheck_Left.finishLine += LastClimbing; // ë§ˆì§€ë§‰ ë“±ë°˜ ì´ë²¤íŠ¸ êµ¬ë…
     }
 
     private void OnEnable()
@@ -93,33 +123,27 @@ public class Player_Climbing : MonoBehaviour
     }
     #endregion
 
-    #region ¼Õ Á¢ÃË ¿©ºÎ Ã¼Å©, ¼Õ ÀüÈ¯ (ÀÏ¹İ - µî¹İ)
+    #region êµ¬í˜„: ì† ì ‘ì´‰ ì—¬ë¶€ ì²´í¬, ì† ì „í™˜ (ì¼ë°˜ - ë“±ë°˜)
     /// <summary>
-    /// ¿Ş¼Õ Á¢ÃË ¿©ºÎ Ã¼Å©
+    /// ì™¼ì† ì ‘ì´‰ & ê·¸ë¦½ ì—¬ë¶€ ì²´í¬ 
     /// </summary>
     private bool LeftGrab
     {
         get
         {
             bool check = false;
-            float arm = 0.15f; // ÆÈ ±æÀÌ
 
-            if (grabCheck_Left.thisHand) // È¦´õ¿¡ Á¢ÃË && ±×¸³ ¹öÆ°
+            if (grabCheck_Left.thisHand)
             {
-                if (playerAction.Player.LeftGrip.ReadValue<float>() > 0.5f && 
-                    Vector3.Distance(leftHand_G.transform.position, leftHand.position) <= arm)
+                if (playerAction.Player.LeftGrip.ReadValue<float>() >= 0.5f) // ê·¸ë¦½ì„ ì¥ì—ˆìœ¼ë©´
                 {
-                    check = true; // µî¹İ »óÅÂ·Î ÀüÈ¯
-                }
-                else if (playerAction.Player.LeftGrip.ReadValue<float>() > 0.5f && 
-                    Vector3.Distance(leftHand_G.transform.position, leftHand.position) > arm)
-                {
-                    rigid.velocity = Vector3.zero; // ¸®Áöµå¹Ùµğ zero
+                    check = true; // ë“±ë°˜ ìƒíƒœ ì „í™˜
                 }
             }
-            else if (!grabCheck_Left.thisHand)
+
+            if (playerAction.Player.LeftGrip.ReadValue<float>() < 0.5f) // ê·¸ë¦½ì„ ë†“ìœ¼ë©´ ì–´ëŠ ì¡°ê±´ì—ì„œë“ 
             {
-                check = false; // Æò½Ã »óÅÂ·Î ÀüÈ¯
+                check = false;
             }
 
             return check;
@@ -127,56 +151,53 @@ public class Player_Climbing : MonoBehaviour
     }
 
     /// <summary>
-    /// ¿Ş¼Õ µî¹İ ±¸Çö
+    /// ì™¼ì† ë“±ë°˜ êµ¬í˜„
     /// </summary>
     private void LeftClimbing()
     {
         if (LeftGrab)
         {
-            leftGrabRenderer.enabled = true; // µî¹İ¿ë ¼Õ ¸Ş½¬ On
-            leftPos = grabCheck_Left.grabPos; // ¿Ş¼ÕÀÌ Àâ¾Æ¾ß ÇÒ À§Ä¡ ÇÒ´ç
-            leftHand_G.SetActive(false); // ÀÏ¹İ ¼Õ Off
+            leftGrabRenderer.enabled = true; // ë“±ë°˜ìš© ì† ë©”ì‰¬ On
+            leftPos = grabCheck_Left.grabPos; // ì™¼ì†ì´ ì¡ì•„ì•¼ í•  ìœ„ì¹˜ í• ë‹¹
+            leftHand_G.SetActive(false); // ì¼ë°˜ ì† Off
         }
         else if (!LeftGrab)
         {
-            leftGrabRenderer.enabled = false; // µî¹İ¿ë ¼Õ ¸Ş½¬ Off
-            leftHand.position = leftHand_G.transform.position; // ±×·¦¿ë ¼Õ À§Ä¡ = ¿ø·¡ ¼Õ À§Ä¡
-            leftHand_G.SetActive(true); // ÀÏ¹İ ¼Õ On
+            leftGrabRenderer.enabled = false; // ë“±ë°˜ìš© ì† ë©”ì‰¬ Off
+            leftHand.position = leftHand_G.transform.position; // ê·¸ë©ìš© ì† ìœ„ì¹˜ = ì›ë˜ ì† ìœ„ì¹˜
+            leftHand_G.SetActive(true); // ì¼ë°˜ ì† On
         }
     }
 
     /// <summary>
-    /// ¿À¸¥¼Õ Á¢ÃË ¿©ºÎ Ã¼Å©
+    /// ì˜¤ë¥¸ì† ì ‘ì´‰ & ê·¸ë¦½ ì—¬ë¶€ ì²´í¬
     /// </summary>
     private bool RightGrab
     {
         get
         {
             bool check = false;
-            float arm = 0.15f; // ÆÈ ±æÀÌ
 
             if (grabCheck_Right.thisHand)
             {
-                if (playerAction.Player.RightGrip.ReadValue<float>() > 0.5f &&
-                    Vector3.Distance(rightHand_G.transform.position, rightHand.position) <= arm)
+                if (playerAction.Player.RightGrip.ReadValue<float>() >= 0.5f) // ê·¸ë¦½ì„ ì¥ì—ˆìœ¼ë©´
                 {
-                    check = true; // µî¹İ »óÅÂ·Î ÀüÈ¯
-                }
-                else if (playerAction.Player.RightGrip.ReadValue<float>() > 0.5f &&
-                    Vector3.Distance(rightHand_G.transform.position, rightHand.position) > arm)
-                {
-                    rigid.velocity = Vector3.zero; // ¸®Áöµå¹Ùµğ zero
+                    check = true; // ë“±ë°˜ ìƒíƒœ ì „í™˜
                 }
             }
-            else if (!grabCheck_Right.thisHand)
-            { 
-                check = false; // Æò½Ã »óÅÂ·Î ÀüÈ¯
+
+            if (playerAction.Player.RightGrip.ReadValue<float>() < 0.5f) // ê·¸ë¦½ì„ ë†“ìœ¼ë©´ ì–´ëŠ ì¡°ê±´ì—ì„œë“ 
+            {
+                check = false;
             }
 
             return check;
         }
     }
 
+    /// <summary>
+    /// ì•„ë˜ ë‘ ë©”ì†Œë“œëŠ” ê¸°ì¡´ ì»¨íŠ¸ë¡¤ëŸ¬(í˜¹ì€ ì†)ë¥¼ ê¸°ì–µí•´ë‘ì—ˆê°€ê°€ IDLE ìƒíƒœì— ë³¸ ì»¨íŠ¸ë¡¤ëŸ¬ë¥¼ ë°˜í™˜í•œë‹¤. 
+    /// </summary>
     private void DeactivateRightOrigin()
     {
         if (rightHand_G.activeSelf) { originController_G = rightHand_G; }
@@ -194,110 +215,315 @@ public class Player_Climbing : MonoBehaviour
     }
 
     /// <summary>
-    /// ¿À¸¥¼Õ µî¹İ ±¸Çö
+    /// ì˜¤ë¥¸ì† ë“±ë°˜ êµ¬í˜„
     /// </summary>
     private void RightClimbing()
     {
         if (RightGrab)
         {
-            rightGrabRenderer.enabled = true; // µî¹İ¿ë ¼Õ ¸Ş½¬ On
-            rightPos = grabCheck_Right.grabPos; // ¿À¸¥¼ÕÀÌ Àâ¾Æ¾ß ÇÒ À§Ä¡ ÇÒ´ç
-            DeactivateRightOrigin(); // ÀÏ¹İ ¼Õ Off
+            rightGrabRenderer.enabled = true; // ë“±ë°˜ìš© ì† ë©”ì‰¬ On
+            rightPos = grabCheck_Right.grabPos; // ì˜¤ë¥¸ì†ì´ ì¡ì•„ì•¼ í•  ìœ„ì¹˜ í• ë‹¹
+            DeactivateRightOrigin(); // ë³¸ ì»¨íŠ¸ë¡¤ëŸ¬ Off
         }
         else if (!RightGrab)
         {
-            rightGrabRenderer.enabled = false; // µî¹İ¿ë ¼Õ ¸Ş½¬ Off
-            rightHand.position = rightHand_G.transform.position; // ±×·¦¿ë ¼Õ À§Ä¡ = ¿ø·¡ ¼Õ À§Ä¡
-            ActivateRightOrigin(); // ÀÏ¹İ ¼Õ On
+            rightGrabRenderer.enabled = false; // ë“±ë°˜ìš© ì† ë©”ì‰¬ Off
+            rightHand.position = rightHand_G.transform.position; // ê·¸ë©ìš© ì† ìœ„ì¹˜ = ì›ë˜ ì† ìœ„ì¹˜
+            ActivateRightOrigin(); // ë³¸ ì»¨íŠ¸ë¡¤ëŸ¬ On
         }
     }
     #endregion
 
-    #region µî¹İ (rigidbody)
+    #region êµ¬í˜„: ë“±ë°˜ (Rigidbody, Transform)
     private void Climbing()
     {
-        if (LeftGrab) // ¿ŞÂÊ ¼ÕÀ¸·Î Àıº® ºÙÀâ±â
+        // ì™¼ìª½ ì»¨íŠ¸ë¡¤ëŸ¬ Velocity
+        leftVel = OVRInput.GetLocalControllerVelocity(OVRInput.Controller.LTouch);
+        // ì™¼ìª½ ì»¨íŠ¸ë¡¤ëŸ¬ Magnitude
+        leftMagnitude = Vector3.Magnitude(leftVel);
+        // ì˜¤ë¥¸ìª½ ì»¨íŠ¸ë¡¤ëŸ¬ Velocity
+        rightVel = OVRInput.GetLocalControllerVelocity(OVRInput.Controller.RTouch);
+        // ì˜¤ë¥¸ìª½ ì»¨íŠ¸ë¡¤ëŸ¬ Velocity
+        rightMagnitude = Vector3.Magnitude(rightVel);
+
+        // TODO: ì™¼ì†ì´ë“  ì˜¤ë¥¸ì†ì´ë“  ì¡ê³ ë§Œ ìˆë‹¤ë©´ ì í”„ê°€ ê°€ëŠ¥í•˜ë„ë¡ ë³€ê²½
+
+        //if (LeftGrab) // ì™¼ì† ë“±ë°˜
+        //{
+        //    if (playerAction.Player.ClimbingLeftJump.ReadValue<float>() > 0.5f) // ì˜¤ë¥´ë˜ ì¤‘ ì¢Œì¸¡ ì í”„ ë²„íŠ¼
+        //    {
+        //        LeftJump();
+        //    }
+        //    else // ì í”„ ìˆœê°„ì´ ì•„ë‹ ë•Œë§Œ
+        //    {
+        //        player_State.ChangeState(Player_State.PlayerState.CLIMBING); // í”Œë ˆì´ì–´ ìƒíƒœ ì „í™˜ - ë“±ë°˜
+
+        //        rigid.useGravity = false; // ì¤‘ë ¥ ë¹„í™œì„±í™”
+        //        rigid.constraints = RigidbodyConstraints.FreezeRotation; // ì¶• ê³ ì •
+        //        leftHand.position = leftPos;
+
+        //        AddForce(leftVel, leftMagnitude);
+        //    }
+        //}
+
+        //if (RightGrab) // ì˜¤ë¥¸ì† ë“±ë°˜
+        //{
+        //    if (playerAction.Player.ClimbingRightJump.ReadValue<float>() > 0.5f) // ì˜¤ë¥´ë˜ ì¤‘ ìš°ì¸¡ ì í”„ ë²„íŠ¼
+        //    {
+        //        RightJump();
+        //    }
+        //    else // ì í”„ ìˆœê°„ì´ ì•„ë‹ ë•Œë§Œ
+        //    {
+        //        player_State.ChangeState(Player_State.PlayerState.CLIMBING); // í”Œë ˆì´ì–´ ìƒíƒœ ì „í™˜ - ë“±ë°˜
+
+        //        rigid.useGravity = false; // ì¤‘ë ¥ ë¹„í™œì„±í™”
+        //        rigid.constraints = RigidbodyConstraints.FreezeRotation; // ì¶• ê³ ì •
+        //        rightHand.position = rightPos;
+
+        //        AddForce(rightVel, rightMagnitude);
+        //    }
+        //}
+
+        if (LeftGrab || RightGrab)
         {
-            player_State.ChangeState(Player_State.PlayerState.CLIMBING); // ÇÃ·¹ÀÌ¾î »óÅÂ ÀüÈ¯ - µî¹İ
+            if (playerAction.Player.ClimbingLeftJump.triggered)
+            {
+                Debug.LogWarning("Left Jump");
+                sideJumping = true;
+                LeftJump();
+                sideJumping = false;
+            }
 
-            rigid.useGravity = false; // Áß·Â ºñÈ°¼ºÈ­
-            rigid.constraints = RigidbodyConstraints.FreezeRotation;
-            leftHand.position = leftPos;
+            if (playerAction.Player.ClimbingRightJump.triggered)
+            {
+                sideJumping = true;
+                RightJump();
+                sideJumping = false;
+            }
 
-            leftVel = OVRInput.GetLocalControllerVelocity(OVRInput.Controller.LTouch);
-            AddForce(leftVel);
+            if (LeftGrab && !sideJumping)
+            {
+                player_State.ChangeState(Player_State.PlayerState.CLIMBING); // í”Œë ˆì´ì–´ ìƒíƒœ ì „í™˜ - ë“±ë°˜
+
+                rigid.useGravity = false; // ì¤‘ë ¥ ë¹„í™œì„±í™”
+                rigid.constraints = RigidbodyConstraints.FreezeRotation; // ì¶• ê³ ì •
+                leftHand.position = leftPos;
+
+                AddForce(leftVel, leftMagnitude);
+            }
+
+            if (RightGrab && !sideJumping)
+            {
+                player_State.ChangeState(Player_State.PlayerState.CLIMBING); // í”Œë ˆì´ì–´ ìƒíƒœ ì „í™˜ - ë“±ë°˜
+
+                rigid.useGravity = false; // ì¤‘ë ¥ ë¹„í™œì„±í™”
+                rigid.constraints = RigidbodyConstraints.FreezeRotation; // ì¶• ê³ ì •
+                rightHand.position = rightPos;
+
+                AddForce(rightVel, rightMagnitude);
+            }
         }
 
-        if (RightGrab) // ¿À¸¥ÂÊ ¼ÕÀ¸·Î Àıº® ºÙÀâ±â
+        if (Player_State.playerState == Player_State.PlayerState.CLIMBING && 
+            !LeftGrab && !RightGrab) // ì¶”ë½
         {
-            player_State.ChangeState(Player_State.PlayerState.CLIMBING); // ÇÃ·¹ÀÌ¾î »óÅÂ ÀüÈ¯ - µî¹İ
-
-            rigid.useGravity = false; // Áß·Â ºñÈ°¼ºÈ­
-            rigid.constraints = RigidbodyConstraints.FreezeRotation;
-            rightHand.position = rightPos;
-
-            rightVel = OVRInput.GetLocalControllerVelocity(OVRInput.Controller.RTouch);
-            AddForce(rightVel);
-        }
-
-        if (!LeftGrab && !RightGrab) // ¾î´À ¼ÕÀ¸·Îµµ Àıº®À» ºÙÀâ°í ÀÖÁö ¾Ê´Ù¸é 
-        {
-            player_State.ChangeState(Player_State.PlayerState.IDLE); // ÇÃ·¹ÀÌ¾î »óÅÂ ÀüÈ¯ - ÀÏ¹İ
+            player_State.ChangeState(Player_State.PlayerState.IDLE); // í”Œë ˆì´ì–´ ìƒíƒœ ì „í™˜ - ì¼ë°˜
 
             rigid.useGravity = true;
-            rigid.constraints &= ~RigidbodyConstraints.FreezeRotationY; // yÃà °íÁ¤ ÇØÁ¦
+            rigid.constraints &= ~RigidbodyConstraints.FreezeRotationY; // yì¶• ê³ ì • í•´ì œ
+
+            fallDown = true;
         }     
     }
 
     /// <summary>
-    /// ÇÑ ¼Õ ÀÌ¿ë½Ã µî¹İ
+    /// í•œ ì† ì´ìš©ì‹œ ë“±ë°˜
     /// </summary>
-    /// <param name="_moveDir">ÀÌµ¿ ¹æÇâ</param>
-    private void AddForce(Vector3 _moveDir)
+    /// <param name="_moveDir">ì´ë™ ë°©í–¥</param>
+    private void AddForce(Vector3 _moveDir, float _magnitude)
     {
         rigid.useGravity = false;
 
         Vector3 moveDir = _moveDir;
         moveDir.z = 0;
 
-        rigid.AddForce(-moveDir * climbingForce);
+        float magnitude = _magnitude + 0.3f; // ì»¨íŠ¸ë¡¤ëŸ¬ ì†ë„ ì ˆëŒ“ê°’ (ë³´ì •ê°’ ì¶”ê°€)
+
+        ovrCameraRig.transform.Translate(-moveDir * magnitude * Time.deltaTime);
     }
     #endregion
 
-    private void Falling()
+    #region êµ¬í˜„: ì¸¡ë©´ ì í”„ (Rigidbody)
+    /// <summary>
+    /// ë“±ë°˜ ì¤‘ ì¢Œì¸¡ ì í”„
+    /// </summary>
+    public void LeftJump()
     {
-        if (rigid.IsSleeping()) // ¸¸¾à Ãß¶ôÇÏ´Â ÁßÀÌ¶ó¸é
+        float upJumpForce = 1.5f; // ìœ„ë¡œ ì í”„í•˜ëŠ” í˜
+        float leftJumpForce = 1f; // ì¢Œì¸¡ìœ¼ë¡œ ì í”„í•˜ëŠ” í˜
+
+        if (leftCol.activateJump) // ì¢Œì¸¡ ì í”„ê°€ ê°€ëŠ¥í•œ ìƒíƒœë¼ë©´
         {
-            // TODO: ±×¸³À» Áå Ã¤·Î ¾Ïº® Äİ¶óÀÌ´õ¿¡ Á¢ÃË ½Ã rigidbody´Â zero, CameraRig À§Ä¡´Â °íÁ¤? ÀÌÀü¿¡ ¸¸µç ¸Ş¼Òµå¸¦ È°¿ëÇØº¸ÀÚ 
+            Vector3 targetPos = leftCol.jumpPos; // ì¸ì‹í•œ íƒ€ê²Ÿ ì¢Œí‘œ
+            targetPos.z = 0;
+            Vector3 playerPos = ovrCameraRig.transform.position; // í”Œë ˆì´ì–´ ì¢Œí‘œ 
+            playerPos.z = 0;
+            Vector3 dir = targetPos - playerPos; // ì í”„í•  ë°©í–¥
+
+            rigid.useGravity = true; // ì¤‘ë ¥ í™œì„±í™”
+
+            rigid.velocity = Vector3.zero; // ì í”„ ì „ ì´ˆê¸°í™”  
+
+            rigid.AddForce(Vector3.up * upJumpForce, ForceMode.Impulse); // ìœ„ìª½ìœ¼ë¡œ ì í”„
+            rigid.AddForce(dir.normalized * leftJumpForce, ForceMode.Impulse); // ì™¼ìª½ìœ¼ë¡œ ì í”„ 
+        }
+        else if (!leftCol.activateJump) { Debug.LogWarning("Can't Left Jump"); }
+    }
+
+    /// <summary>
+    /// ë“±ë°˜ ì¤‘ ìš°ì¸¡ ì í”„
+    /// </summary>
+    public void RightJump()
+    {
+        float upJumpForce = 1.5f; // ìœ„ë¡œ ì í”„í•˜ëŠ” í˜
+        float leftJumpForce = 1f; // ì¢Œì¸¡ìœ¼ë¡œ ì í”„í•˜ëŠ” í˜
+
+        if (rightCol.activateJump) // ìš°ì¸¡ ì í”„ê°€ ê°€ëŠ¥í•œ ìƒíƒœë¼ë©´ 
+        {
+            Vector3 targetPos = rightCol.jumpPos; // ì¸ì‹í•œ íƒ€ê²Ÿ ì¢Œí‘œ
+            targetPos.z = 0;
+            Vector3 playerPos = ovrCameraRig.transform.position; // í”Œë ˆì´ì–´ ì¢Œí‘œ 
+            playerPos.z = 0;
+            Vector3 dir = targetPos - playerPos; // ì í”„í•  ë°©í–¥
+
+            rigid.useGravity = true; // ì¤‘ë ¥ í™œì„±í™”
+
+            rigid.velocity = Vector3.zero; // ì í”„ ì „ ì´ˆê¸°í™”  
+
+            rigid.AddForce(Vector3.up * upJumpForce, ForceMode.Impulse); // ìœ„ìª½ìœ¼ë¡œ ì í”„
+            rigid.AddForce(dir.normalized * leftJumpForce, ForceMode.Impulse); // ì™¼ìª½ìœ¼ë¡œ ì í”„ 
+        }
+        else if (!rightCol.activateJump) { Debug.LogWarning("Can't Right Jump"); }
+    }
+    #endregion
+
+    #region êµ¬í˜„: ìƒìŠ¹ ì í”„ (Rigidbody)
+    /// <summary>
+    /// ìƒìŠ¹ ì í”„
+    /// </summary>
+    private void HighJump()
+    {
+        float jumpForce = 5f;
+
+        // ë‘ ì†ìœ¼ë¡œ ì•”ë²½ì„ ì¡ì€ ìƒíƒœì—ì„œ ì•„ë˜ë¡œ ê°•í•˜ê²Œ íœ˜ë‘ë¥´ë©´
+        if ((LeftGrab && (leftVel.y <= -1f)) && (RightGrab && (rightVel.y <= -1f)))
+        {
+            superSwing = true;
+        }
+        
+        // ìŠˆí¼ ì í”„ê°€ ê°€ëŠ¥í•œ ìƒíƒœ 
+        if (superSwing)
+        {
+            if (playerAction.Player.LeftGrip.ReadValue<float>() <= 0.45f &&
+                playerAction.Player.RightGrip.ReadValue<float>() <= 0.45f) // ì•„ë˜ë¡œ íœ˜ë‘ë¥´ë©° ì†ì„ ë†“ì•˜ë‹¤ë©´
+            {
+                rigid.AddForce(Vector3.up * jumpForce, ForceMode.Impulse); // ìƒìŠ¹ ì í”„
+                superSwing = false;
+            }
+
+            Invoke("ClearHighJump", 0.7f); // ì‹œê°„ì°¨ ìƒìŠ¹ ì í”„ ìƒíƒœ í•´ì œ (ê·¸ë©ì„ ë†“ëŠ” ë™ì‘ì´ ëŠ¦ì„ ê²½ìš°ë¥¼ ëŒ€ë¹„)
         }
     }
 
+    /// <summary>
+    /// ìƒìŠ¹ ì í”„ ìƒíƒœ í•´ì œ 
+    /// </summary>
+    private void ClearHighJump() { superSwing = false; }
+    #endregion
+
+    #region êµ¬í˜„: ë“±ë°˜ ì¤‘ ì¶”ë½
+    /// <summary>
+    /// ë“±ë°˜ ì¤‘ ì¶”ë½
+    /// </summary>
+    private void Falling()
+    {
+        if (fallDown) // ë§Œì•½ ì¶”ë½í•˜ëŠ” ì¤‘ì´ë¼ë©´
+        {
+            if (LeftGrab || RightGrab) // ì™¼ì†ì´ë‚˜ ì˜¤ë¥¸ì†ìœ¼ë¡œ ì ˆë²½ì„ ì¡ëŠ” ê²ƒì— ì„±ê³µí–ˆë‹¤ë©´
+            {
+                rigid.velocity = Vector3.zero; // ê°€í•´ì§€ë˜ í˜ì„ 0ìœ¼ë¡œ ë§Œë“¦
+                rigid.useGravity = false; // ì¤‘ë ¥ í•´ì œ 
+
+                fallDown = false;
+            }
+        }
+    }
+    #endregion
+
+    #region êµ¬í˜„: ë§ˆì§€ë§‰ ë“±ë°˜ 
+    /// <summary>
+    /// ë§ˆì§€ë§‰ ë“±ë°˜ ì¡°ê±´ (í‰ì§€ ì˜¤ë¥´ê¸°)
+    /// </summary>
+    private void LastClimbing(object sender, EventArgs e)
+    {
+        if (grabCheck_Left.finishHand && playerAction.Player.LeftGrip.ReadValue<float>() >= 0.5f)
+        {
+            if (leftVel.y <= -0.5f)
+            {
+                Vector3 grabPos = grabCheck_Left.finishGrabPos;
+                StartCoroutine(LastClimbingAction(grabPos));
+            }
+        }
+
+        if (grabCheck_Right.finishHand && playerAction.Player.RightGrip.ReadValue<float>() >= 0.5f)
+        {
+            if (rightVel.y <= -0.5f)
+            {
+                Vector3 grabPos = grabCheck_Right.finishGrabPos;
+                StartCoroutine(LastClimbingAction(grabPos));
+            }
+        }
+    }
+
+    /// <summary>
+    /// ë§ˆì§€ë§‰ ë“±ë°˜ êµ¬í˜„
+    /// </summary>
+    private IEnumerator LastClimbingAction(Vector3 _grabPos)
+    {
+        // TODO: ë¬´í•œ ë£¨í”„ê°€ ë°œìƒí•´ ì¼ë‹¨ ì£¼ì„ ì²˜ë¦¬í–ˆë‹¤. 
+
+        //rigid.useGravity = false; // ì¤‘ë ¥ í•´ì œ
+        //Vector3 targetPos = _grabPos;
+        //targetPos.y += 1;
+
+        //bool climbing = true; // í‰ì§€ ì˜¤ë¥´ê¸° í™œì„±í™”
+
+        //while(climbing) // ë“±ë°˜ ë™ì‘ì´ ëë‚˜ì§€ ì•Šì€ ë™ì•ˆ 
+        //{
+        //    ovrCameraRig.transform.Translate(targetPos * 2f * Time.smoothDeltaTime); // ìœ„ì¹˜ë¡œ ì´ë™
+
+        //    if (Vector3.Distance(ovrCameraRig.transform.position, targetPos) <= 0.1f) // ëª©í‘œ ìœ„ì¹˜ì— ê±°ì˜ ë„ì°©í–ˆë‹¤ë©´
+        //    {
+        //        ovrCameraRig.transform.position = targetPos; // ìœ„ì¹˜ ê³ ì •
+        //        rigid.useGravity = true; // ì¤‘ë ¥ ì¬í™œì„±í™” 
+
+        //        climbing = false; // í‰ì§€ ì˜¤ë¥´ê¸° ë¹„í™œì„±í™”
+        //    }
+        //}
+
+        yield return null;
+    }
+    #endregion
+
     private void Update()
     {
-        LeftClimbing();
-        RightClimbing();
+        LeftClimbing(); // ì™¼ì† ë“±ë°˜ (ì† ì¡°ì‘)
+        RightClimbing(); // ì˜¤ë¥¸ì† ë“±ë°˜ (ì† ì¡°ì‘)
 
-        Climbing();
+        Climbing(); // ì‹¤ ë“±ë°˜
 
-        Falling();
+        Falling(); // ì¶”ë½
+
+        HighJump(); // ìƒìŠ¹ ì í”„
     }
-
-    /// <summary>
-    /// µî¹İ Áß ¿ŞÂÊ Á¡ÇÁ
-    /// </summary>
-    private void LeftJump()
-    {
-
-    }
-
-    /// <summary>
-    /// µî¹İ Áß ¿À¸¥ÂÊ Á¡ÇÁ 
-    /// </summary>
-    private void RightJump()
-    {
-
-    }
-
-    // TODO: ¾Æ·¡·Î ¶³¾îÁö´ø Áß Àıº®À» ÀâÀ¸¸é °íÁ¤µÇ¾î¾ß ÇÑ´Ù. (rigidbody¸¦ Á¦·Î·Î Àû¿ë.) => (bool)rigid.IsSleepingÀ¸·Î ¾Ë ¼ö ÀÖ´Ù.
-    // TODO: Ä«¸Ş¶ó À§Ä¡ Á¶Á¤? ±×·¦À» ÀâÀ¸¸é ±×·¦ÂÊÀ¸·Î ½Ã¾ß°¡ ¾à°£ ÀÌµ¿ÇÏ´Â°Å °°´Ù. 
 }

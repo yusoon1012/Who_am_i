@@ -150,7 +150,7 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""6e3e2f46-2572-48ad-a189-e2aebcc71d7b"",
-                    ""path"": """",
+                    ""path"": ""<OculusTouchController>{LeftHand}/primaryButton"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Oculus"",
@@ -161,7 +161,7 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""bd405507-63a0-4b70-a66e-ed348ba96cdf"",
-                    ""path"": """",
+                    ""path"": ""<OculusTouchController>{RightHand}/primaryButton"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Oculus"",

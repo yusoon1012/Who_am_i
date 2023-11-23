@@ -5,40 +5,48 @@ using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class Tool_NerfGun : MonoBehaviour
 {
-    // ³ÊÇÁ°ÇÀ» Áã¾ú´ÂÁö ¿©ºÎ¸¦ À§ÇØ
-    OVRGrabbable ovrGrabbable = default;
-    // ·¹ÀÌ ¹ß»ç ÁöÁ¡
+    // LEGACY: ë„ˆí”„ê±´ì„ ì¥ì—ˆëŠ”ì§€ ì—¬ë¶€ë¥¼ ìœ„í•´
+    //OVRGrabbable ovrGrabbable = default;
+
+    // Player Input
+    private PlayerAction playerAction = default;
+    // ë ˆì´ ë°œì‚¬ ì§€ì 
     [SerializeField] Transform firePos = default;
-    // »çÁ¤°Å¸®
+    // ì‚¬ì •ê±°ë¦¬
     private float distance = 8.5f;
-    // Æ÷ÀÎÅÍ(Å©·Î½º Çì¾î)
+    // í¬ì¸í„°(í¬ë¡œìŠ¤ í—¤ì–´)
     [SerializeField] Transform pointer = default;
-    // ¼ö·Æ °¡´É ¿©ºÎ(µ¿¹° Á¶ÁØ)
+    // ìˆ˜ë µ ê°€ëŠ¥ ì—¬ë¶€(ë™ë¬¼ ì¡°ì¤€)
     //private bool aimingPrey = false;
-    // ³ÊÇÁ°Ç ±ËÀû
+    // ë„ˆí”„ê±´ ê¶¤ì 
     [SerializeField] LineRenderer trajectory = default;
 
     private void Start()
     {
-        ovrGrabbable = GetComponent<OVRGrabbable>();
-        trajectory.positionCount = 2; // ±ËÀûÀÇ Æ÷ÀÎÆ®´Â µÎ °³ 
+        Setting();
+    }
+
+    /// <summary>
+    /// ì´ˆê¸°ì„¸íŒ…
+    /// </summary>
+    private void Setting()
+    {
+        trajectory.positionCount = 2; // ê¶¤ì ì˜ í¬ì¸íŠ¸ëŠ” ë‘ ê°œ 
+        playerAction = new PlayerAction();
     }
 
     private void Update()
     {
         Debug.DrawRay(firePos.position, firePos.forward * distance, Color.green);
 
-        if (ovrGrabbable.isGrabbed) // ¸¸¾à ³ÊÇÁ°ÇÀÌ Áã¾îÁø »óÅÂÀÏ¶§
-        {
-            Aiming(); // ³ÊÇÁ°ÇÀ» Á¶ÁØÇÑ´Ù
+        Aiming();
 
-            if (OVRInput.GetDown(OVRInput.Button.SecondaryIndexTrigger)) { Shoot(); }
-        }
-        else { Restore(); }
+        if (playerAction.Player.Click.triggered) { Shoot(); }
+
     }
 
     /// <summary>
-    /// ³ÊÇÁ°ÇÀ» Á¶ÁØ, Å©·Î½º Çì¾î¸¦ Ç¥½ÃÇÑ´Ù. 
+    /// ë„ˆí”„ê±´ì„ ì¡°ì¤€, í¬ë¡œìŠ¤ í—¤ì–´ë¥¼ í‘œì‹œí•œë‹¤. 
     /// </summary>
     private void Aiming()
     {
@@ -52,35 +60,37 @@ public class Tool_NerfGun : MonoBehaviour
             pointer.position = hit.point;
             trajectory.SetPosition(1, hit.point);
 
-            // ÀÓ½Ã ÁÖ¼®
-            //if (hit.transform.CompareTag("Animal")) // TODO: ÈÄ¿¡ µ¿¹°ÀÇ ÅÂ±×¿¡ µû¶ó ¼öÁ¤
+            // ì„ì‹œ ì£¼ì„
+            //if (hit.transform.CompareTag("Animal")) // TODO: í›„ì— ë™ë¬¼ì˜ íƒœê·¸ì— ë”°ë¼ ìˆ˜ì •
             //{
-            //    aimingPrey = true; // µ¿¹° Á¶ÁØ O
+            //    aimingPrey = true; // ë™ë¬¼ ì¡°ì¤€ O
             //}
             //else
             //{
-            //    aimingPrey = false; // µ¿¹° Á¶ÁØ X
+            //    aimingPrey = false; // ë™ë¬¼ ì¡°ì¤€ X
             //}
         }
     }
 
     /// <summary>
-    /// ÃÑÀ» ¹ß»çÇÑ´Ù. 
+    /// ì´ì„ ë°œì‚¬í•œë‹¤. 
     /// </summary>
     private void Shoot()
     {
-        Debug.Log("¹ß»ç!");
-        // TODO: ·¹ÀÌ°¡ ´êÀº ºÎºĞ, ÃÑ±¸¿¡ ÆÄÆ¼Å¬(È¤Àº ´Ù¸¥ È¿°ú) ¹ß»ı
+        Debug.Log("ë°œì‚¬!");
+        // TODO: ë ˆì´ê°€ ë‹¿ì€ ë¶€ë¶„, ì´êµ¬ì— íŒŒí‹°í´(í˜¹ì€ ë‹¤ë¥¸ íš¨ê³¼) ë°œìƒ
     }
 
+    #region LEGACY: ê¶¤ì  ì¬ì„¸íŒ…
     /// <summary>
-    /// ³ÊÇÁ°ÇÀ» Á¶ÁØÇÑ »óÅÂ°¡ ¾Æ´Ò ¶§ Àç¼¼ÆÃ
+    /// ë„ˆí”„ê±´ì„ ì¡°ì¤€í•œ ìƒíƒœê°€ ì•„ë‹ ë•Œ ì¬ì„¸íŒ…
     /// </summary>
-    private void Restore()
-    {
-        trajectory.SetPosition(0, PlayerSystem.poolPos);
-        trajectory.SetPosition(1, PlayerSystem.poolPos);
+    //private void Restore()
+    //{
+    //    trajectory.SetPosition(0, PlayerSystem.poolPos);
+    //    trajectory.SetPosition(1, PlayerSystem.poolPos);
 
-        pointer.position = PlayerSystem.poolPos; // Æ÷ÀÎÅÍ´Â Ç®¿¡
-    }
+    //    pointer.position = PlayerSystem.poolPos; // í¬ì¸í„°ëŠ” í’€ì—
+    //}
+    #endregion
 }

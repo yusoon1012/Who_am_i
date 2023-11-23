@@ -7,37 +7,41 @@ using UnityEngine.InputSystem;
 
 public class Player_Moving : MonoBehaviour
 {
-    #region ÇÊµå
-    // ÇÃ·¹ÀÌ¾î
+    #region í•„ë“œ
+    // í”Œë ˆì´ì–´
     Transform player = default;
+
+    Player_State player_State = default;
     #endregion
 
     private void Start() { Setting(); }
 
     /// <summary>
-    /// (ÃÊ±â ¼¼ÆÃ) 
+    /// (ì´ˆê¸° ì„¸íŒ…) 
     /// </summary>
     private void Setting()
     {
         player = transform.GetChild(0);
+
+        player_State = transform.GetComponent<Player_State>();
     }
 
-    #region LEGACY: ½Ã¾ß ÀÌµ¿(Æó±â)ÀÌ³ª Å×½ºÆ®¿ëÀ¸·Î ¿ÀÇÂ
+    #region LEGACY: ì‹œì•¼ ì´ë™(íê¸°)ì´ë‚˜ í…ŒìŠ¤íŠ¸ìš©ìœ¼ë¡œ ì˜¤í”ˆ
     /// <summary>
-    /// ¿ìÃø ÄÁÆ®·Ñ·¯ Á¶ÀÌ½ºÆ½ °ªÀ» ¹Ş¾Æ ÀÌµ¿
+    /// ìš°ì¸¡ ì»¨íŠ¸ë¡¤ëŸ¬ ì¡°ì´ìŠ¤í‹± ê°’ì„ ë°›ì•„ ì´ë™
     /// </summary>
-    /// <param name="value">¿ìÃø Á¶ÀÌ½ºÆ½ ÀÔ·Â°ª</param>
+    /// <param name="value">ìš°ì¸¡ ì¡°ì´ìŠ¤í‹± ì…ë ¥ê°’</param>
     public void OnRotate(InputAction.CallbackContext context)
     {
-        int rotateSpeed = 70; // ½Ã¾ß È¸Àü ¼Óµµ
+        int rotateSpeed = 70; // ì‹œì•¼ íšŒì „ ì†ë„
 
         Vector2 input = context.ReadValue<Vector2>();
 
-        if (input.x < 0) // ÁÂÃø È¸Àü
+        if (input.x < 0) // ì¢Œì¸¡ íšŒì „
         {
             player.Rotate(Vector3.down * Time.deltaTime * rotateSpeed);
         }
-        else if (input.x > 0) // ¿ìÃø È¸Àü
+        else if (input.x > 0) // ìš°ì¸¡ íšŒì „
         {
             player.Rotate(Vector3.up * Time.deltaTime * rotateSpeed);
         }
@@ -46,12 +50,15 @@ public class Player_Moving : MonoBehaviour
 
     public void OnMove(InputAction.CallbackContext context)
     {
-        Vector2 input = context.ReadValue<Vector2>();
+        if (Player_State.playerState != Player_State.PlayerState.CLIMBING) // ë“±ë°˜ ìƒíƒœê°€ ì•„ë‹ ë•Œ
+        {
+            Vector2 input = context.ReadValue<Vector2>();
 
-        Vector3 moveDir = player.forward * input.y + player.right * input.x; // ÇÃ·¹ÀÌ¾î ÀÌµ¿°ª
-        moveDir.y = 0; // ³ôÀÌ º¯È­ ¹æÁö
+            Vector3 moveDir = player.forward * input.y + player.right * input.x; // í”Œë ˆì´ì–´ ì´ë™ê°’
+            moveDir.y = 0; // ë†’ì´ ë³€í™” ë°©ì§€
 
-        player.Translate(moveDir * Time.deltaTime, Space.World); // ¿ùµå Æ÷Áö¼Ç ÀÌµ¿
+            player.Translate(moveDir * Time.deltaTime, Space.World); // ì›”ë“œ í¬ì§€ì…˜ ì´ë™
+        }
     }
 }
 
