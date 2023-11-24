@@ -76,7 +76,9 @@ public class QuestList : MonoBehaviour
                              }
                          }
                      }
-                    // Debug.LogFormat("퀘스트이름 : {0}", mainQuestName);
+                     // Debug.LogFormat("퀘스트이름 : {0}", mainQuestName);
+                     GameEventManager.instance.questLoadEvent.QuestLoaded();
+
                  }
                  else
                  {
@@ -90,7 +92,6 @@ public class QuestList : MonoBehaviour
                      Debug.Log("저장된 키값 : " + conditions.Key);
                      Debug.Log("저장된 밸류 : "+conditions.Value);
                  }
-                 GameEventManager.instance.questLoadEvent.QuestLoaded();
              });
        
     }

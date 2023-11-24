@@ -29,6 +29,7 @@ public class TestNPC : MonoBehaviour
     QuestList questlist;
     Testpilot player;
     string conditionStr;
+    int conditionIndex = 0;
     int conditionCount;
     int currentConditionCount;
     private void Awake()
@@ -88,14 +89,18 @@ public class TestNPC : MonoBehaviour
         {
             clearImg.color = Color.white;
         }
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            isClear = true;
-            isAccept = false;
-        }
+        
     }
     public void AddQuestItem()
     {
+        if(isAccept == false)
+        {
+            return;
+        }
+        if(isClear)
+        {
+            return;
+        }
         Debug.Log("AddQuestItem 실행");
         foreach(KeyValuePair<string, int> item1 in questCondition)
         {
@@ -108,12 +113,27 @@ public class TestNPC : MonoBehaviour
                 if (value1 == value2)
                 {
                     Debug.Log($"키 '{key}'의 값이 두 딕셔너리에 존재하며 같습니다.");
+                    conditionClears[conditionIndex] = true;
+                    if(conditionClears.Length-1>conditionIndex)
+                    {
+                    conditionIndex += 1;
+
+                    }
+                    if(conditionClears.All(x => x))
+                    {
+                        Debug.Log("모든 조건 클리어");
+                        questData.questState = QuestData.QuestState.CAN_FINISH;
+                        isAccept = false;
+                        isClear = true;
+
+                    }
                 }
                 else
                 {
                     Debug.Log($"키 '{key}'의 값이 두 딕셔너리에 존재하며 다릅니다.");
                     currentCondition[key] += 1;
                     Debug.Log($"키 '{key}'의 값이 증가되었습니다. 현재 값: {currentCondition[key]}");
+
                 }
                 
             }
@@ -122,6 +142,42 @@ public class TestNPC : MonoBehaviour
                 Debug.Log($"키 '{key}'의 값이 두 딕셔너리에 존재하지 않습니다.");
 
             }
+        }
+        foreach (KeyValuePair<string, int> item1 in questCondition)
+        {
+            string key = item1.Key;
+            int value1, value2;
+            if (currentCondition.TryGetValue(key, out value2))
+            {
+                value1 = item1.Value;
+                if (value1 == value2)
+                {
+                    Debug.Log($"키 '{key}'의 값이 두 딕셔너리에 존재하며 같습니다.");
+                    conditionClears[conditionIndex] = true;
+                    if (conditionClears.Length - 1 > conditionIndex)
+                    {
+                        conditionIndex += 1;
+
+                    }
+                    if (conditionClears.All(x => x))
+                    {
+                        Debug.Log("모든 조건 클리어");
+                        questData.questState = QuestData.QuestState.CAN_FINISH;
+                        isAccept = false;
+                        isClear = true;
+
+                    }
+                }
+               
+            }
+        }
+            if (conditionClears.All(x => x))
+        {
+            Debug.Log("모든 조건 클리어");
+            questData.questState = QuestData.QuestState.CAN_FINISH;
+            isAccept = false;
+            isClear = true;
+
         }
     }
     public void MeetNpc()
@@ -225,7 +281,11 @@ public class TestNPC : MonoBehaviour
     private void ClearIndex()
     {
         chatText.text = clearList[textIdx];
+        if(textIdx<clearList.Count)
+        {
         textIdx += 1;
+
+        }
     }
     public void ClearQuest()
     {

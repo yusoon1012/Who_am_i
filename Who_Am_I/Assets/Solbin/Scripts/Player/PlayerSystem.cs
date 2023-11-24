@@ -4,47 +4,46 @@ using Unity.VisualScripting;
 using UnityEngine;
 using System;
 using Meta.WitAi;
-using UnityEditor.Experimental.GraphView;
 
 /// <summary>
-/// ÇÃ·¹ÀÌ¾î ½Ã½ºÅÛ
+/// í”Œë ˆì´ì–´ ì‹œìŠ¤í…œ
 /// </summary>
 public class PlayerSystem : MonoBehaviour
 {
-    #region ÇÊµå
+    #region í•„ë“œ
     // OVRCameraRig
     //[SerializeField] private Transform player = default;
-    // ¿À¸¥¼Õ
+    // ì˜¤ë¥¸ì†
     [SerializeField] private GameObject rHand = default;
-    // ¿ìÃø ÄÁÆ®·Ñ·¯
+    // ìš°ì¸¡ ì»¨íŠ¸ë¡¤ëŸ¬
     [SerializeField] private GameObject rController = default;
-    // ¿À¸¥¼Õ È°¼ºÈ­ ¿©ºÎ
+    // ì˜¤ë¥¸ì† í™œì„±í™” ì—¬ë¶€
     public bool handActivate = false;
-    // ÀüÃ¼ Ç®Æ÷Áö¼Ç
+    // ì „ì²´ í’€í¬ì§€ì…˜
     public static Vector3 poolPos = new Vector3(0, -10, 0);
     #endregion
 
     private void Start()
     {
-        ManageEvent(); // ÀÌº¥Æ® ±¸µ¶
+        ManageEvent(); // ì´ë²¤íŠ¸ êµ¬ë…
     }
 
-    #region ÃÊ±â ¼¼ÆÃ
+    #region ì´ˆê¸° ì„¸íŒ…
     /// <summary>
-    /// (ÃÊ±â ¼¼ÆÃ)°¢ ½ºÅ©¸³Æ®¿¡¼­ ÀÌº¥Æ®¸¦ ¹Ş¾Æ ±â´É ±¸Çö
+    /// (ì´ˆê¸° ì„¸íŒ…)ê° ìŠ¤í¬ë¦½íŠ¸ì—ì„œ ì´ë²¤íŠ¸ë¥¼ ë°›ì•„ ê¸°ëŠ¥ êµ¬í˜„
     /// </summary>
     private void ManageEvent()
     {
-        // ÇÃ·¹ÀÌ¾î ¾²·¯Áü ÀÌº¥Æ®
+        // í”Œë ˆì´ì–´ ì“°ëŸ¬ì§ ì´ë²¤íŠ¸
         Player_Status.playerDefeat += PlayerDefeat;
-        // ÇÃ·¹ÀÌ¾î ¹èÃâ ÀÌº¥Æ®
+        // í”Œë ˆì´ì–´ ë°°ì¶œ ì´ë²¤íŠ¸
         Player_Status.playerPoo += PlayerPoo;
     }
     #endregion
 
     private void Update()
     {
-        if (Player_State.playerState == Player_State.PlayerState.IDLE) // Æò½Ã¿¡¸¸ ÄÁÆ®·Ñ·¯ ±³Ã¼ °¡´É
+        if (Player_State.playerState == Player_State.PlayerState.IDLE) // í‰ì‹œì—ë§Œ ì»¨íŠ¸ë¡¤ëŸ¬ êµì²´ ê°€ëŠ¥
         {
             ChangeController();
             CheckController();
@@ -52,18 +51,18 @@ public class PlayerSystem : MonoBehaviour
     }
 
     /// <summary>
-    /// (±¸Çö)ÄÁÆ®·Ñ·¯ Çü½Ä ±³Ã¼
+    /// (êµ¬í˜„)ì»¨íŠ¸ë¡¤ëŸ¬ í˜•ì‹ êµì²´
     /// </summary>
     private void ChangeController()
     {
-        if (OVRInput.GetDown(OVRInput.Button.Two)) // ¿ìÃø ÄÁÆ®·Ñ·¯ B¹öÆ° Å¬¸¯
+        if (OVRInput.GetDown(OVRInput.Button.Two)) // ìš°ì¸¡ ì»¨íŠ¸ë¡¤ëŸ¬ Bë²„íŠ¼ í´ë¦­
         {
-            if (rHand.activeSelf) // ¼ÕÀÌ È°¼ºÈ­µÇ¾î ÀÖÀ» ¶§
+            if (rHand.activeSelf) // ì†ì´ í™œì„±í™”ë˜ì–´ ìˆì„ ë•Œ
             {
                 rHand.SetActive(false);
                 rController.SetActive(true);
             }
-            else if (!rHand.activeSelf)// ¼ÕÀÌ ºñÈ°¼ºÈ­ µÇ¾î ÀÖÀ» ¶§ 
+            else if (!rHand.activeSelf)// ì†ì´ ë¹„í™œì„±í™” ë˜ì–´ ìˆì„ ë•Œ 
             {
                 rHand.SetActive(true);
                 rController.SetActive(false);
@@ -72,7 +71,7 @@ public class PlayerSystem : MonoBehaviour
     }
 
     /// <summary>
-    /// (±¸Çö)ÄÁÆ®·Ñ·¯ ¸ğµ¨ Ã¼Å©
+    /// (êµ¬í˜„)ì»¨íŠ¸ë¡¤ëŸ¬ ëª¨ë¸ ì²´í¬
     /// </summary>
     private void CheckController()
     {
@@ -81,20 +80,20 @@ public class PlayerSystem : MonoBehaviour
     }
 
     /// <summary>
-    /// (±¸Çö)ÇÃ·¹ÀÌ¾î ¹èÃâ
+    /// (êµ¬í˜„)í”Œë ˆì´ì–´ ë°°ì¶œ
     /// </summary>
     private void PlayerPoo(object sender, EventArgs e)
     {
-        // TODO: ÇÃ·¹ÀÌ¾î ¹èÃâ ÀÌº¥Æ® ±¸ÇöÇÏ±â
-        Debug.Log("ÇÃ·¹ÀÌ¾î°¡ ¹èÃâ!");
+        // TODO: í”Œë ˆì´ì–´ ë°°ì¶œ ì´ë²¤íŠ¸ êµ¬í˜„í•˜ê¸°
+        Debug.Log("í”Œë ˆì´ì–´ê°€ ë°°ì¶œ!");
     }
 
     /// <summary>
-    /// (±¸Çö)ÇÃ·¹ÀÌ¾î »ç¸Á 
+    /// (êµ¬í˜„)í”Œë ˆì´ì–´ ì‚¬ë§ 
     /// </summary>
     private void PlayerDefeat(object sender, EventArgs e)
     {
-        // TODO: ÇÃ·¹ÀÌ¾î »ç¸Á ÀÌº¥Æ® ±¸ÇöÇÏ±â
-        Debug.Log("ÇÃ·¹ÀÌ¾î »ç¸Á!");
+        // TODO: í”Œë ˆì´ì–´ ì‚¬ë§ ì´ë²¤íŠ¸ êµ¬í˜„í•˜ê¸°
+        Debug.Log("í”Œë ˆì´ì–´ ì‚¬ë§!");
     }
 }
