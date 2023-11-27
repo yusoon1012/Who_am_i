@@ -1,4 +1,5 @@
-﻿using System.Collections;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -67,6 +68,10 @@ namespace BNG {
 
         Vector3 controllerMoveAmount;
 
+        // <Solbin> 등반 중인지 체크하는 이벤트
+        public event EventHandler climbingEvent;
+        // <SOlbin> ===
+
         // Start is called before the first frame update
         public void Start() {
             climbers = new List<Grabber>();
@@ -130,6 +135,7 @@ namespace BNG {
             }
         }
 
+        // <Solbin> 하나 이상의 등반 물체를 잡고 있는지 체크하는 메소드
         public virtual bool GrippingAtLeastOneClimbable() {
 
             if (climbers != null && climbers.Count > 0) {
@@ -137,6 +143,11 @@ namespace BNG {
                 for (int x = 0; x < climbers.Count; x++) {
                     // Climbable is still being held
                     if (climbers[x] != null && climbers[x].HoldingItem) {
+
+                        // <Solbin> 등반 이벤트 발생
+                        climbingEvent?.Invoke(this, EventArgs.Empty);
+                        // <Solbin> ===
+
                         return true;
                     }
                 }
