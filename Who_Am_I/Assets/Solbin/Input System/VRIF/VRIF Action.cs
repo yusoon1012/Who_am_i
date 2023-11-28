@@ -80,6 +80,51 @@ public partial class @VRIFAction: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ClimbingLeftJump"",
+                    ""type"": ""Button"",
+                    ""id"": ""7a10cc76-2042-4ec4-8133-84ab03147f91"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ClimbingRightJump"",
+                    ""type"": ""Button"",
+                    ""id"": ""c474369e-6a09-443f-890e-43aae76cdfc4"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Interaction"",
+                    ""type"": ""Button"",
+                    ""id"": ""242dc2c2-2e0e-4d6a-be8b-d7c31a7b8c29"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""UI_Menu"",
+                    ""type"": ""Button"",
+                    ""id"": ""66f0841f-4a5a-4e38-b4be-bfeea78cd541"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SlowMode"",
+                    ""type"": ""Button"",
+                    ""id"": ""3f101cf3-6825-4f48-90e4-732a56bf54d8"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -148,6 +193,61 @@ public partial class @VRIFAction: IInputActionCollection2, IDisposable
                     ""action"": ""RightTrigger"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""69ac29c0-057a-4c25-9101-eb66f501b685"",
+                    ""path"": ""<XRController>{LeftHand}/primaryButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""XR"",
+                    ""action"": ""ClimbingLeftJump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f0b1cbb7-f82b-468e-ae2b-6cbd211d3c6a"",
+                    ""path"": ""<XRController>{RightHand}/primaryButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""XR"",
+                    ""action"": ""ClimbingRightJump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""06c65e26-9417-4333-b099-0686f514337b"",
+                    ""path"": ""<XRController>{LeftHand}/secondaryButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""XR"",
+                    ""action"": ""Interaction"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ba3e5e30-2724-48e5-b961-8a1dfc2f42f9"",
+                    ""path"": ""<XRController>{LeftHand}/menu"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""XR"",
+                    ""action"": ""UI_Menu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""02220e52-9e65-4500-a48d-859568b1608b"",
+                    ""path"": ""<XRController>{RightHand}/secondaryButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""XR"",
+                    ""action"": ""SlowMode"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -174,6 +274,11 @@ public partial class @VRIFAction: IInputActionCollection2, IDisposable
         m_Player_RightVelocity = m_Player.FindAction("RightVelocity", throwIfNotFound: true);
         m_Player_LeftTrigger = m_Player.FindAction("LeftTrigger", throwIfNotFound: true);
         m_Player_RightTrigger = m_Player.FindAction("RightTrigger", throwIfNotFound: true);
+        m_Player_ClimbingLeftJump = m_Player.FindAction("ClimbingLeftJump", throwIfNotFound: true);
+        m_Player_ClimbingRightJump = m_Player.FindAction("ClimbingRightJump", throwIfNotFound: true);
+        m_Player_Interaction = m_Player.FindAction("Interaction", throwIfNotFound: true);
+        m_Player_UI_Menu = m_Player.FindAction("UI_Menu", throwIfNotFound: true);
+        m_Player_SlowMode = m_Player.FindAction("SlowMode", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -241,6 +346,11 @@ public partial class @VRIFAction: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_RightVelocity;
     private readonly InputAction m_Player_LeftTrigger;
     private readonly InputAction m_Player_RightTrigger;
+    private readonly InputAction m_Player_ClimbingLeftJump;
+    private readonly InputAction m_Player_ClimbingRightJump;
+    private readonly InputAction m_Player_Interaction;
+    private readonly InputAction m_Player_UI_Menu;
+    private readonly InputAction m_Player_SlowMode;
     public struct PlayerActions
     {
         private @VRIFAction m_Wrapper;
@@ -251,6 +361,11 @@ public partial class @VRIFAction: IInputActionCollection2, IDisposable
         public InputAction @RightVelocity => m_Wrapper.m_Player_RightVelocity;
         public InputAction @LeftTrigger => m_Wrapper.m_Player_LeftTrigger;
         public InputAction @RightTrigger => m_Wrapper.m_Player_RightTrigger;
+        public InputAction @ClimbingLeftJump => m_Wrapper.m_Player_ClimbingLeftJump;
+        public InputAction @ClimbingRightJump => m_Wrapper.m_Player_ClimbingRightJump;
+        public InputAction @Interaction => m_Wrapper.m_Player_Interaction;
+        public InputAction @UI_Menu => m_Wrapper.m_Player_UI_Menu;
+        public InputAction @SlowMode => m_Wrapper.m_Player_SlowMode;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -278,6 +393,21 @@ public partial class @VRIFAction: IInputActionCollection2, IDisposable
             @RightTrigger.started += instance.OnRightTrigger;
             @RightTrigger.performed += instance.OnRightTrigger;
             @RightTrigger.canceled += instance.OnRightTrigger;
+            @ClimbingLeftJump.started += instance.OnClimbingLeftJump;
+            @ClimbingLeftJump.performed += instance.OnClimbingLeftJump;
+            @ClimbingLeftJump.canceled += instance.OnClimbingLeftJump;
+            @ClimbingRightJump.started += instance.OnClimbingRightJump;
+            @ClimbingRightJump.performed += instance.OnClimbingRightJump;
+            @ClimbingRightJump.canceled += instance.OnClimbingRightJump;
+            @Interaction.started += instance.OnInteraction;
+            @Interaction.performed += instance.OnInteraction;
+            @Interaction.canceled += instance.OnInteraction;
+            @UI_Menu.started += instance.OnUI_Menu;
+            @UI_Menu.performed += instance.OnUI_Menu;
+            @UI_Menu.canceled += instance.OnUI_Menu;
+            @SlowMode.started += instance.OnSlowMode;
+            @SlowMode.performed += instance.OnSlowMode;
+            @SlowMode.canceled += instance.OnSlowMode;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -300,6 +430,21 @@ public partial class @VRIFAction: IInputActionCollection2, IDisposable
             @RightTrigger.started -= instance.OnRightTrigger;
             @RightTrigger.performed -= instance.OnRightTrigger;
             @RightTrigger.canceled -= instance.OnRightTrigger;
+            @ClimbingLeftJump.started -= instance.OnClimbingLeftJump;
+            @ClimbingLeftJump.performed -= instance.OnClimbingLeftJump;
+            @ClimbingLeftJump.canceled -= instance.OnClimbingLeftJump;
+            @ClimbingRightJump.started -= instance.OnClimbingRightJump;
+            @ClimbingRightJump.performed -= instance.OnClimbingRightJump;
+            @ClimbingRightJump.canceled -= instance.OnClimbingRightJump;
+            @Interaction.started -= instance.OnInteraction;
+            @Interaction.performed -= instance.OnInteraction;
+            @Interaction.canceled -= instance.OnInteraction;
+            @UI_Menu.started -= instance.OnUI_Menu;
+            @UI_Menu.performed -= instance.OnUI_Menu;
+            @UI_Menu.canceled -= instance.OnUI_Menu;
+            @SlowMode.started -= instance.OnSlowMode;
+            @SlowMode.performed -= instance.OnSlowMode;
+            @SlowMode.canceled -= instance.OnSlowMode;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -334,5 +479,10 @@ public partial class @VRIFAction: IInputActionCollection2, IDisposable
         void OnRightVelocity(InputAction.CallbackContext context);
         void OnLeftTrigger(InputAction.CallbackContext context);
         void OnRightTrigger(InputAction.CallbackContext context);
+        void OnClimbingLeftJump(InputAction.CallbackContext context);
+        void OnClimbingRightJump(InputAction.CallbackContext context);
+        void OnInteraction(InputAction.CallbackContext context);
+        void OnUI_Menu(InputAction.CallbackContext context);
+        void OnSlowMode(InputAction.CallbackContext context);
     }
 }

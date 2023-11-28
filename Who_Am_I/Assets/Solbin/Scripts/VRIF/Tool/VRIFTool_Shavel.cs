@@ -30,5 +30,6 @@ public class VRIFTool_Shavel : MonoBehaviour
     private void GetCrop(string _name)
     {
         // TODO: 무슨 작물을 얻는지 추가되어야 한다. (작물의 구분은 이름? 태그?)
+        Debug.LogWarning("Get Crop!");
     }
 }

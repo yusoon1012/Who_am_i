@@ -48,6 +48,15 @@ public class VRIFItemSystem : MonoBehaviour
     }
     #endregion
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.K)) // 테스트용 코드
+        {
+            if (!nerfGun.activeSelf) { MountingItem("NerfGun"); }
+            else { ReleaseItem("NerfGun"); }
+        }
+    }
+
     #region 구현: 아이템 장착/해제 메소드
     /// <summary>
     /// 플레이어가 아이템을 장착하는 메소드

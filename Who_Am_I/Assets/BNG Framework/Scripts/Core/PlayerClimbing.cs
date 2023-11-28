@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace BNG {
-    public class PlayerClimbing : MonoBehaviour {
+    public class PlayerClimbing : MonoBehaviour { 
 
         [Header("Climbing Transforms")]
         public Transform LeftControllerTransform;
@@ -29,6 +29,7 @@ namespace BNG {
         [Tooltip("Duration of haptics to play on grab if 'ApplyHapticsOnGrab' is true")]
         public float VibrateDuration = 0.1f;
 
+        // <Solbin> 사용 중인 Grabber의 리스트
         // Any climber grabbers in use
         List<Grabber> climbers;
 
@@ -41,10 +42,12 @@ namespace BNG {
 
         public bool IsRigidbodyPlayer {
             get {
-                if (_checkedRigidPlayer) {
+                if (_checkedRigidPlayer) 
+                {
                     return _isRigidPlayer;
                 }
-                else {
+                else 
+                {
                     _isRigidPlayer = smoothLocomotion != null && smoothLocomotion.ControllerType == PlayerControllerType.Rigidbody;
                     _checkedRigidPlayer = true;
                     return _isRigidPlayer;
@@ -55,6 +58,7 @@ namespace BNG {
         bool _checkedRigidPlayer = false;
         bool _isRigidPlayer = false;
 
+        // <Solbin> 하나 혹은 이상의 grabber를 홀드하고 있는지 여부
         [Header("Shown for Debug : ")]
         /// <summary>
         /// Whether or not we are currently holding on to something climbable with 1 or more grabbers
@@ -68,9 +72,13 @@ namespace BNG {
 
         Vector3 controllerMoveAmount;
 
-        // <Solbin> 등반 중인지 체크하는 이벤트
+        // <Solbin> 한 손 이상 그랩 중인지 체크하는 이벤트
         public event EventHandler climbingEvent;
-        // <SOlbin> ===
+        // <Solbin> 왼손 그랩 이벤트
+        public event EventHandler leftClimbingEvent;
+        // <Solbin> 오른손 그랩 이벤트
+        public event EventHandler rightClimbingEvent;
+        // <Solbin> ===
 
         // Start is called before the first frame update
         public void Start() {
@@ -162,12 +170,15 @@ namespace BNG {
         protected virtual void checkClimbing() {
             GrippingClimbable = GrippingAtLeastOneClimbable();
 
+            // TODO: 아래 부분을 체크하면 측면 점프 때 손을 놓게 하는 동작이 가능할 것 같다. 
             // Check events
-            if (GrippingClimbable && !wasGrippingClimbable) {
+            if (GrippingClimbable && !wasGrippingClimbable) 
+            {
                 onGrabbedClimbable();
             }
 
-            if (wasGrippingClimbable && !GrippingClimbable) {
+            if (wasGrippingClimbable && !GrippingClimbable) 
+            {
                 onReleasedClimbable();
             }
 
@@ -181,12 +192,20 @@ namespace BNG {
                     Grabber climber = climbers[i];
                     if (climber != null && climber.HoldingItem) {
 
+                        //<Solbin> 왼손/오른손을 구분해 등반, 그랩을 체크
                         // Add hand offsets
                         if (climber.HandSide == ControllerHand.Left) {
                             controllerMoveAmount = previousLeftControllerPosition - LeftControllerTransform.position;
+
+                            // <Solbin> 왼손 등반 이벤트 발생
+                            leftClimbingEvent?.Invoke(this, EventArgs.Empty);
+                            // <Solbin> ===
                         }
                         else {
                             controllerMoveAmount = previousRightControllerPosition - RightControllerTransform.position;
+                            // <Solbin> 오른손 등반 이벤트 발생
+                            rightClimbingEvent?.Invoke(this, EventArgs.Empty);
+                            // <Solbin> ===
                         }
 
                         // Always use last grabbed hand
@@ -261,6 +280,7 @@ namespace BNG {
             }
         }
 
+        // <Solbin> public으로 교체
         void onGrabbedClimbable() {
             
             // Don't allow player movement while climbing
@@ -274,6 +294,7 @@ namespace BNG {
             }
         }
 
+        // <Solbin> public으로 교체 
         void onReleasedClimbable() {
             // Reset back to our original values
             if (smoothLocomotion) {
@@ -283,6 +304,18 @@ namespace BNG {
             // Gravity back to normal
             if (playerGravity) {
                 playerGravity.ToggleGravity(true);
+            }
+        }
+
+        // <Solbin> Test: 손을 놓는 메소드 (아래 Test 메소드는 테스트용 )
+        void Test()
+        {
+            if ( Input.GetKeyDown(KeyCode.K))
+            {
+                foreach (Grabber climber in climbers)
+                {
+                    
+                }
             }
         }
     }
