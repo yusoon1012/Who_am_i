@@ -64,7 +64,7 @@ public class VRIFPlayerItem : MonoBehaviour
         {
             Debug.LogWarning("Get " + _item + "item!");
         }
-
-        Destroy(_item); // TODO: 병합 후 해당 코드 수정 => 오브젝트 풀링 
     }
 }
+
+// TODO: Inventory.cs에서 아이템을 받도록 코드 추가 필요 

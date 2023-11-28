@@ -118,9 +118,45 @@ public partial class @VRIFAction: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
+                    ""name"": ""UI_Exit"",
+                    ""type"": ""Button"",
+                    ""id"": ""0442b6f4-5775-4f9a-89f9-459e41cb1310"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""SlowMode"",
                     ""type"": ""Button"",
                     ""id"": ""3f101cf3-6825-4f48-90e4-732a56bf54d8"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""LeftController"",
+                    ""type"": ""Value"",
+                    ""id"": ""c01ed57b-4545-46cc-aea1-c2b24fe09ab1"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""RightController"",
+                    ""type"": ""Value"",
+                    ""id"": ""dd3cac27-e78e-458c-870a-74a6a0913634"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""UI_Click"",
+                    ""type"": ""Button"",
+                    ""id"": ""0bdb2bb4-1e74-47eb-ab23-1d4f2f1371c7"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -230,7 +266,7 @@ public partial class @VRIFAction: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""ba3e5e30-2724-48e5-b961-8a1dfc2f42f9"",
-                    ""path"": ""<XRController>{LeftHand}/menu"",
+                    ""path"": ""<XRController>{LeftHand}/start"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""XR"",
@@ -246,6 +282,50 @@ public partial class @VRIFAction: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""XR"",
                     ""action"": ""SlowMode"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""86061cc3-77bc-46d9-9b62-c6b4a7745878"",
+                    ""path"": ""<XRController>{LeftHand}/primaryButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""XR"",
+                    ""action"": ""UI_Exit"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b73b5f7d-1459-4033-9e67-b286536645fd"",
+                    ""path"": ""<XRController>{LeftHand}/joystick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""XR"",
+                    ""action"": ""LeftController"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4f9b8e9e-0817-4d2e-809f-4437f7086eee"",
+                    ""path"": ""<XRController>{RightHand}/joystick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""XR"",
+                    ""action"": ""RightController"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""fa84cbdf-2151-44d4-9a45-a8c3db55b613"",
+                    ""path"": ""<XRController>{RightHand}/primaryButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""XR"",
+                    ""action"": ""UI_Click"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -278,7 +358,11 @@ public partial class @VRIFAction: IInputActionCollection2, IDisposable
         m_Player_ClimbingRightJump = m_Player.FindAction("ClimbingRightJump", throwIfNotFound: true);
         m_Player_Interaction = m_Player.FindAction("Interaction", throwIfNotFound: true);
         m_Player_UI_Menu = m_Player.FindAction("UI_Menu", throwIfNotFound: true);
+        m_Player_UI_Exit = m_Player.FindAction("UI_Exit", throwIfNotFound: true);
         m_Player_SlowMode = m_Player.FindAction("SlowMode", throwIfNotFound: true);
+        m_Player_LeftController = m_Player.FindAction("LeftController", throwIfNotFound: true);
+        m_Player_RightController = m_Player.FindAction("RightController", throwIfNotFound: true);
+        m_Player_UI_Click = m_Player.FindAction("UI_Click", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -350,7 +434,11 @@ public partial class @VRIFAction: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_ClimbingRightJump;
     private readonly InputAction m_Player_Interaction;
     private readonly InputAction m_Player_UI_Menu;
+    private readonly InputAction m_Player_UI_Exit;
     private readonly InputAction m_Player_SlowMode;
+    private readonly InputAction m_Player_LeftController;
+    private readonly InputAction m_Player_RightController;
+    private readonly InputAction m_Player_UI_Click;
     public struct PlayerActions
     {
         private @VRIFAction m_Wrapper;
@@ -365,7 +453,11 @@ public partial class @VRIFAction: IInputActionCollection2, IDisposable
         public InputAction @ClimbingRightJump => m_Wrapper.m_Player_ClimbingRightJump;
         public InputAction @Interaction => m_Wrapper.m_Player_Interaction;
         public InputAction @UI_Menu => m_Wrapper.m_Player_UI_Menu;
+        public InputAction @UI_Exit => m_Wrapper.m_Player_UI_Exit;
         public InputAction @SlowMode => m_Wrapper.m_Player_SlowMode;
+        public InputAction @LeftController => m_Wrapper.m_Player_LeftController;
+        public InputAction @RightController => m_Wrapper.m_Player_RightController;
+        public InputAction @UI_Click => m_Wrapper.m_Player_UI_Click;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -405,9 +497,21 @@ public partial class @VRIFAction: IInputActionCollection2, IDisposable
             @UI_Menu.started += instance.OnUI_Menu;
             @UI_Menu.performed += instance.OnUI_Menu;
             @UI_Menu.canceled += instance.OnUI_Menu;
+            @UI_Exit.started += instance.OnUI_Exit;
+            @UI_Exit.performed += instance.OnUI_Exit;
+            @UI_Exit.canceled += instance.OnUI_Exit;
             @SlowMode.started += instance.OnSlowMode;
             @SlowMode.performed += instance.OnSlowMode;
             @SlowMode.canceled += instance.OnSlowMode;
+            @LeftController.started += instance.OnLeftController;
+            @LeftController.performed += instance.OnLeftController;
+            @LeftController.canceled += instance.OnLeftController;
+            @RightController.started += instance.OnRightController;
+            @RightController.performed += instance.OnRightController;
+            @RightController.canceled += instance.OnRightController;
+            @UI_Click.started += instance.OnUI_Click;
+            @UI_Click.performed += instance.OnUI_Click;
+            @UI_Click.canceled += instance.OnUI_Click;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -442,9 +546,21 @@ public partial class @VRIFAction: IInputActionCollection2, IDisposable
             @UI_Menu.started -= instance.OnUI_Menu;
             @UI_Menu.performed -= instance.OnUI_Menu;
             @UI_Menu.canceled -= instance.OnUI_Menu;
+            @UI_Exit.started -= instance.OnUI_Exit;
+            @UI_Exit.performed -= instance.OnUI_Exit;
+            @UI_Exit.canceled -= instance.OnUI_Exit;
             @SlowMode.started -= instance.OnSlowMode;
             @SlowMode.performed -= instance.OnSlowMode;
             @SlowMode.canceled -= instance.OnSlowMode;
+            @LeftController.started -= instance.OnLeftController;
+            @LeftController.performed -= instance.OnLeftController;
+            @LeftController.canceled -= instance.OnLeftController;
+            @RightController.started -= instance.OnRightController;
+            @RightController.performed -= instance.OnRightController;
+            @RightController.canceled -= instance.OnRightController;
+            @UI_Click.started -= instance.OnUI_Click;
+            @UI_Click.performed -= instance.OnUI_Click;
+            @UI_Click.canceled -= instance.OnUI_Click;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -483,6 +599,10 @@ public partial class @VRIFAction: IInputActionCollection2, IDisposable
         void OnClimbingRightJump(InputAction.CallbackContext context);
         void OnInteraction(InputAction.CallbackContext context);
         void OnUI_Menu(InputAction.CallbackContext context);
+        void OnUI_Exit(InputAction.CallbackContext context);
         void OnSlowMode(InputAction.CallbackContext context);
+        void OnLeftController(InputAction.CallbackContext context);
+        void OnRightController(InputAction.CallbackContext context);
+        void OnUI_Click(InputAction.CallbackContext context);
     }
 }

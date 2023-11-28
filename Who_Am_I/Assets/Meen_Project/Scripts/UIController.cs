@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using BNG;
 
 public class UIController : MonoBehaviour
 {
@@ -25,6 +27,13 @@ public class UIController : MonoBehaviour
 
     #endregion 변수 설정
 
+    // <Solbin> VRIF Action
+    private VRIFAction vrifAction = default;
+    // <Solbin> VRIF State System
+    [SerializeField] private VRIFStateSystem vrifStateSystem = default;
+    // <Solbin> UI 조이스틱 입력 기준값
+    private float joystickInput = 0.95f;
+
     void Awake()
     {
         uiController = 0;
@@ -34,6 +43,17 @@ public class UIController : MonoBehaviour
     {
         playerTf = GetComponent<Transform>().transform;
     }     // Start()
+
+    private void OnEnable()
+    {
+        vrifAction = new VRIFAction();
+        vrifAction.Enable();
+    }
+
+    private void OnDisable()
+    {
+        vrifAction?.Disable();
+    }
 
     // 모든 UI 에서 방향키 입력을 받아 전달하는 함수
     public void DirectionControl(int arrowType)
@@ -104,10 +124,6 @@ public class UIController : MonoBehaviour
         {
             switch (uiController)
             {
-                case 0:
-                    uiController = 1;
-                    playerTf.GetComponent<MainMenu>().OnMainMenu();
-                    break;
                 case 1:
                     playerTf.GetComponent<MainMenu>().ConnectMenu();
                     break;
@@ -179,51 +195,69 @@ public class UIController : MonoBehaviour
         }
     }     // OnOffControl()
 
+    public void OnMainMenuControl()
+    {
+        uiController = 1;
+        playerTf.GetComponent<MainMenu>().OnMainMenu();
+    }
+
     #region Input 키 입력 값 모음
 
     void Update()
     {
         // 모든 상, 하, 좌, 우 기본 키보드 키 입력 값
-        if (Input.GetKeyDown(KeyCode.UpArrow))
+        if (Input.GetKeyDown(KeyCode.UpArrow) || vrifAction.Player.LeftController.ReadValue<Vector2>().y >= joystickInput)
         {
+            // <Solbin> GetKey 같은 느낌이라 너무 예민하다고 느껴진다. 수정 필요
             DirectionControl(0);
         }
-        else if (Input.GetKeyDown(KeyCode.DownArrow))
+        else if (Input.GetKeyDown(KeyCode.DownArrow) || vrifAction.Player.LeftController.ReadValue<Vector2>().y <= -joystickInput)
         {
             DirectionControl(1);
         }
-        else if (Input.GetKeyDown(KeyCode.LeftArrow))
+        else if (Input.GetKeyDown(KeyCode.LeftArrow) || vrifAction.Player.LeftController.ReadValue<Vector2>().x <= -joystickInput)
         {
             DirectionControl(2);
         }
-        else if (Input.GetKeyDown(KeyCode.RightArrow))
+        else if (Input.GetKeyDown(KeyCode.RightArrow) || vrifAction.Player.LeftController.ReadValue<Vector2>().x >= joystickInput)
         {
             DirectionControl(3);
         }
-        // 모든 진입 키 입력 값
-        else if (Input.GetKeyDown(KeyCode.Z))
+        // <Solbin> 메뉴 진입 
+        else if (Input.GetKeyDown(KeyCode.M) || vrifAction.Player.UI_Menu.triggered) // <Solbin> Menu Enter
         {
-            OnOffControl(0);
+            if (vrifStateSystem.gameState == VRIFStateSystem.GameState.NORMAL) // <Solbin> 메뉴는 NORMAL 상태에서만 진입 가능 
+            OnMainMenuControl();
+            vrifStateSystem.ChangeState(VRIFStateSystem.GameState.UI); // <Solbin> UI 상태로 전환 
+        }
+        // 모든 진입 키 입력 값
+        else if (Input.GetKeyDown(KeyCode.Z) || vrifAction.Player.UI_Click.triggered) // <Solbin> Menu Select
+        {
+            OnOffControl(0);  
         }
         // 모든 뒤로가기 키 입력 값
-        else if (Input.GetKeyDown(KeyCode.X))
+        else if (Input.GetKeyDown(KeyCode.X) || vrifAction.Player.UI_Exit.triggered) // <Solbin> Exit Menu
         {
-            OnOffControl(1);
+            if (vrifStateSystem.gameState == VRIFStateSystem.GameState.UI) // <Solbin> UI 상태일때
+            {
+                OnOffControl(1);
+                vrifStateSystem.ChangeState(VRIFStateSystem.GameState.NORMAL); // <Solbin> NORMAL 상태로 전환 
+            }
         }
         // 모든 두번째 상, 하, 좌, 우 키보드 키 입력 값
-        else if (Input.GetKeyDown(KeyCode.Keypad8))
+        else if (Input.GetKeyDown(KeyCode.Keypad8) || vrifAction.Player.RightController.ReadValue<Vector2>().y >= joystickInput)
         {
             RightDirectionControl(0);
         }
-        else if (Input.GetKeyDown(KeyCode.Keypad2))
+        else if (Input.GetKeyDown(KeyCode.Keypad2) || vrifAction.Player.RightController.ReadValue<Vector2>().y <= -joystickInput)
         {
             RightDirectionControl(1);
         }
-        else if (Input.GetKeyDown(KeyCode.Keypad4))
+        else if (Input.GetKeyDown(KeyCode.Keypad4) || vrifAction.Player.RightController.ReadValue<Vector2>().x <= -joystickInput)
         {
             RightDirectionControl(2);
         }
-        else if (Input.GetKeyDown(KeyCode.Keypad6))
+        else if (Input.GetKeyDown(KeyCode.Keypad6) || vrifAction.Player.RightController.ReadValue<Vector2>().x >= joystickInput)
         {
             RightDirectionControl(3);
         }

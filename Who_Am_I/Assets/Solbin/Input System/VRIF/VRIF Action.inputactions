@@ -96,9 +96,45 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "UI_Exit",
+                    "type": "Button",
+                    "id": "0442b6f4-5775-4f9a-89f9-459e41cb1310",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "SlowMode",
                     "type": "Button",
                     "id": "3f101cf3-6825-4f48-90e4-732a56bf54d8",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "LeftController",
+                    "type": "Value",
+                    "id": "c01ed57b-4545-46cc-aea1-c2b24fe09ab1",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "RightController",
+                    "type": "Value",
+                    "id": "dd3cac27-e78e-458c-870a-74a6a0913634",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "UI_Click",
+                    "type": "Button",
+                    "id": "0bdb2bb4-1e74-47eb-ab23-1d4f2f1371c7",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -208,7 +244,7 @@
                 {
                     "name": "",
                     "id": "ba3e5e30-2724-48e5-b961-8a1dfc2f42f9",
-                    "path": "<XRController>{LeftHand}/menu",
+                    "path": "<XRController>{LeftHand}/start",
                     "interactions": "",
                     "processors": "",
                     "groups": "XR",
@@ -224,6 +260,50 @@
                     "processors": "",
                     "groups": "XR",
                     "action": "SlowMode",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "86061cc3-77bc-46d9-9b62-c6b4a7745878",
+                    "path": "<XRController>{LeftHand}/primaryButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "XR",
+                    "action": "UI_Exit",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b73b5f7d-1459-4033-9e67-b286536645fd",
+                    "path": "<XRController>{LeftHand}/joystick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "XR",
+                    "action": "LeftController",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4f9b8e9e-0817-4d2e-809f-4437f7086eee",
+                    "path": "<XRController>{RightHand}/joystick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "XR",
+                    "action": "RightController",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "fa84cbdf-2151-44d4-9a45-a8c3db55b613",
+                    "path": "<XRController>{RightHand}/primaryButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "XR",
+                    "action": "UI_Click",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
