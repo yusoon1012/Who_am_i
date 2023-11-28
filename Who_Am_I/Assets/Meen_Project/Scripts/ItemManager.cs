@@ -1,3 +1,4 @@
+using Firebase.Auth;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -23,6 +24,9 @@ public class ItemManager : MonoBehaviour
 
     // 모든 아이템 데이터 베이스
     public Dictionary<string, ItemsMain> itemDataBase = new Dictionary<string, ItemsMain>();
+    // 아이템 도감에 저장되는 아이템 데이터
+    public Dictionary<string, ItemsMain> Encyclopedia = new Dictionary<string, ItemsMain>();
+
     // 장비 아이템 타입 인벤토리 데이터
     Dictionary<string, ItemsMain> equipments = new Dictionary<string, ItemsMain>();
     // 음식 아이템 타입 인벤토리 데이터
@@ -38,35 +42,27 @@ public class ItemManager : MonoBehaviour
     {
         if (instance == null || instance == default) { instance = this; DontDestroyOnLoad(instance.gameObject); }
         else { Destroy(gameObject); }
-
+        FirebaseAuth auth = FirebaseAuth.DefaultInstance;
+        Debug.Log(auth.CurrentUser);
         itemCount = 0;
     }     // Awake()
 
     void Start()
     {
         // 게임 이어하기 클릭 시 저장된 아이템 로드 테스트
-        testDic.Add("레드 포션", 11);
-        testDic.Add("블루 포션", 15);
-        testDic.Add("롱 소드", 1);
-        testDic.Add("철", 4);
-        testDic.Add("사파이어", 10);
-        testDic.Add("블루 아뮬렛", 1);
-        testDic.Add("고기", 6);
-        testDic.Add("빨간 사과", 8);
+        testDic.Add("고기", 1);
+        testDic.Add("딸기", 1);
+        testDic.Add("우유", 1);
 
         //* 아이템 데이터 베이스에 아이템 추가
-        itemDataBase.Add("레드 포션", new Items001());
-        itemDataBase.Add("블루 포션", new Items002());
-        itemDataBase.Add("롱 소드", new Items003());
-        itemDataBase.Add("철", new Items004());
-        itemDataBase.Add("사파이어", new Items005());
-        itemDataBase.Add("블루 아뮬렛", new Items006());
-        itemDataBase.Add("빨간 사과", new Items007());
-        itemDataBase.Add("고기", new Items008());
+        itemDataBase.Add("고기", new Items001());
+        itemDataBase.Add("딸기", new Items002());
+        itemDataBase.Add("우유", new Items003());
+        itemDataBase.Add("딸기 우유", new Items004());
         //* 아이템 데이터 베이스에 아이템 추가
 
         //* 제작 데이터 베이스에 아이템 추가
-        crafting.Add("블루 아뮬렛", new Crafting001());
+        crafting.Add("딸기 우유", new Crafting001());
         //* 제작 데이터 베이스에 아이템 추가
     }     // Start()
 
@@ -132,6 +128,8 @@ public class ItemManager : MonoBehaviour
                 Debug.LogFormat("장비 인벤토리에 {0} 아이템 {1} 개를 인벤토리에 넣었습니다. (총 아이템 갯수 : {2})", itemInfo.itemName, num,
                     itemInfo.itemStack);
             }
+
+            //ItemDatabase.Instance.WriteItemInfo("Equipment", itemName, itemInfo.itemStack);
         }
         else if (itemTypeNum == 1)
         {
@@ -150,6 +148,8 @@ public class ItemManager : MonoBehaviour
                 Debug.LogFormat("음식 인벤토리에 {0} 아이템 {1} 개를 인벤토리에 넣었습니다. (총 아이템 갯수 : {2})", itemInfo.itemName, num,
                     itemInfo.itemStack);
             }
+
+            //ItemDatabase.Instance.WriteItemInfo("Food", itemName, itemInfo.itemStack);
         }
         else if (itemTypeNum == 2)
         {
@@ -168,6 +168,8 @@ public class ItemManager : MonoBehaviour
                 Debug.LogFormat("재료 인벤토리에 {0} 아이템 {1} 개를 인벤토리에 넣었습니다. (총 아이템 갯수 : {2})", itemInfo.itemName, num,
                     itemInfo.itemStack);
             }
+
+            //ItemDatabase.Instance.WriteItemInfo("Stuff", itemName, itemInfo.itemStack);
         }
         else
         {
@@ -176,6 +178,78 @@ public class ItemManager : MonoBehaviour
 
         return itemInfo;
     }     // InventoryAdd()
+
+    // 퀵슬롯 칸마다 아이템 정보를 확인해 return 하는 함수
+    public ItemsMain QuickSlotItemInfo(string itemName, int itemType, out ItemsMain itemInfo)
+    {
+        // 현재 퀵슬롯이 도구 페이지면
+        if (itemType == 0)
+        {
+            if (equipments.ContainsKey(itemName))
+            {
+                itemInfo = equipments[itemName];
+            }
+            else
+            {
+                itemInfo = null;
+            }
+        }
+        // 현재 퀵슬롯이 음식 페이지면
+        else if (itemType == 1)
+        {
+            if (foods.ContainsKey(itemName))
+            {
+                itemInfo = foods[itemName];
+            }
+            else
+            {
+                itemInfo = null;
+            }
+        }
+        else
+        {
+            itemInfo = null;
+        }
+
+        return itemInfo;
+    }
+
+    // 도감에서 현재 페이지의 아이템들의 이미지값들을 내보내는 함수
+    public ItemsMain DictionaryItemImage(string itemName, out ItemsMain items)
+    {
+        if (itemDataBase.ContainsKey(itemName))
+        {
+            items = itemDataBase[itemName];
+        }
+        else
+        {
+            items = null;
+        }
+
+        return items;
+    }     // DictionaryItemImage()
+
+    // 도감에서 현재 페이지의 아이템들의 획득, 미획득 상태 값들을 내보내는 함수
+    public bool DictionaryCheck(int type, string itemName, out bool itemCheck)
+    {
+        if (type == 0)
+        {
+            if (foods.ContainsKey(itemName))
+            {
+                itemCheck = true;
+            }
+            else
+            {
+                itemCheck = false;
+            }
+        }
+        else
+        {
+            itemCheck = false;
+        }
+
+        return itemCheck;
+    }     // DictionaryCheck()
 
     // 인벤토리 안에 총 아이템 갯수를 확인하는 함수
     public int InventoryCountCheck(int num, int page, out int checkNum)
@@ -207,7 +281,7 @@ public class ItemManager : MonoBehaviour
     public string[] InventoryTotal(int num, int page, out string[] itemNames)
     {
         itemCount = 0;
-        itemNames = new string[num + 1];     // ???
+        itemNames = new string[30];
 
         switch (page)
         {
@@ -396,8 +470,62 @@ public class ItemManager : MonoBehaviour
         return itemInfoText;
     }     // LoadItemInfoText()
 
+    // 아이템 데이터 베이스에서 아이템 버리기 기능
+    public string RemoveItem(string itemName, int itemType, out string dropItemName)
+    {
+        ItemsMain itemInfo = new ItemsMain();
+
+        switch (itemType)
+        {
+            case 0:
+                if (equipments.ContainsKey(itemName))
+                {
+                    itemInfo = equipments[itemName];
+                    itemInfo.itemStack = 0;
+                    equipments.Remove(itemName);
+                    dropItemName = itemName;
+                }
+                else
+                {
+                    dropItemName = null;
+                }
+                break;
+            case 1:
+                if (foods.ContainsKey(itemName))
+                {
+                    itemInfo = foods[itemName];
+                    itemInfo.itemStack = 0;
+                    foods.Remove(itemName);
+                    dropItemName = itemName;
+                }
+                else
+                {
+                    dropItemName = null;
+                }
+                break;
+            case 2:
+                if (stuffs.ContainsKey(itemName))
+                {
+                    itemInfo = stuffs[itemName];
+                    itemInfo.itemStack = 0;
+                    stuffs.Remove(itemName);
+                    dropItemName = itemName;
+                }
+                else
+                {
+                    dropItemName = null;
+                }
+                break;
+            default:
+                dropItemName = null;
+                break;
+        }
+
+        return dropItemName;
+    }     // RemoveItem()
+
     // 인벤토리에서 아이템 중첩 수를 빼고, 중첩 수가 0 이하면 해당 아이템을 삭제하는 함수
-    public ItemsMain InventoryRemove(string itemName, int stack, int type, out ItemsMain itemInfo)
+    public ItemsMain RemoveCraftingItem(string itemName, int stack, int type, out ItemsMain itemInfo)
     {
         switch (type)
         {
@@ -409,6 +537,7 @@ public class ItemManager : MonoBehaviour
                     if (itemInfo.itemStack <= 0)
                     {
                         equipments.Remove(itemName);
+                        itemInfo.itemStack = 0;
                     }
                 }
                 else
@@ -424,6 +553,7 @@ public class ItemManager : MonoBehaviour
                     if (itemInfo.itemStack <= 0)
                     {
                         foods.Remove(itemName);
+                        itemInfo.itemStack = 0;
                     }
                 }
                 else
@@ -439,6 +569,7 @@ public class ItemManager : MonoBehaviour
                     if (itemInfo.itemStack <= 0)
                     {
                         stuffs.Remove(itemName);
+                        itemInfo.itemStack = 0;
                     }
                 }
                 else

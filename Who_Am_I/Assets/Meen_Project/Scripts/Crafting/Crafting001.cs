@@ -11,12 +11,12 @@ public class Crafting001 : CraftingMain
 
     public override void Init()
     {
-        craftingName = "블루 아뮬렛";
+        craftingName = "딸기 우유";
         craftingLength = 2;
-        stuffName[0] = "철";
-        stuffName[1] = "사파이어";
-        stuffStack[0] = 10;
-        stuffStack[1] = 10;
+        stuffName[0] = "딸기";
+        stuffName[1] = "우유";
+        stuffStack[0] = 1;
+        stuffStack[1] = 1;
         craftingStack = 1;
     }     // Init()
 }

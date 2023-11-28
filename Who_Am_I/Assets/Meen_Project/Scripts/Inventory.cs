@@ -1,8 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Threading;
-using System.Xml;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -18,6 +15,8 @@ public class Inventory : MonoBehaviour
     public Image[] pageImages = new Image[3];
     // 아이템 아이콘마다 출력될 아이템 중첩 수
     public Text[] itemStakcsText = new Text[30];
+    // 도구 페이지 장착 중 텍스트 목록
+    public Text[] usingText = new Text[30];
     // 아이템 상세 창에서 아이템 큰 이미지
     public Image largeImage;
     // 아이템 상세 창에서 아이템 이름
@@ -38,6 +37,12 @@ public class Inventory : MonoBehaviour
     public GameObject[] itemGroupPageObj = new GameObject[2];
     // 인벤토리 창 오브젝트
     public GameObject inventory;
+    // 퀵슬롯 UI 트랜스폼
+    public Transform quickSlotTf;
+    // 아이템 버리기 안내 창 오브젝트
+    public GameObject dropItemInfo;
+    // 아이템 버리기 선택 버튼 UI
+    public Image[] dropItemInfoImage = new Image[2];
 
     // 인벤토리를 열고있는 상태인지 체크
     public bool lookInventory = false;
@@ -50,8 +55,6 @@ public class Inventory : MonoBehaviour
     private Color currentColor = default;
     // 인벤토리 창에서 새로운 아이템 선택 색
     private Color newColor = default;
-    // Test : 도감 전용 테스트 색
-    private Color testColor = default;
 
     // 인벤토리에서 아이템 아이콘 선택 색 변경 이미지
     private Image[] itemSlotColor = new Image[30];
@@ -75,6 +78,9 @@ public class Inventory : MonoBehaviour
     // 참조되는 아이템의 아이콘 이미지 값
     private int imageNum = default;
     // 인벤토리 페이지 현재 값
+    // 0. 도구 페이지
+    // 1. 음식 페이지
+    // 2. 재료 페이지
     private int inventoryPage = default;
     // 인벤토리 아이템 그룹 페이지 현재 값
     private int itemGroupPage = default;
@@ -84,10 +90,22 @@ public class Inventory : MonoBehaviour
     private int order = default;
     // 아이템 상세 목록에서의 현재 선택한 버튼 확인 값
     private int detailOrder = default;
+
+    private int dropItemOrder = default;
     // 인벤토리에 아이템들을 표시할 때 몇칸까지 표시할지 체크
     private int countItemSlot = default;
+    // 도구 페이지의 장착 중 텍스트의 표시된 위치
+    private int useEquipNum = default;
+    // 도구 페이지의 장착 중 텍스트가 표시된 아이템의 이름
+    private string useEquipStr = default;
+    // 도구 페이지의 장착 중 텍스트가 표시된 상태인지 체크
+    private bool useEquipCheck = false;
+    // 현재 출력된 인벤토리가 몇번째 페이지인지 중첩 슬롯을 확인하는 값
+    private int checkCount = default;
     // 이전, 다음 아이템 수량 페이지가 존재 하는지 체크
     private bool[] itemGroupPageCheck = new bool[2];
+    // 인벤토리 상세 정보창에 들어간 상태인지 체크
+    private bool itemInfoCheck = false;
 
     // Test : 데이터 베이스 연동 테스트 딕셔너리
     Dictionary<string, int> test = new Dictionary<string, int>();
@@ -104,8 +122,12 @@ public class Inventory : MonoBehaviour
         itemGroupPage = 0;
         itemGroupCount = 0;
         countItemSlot = 0;
-        maxItemSlot = 5;
+        checkCount = 0;
+        useEquipNum = 0;
+        dropItemOrder = 0;
 
+        maxItemSlot = 24;
+        useEquipStr = "None";
     }     // Awake()
 
     void Start()
@@ -128,27 +150,7 @@ public class Inventory : MonoBehaviour
     void Update()
     {
         //* Test : 해당 키를 누르면 인벤토리에 아이템 추가 기능
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            AddInventory("레드 포션", 3);
-        }
-        else if (Input.GetKeyDown(KeyCode.W))
-        {
-            AddInventory("블루 포션", 4);
-        }
-        else if (Input.GetKeyDown(KeyCode.E))
-        {
-            AddInventory("롱 소드", 1);
-        }
-        else if (Input.GetKeyDown(KeyCode.A))
-        {
-            AddInventory("철", 2);
-        }
-        else if (Input.GetKeyDown(KeyCode.S))
-        {
-            AddInventory("사파이어", 2);
-        }
-        else if (Input.GetKeyDown(KeyCode.T))
+        if (Input.GetKeyDown(KeyCode.T))
         {
             Test();
         }
@@ -156,24 +158,13 @@ public class Inventory : MonoBehaviour
         {
             ReadTest();
         }
-        else if (Input.GetKeyDown(KeyCode.G))
+        else if (Input.GetKeyDown(KeyCode.P))
         {
-            DictionaryTest(Color.black);
-        }
-        else if (Input.GetKeyDown(KeyCode.H))
-        {
-            DictionaryTest(Color.white);
+            useEquipStr = "None";
         }
 
         //* End Test : 해당 키를 누르면 인벤토리에 아이템 추가 기능
     }     // Update()
-
-    // Test : 도감 미획득 아이템 이미지 색 변화
-    public void DictionaryTest(Color color)
-    {
-        testColor = color;
-        itemSlotImages[0].color = testColor;
-    }
 
     #region 아이템 획득 기능
 
@@ -182,8 +173,6 @@ public class Inventory : MonoBehaviour
     {
         ItemsMain itemInfo = new ItemsMain();
         ItemManager.instance.InventoryAdd(itemName, num, out itemInfo);
-
-        SendItemData(itemName, num);
 
         if (lookInventory == true)
         {
@@ -194,31 +183,6 @@ public class Inventory : MonoBehaviour
     }     // AddInventory()
 
     #endregion 아이템 획득 기능
-
-    // 아이템 정보가 변경될 때 마다 데이터 베이스에 정보를 보내주는 함수
-    // 추가 : 타입, 이름, 갯수
-    // 삭제 : 타입, 이름
-    public void SendItemData(string itemName, int stack)
-    {
-        string itemTypeStr = string.Empty;
-
-        ItemManager.instance.ItemTypeCheck(itemName, out int itemType);
-
-        if (itemType == 0)
-        {
-            itemTypeStr = "Equipment";
-        }
-        else if (itemType == 1)
-        {
-            itemTypeStr = "Food";
-        }
-        else if (itemType == 2)
-        {
-            itemTypeStr = "Stuff";
-        }
-
-        ItemManager.instance.SendDataTest(itemTypeStr, itemName, stack);
-    }     // SendItemData()
 
     public void Test()
     {
@@ -259,6 +223,7 @@ public class Inventory : MonoBehaviour
         }
     }     // ChangeItemGroupPage()
 
+    // 아이템 타입 페이지를 변경시켜주는 함수를 연결시켜주는 함수
     public void ChangePage(int arrowType)
     {
         if (arrowType == 2)
@@ -269,7 +234,7 @@ public class Inventory : MonoBehaviour
         {
             PageDown();
         }
-    }
+    }     // ChangePage()
 
     // 인벤토리 이전 타입 창 이동 함수
     public void PageUp()
@@ -400,6 +365,39 @@ public class Inventory : MonoBehaviour
         ShowOrder();
     }     // OrderCheck()
 
+    // 아이템 버리기 안내창에서 커서를 움직이는 함수
+    public void DropItemOrderCheck(int arrowType)
+    {
+        currentColor = new Color32(155, 155, 155, 255);
+        dropItemInfoImage[dropItemOrder].color = currentColor;
+
+        if (arrowType == 0 || arrowType == 2)
+        {
+            if (dropItemOrder == 0)
+            {
+                dropItemOrder = 1;
+            }
+            else if (dropItemOrder == 1)
+            {
+                dropItemOrder = 0;
+            }
+        }
+        else if (arrowType == 1 || arrowType == 3)
+        {
+            if (dropItemOrder == 0)
+            {
+                dropItemOrder = 1;
+            }
+            else if (dropItemOrder == 1)
+            {
+                dropItemOrder = 0;
+            }
+        }
+
+        newColor = new Color32(255, 255, 255, 255);
+        dropItemInfoImage[dropItemOrder].color = newColor;
+    }     // DropItemOrderCheck()
+
     // 방향키를 눌러 새롭게 선택되는 아이템 아이콘의 정보를 표시하는 함수
     public void ShowOrder()
     {
@@ -441,6 +439,14 @@ public class Inventory : MonoBehaviour
             itemInfo.gameObject.SetActive(false);
         }
 
+        // 현재 <장착중> 표시가 인벤토리에 표시 되어있을 경우에는 해당 표시를 지워줌
+        if (useEquipCheck == true)
+        {
+            useEquipCheck = false;
+            usingText[useEquipNum].gameObject.SetActive(false);
+            useEquipNum = 0;
+        }
+
         for (int i = 0; i < itemCount; i++)
         {
             itemSlot[i].GetComponent<SaveItemInfo>().CleanSlot();
@@ -450,6 +456,9 @@ public class Inventory : MonoBehaviour
         }
 
         itemCount = 0;
+        checkCount = 0;
+        countItemSlot = 0;
+        itemGroupCount = 0;
     }     // CleanInventory()
 
     // 인벤토리를 종료할 때 비활성화 하는 함수
@@ -457,6 +466,8 @@ public class Inventory : MonoBehaviour
     {
         if (lookItemInfo == true)
         {
+            itemInfo.SetActive(false);
+            largeImage.gameObject.SetActive(true);
             itemInfo.gameObject.SetActive(false);
         }
 
@@ -527,19 +538,27 @@ public class Inventory : MonoBehaviour
     {
         if (itemCount == 0) { return; }
 
+        checkCount = 0;
+        countItemSlot = 0;
+
+        for (int j = 0; j < itemCount; j++)
+        {
+            if (itemNames[j] == null)
+            {
+                itemCount -= 1;
+            }
+        }
+
         // 몇번째 아이템 그룹 페이지인지 체크하고 인벤토리 배열에 아이템 그룹 페이지만큼의 아이템을 출력
-        int checkCount = itemGroupPage * maxItemSlot;
+        checkCount = itemGroupPage * maxItemSlot;
+
         // 마지작 아이템 그룹 페이지를 체크하고 for 문의 마지막 정수를 표시
         int maxCheckCount = (itemGroupPage + 1) * maxItemSlot;
 
         // 인벤토리의 총 아이템 갯수가 마지막 아이템 그룹 페이지보다 작거나 같은지 체크
         if (itemCount < maxCheckCount)
         {
-            // 아이템 총 갯수가 마지막 그룹 페이지보다 작거나 같으면 for 문의 마지막 정수 값을 계산
-            int count = maxCheckCount - itemCount;
-            int result = maxItemSlot - count;
-
-            countItemSlot = count + 1;
+            countItemSlot = itemCount;
 
             itemGroupPageObj[1].SetActive(false);
             itemGroupPageCheck[1] = false;
@@ -555,6 +574,7 @@ public class Inventory : MonoBehaviour
         {
             // 아이템 총 갯수가 마지막 그룹 페이지보다 크면 for 문의 마지막 정수를 최대값으로 지정
             countItemSlot = maxItemSlot;
+
             itemGroupPageObj[1].SetActive(true);
             itemGroupPageCheck[1] = true;
         }
@@ -575,6 +595,8 @@ public class Inventory : MonoBehaviour
         // 현재 아이템 수량 페이지에 최대 출력값 만큼 for 문으로 아이템들을 표시
         for (int i = 0; i < countItemSlot; i++)
         {
+            if (itemNames[i + checkCount] == null) { continue; }
+
             itemSlot[i].GetComponent<SaveItemInfo>().SaveInfo(itemNames[i + checkCount], itemStacks[i + checkCount]);
 
             // 아이템 아이콘의 이미지를 순차적으로 저장
@@ -603,6 +625,18 @@ public class Inventory : MonoBehaviour
             {
                 itemStakcsText[i].text = string.Format(" ");
             }
+
+            // 인벤토리 현재 페이지의 아이템들을 출력할 때 페이지가 도구 페이지이고, 현재 장착 상태인 아이템이 있을때 실행
+            if (inventoryPage == 1 && useEquipStr != "None")
+            {
+                // 해당 인벤토리 칸의 아이템이 장착 중인 아이템과 같을때 <장착중> 글을 표시
+                if (itemNames[i + checkCount] == useEquipStr)
+                {
+                    useEquipCheck = true;
+                    useEquipNum = i;
+                    usingText[i].gameObject.SetActive(true);
+                }
+            }
         }
     }     // ResultInventory()
 
@@ -626,6 +660,13 @@ public class Inventory : MonoBehaviour
     // 아이템 상세 정보창에서 나오는 함수
     public void OffItemDetailInfo()
     {
+        if (itemInfoCheck == true)
+        {
+            itemInfoCheck = false;
+            itemInfoTextUI.gameObject.SetActive(false);
+            largeImage.gameObject.SetActive(true);
+        }
+
         lookItemDetailInfo = false;
         playerTf.GetComponent<UIController>().uiController = 2;
 
@@ -744,17 +785,28 @@ public class Inventory : MonoBehaviour
 
             // 인벤토리 페이지 값에 따라 버튼을 장착 / 사용 / 빈칸 으로 설정
             // 인벤토리 페이지 값에 따라 퀵슬롯 버튼을 활성, 비활성으로 설정
-            if (inventoryPage == 0)
-            {
-                usingInfoObj.SetActive(true);
-                usingInfoText.text = string.Format("장 착");
-                quickSlotObj.SetActive(true);
-            }
-            else if (inventoryPage == 1)
+            if (inventoryPage == 1)
             {
                 usingInfoObj.SetActive(true);
                 usingInfoText.text = string.Format("사 용");
                 quickSlotObj.SetActive(true);
+            }
+            else if (inventoryPage == 0)
+            {
+                // 아이템을 선택할 때 해당 아이템이 현재 장착중인 아이템일 경우에는 장착 해제를 표시
+                if (useEquipCheck == true && itemNames[order + checkCount] == useEquipStr)
+                {
+                    usingInfoObj.SetActive(true);
+                    usingInfoText.text = string.Format("장착 해제");
+                    quickSlotObj.SetActive(true);
+                }
+                // 아이템을 선택할 때 해당 아이템이 장착중인 아이템이 아니면 장착을 표시
+                else
+                {
+                    usingInfoObj.SetActive(true);
+                    usingInfoText.text = string.Format("장 착");
+                    quickSlotObj.SetActive(true);
+                }
             }
             else
             {
@@ -772,10 +824,147 @@ public class Inventory : MonoBehaviour
             if (lookItemInfo == true)
             {
                 lookItemInfo = false;
-                itemInfo.gameObject.SetActive(false);
+                itemInfo.SetActive(false);
             }
         }
     }     // OnItemInfo()
+
+    // 아이템 상세 정보창에서 각각의 메뉴를 실행하는 함수
+    public void SelectInfo()
+    {
+        // 아이템 큰 이미지를 누르면 아이템 정보가 표시됨 (반대도 가능)
+        if (detailOrder == 0) { ChangeItemInfo(); }
+        // 아이템 장착, 사용, 장착 해제를 누르면 해당 기능의 함수 실행
+        else if (detailOrder == 1) { UseItem(); }
+        // 퀵슬롯 버튼을 누르면 실행
+        else if (detailOrder == 2)
+        {
+            quickSlotTf.GetComponent<QuickSlot>().TakeItemName(itemNames[order + checkCount], inventoryPage);
+            playerTf.GetComponent<UIController>().uiController = 6;
+            ConnectQuickSlot();
+        }
+        // 아이템 버리기 버튼을 누르면 실행
+        else if (detailOrder == 3)
+        {
+            playerTf.GetComponent<UIController>().uiController = 7;
+            dropItemInfo.SetActive(true);
+            dropItemOrder = 1;
+            newColor = new Color32(255, 255, 255, 255);
+            dropItemInfoImage[dropItemOrder].color = newColor;
+        }
+    }     // SelectInfo()
+
+    // 아이템 버리기 안내창에서 확인을 눌렀을 때 기능 함수
+    public void FunctionDropItem()
+    {
+        // 아이템 버리기 안내창에서 확인을 눌렀을 때
+        if (dropItemOrder == 0)
+        {
+            // 아이템 매니저의 아이템 삭제 함수를 실행
+            ItemManager.instance.RemoveItem(itemNames[order + checkCount], inventoryPage, out string dropItemName);
+            playerTf.GetComponent<UIController>().uiController = 2;
+            Debug.LogFormat("{0} 아이템을 버렸습니다.", dropItemName);
+
+            // 인벤토리 UI 를 초기화 하고 다시 아이템 정렬
+            ExitDropItem(0);
+            OffItemDetailInfo();
+            CleanInventory();
+            ControlInventory();
+        }
+        // 아이템 버리기 안내창에서 취소를 눌렀을 때
+        else if (dropItemOrder == 1)
+        {
+            ExitDropItem(1);
+        }
+    }     // FunctionDropItem()
+
+    // 아이템 버리기 안내창에서 취소를 눌렀을 때 기능 함수
+    public void ExitDropItem(int exitType)
+    {
+        currentColor = new Color32(155, 155, 155, 255);
+        dropItemInfoImage[dropItemOrder].color = currentColor;
+        dropItemOrder = 1;
+        dropItemInfo.SetActive(false);
+        
+        // 아이템 버리기 안내창에서 확인 키를 누르고 UI 가 비활성화 되지않고 취소를 누르고 UI 가 비활성화 될 때
+        // 아이템을 버리고 난 뒤에는 아이템 상세 창이 비활성화 됨
+        if (exitType == 1)
+        {
+            playerTf.GetComponent<UIController>().uiController = 3;
+        }
+    }     // ExitDropItem()
+
+    // 인벤토리 UI 에서 퀵슬롯 UI 로 이동하는 함수
+    public void ConnectQuickSlot()
+    {
+        inventory.SetActive(false);
+        itemInfo.SetActive(false);
+        playerTf.GetComponent<MainMenu>().mainMenu.SetActive(false);
+        quickSlotTf.GetComponent<QuickSlot>().quickSlotObj.SetActive(true);
+    }     // ConnectQuickSlot()
+
+    // 아이템 장착, 사용, 장착 해제 기능 함수
+    public void UseItem()
+    {
+        if (inventoryPage == 0)
+        {
+            // 현재 장착 아이템이 없으면 장착을 누른 아이템을 장착
+            if (useEquipStr == "None")
+            {
+                useEquipStr = itemNames[order + checkCount];
+
+                CleanInventory();
+                ControlInventory();
+                OnItemInfo(itemNames[order + checkCount]);
+            }
+            // 현재 장착중인 다른 아이템이 있으면 장착을 누른 아이템으로 장착 교체
+            else if (useEquipStr != "None" && itemNames[order + checkCount] != useEquipStr)
+            {
+                useEquipStr = itemNames[order + checkCount];
+
+                CleanInventory();
+                ControlInventory();
+                OnItemInfo(itemNames[order + checkCount]);
+            }
+            // 현재 장착중인 아이템을 장착 해제를 누르면 장착 해제
+            else if (useEquipStr != "None" && itemNames[order + checkCount] == useEquipStr)
+            {
+                useEquipStr = "None";
+
+                CleanInventory();
+                ControlInventory();
+                OnItemInfo(itemNames[order + checkCount]);
+            }
+        }
+    }     // UseItem()
+
+    // 아이템 큰 이미지를 누르면 아이템 정보가 표시되는 함수 (반대도 가능)
+    public void ChangeItemInfo()
+    {
+        // 아이템 큰 이미지가 표시된 상태
+        if (itemInfoCheck == false)
+        {
+            // 아이템 큰 이미지를 비활성화하고 아이템 정보를 표시
+            itemInfoCheck = true;
+            largeImage.gameObject.SetActive(false);
+            itemInfoTextUI.gameObject.SetActive(true);
+
+            ItemsMain items = new ItemsMain();
+
+            // 아이템 매니저에서 아이템 정보를 가져와 아이템 정보를 출력
+            ItemManager.instance.DictionaryItemImage(itemNames[order + checkCount], out items);
+
+            itemInfoTextUI.text = string.Format("{0}", items.itemInfo);
+        }
+        // 아이템 정보가 표시된 상태
+        else
+        {
+            // 아이템 정보를 비활성화하고 큰 이미지를 표시
+            itemInfoCheck = false;
+            itemInfoTextUI.gameObject.SetActive(false);
+            largeImage.gameObject.SetActive(true);
+        }
+    }     // ChangeItemInfo()
 
     #endregion 인벤토리 상세 정보 창 기능
 

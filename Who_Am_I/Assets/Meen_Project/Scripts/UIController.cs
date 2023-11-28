@@ -1,17 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class UIController : MonoBehaviour
 {
     #region 변수 설정
 
+    public Transform quickSlotTf;
+
     // 보고있는 UI 창 타입 설정
     // 0 : UI 창 모두 꺼짐
     // 1 : 메인 메뉴 창
     // 2 : 인벤토리 창
     // 3 : 인벤토리 세부 창
+    // 4 : 제작 창
+    // 5 : 도감 창
+    // 6 : 퀵슬롯 창
+    // 7 : 아이템 버리기 창
+    // 8 : 제작 세부 창
     public int uiController = default;
 
     // 플레이어 트랜스폼
@@ -44,20 +50,56 @@ public class UIController : MonoBehaviour
         {
             playerTf.GetComponent<Inventory>().DetailOrderCheck(arrowType);
         }
-    }
+        else if (uiController == 4)
+        {
+            playerTf.GetComponent<ItemCrafting>().OrderCheck(arrowType);
+        }
+        else if (uiController == 5)
+        {
+            playerTf.GetComponent<Dictionary>().ChangeOrder(arrowType);
+        }
+        else if (uiController == 6)
+        {
+            quickSlotTf.GetComponent<QuickSlot>().DirectionControl(arrowType);
+        }
+        else if (uiController == 7)
+        {
+            playerTf.GetComponent<Inventory>().DropItemOrderCheck(arrowType);
+        }
+        else if (uiController == 8)
+        {
+            playerTf.GetComponent<ItemCrafting>().DetailOrderCheck(arrowType);
+        }
+    }     // DirectionControl()
 
     // 모든 UI 에서 다른 방향키 입력을 받아 전달하는 함수
     public void RightDirectionControl(int arrowType)
     {
         if (uiController == 2)
         {
-            playerTf.GetComponent<Inventory>().ChangePage(arrowType);
+            if (arrowType == 2 || arrowType == 3)
+            {
+                playerTf.GetComponent<Inventory>().ChangePage(arrowType);
+            }
+            else if (arrowType == 0 || arrowType == 1)
+            {
+                playerTf.GetComponent<Inventory>().ChangeItemGroupPage(arrowType);
+            }
         }
-    }
+        else if (uiController == 4)
+        {
+            playerTf.GetComponent<ItemCrafting>().ControlDetailOrder(arrowType);
+        }
+        else if (uiController == 5)
+        {
+            playerTf.GetComponent<Dictionary>().OtherChangeOrder(arrowType);
+        }
+    }     // RightDirectionControl()
 
     // 모든 UI 에서 진입, 뒤로가기 입력을 받아 전달하는 함수
     public void OnOffControl(int keyType)
     {
+        // 진입 키 입력 값 전달
         if (keyType == 0)
         {
             switch (uiController)
@@ -72,10 +114,27 @@ public class UIController : MonoBehaviour
                 case 2:
                     playerTf.GetComponent<Inventory>().OnItemDetailInfo();
                     break;
+                case 3:
+                    playerTf.GetComponent<Inventory>().SelectInfo();
+                    break;
+                case 4:
+                    uiController = 8;
+                    playerTf.GetComponent<ItemCrafting>().OnDetailCrafting();
+                    break;
+                case 6:
+                    quickSlotTf.GetComponent<QuickSlot>().SelectSlot();
+                    break;
+                case 7:
+                    playerTf.GetComponent<Inventory>().FunctionDropItem();
+                    break;
+                case 8:
+                    playerTf.GetComponent<ItemCrafting>().Crafting();
+                    break;
                 default:
                     break;
             }
         }
+        // 뒤로가기 키 입력 값 전달
         else if (keyType == 1)
         {
             switch (uiController)
@@ -93,14 +152,38 @@ public class UIController : MonoBehaviour
                     uiController = 2;
                     playerTf.GetComponent<Inventory>().OffItemDetailInfo();
                     break;
+                case 4:
+                    uiController = 0;
+                    playerTf.GetComponent<ItemCrafting>().ExitCrafting();
+                    break;
+                case 5:
+                    uiController = 1;
+                    playerTf.GetComponent<Dictionary>().OffDictionary();
+                    playerTf.GetComponent<MainMenu>().DisconnectMenu();
+                    break;
+                case 6:
+                    uiController = 3;
+                    quickSlotTf.GetComponent<QuickSlot>().ConnectInventory();
+                    break;
+                case 7:
+                    uiController = 3;
+                    playerTf.GetComponent<Inventory>().ExitDropItem(1);
+                    break;
+                case 8:
+                    uiController = 4;
+                    playerTf.GetComponent<ItemCrafting>().ExitDetailCrafting();
+                    break;
                 default:
                     break;
             }
         }
-    }
+    }     // OnOffControl()
+
+    #region Input 키 입력 값 모음
 
     void Update()
     {
+        // 모든 상, 하, 좌, 우 기본 키보드 키 입력 값
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
             DirectionControl(0);
@@ -117,14 +200,17 @@ public class UIController : MonoBehaviour
         {
             DirectionControl(3);
         }
+        // 모든 진입 키 입력 값
         else if (Input.GetKeyDown(KeyCode.Z))
         {
             OnOffControl(0);
         }
+        // 모든 뒤로가기 키 입력 값
         else if (Input.GetKeyDown(KeyCode.X))
         {
             OnOffControl(1);
         }
+        // 모든 두번째 상, 하, 좌, 우 키보드 키 입력 값
         else if (Input.GetKeyDown(KeyCode.Keypad8))
         {
             RightDirectionControl(0);
@@ -141,7 +227,15 @@ public class UIController : MonoBehaviour
         {
             RightDirectionControl(3);
         }
+        else if (Input.GetKeyDown(KeyCode.P) && uiController == 0)
+        {
+            uiController = 4;
+            playerTf.GetComponent<ItemCrafting>().OnCrafting();
+        }
 
+
+        #region LAGACY
+        //* LEGACY CODE
         //// 인벤토리 창을 열고있는 상태에서만 실행
         //if (playerTf.GetComponent<Inventory>().lookInventory == true)
         //{
@@ -302,7 +396,7 @@ public class UIController : MonoBehaviour
         //        playerTf.GetComponent<ItemCrafting>().OnCrafting();
         //    }
         //}
-        
+
         //// Legacy : 인벤토리 아이콘을 클릭했을 때 실행되는 함수
         //if (Input.GetMouseButtonDown(0))
         //{
@@ -338,4 +432,8 @@ public class UIController : MonoBehaviour
         //    }
         //}
     }     // Update()
+
+    #endregion LAGACY
+
+    #endregion Input 키 입력 값 모음
 }

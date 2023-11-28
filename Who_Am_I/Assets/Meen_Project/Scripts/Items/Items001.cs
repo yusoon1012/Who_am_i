@@ -1,3 +1,4 @@
+using Oculus.Platform.Models;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,11 +12,22 @@ public class Items001 : ItemsMain
 
     public override void Init()
     {
-        itemName = "레드 포션";
-        itemNumber = 1;
-        itemImageNum = 1;
-        itemType = ItemType.FOOD;
-        itemInfo = "마시면 소량의 HP 가 회복되는 작은 포션입니다.";
+        itemID = 1000;
+        itemName = "고기";
+        itemInfo = "불에 구워 먹으면 맛있어 보이는 고기";
+        rarity = 1;
         itemStack = 0;
+        itemType = ItemType.STUFF;
+        itemImageNum = 1;
+        collectType = 1;
+        hp = 1;
+        range = 30f;
+        respawn = 60f;
+
+        cookType = 0;
+        satietyGauge = 0;
+        pooGauge = 0;
+
+        itemHint = "획득 방법 : ";
     }     // Init()
 }
