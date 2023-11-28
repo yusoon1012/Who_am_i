@@ -56,35 +56,35 @@
     <Analyzer Include="C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\_PJO\Scripts\Editor\MeshEditor.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Usage\OVROverlayCanvas\Editor\OVROverlayCanvasEditor.cs" />
-    <Compile Include="Assets\BNG Framework\Editor\GrabPointEditor.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Editor\OculusSampleFrameworkUtil.cs" />
-    <Compile Include="Assets\BNG Framework\Editor\ExplosiveEditor.cs" />
-    <Compile Include="Assets\BNG Framework\Editor\GrabbableEditor.cs" />
-    <Compile Include="Assets\BNG Framework\Editor\ButtonEditor.cs" />
-    <Compile Include="Assets\BNG Framework\HandPoser\Editor\HandPoseSaveAs.cs" />
     <Compile Include="Assets\TutorialInfo\Scripts\Editor\ReadmeEditor.cs" />
-    <Compile Include="Assets\BNG Framework\HandPoser\Editor\HandPoseEditor.cs" />
-    <Compile Include="Assets\BNG Framework\Editor\TrackedDeviceEditor.cs" />
-    <Compile Include="Assets\BNG Framework\Editor\VRIFGrabpointUpdaterEditor.cs" />
-    <Compile Include="Assets\BNG Framework\Editor\GrabPointTriggerEditor.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Editor\BuildAssetPackages.cs" />
-    <Compile Include="Assets\BNG Framework\Editor\InputBridgeEditor.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Core\Video\Editor\AndroidVideoEditorUtil.cs" />
-    <Compile Include="Assets\_PJO\Scripts\Editor\SaveMeshEditor.cs" />
-    <Compile Include="Assets\BNG Framework\Editor\ClimbableEditor.cs" />
-    <Compile Include="Assets\BNG Framework\HandPoser\Editor\AutoPoserEditor.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Editor\BuildSamples.cs" />
-    <Compile Include="Assets\BNG Framework\HandPoser\Editor\HandPoserEditor.cs" />
-    <Compile Include="Assets\BNG Framework\Editor\LeverEditor.cs" />
-    <Compile Include="Assets\_PJO\Scripts\Editor\TerrainMeshSendEditor.cs" />
-    <Compile Include="Assets\BNG Framework\Editor\PluginsEditor.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Core\Gradle\Editor\Utils.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Core\Firebase\Editor\FirebaseEnabler.cs" />
-    <Compile Include="Assets\BNG Framework\Editor\IntegrationsEditor.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Core\Locomotion\Scripts\Editor\TeleportTransitionWarpInspector.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Core\Video\Editor\MediaPlayerImageEditor.cs" />
+    <Compile Include="Assets\_PJO\Scripts\Editor\TerrainMeshSendEditor.cs" />
+    <Compile Include="Assets\BNG Framework\Editor\PluginsEditor.cs" />
+    <Compile Include="Assets\_PJO\Scripts\Editor\MeshEditor.cs" />
+    <Compile Include="Assets\BNG Framework\Editor\ClimbableEditor.cs" />
+    <Compile Include="Assets\BNG Framework\Editor\GrabPointEditor.cs" />
+    <Compile Include="Assets\BNG Framework\Editor\GrabPointTriggerEditor.cs" />
+    <Compile Include="Assets\BNG Framework\HandPoser\Editor\AutoPoserEditor.cs" />
+    <Compile Include="Assets\BNG Framework\Editor\ExplosiveEditor.cs" />
+    <Compile Include="Assets\BNG Framework\HandPoser\Editor\HandPoserEditor.cs" />
+    <Compile Include="Assets\BNG Framework\Editor\GrabbableEditor.cs" />
+    <Compile Include="Assets\BNG Framework\Editor\ButtonEditor.cs" />
+    <Compile Include="Assets\BNG Framework\Editor\InputBridgeEditor.cs" />
+    <Compile Include="Assets\BNG Framework\HandPoser\Editor\HandPoseSaveAs.cs" />
+    <Compile Include="Assets\BNG Framework\Editor\IntegrationsEditor.cs" />
+    <Compile Include="Assets\BNG Framework\HandPoser\Editor\HandPoseEditor.cs" />
+    <Compile Include="Assets\_PJO\Scripts\Editor\SaveMeshEditor.cs" />
+    <Compile Include="Assets\BNG Framework\Editor\TrackedDeviceEditor.cs" />
+    <Compile Include="Assets\BNG Framework\Editor\VRIFGrabpointUpdaterEditor.cs" />
+    <Compile Include="Assets\BNG Framework\Editor\LeverEditor.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\ExternalDependencyManager\Editor\1.2.177\Google.PackageManagerResolver.dll" />
@@ -370,23 +370,14 @@
     <Reference Include="log4netPlastic">
       <HintPath>Library\PackageCache\com.unity.collab-proxy@2.0.4\Lib\Editor\PlasticSCM\log4netPlastic.dll</HintPath>
     </Reference>
-    <Reference Include="Firebase.App">
-      <HintPath>Assets\Firebase\Plugins\Firebase.App.dll</HintPath>
-    </Reference>
     <Reference Include="Google.JarResolver">
       <HintPath>Assets\ExternalDependencyManager\Editor\1.2.177\Google.JarResolver.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Plastic.Newtonsoft.Json">
       <HintPath>Library\PackageCache\com.unity.collab-proxy@2.0.4\Lib\Editor\PlasticSCM\Unity.Plastic.Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="Firebase.Database">
-      <HintPath>Assets\Firebase\Plugins\Firebase.Database.dll</HintPath>
-    </Reference>
     <Reference Include="Unity.Plastic.Antlr3.Runtime">
       <HintPath>Library\PackageCache\com.unity.collab-proxy@2.0.4\Lib\Editor\PlasticSCM\Unity.Plastic.Antlr3.Runtime.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.VisualScripting.TextureAssets">
-      <HintPath>Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\EditorAssetResources\Unity.VisualScripting.TextureAssets.dll</HintPath>
     </Reference>
     <Reference Include="Firebase.TaskExtension">
       <HintPath>Assets\Firebase\Plugins\Firebase.TaskExtension.dll</HintPath>
@@ -397,6 +388,24 @@
     <Reference Include="Google.IOSResolver">
       <HintPath>Assets\ExternalDependencyManager\Editor\1.2.177\Google.IOSResolver.dll</HintPath>
     </Reference>
+    <Reference Include="Firebase.Analytics">
+      <HintPath>Assets\Firebase\Plugins\Firebase.Analytics.dll</HintPath>
+    </Reference>
+    <Reference Include="unityplastic">
+      <HintPath>Library\PackageCache\com.unity.collab-proxy@2.0.4\Lib\Editor\PlasticSCM\unityplastic.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.MiniJson">
+      <HintPath>Assets\Firebase\Plugins\Google.MiniJson.dll</HintPath>
+    </Reference>
+    <Reference Include="Firebase.App">
+      <HintPath>Assets\Firebase\Plugins\Firebase.App.dll</HintPath>
+    </Reference>
+    <Reference Include="Firebase.Database">
+      <HintPath>Assets\Firebase\Plugins\Firebase.Database.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.VisualScripting.TextureAssets">
+      <HintPath>Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\EditorAssetResources\Unity.VisualScripting.TextureAssets.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.VisualScripting.IonicZip">
       <HintPath>Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll</HintPath>
     </Reference>
@@ -406,20 +415,11 @@
     <Reference Include="Firebase.Editor">
       <HintPath>Assets\Firebase\Editor\Firebase.Editor.dll</HintPath>
     </Reference>
-    <Reference Include="Firebase.Analytics">
-      <HintPath>Assets\Firebase\Plugins\Firebase.Analytics.dll</HintPath>
-    </Reference>
     <Reference Include="Google.VersionHandlerImpl">
       <HintPath>Assets\ExternalDependencyManager\Editor\1.2.177\Google.VersionHandlerImpl.dll</HintPath>
     </Reference>
     <Reference Include="Unity.VisualScripting.YamlDotNet">
       <HintPath>Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll</HintPath>
-    </Reference>
-    <Reference Include="unityplastic">
-      <HintPath>Library\PackageCache\com.unity.collab-proxy@2.0.4\Lib\Editor\PlasticSCM\unityplastic.dll</HintPath>
-    </Reference>
-    <Reference Include="Google.MiniJson">
-      <HintPath>Assets\Firebase\Plugins\Google.MiniJson.dll</HintPath>
     </Reference>
     <Reference Include="Firebase.Platform">
       <HintPath>Assets\Firebase\Plugins\Firebase.Platform.dll</HintPath>
@@ -832,9 +832,6 @@
     <Reference Include="Unity.Searcher.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.Searcher.Editor.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.ProBuilder">
-      <HintPath>Library\ScriptAssemblies\Unity.ProBuilder.dll</HintPath>
-    </Reference>
     <Reference Include="Unity.VisualScripting.SettingsProvider.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.VisualScripting.SettingsProvider.Editor.dll</HintPath>
     </Reference>
@@ -874,23 +871,14 @@
     <Reference Include="Unity.VisualScripting.Flow.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.VisualScripting.Flow.Editor.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.VisualEffectGraph.Editor">
-      <HintPath>Library\ScriptAssemblies\Unity.VisualEffectGraph.Editor.dll</HintPath>
-    </Reference>
     <Reference Include="Unity.RenderPipelines.Universal.Runtime">
       <HintPath>Library\ScriptAssemblies\Unity.RenderPipelines.Universal.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="PPv2URPConverters">
       <HintPath>Library\ScriptAssemblies\PPv2URPConverters.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.ProBuilder.AddOns.Editor">
-      <HintPath>Library\ScriptAssemblies\Unity.ProBuilder.AddOns.Editor.dll</HintPath>
-    </Reference>
     <Reference Include="Unity.VisualStudio.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.VisualStudio.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.VisualEffectGraph.Runtime">
-      <HintPath>Library\ScriptAssemblies\Unity.VisualEffectGraph.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="Unity.XR.Management.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.XR.Management.Editor.dll</HintPath>
@@ -910,20 +898,11 @@
     <Reference Include="Unity.RenderPipelines.Core.Runtime">
       <HintPath>Library\ScriptAssemblies\Unity.RenderPipelines.Core.Runtime.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.ProBuilder.Editor">
-      <HintPath>Library\ScriptAssemblies\Unity.ProBuilder.Editor.dll</HintPath>
-    </Reference>
     <Reference Include="Unity.VisualScripting.Flow">
       <HintPath>Library\ScriptAssemblies\Unity.VisualScripting.Flow.dll</HintPath>
     </Reference>
     <Reference Include="Unity.PlasticSCM.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.PlasticSCM.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Polybrush.Editor">
-      <HintPath>Library\ScriptAssemblies\Unity.Polybrush.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Polybrush">
-      <HintPath>Library\ScriptAssemblies\Unity.Polybrush.dll</HintPath>
     </Reference>
     <Reference Include="Unity.VisualScripting.Core">
       <HintPath>Library\ScriptAssemblies\Unity.VisualScripting.Core.dll</HintPath>
@@ -952,9 +931,6 @@
     <Reference Include="UnityEditor.XR.LegacyInputHelpers">
       <HintPath>Library\ScriptAssemblies\UnityEditor.XR.LegacyInputHelpers.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.ProBuilder.AssetIdRemapUtility">
-      <HintPath>Library\ScriptAssemblies\Unity.ProBuilder.AssetIdRemapUtility.dll</HintPath>
-    </Reference>
     <Reference Include="Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary">
       <HintPath>Library\ScriptAssemblies\Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.dll</HintPath>
     </Reference>
@@ -969,6 +945,30 @@
     </Reference>
     <Reference Include="Unity.VisualScripting.State">
       <HintPath>Library\ScriptAssemblies\Unity.VisualScripting.State.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.VisualEffectGraph.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.VisualEffectGraph.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Polybrush.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.Polybrush.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.VisualEffectGraph.Runtime">
+      <HintPath>Library\ScriptAssemblies\Unity.VisualEffectGraph.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Polybrush">
+      <HintPath>Library\ScriptAssemblies\Unity.Polybrush.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.ProBuilder.AddOns.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.ProBuilder.AddOns.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.ProBuilder">
+      <HintPath>Library\ScriptAssemblies\Unity.ProBuilder.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.ProBuilder.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.ProBuilder.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.ProBuilder.AssetIdRemapUtility">
+      <HintPath>Library\ScriptAssemblies\Unity.ProBuilder.AssetIdRemapUtility.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -1056,10 +1056,6 @@
       <Project>{66CCF5BC-2455-8D30-8F72-A47C89DD736A}</Project>
       <Name>Facebook.Wit.Dictation</Name>
     </ProjectReference>
-    <ProjectReference Include="BNGHandPoseID.csproj">
-      <Project>{CF5C4034-DB7C-DCFF-AF08-7ED6ED8BEEF2}</Project>
-      <Name>BNGHandPoseID</Name>
-    </ProjectReference>
     <ProjectReference Include="Meta.Voice.Samples.TTSVoices.csproj">
       <Project>{712BBC9F-6F0B-A2FF-68EA-122C3E584E18}</Project>
       <Name>Meta.Voice.Samples.TTSVoices</Name>
@@ -1116,13 +1112,13 @@
       <Project>{3EAFB6AB-A86B-3BF9-8035-D0FE40893D57}</Project>
       <Name>Meta.Voice.Samples.Dictation</Name>
     </ProjectReference>
-    <ProjectReference Include="Oculus.VR.Scripts.Editor.csproj">
-      <Project>{FBA66A29-8424-F252-E6BE-B3F4BEDB1CD9}</Project>
-      <Name>Oculus.VR.Scripts.Editor</Name>
-    </ProjectReference>
     <ProjectReference Include="Oculus.Interaction.Editor.csproj">
       <Project>{A4E5F67E-F70D-3FA4-C85A-3B89275355F8}</Project>
       <Name>Oculus.Interaction.Editor</Name>
+    </ProjectReference>
+    <ProjectReference Include="Oculus.VR.Scripts.Editor.csproj">
+      <Project>{FBA66A29-8424-F252-E6BE-B3F4BEDB1CD9}</Project>
+      <Name>Oculus.VR.Scripts.Editor</Name>
     </ProjectReference>
     <ProjectReference Include="Oculus.Spatializer.csproj">
       <Project>{3E0C0C02-835C-EFE1-1489-33B1F70FE27A}</Project>
@@ -1211,6 +1207,10 @@
     <ProjectReference Include="Meta.Voice.Samples.BuiltInTimer.csproj">
       <Project>{231C0F82-86C6-8BD1-4E0C-C26F199E0D87}</Project>
       <Name>Meta.Voice.Samples.BuiltInTimer</Name>
+    </ProjectReference>
+    <ProjectReference Include="BNGHandPoseID.csproj">
+      <Project>{CF5C4034-DB7C-DCFF-AF08-7ED6ED8BEEF2}</Project>
+      <Name>BNGHandPoseID</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
