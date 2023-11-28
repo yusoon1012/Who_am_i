@@ -172,6 +172,7 @@ public class Inventory : MonoBehaviour
     public void AddInventory(string itemName, int num)
     {
         ItemsMain itemInfo = new ItemsMain();
+
         ItemManager.instance.InventoryAdd(itemName, num, out itemInfo);
 
         if (lookInventory == true)
