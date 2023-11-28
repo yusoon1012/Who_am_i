@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class MainMenu : MonoBehaviour
@@ -67,6 +66,13 @@ public class MainMenu : MonoBehaviour
             menuImage[7].SetActive(false);
             playerTf.GetComponent<Inventory>().ControlInventory();
         }
+        else if (order == 4)
+        {
+            playerTf.GetComponent<UIController>().uiController = 5;
+            menuImage[6].SetActive(false);
+            menuImage[7].SetActive(false);
+            playerTf.GetComponent<Dictionary>().OnDictionary();
+        }
     }     // ConnectMenu()
 
     // 다른 메뉴에서 메인 메뉴로 넘어오는 함수
@@ -79,8 +85,10 @@ public class MainMenu : MonoBehaviour
     // 메인 메뉴에서 메뉴 선택을 변경하는 함수
     public void ChangeOrder(int arrowType)
     {
+        // 기존에 있던 선택 버튼 이펙트 제거
         selectMenu[order].SetActive(false);
 
+        // 입력된 방향키에 따른 버튼 선택 변경
         switch (arrowType)
         {
             case 0:
@@ -143,6 +151,7 @@ public class MainMenu : MonoBehaviour
                 break;
         }
 
+        // 새로 선택된 버튼 이펙트 추가
         selectMenu[order].SetActive(true);
     }     // ChangeOrder()
 }
