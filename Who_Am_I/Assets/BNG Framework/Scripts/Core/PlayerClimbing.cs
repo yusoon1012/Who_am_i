@@ -78,6 +78,8 @@ namespace BNG {
         public event EventHandler leftClimbingEvent;
         // <Solbin> 오른손 그랩 이벤트
         public event EventHandler rightClimbingEvent;
+        // <Solbin> VRIFStateSystem
+        [SerializeField] private VRIFStateSystem vRIFStateSystem = default;
         // <Solbin> ===
 
         // Start is called before the first frame update
@@ -280,9 +282,11 @@ namespace BNG {
             }
         }
 
-        // <Solbin> public으로 교체
+        // <Solbin> 등반 중일때
         void onGrabbedClimbable() {
-            
+
+            vRIFStateSystem.ChangeState(VRIFStateSystem.GameState.CLIMBING); // 등반 상태로 전환
+
             // Don't allow player movement while climbing
             if (smoothLocomotion) {
                 smoothLocomotion.DisableMovement();
@@ -294,8 +298,11 @@ namespace BNG {
             }
         }
 
-        // <Solbin> public으로 교체 
+        // <Solbin> 등반 중이 아닐때
         void onReleasedClimbable() {
+
+            vRIFStateSystem.ChangeState(VRIFStateSystem.GameState.NORMAL); // 노말 상태로 전환
+
             // Reset back to our original values
             if (smoothLocomotion) {
                 smoothLocomotion.EnableMovement();
@@ -304,18 +311,6 @@ namespace BNG {
             // Gravity back to normal
             if (playerGravity) {
                 playerGravity.ToggleGravity(true);
-            }
-        }
-
-        // <Solbin> Test: 손을 놓는 메소드 (아래 Test 메소드는 테스트용 )
-        void Test()
-        {
-            if ( Input.GetKeyDown(KeyCode.K))
-            {
-                foreach (Grabber climber in climbers)
-                {
-                    
-                }
             }
         }
     }
