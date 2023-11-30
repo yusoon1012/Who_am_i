@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -147,6 +147,7 @@ namespace BNG {
         [HideInInspector]
         public Vector3 PreviousPosition;
 
+        // <Solbin> 모델과 독립적으로 손을 위치시키는데 사용
         /// <summary>
         /// Can be used to position hands independently from model
         /// </summary>
@@ -249,9 +250,11 @@ namespace BNG {
 
             // Check for input to grab or release item
             if ((HoldingItem == false && InputCheckGrab()) || ForceGrab) {
+                // <Solbin> Grab 조건을 평가
                 TryGrab();               
             }
-            else if(((HoldingItem || RemoteGrabbingItem) && inputCheckRelease()) || ForceRelease) {                
+            else if(((HoldingItem || RemoteGrabbingItem) && inputCheckRelease()) || ForceRelease) {  
+                // <Solbin> Release 조건을 평가 
                 TryRelease();
             }
         }
@@ -552,8 +555,8 @@ namespace BNG {
 
             // Activate Nearby Grabbable
             if (grabsInTrigger.ClosestGrabbable != null) {
-                GrabGrabbable(grabsInTrigger.ClosestGrabbable);                
-                
+                GrabGrabbable(grabsInTrigger.ClosestGrabbable);
+
                 return true;
             }
             // If no immediate grabbable, see if remote is available to pull

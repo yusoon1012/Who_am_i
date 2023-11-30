@@ -110,6 +110,7 @@
     <Compile Include="Assets\BNG Framework\Scripts\Core\JoystickVehicleControl.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Core\DebugUI\Scripts\DebugUIBuilder.cs" />
     <Compile Include="Assets\Meen_Project\Scripts\Items\Items004.cs" />
+    <Compile Include="Assets\Solbin\Scripts\VRIF\MBTI\VRIFMBTISystem.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Components\PlaySoundOnGrab.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Core\HandModelSelector.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Core\Locomotion\Scripts\TeleportSupport.cs" />
@@ -132,7 +133,7 @@
     <Compile Include="Assets\_yusoon\Scripts\Quests\QuestList.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Components\SnapZoneRingHelper.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Extras\VREmulator.cs" />
-    <Compile Include="Assets\Solbin\Scripts\VRIF\UI\VRIFUISystem.cs" />
+    <Compile Include="Assets\Solbin\Scripts\VRIF\UI\VRIFStatusSystem.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Extras\Arrow.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Helpers\HandleGFXHelper.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Helpers\DetachableLimb.cs" />
@@ -155,6 +156,7 @@
     <Compile Include="Assets\BNG Framework\Scripts\Extras\HandModelSwitcher.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Usage\HandsTrainExample\Scripts\WindmillController.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Helpers\StaticBatch.cs" />
+    <Compile Include="Assets\Meen_Project\Scripts\Test\ZoneTest.cs" />
     <Compile Include="Assets\Meen_Project\Scripts\ItemCrafting.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Core\Locomotion\Scripts\TeleportTransition.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Utility\VRUtils.cs" />
@@ -326,6 +328,7 @@
     <Compile Include="Assets\BNG Framework\Scripts\Extras\CalibratePlayerHeight.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Core\Button.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Core\Locomotion\Scripts\TeleportAimHandlerLaser.cs" />
+    <Compile Include="Assets\Solbin\Scripts\VRIF\For Test\ClimbingTest.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Core\JoystickControl.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Components\DestroyObjectWithDelay.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Helpers\ControllerOffsetHelper.cs" />
@@ -359,6 +362,7 @@
     <Compile Include="Assets\Oculus\SampleFramework\Core\DistanceGrab\Scripts\ColorGrabbable.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Core\Video\Scripts\MediaPlayerImage.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Core\HeadCollisionMove.cs" />
+    <Compile Include="Assets\Solbin\Scripts\VRIF\Time\VRIFTimeSystem.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\UI\UICanvasGroup.cs" />
     <Compile Include="Assets\Solbin\Scripts\Oculus\MBTI\MBTISystem.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Extras\Bow.cs" />
@@ -366,6 +370,7 @@
     <Compile Include="Assets\Oculus\SampleFramework\Core\DistanceGrab\Scripts\GrabbableCrosshair.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Extras\TimeController.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Core\Grabbable.cs" />
+    <Compile Include="Assets\Meen_Project\Scripts\Test\PlayerMoveTest.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Helpers\HandRepresentationHelper.cs" />
     <Compile Include="Assets\BNG Framework\HandPoser\Scripts\FingerJoint.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Usage\StartScene\Scripts\StartMenu.cs" />
@@ -419,7 +424,6 @@
     <Compile Include="Assets\Oculus\SampleFramework\Core\Locomotion\Scripts\TeleportTargetHandler.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Usage\Passthrough\Scripts\PassthroughStyler.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Usage\SpatialAnchor\Scripts\AnchorUIManager.cs" />
-    <Compile Include="Assets\Solbin\Scripts\VRIF\Time\VRIFTimeSystem.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Oculus\SampleFramework\Usage\HandsTrainExample\Shaders\XingLightShader.shader" />

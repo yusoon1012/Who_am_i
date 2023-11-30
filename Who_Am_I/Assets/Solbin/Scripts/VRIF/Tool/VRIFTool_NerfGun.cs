@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class VRIFTool_NerfGun : MonoBehaviour
 {
@@ -14,6 +16,8 @@ public class VRIFTool_NerfGun : MonoBehaviour
     [SerializeField] Transform pointer = default;
     // 너프건 궤적
     [SerializeField] LineRenderer trajectory = default;
+
+    public static event EventHandler slowTimeEvent;
 
     private void Start()
     {
@@ -44,6 +48,8 @@ public class VRIFTool_NerfGun : MonoBehaviour
         Debug.DrawRay(firePos.position, firePos.forward * distance, Color.green);
 
         Aiming();
+
+        ActivateSlowTime();
     }
 
     /// <summary>
@@ -80,5 +86,13 @@ public class VRIFTool_NerfGun : MonoBehaviour
         }
 
         // TODO: 레이가 닿은 부분, 총구에 파티클(혹은 다른 효과) 발생
+    }
+
+    private void ActivateSlowTime()
+    {
+        if (vrifAction.Player.SlowMode.triggered) // B버튼을 누르면 
+        {
+            slowTimeEvent?.Invoke(this, EventArgs.Empty);
+        }
     }
 }

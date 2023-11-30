@@ -87,24 +87,6 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "UI_Menu",
-                    "type": "Button",
-                    "id": "66f0841f-4a5a-4e38-b4be-bfeea78cd541",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "UI_Exit",
-                    "type": "Button",
-                    "id": "0442b6f4-5775-4f9a-89f9-459e41cb1310",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "SlowMode",
                     "type": "Button",
                     "id": "3f101cf3-6825-4f48-90e4-732a56bf54d8",
@@ -132,9 +114,36 @@
                     "initialStateCheck": true
                 },
                 {
+                    "name": "UI_Menu",
+                    "type": "Button",
+                    "id": "66f0841f-4a5a-4e38-b4be-bfeea78cd541",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "UI_Click",
                     "type": "Button",
                     "id": "0bdb2bb4-1e74-47eb-ab23-1d4f2f1371c7",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "UI_Exit",
+                    "type": "Button",
+                    "id": "0442b6f4-5775-4f9a-89f9-459e41cb1310",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "UI_QuickSlot",
+                    "type": "Button",
+                    "id": "5ab9dcbd-90b3-4535-8c88-7963f1e99404",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -243,34 +252,12 @@
                 },
                 {
                     "name": "",
-                    "id": "ba3e5e30-2724-48e5-b961-8a1dfc2f42f9",
-                    "path": "<XRController>{LeftHand}/start",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "XR",
-                    "action": "UI_Menu",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "02220e52-9e65-4500-a48d-859568b1608b",
                     "path": "<XRController>{RightHand}/secondaryButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "XR",
                     "action": "SlowMode",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "86061cc3-77bc-46d9-9b62-c6b4a7745878",
-                    "path": "<XRController>{LeftHand}/primaryButton",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "XR",
-                    "action": "UI_Exit",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -304,6 +291,39 @@
                     "processors": "",
                     "groups": "XR",
                     "action": "UI_Click",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ba3e5e30-2724-48e5-b961-8a1dfc2f42f9",
+                    "path": "<XRController>{LeftHand}/start",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "XR",
+                    "action": "UI_Menu",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "86061cc3-77bc-46d9-9b62-c6b4a7745878",
+                    "path": "<XRController>{LeftHand}/primaryButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "XR",
+                    "action": "UI_Exit",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "bc0afde9-b28f-485e-bc52-3b1a4f91d410",
+                    "path": "<XRController>{RightHand}/primaryButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "XR",
+                    "action": "UI_QuickSlot",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

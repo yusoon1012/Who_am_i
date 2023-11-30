@@ -4,20 +4,20 @@ using Unity.VisualScripting;
 using UnityEngine;
 
 /// <summary>
-/// ÇÃ·¹ÀÌ¾î UI ½ºÅ©¸³Æ®
+/// í”Œë ˆì´ì–´ UI ìŠ¤í¬ë¦½íŠ¸
 /// </summary>
 public class UI_Player : MonoBehaviour
 {
-    #region ÇÊµå
+    #region í•„ë“œ
     [SerializeField] Transform fullnessGage = default;
     [SerializeField] Transform pooGage = default;
-    // Æ÷¸¸°¨ °ÔÀÌÁö ±¸¼º ¼ö
+    // í¬ë§Œê° ê²Œì´ì§€ êµ¬ì„± ìˆ˜
     int fullnessCount = default;
-    // ¹èÃâ °ÔÀÌÁö ±¸¼º ¼ö 
+    // ë°°ì¶œ ê²Œì´ì§€ êµ¬ì„± ìˆ˜ 
     int pooCount = default;
-    // Æ÷¸¸°¨ °ÔÀÌÁö ¹è¿­
+    // í¬ë§Œê° ê²Œì´ì§€ ë°°ì—´
     GameObject[] fullnessArray = default;
-    // ¹èÃâ °ÔÀÌÁö ¹è¿­
+    // ë°°ì¶œ ê²Œì´ì§€ ë°°ì—´
     GameObject[] pooArray = default;
     #endregion
 
@@ -30,7 +30,7 @@ public class UI_Player : MonoBehaviour
     }
 
     /// <summary>
-    /// °ÔÀÌÁö ¹è¿­ ¼¼ÆÃ
+    /// ê²Œì´ì§€ ë°°ì—´ ì„¸íŒ…
     /// </summary>
     private void SetAray()
     {
@@ -47,13 +47,13 @@ public class UI_Player : MonoBehaviour
         }
     }
 
-    #region °ÔÀÌÁö ¾÷µ¥ÀÌÆ®
+    #region ê²Œì´ì§€ ì—…ë°ì´íŠ¸
     /// <summary>
-    /// Æ÷¸¸°¨ °ÔÀÌÁö ¾÷µ¥ÀÌÆ®
+    /// í¬ë§Œê° ê²Œì´ì§€ ì—…ë°ì´íŠ¸
     /// </summary>
     private void FollowUp_Fullness()
     {
-        float maxFullness = Player_Status.playerStat.fullness; // ¸ÅÁ÷³Ñ¹ö
+        float maxFullness = Player_Status.playerStat.fullness; // ë§¤ì§ë„˜ë²„
 
         for (int i = 0; i < fullnessCount; i++)
         {
@@ -69,11 +69,11 @@ public class UI_Player : MonoBehaviour
     }
 
     /// <summary>
-    /// ¹èÃâ °ÔÀÌÁö ¾÷µ¥ÀÌÆ®
+    /// ë°°ì¶œ ê²Œì´ì§€ ì—…ë°ì´íŠ¸
     /// </summary>
     private void FollowUp_Poo()
     {
-        float maxPoo = Player_Status.playerStat.poo; // ¸ÅÁ÷³Ñ¹ö
+        float maxPoo = Player_Status.playerStat.poo; // ë§¤ì§ë„˜ë²„
 
         for (int i = 0; i < pooCount; i++)
         {

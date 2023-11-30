@@ -1,9 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
+/// <summary>
+/// 장착 아이템 관리
+/// </summary>
 public class VRIFItemSystem : MonoBehaviour
 {
+    // 아이템 이름 - 아이템 오브젝트 딕셔너리
     private Dictionary<string, GameObject> mountingItem = new Dictionary<string, GameObject>();
 
     [Header("Items")]
@@ -52,8 +57,11 @@ public class VRIFItemSystem : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.K)) // 테스트용 코드
         {
-            if (!nerfGun.activeSelf) { MountingItem("NerfGun"); }
-            else { ReleaseItem("NerfGun"); }
+            MountingItem("NerfGun");
+        }
+        else if (Input.GetKeyDown(KeyCode.L))
+        {
+            MountingItem("Shavel");
         }
     }
 
@@ -86,7 +94,13 @@ public class VRIFItemSystem : MonoBehaviour
                 break;
         }
 
-        item.SetActive(true);
+        foreach (var obj in mountingItem) // 아이템 활성화 전 중복을 막기 위해 모든 아이템 비활성화 처리 
+        {
+            GameObject myItem = obj.Value;
+            myItem.SetActive(false);
+        }
+
+        item.SetActive(true); // 지정 아이템만 활성화
     }
 
     /// <summary>

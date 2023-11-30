@@ -10,7 +10,8 @@ namespace BNG
         {
             NORMAL,
             CLIMBING,
-            UI
+            UI,
+            POO
         }
 
         // 현재 게임 상태 
@@ -22,6 +23,10 @@ namespace BNG
         [SerializeField] private SmoothLocomotion smoothLocomotion;
         // 플레이어 회전 컴포넌트 
         [SerializeField] private PlayerRotation playerRotation;
+        // 왼쪽 컨트롤러
+        [SerializeField] private Transform leftController;
+        // 오른쪽 컨트롤러
+        [SerializeField] private Transform rightController;
 
         private void Start()
         {
@@ -48,6 +53,10 @@ namespace BNG
                 case GameState.UI: // UI 상태 
                     UIState();
                     break;
+
+                case GameState.POO: // POO 상태 (배출 상태)
+                    PooState();
+                    break;
             }
         }
 
@@ -63,6 +72,10 @@ namespace BNG
                 locomotionManager.enabled = true; // 이동 활성화
                 smoothLocomotion.enabled = true;
             }
+
+            foreach (Transform child in leftController) { child.gameObject.SetActive(true); } // 왼손 활성화
+
+            foreach (Transform child in rightController) { child.gameObject.SetActive(true); } // 오른손 활성화
         }
 
         /// <summary>
@@ -74,6 +87,22 @@ namespace BNG
             {
                 locomotionManager.enabled = false; // 이동 비활성화
                 smoothLocomotion.enabled = false;
+            }
+
+            foreach (Transform child in leftController) { child.gameObject.SetActive(false); } // 왼손 비활성화
+
+            foreach (Transform child in rightController) { child.gameObject.SetActive(false); } // 오른손 비활성화 
+        }
+
+        /// <summary>
+        /// POO 상태 (배출 상태)
+        /// </summary>
+        private void PooState()
+        {
+            if (locomotionManager.enabled) // 이동 활성화 상태면
+            {
+                locomotionManager.enabled = false; // 이동 비활성화
+                smoothLocomotion.enabled = false;   
             }
         }
     }

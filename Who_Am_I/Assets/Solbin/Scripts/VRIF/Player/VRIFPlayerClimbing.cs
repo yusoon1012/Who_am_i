@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -20,6 +21,8 @@ namespace BNG
         private bool leftGrab = false;
         private bool rightGrab = false;
         private bool readySuperJump = false;
+
+        public event EventHandler superJumpEvent;
 
         private void Start()
         {
@@ -57,7 +60,7 @@ namespace BNG
 
         private void Update()
         {
-           SuperJump();
+            SuperJump();
         }
         #endregion
 
@@ -81,20 +84,16 @@ namespace BNG
             {
                 float jumpForce = 5f;
 
-                if (vrifAction.Player.LeftGrip.ReadValue<float>() <= 0.45f &&
-                vrifAction.Player.RightGrip.ReadValue<float>() <= 0.45f) // 아래로 휘두르며 손을 놓았다면
+                if (!playerClimbing.GrippingClimbable) // 아래로 휘두르며 손을 놓았다면
                 {
-                    Debug.LogWarning("Super Jump!");
-
                     playerRigid.AddForce(Vector3.up * jumpForce, ForceMode.Impulse); // 상승 점프
+                    superJumpEvent?.Invoke(this, EventArgs.Empty);
                     readySuperJump = false;
                 }
 
                 Invoke("ClearSuperJump", 0.7f); // 시간차 상승 점프 상태 해제 (그랩을 놓는 동작이 늦을 경우를 대비)
             }
         }
-
-        private void ClearSuperJump() { readySuperJump = false; }
         #endregion
 
         #region 측면 점프
@@ -112,11 +111,13 @@ namespace BNG
         /// </summary>
         private void LeftJump()
         {
-            float upJumpForce = 1.5f; // 위로 점프하는 힘
-            float leftJumpForce = 1f; // 좌측으로 점프하는 힘
+            //float upJumpForce = 1.5f; // 위로 점프하는 힘
+            //float leftJumpForce = 1f; // 좌측으로 점프하는 힘
 
-            playerRigid.AddForce(Vector3.up * upJumpForce, ForceMode.Impulse); // 위쪽으로 점프
-            playerRigid.AddForce(Vector3.left * leftJumpForce, ForceMode.Impulse); // 왼쪽으로 점프 
+            //playerRigid.AddForce(Vector3.up * upJumpForce, ForceMode.Impulse); // 위쪽으로 점프
+            //playerRigid.AddForce(Vector3.left * leftJumpForce, ForceMode.Impulse); // 왼쪽으로 점프 
+
+
         }
 
         /// <summary>
@@ -133,3 +134,5 @@ namespace BNG
         #endregion
     }
 }
+
+// TODO: 상승 점프 후 Grabbable을 다시 잡았을 때 위치가 뒤틀리는 증상 

@@ -7,11 +7,12 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Shader Graphs_Outline
+  m_Name: Outline_StrawBerry
   m_Shader: {fileID: -6465566751694194690, guid: 3c75757ee99afe14484f5cae1cbbb42f,
     type: 3}
   m_ValidKeywords: []
-  m_InvalidKeywords: []
+  m_InvalidKeywords:
+  - _NORMALMAP
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -37,7 +38,7 @@ Material:
     m_Floats:
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _Scale: 1.03
+    - _Scale: 0
     m_Colors:
     - _Color: {r: 2.9960785, g: 0.5019608, b: 0.078431375, a: 0}
   m_BuildTextureStacks: []

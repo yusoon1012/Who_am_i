@@ -62,7 +62,10 @@ namespace BNG {
                     _movementY = 0;
 
                     // <Solbin> AddForce의 영향으로 무한 점프하는 문제가 있어 추가
-                    playerRigidbody.velocity = Vector3.zero;
+                    if (playerRigidbody != null)
+                    {
+                        playerRigidbody.velocity = Vector3.zero;
+                    }
                     // <Solbim> ===
                 }
             }
