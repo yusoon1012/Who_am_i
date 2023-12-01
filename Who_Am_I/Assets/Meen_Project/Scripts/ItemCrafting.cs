@@ -83,6 +83,8 @@ public class ItemCrafting : MonoBehaviour
     // 제작 상세 창의 제작 후 완성되는 아이템의 제작 완료 갯수
     private int craftingStack = default;
 
+    private int craftingCount = default;
+
     #endregion 변수 설정
 
     void Awake()
@@ -94,6 +96,7 @@ public class ItemCrafting : MonoBehaviour
         craftingStack = 0;
         order = 0;
         detailOrder = 0;
+        craftingCount = 0;
     }     // Awake()
 
     void Start()
