@@ -79,7 +79,7 @@ namespace BNG {
         // <Solbin> 오른손 그랩 이벤트
         public event EventHandler rightClimbingEvent;
         // <Solbin> VRIFStateSystem
-        [SerializeField] private VRIFStateSystem vRIFStateSystem = default;
+        [SerializeField] private VRIFStateSystem vrifStateSystem = default;
         // <Solbin> ===
 
         // Start is called before the first frame update
@@ -291,7 +291,11 @@ namespace BNG {
         // <Solbin> 등반 중일때
         void onGrabbedClimbable() {
 
-            vRIFStateSystem.ChangeState(VRIFStateSystem.GameState.CLIMBING); // 등반 상태로 전환
+            vrifStateSystem.ChangeState(VRIFStateSystem.GameState.CLIMBING); // 등반 상태로 전환
+
+            // <Solbin> 등반 중 그랩은 Velocity에 힘이 가해지고 있는 중이면 제대로 작동하지 않는다. 
+            // TODO: 추후 상승 점프 후 첫번째 그립 보정 필요. 
+            transform.GetComponent<Rigidbody>().velocity = Vector3.zero; 
 
             // Don't allow player movement while climbing
             if (smoothLocomotion) { // <Solbin> 기본 움직임 비활성화
@@ -304,10 +308,10 @@ namespace BNG {
             }
         }
 
-        // <Solbin> 등반 중이 아닐때
-        void onReleasedClimbable() {
+        // <Solbin> 등반 중이 아닐때 (public으로 교체함)
+        public void onReleasedClimbable() {
 
-            vRIFStateSystem.ChangeState(VRIFStateSystem.GameState.NORMAL); // 노말 상태로 전환
+            vrifStateSystem.ChangeState(VRIFStateSystem.GameState.NORMAL); // 노말 상태로 전환
 
             // Reset back to our original values
             if (smoothLocomotion) {

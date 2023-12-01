@@ -318,7 +318,6 @@ namespace BNG {
             // Check for standard Grabbables first
             Grabbable g = other.GetComponent<Grabbable>();
             if (g != null) { // <Solbin> 만약 Grabbable 컴포넌트를 가지고 있다면 
-                Debug.LogWarning("Trigger Enter"); // <Solbin> 상승점프 후 왜 끊임없이 찍히는가?
                 AddNearbyGrabbable(other, g); 
                 return;
             }
@@ -334,7 +333,6 @@ namespace BNG {
         void OnTriggerExit(Collider other) {
             Grabbable g = other.GetComponent<Grabbable>();
             if (g != null) {
-                Debug.LogWarning("Trigger Exit"); // <Solbin> 상승점프 후 왜 끊임없이 찍히는가?
                 RemoveNearbyGrabbable(other, g);
                 return;
             }

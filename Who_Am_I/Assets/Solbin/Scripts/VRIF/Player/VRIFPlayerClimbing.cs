@@ -10,19 +10,21 @@ namespace BNG
     public class VRIFPlayerClimbing : MonoBehaviour
     {
         // (Asset) PlayerClimbing
-        [SerializeField] private PlayerClimbing asset_playerClimbing;
+        private PlayerClimbing asset_playerClimbing;
         // Player Rigidbody 
         private Rigidbody playerRigid;
         // VRIF Action
         VRIFAction vrifAction;
-        // (Asset) PlayerClimbing
-        PlayerClimbing playerClimbing;
-
+        // 왼손 그랩 여부
         private bool leftGrab = false;
+        // 오른손 그랩 여부
         private bool rightGrab = false;
+        // 상승 점프 대기 상태 
         private bool readySuperJump = false;
-
-        public event EventHandler superJumpEvent;
+        // 잡고 있는 물체를 놓게 하는 bool 값
+        public bool sideJump = false;
+        // 호출에 대한 AddForce 실행 수 제한 
+        private bool addForce = false;
 
         private void Start()
         {
@@ -32,13 +34,12 @@ namespace BNG
         #region 초기 세팅
         private void Setting()
         {
+            asset_playerClimbing = GetComponent<PlayerClimbing>();
             asset_playerClimbing.climbingEvent += ActivateSideJump; // 등반 중 이벤트 구독
             playerRigid = GetComponent<Rigidbody>(); // 점프에 사용할 Rigidbody
 
             asset_playerClimbing.leftClimbingEvent += LeftGrabCheck;
             asset_playerClimbing.rightClimbingEvent += RightGrabCheck;
-
-            playerClimbing = GetComponent<PlayerClimbing>();
         }
 
         private void OnEnable()
@@ -84,16 +85,17 @@ namespace BNG
             {
                 float jumpForce = 5f;
 
-                if (!playerClimbing.GrippingClimbable) // 아래로 휘두르며 손을 놓았다면
+                if (!asset_playerClimbing.GrippingClimbable) // 손을 놓았다면 (등반 중이 아니라면)
                 {
                     playerRigid.AddForce(Vector3.up * jumpForce, ForceMode.Impulse); // 상승 점프
-                    superJumpEvent?.Invoke(this, EventArgs.Empty);
                     readySuperJump = false;
                 }
 
                 Invoke("ClearSuperJump", 0.7f); // 시간차 상승 점프 상태 해제 (그랩을 놓는 동작이 늦을 경우를 대비)
             }
         }
+
+        private void ClearSuperJump() { readySuperJump = false; }
         #endregion
 
         #region 측면 점프
@@ -102,37 +104,50 @@ namespace BNG
         /// </summary>
         private void ActivateSideJump(object sender, EventArgs e)
         {
-            if (vrifAction.Player.ClimbingLeftJump.triggered) { LeftJump(); }
-            else if (vrifAction.Player.ClimbingRightJump.triggered) { RightJump(); }
+            int left = 0;
+            int right = 1;
+
+            vrifAction.Player.ClimbingLeftJump.started += context => SideJump(left);
+            vrifAction.Player.ClimbingRightJump.started += context => SideJump(right);
         }
 
         /// <summary>
-        /// 측면 점프 - 좌측
+        /// 측면 점프
         /// </summary>
-        private void LeftJump()
+        /// <param name="dir"> 방향 값</param>
+        private void SideJump(int dir)
         {
-            //float upJumpForce = 1.5f; // 위로 점프하는 힘
-            //float leftJumpForce = 1f; // 좌측으로 점프하는 힘
+            if (!addForce) // 호출이 수백번 되기 때문에 실행 수 제한
+            {
+                addForce = true;
+                sideJump = true; // 잡고 있는 물체를 놓게 한다
 
-            //playerRigid.AddForce(Vector3.up * upJumpForce, ForceMode.Impulse); // 위쪽으로 점프
-            //playerRigid.AddForce(Vector3.left * leftJumpForce, ForceMode.Impulse); // 왼쪽으로 점프 
+                float upJumpForce = 3.5f; // 위로 점프하는 힘
+                float leftJumpForce = 1.5f; // 좌측으로 점프하는 힘
 
+                // TODO: 왜 두번째 측면 점프는 제대로 작동하지 않는가?
 
+                if (dir == 0)
+                {
+                    playerRigid.AddForce(Vector3.up * upJumpForce, ForceMode.Impulse); // 위쪽으로 점프
+                    playerRigid.AddForce(Vector3.left * leftJumpForce, ForceMode.Impulse); // 왼쪽으로 점프 
+                }
+                else if (dir == 1)
+                {
+                    playerRigid.AddForce(Vector3.up * upJumpForce, ForceMode.Impulse); // 위쪽으로 점프
+                    playerRigid.AddForce(Vector3.right * leftJumpForce, ForceMode.Impulse); // 왼쪽으로 점프 
+                }
+
+                Invoke("ClearSideJump", 0.3f);
+                Invoke("ClearAddForce", 1f);
+            }
         }
 
         /// <summary>
-        /// 측면 점프 - 우측
+        /// 재작동을 위해 bool 값 초기화 
         /// </summary>
-        private void RightJump()
-        {
-            float upJumpForce = 1.5f; // 위로 점프하는 힘
-            float leftJumpForce = 1f; // 좌측으로 점프하는 힘
-
-            playerRigid.AddForce(Vector3.up * upJumpForce, ForceMode.Impulse); // 위쪽으로 점프
-            playerRigid.AddForce(Vector3.right * leftJumpForce, ForceMode.Impulse); // 왼쪽으로 점프 
-        }
+        private void ClearSideJump() { sideJump = false; }
+        private void ClearAddForce() { addForce = false; }
         #endregion
     }
 }
-
-// TODO: 상승 점프 후 Grabbable을 다시 잡았을 때 위치가 뒤틀리는 증상 
