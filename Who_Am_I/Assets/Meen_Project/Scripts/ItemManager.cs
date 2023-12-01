@@ -179,6 +179,72 @@ public class ItemManager : MonoBehaviour
         return itemInfo;
     }     // InventoryAdd()
 
+    // 아이템 데이터 베이스의 정보를 내보내는 함수
+    public ItemsMain ReturnItemInfomation(string itemName, int itemType, out ItemsMain itemInfomation)
+    {
+        switch (itemType)
+        {
+            // 모든 아이템 정보 데이터에 대한 아이템 정보를 확인하고 내보냄
+            case 0:
+                if (itemDataBase.ContainsKey(itemName))
+                {
+                    itemInfomation = itemDataBase[itemName];
+                }
+                else
+                {
+                    itemInfomation = null;
+                }
+                break;
+            // 인벤토리에 저장된 아이템 데이터에 대한 아이템 정보를 확인하고 내보냄
+            case 1:
+                if (equipments.ContainsKey(itemName))
+                {
+                    itemInfomation = equipments[itemName];
+                }
+                else if (foods.ContainsKey(itemName))
+                {
+                    itemInfomation = foods[itemName];
+                }
+                else if (stuffs.ContainsKey(itemName))
+                {
+                    itemInfomation = stuffs[itemName];
+                }
+                else
+                {
+                    itemInfomation = null;
+                }
+                break;
+            default:
+                itemInfomation = null;
+                break;
+        }
+
+        return itemInfomation;
+    }     // ReturnItemInfomation()
+
+    // 인벤토리에 저장된 아이템 정보를 삭제하는 함수
+    public void DeleteItem(string itemName)
+    {
+        // 도구 인벤토리에 아이템이 존재하면
+        if (equipments.ContainsKey(itemName))
+        {
+            // 도구 인벤토리에서 아이템 정보 삭제
+            equipments.Remove(itemName);
+        }
+        // 음식 인벤토리에 아이템이 존재하면
+        else if (foods.ContainsKey(itemName))
+        {
+            // 음식 인벤토리에서 아이템 정보 삭제
+            foods.Remove(itemName);
+        }
+        // 재료 인벤토리에 아이템이 존재하면
+        else if (stuffs.ContainsKey(itemName))
+        {
+            // 재료 인벤토리에서 아이템 정보 삭제
+            stuffs.Remove(itemName);
+        }
+    }
+
     // 퀵슬롯 칸마다 아이템 정보를 확인해 return 하는 함수
     public ItemsMain QuickSlotItemInfo(string itemName, int itemType, out ItemsMain itemInfo)
     {

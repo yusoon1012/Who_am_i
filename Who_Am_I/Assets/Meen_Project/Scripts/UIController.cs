@@ -17,10 +17,11 @@ public class UIController : MonoBehaviour
     // 3 : 인벤토리 세부 창
     // 4 : 제작 창
     // 5 : 도감 창
-    // 6 : 퀵슬롯 창
+    // 6 : 인벤토리 퀵슬롯 창
     // 7 : 아이템 버리기 창
     // 8 : 제작 세부 창
-    public int uiController = default;
+    // 9 : 사용 퀵슬롯 창
+    public int uiController { get; set; } = default;
 
     // 플레이어 트랜스폼
     private Transform playerTf = default;
@@ -78,7 +79,7 @@ public class UIController : MonoBehaviour
         {
             playerTf.GetComponent<Dictionary>().ChangeOrder(arrowType);
         }
-        else if (uiController == 6)
+        else if (uiController == 6 || uiController == 9)
         {
             quickSlotTf.GetComponent<QuickSlot>().DirectionControl(arrowType);
         }
@@ -124,6 +125,11 @@ public class UIController : MonoBehaviour
         {
             switch (uiController)
             {
+                // 아무 UI 도 안켜져 있을 때 A 버튼을 누르면 퀵슬롯이 켜짐
+                case 0:
+                    uiController = 9;
+                    quickSlotTf.GetComponent<QuickSlot>().SingleOpenQuickSlot();
+                    break;
                 case 1:
                     playerTf.GetComponent<MainMenu>().ConnectMenu();
                     break;
@@ -145,6 +151,9 @@ public class UIController : MonoBehaviour
                     break;
                 case 8:
                     playerTf.GetComponent<ItemCrafting>().Crafting();
+                    break;
+                case 9:
+                    quickSlotTf.GetComponent<QuickSlot>().SelectSlot();
                     break;
                 default:
                     break;
@@ -189,6 +198,10 @@ public class UIController : MonoBehaviour
                     uiController = 4;
                     playerTf.GetComponent<ItemCrafting>().ExitDetailCrafting();
                     break;
+                case 9:
+                    uiController = 0;
+                    quickSlotTf.GetComponent<QuickSlot>().SingleCloseQuickSlot();
+                    break;
                 default:
                     break;
             }
@@ -226,9 +239,13 @@ public class UIController : MonoBehaviour
         // <Solbin> 메뉴 진입 
         else if (Input.GetKeyDown(KeyCode.M) || vrifAction.Player.UI_Menu.triggered) // <Solbin> Menu Enter
         {
-            if (vrifStateSystem.gameState == VRIFStateSystem.GameState.NORMAL) // <Solbin> 메뉴는 NORMAL 상태에서만 진입 가능 
             OnMainMenuControl();
-            vrifStateSystem.ChangeState(VRIFStateSystem.GameState.UI); // <Solbin> UI 상태로 전환 
+
+            //if (vrifStateSystem.gameState == VRIFStateSystem.GameState.NORMAL)
+            //{   // <Solbin> 메뉴는 NORMAL 상태에서만 진입 가능 
+            //    OnMainMenuControl();
+            //    vrifStateSystem.ChangeState(VRIFStateSystem.GameState.UI);
+            //}// <Solbin> UI 상태로 전환 
         }
         // 모든 진입 키 입력 값
         else if (Input.GetKeyDown(KeyCode.Z) || vrifAction.Player.UI_Click.triggered) // <Solbin> Menu Select
@@ -238,11 +255,13 @@ public class UIController : MonoBehaviour
         // 모든 뒤로가기 키 입력 값
         else if (Input.GetKeyDown(KeyCode.X) || vrifAction.Player.UI_Exit.triggered) // <Solbin> Exit Menu
         {
-            if (vrifStateSystem.gameState == VRIFStateSystem.GameState.UI) // <Solbin> UI 상태일때
-            {
-                OnOffControl(1);
-                vrifStateSystem.ChangeState(VRIFStateSystem.GameState.NORMAL); // <Solbin> NORMAL 상태로 전환 
-            }
+            OnOffControl(1);
+
+            //if (vrifStateSystem.gameState == VRIFStateSystem.GameState.UI) // <Solbin> UI 상태일때
+            //{
+            //    OnOffControl(1);
+            //    vrifStateSystem.ChangeState(VRIFStateSystem.GameState.NORMAL); // <Solbin> NORMAL 상태로 전환 
+            //}
         }
         // 모든 두번째 상, 하, 좌, 우 키보드 키 입력 값
         else if (Input.GetKeyDown(KeyCode.Keypad8) || vrifAction.Player.RightController.ReadValue<Vector2>().y >= joystickInput)

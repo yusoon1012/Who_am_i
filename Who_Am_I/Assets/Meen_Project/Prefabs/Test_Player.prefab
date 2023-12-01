@@ -50,7 +50,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   quickSlotTf: {fileID: 0}
-  uiController: 0
+  vrifStateSystem: {fileID: 0}
 --- !u!114 &4897344975656598030
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -220,9 +220,6 @@ MonoBehaviour:
   dropItemInfoImage:
   - {fileID: 0}
   - {fileID: 0}
-  lookInventory: 0
-  lookItemDetailInfo: 0
-  maxItemSlot: 0
 --- !u!114 &8319353742856885328
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -279,8 +276,6 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  lookCrafting: 0
-  lookCraftingInfo: 0
 --- !u!114 &8319353742580610747
 MonoBehaviour:
   m_ObjectHideFlags: 0

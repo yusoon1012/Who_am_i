@@ -11,6 +11,8 @@ public class ItemsMain
     public int itemID = default;
     // 아이템 이름
     public string itemName = default;
+    // 아이템 영어 이름
+    public string itemEnglishName = default;
     // 아이템 설명
     public string itemInfo = default;
     // 레어도

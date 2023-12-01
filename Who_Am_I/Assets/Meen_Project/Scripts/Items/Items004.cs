@@ -14,6 +14,7 @@ public class Items004 : ItemsMain
     {
         itemID = 2002;
         itemName = "딸기 우유";
+        itemEnglishName = "Strawberry Milk";
         itemInfo = "딸기 맛이 나는 달콤한 우유";
         rarity = 3;
         itemStack = 0;

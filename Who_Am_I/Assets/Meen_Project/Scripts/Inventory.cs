@@ -45,11 +45,13 @@ public class Inventory : MonoBehaviour
     public Image[] dropItemInfoImage = new Image[2];
 
     // 인벤토리를 열고있는 상태인지 체크
-    public bool lookInventory = false;
+    public bool lookInventory { get; set; } = false;
     // 인벤토리 상세 정보에 들어와 있는 상태인지 체크
-    public bool lookItemDetailInfo = false;
+    public bool lookItemDetailInfo { get; set; } = false;
     // Test : 인벤토리의 1개의 아이템 그룹 페이지당 아이템 아이콘 갯수
-    public int maxItemSlot = default;
+    public int maxItemSlot { get; set; } = default;
+    // 도구 페이지의 장착 중 텍스트가 표시된 아이템의 이름
+    public string useEquipStr { get; set; } = default;
 
     // 인벤토리 창에서 현재 아이템 선택 색
     private Color currentColor = default;
@@ -90,14 +92,12 @@ public class Inventory : MonoBehaviour
     private int order = default;
     // 아이템 상세 목록에서의 현재 선택한 버튼 확인 값
     private int detailOrder = default;
-
+    // 아이템 버리기 UI 에서 현재 표시하고 있는 버튼 값 체크
     private int dropItemOrder = default;
     // 인벤토리에 아이템들을 표시할 때 몇칸까지 표시할지 체크
     private int countItemSlot = default;
     // 도구 페이지의 장착 중 텍스트의 표시된 위치
     private int useEquipNum = default;
-    // 도구 페이지의 장착 중 텍스트가 표시된 아이템의 이름
-    private string useEquipStr = default;
     // 도구 페이지의 장착 중 텍스트가 표시된 상태인지 체크
     private bool useEquipCheck = false;
     // 현재 출력된 인벤토리가 몇번째 페이지인지 중첩 슬롯을 확인하는 값
@@ -106,6 +106,9 @@ public class Inventory : MonoBehaviour
     private bool[] itemGroupPageCheck = new bool[2];
     // 인벤토리 상세 정보창에 들어간 상태인지 체크
     private bool itemInfoCheck = false;
+
+    // 도구, 음식 아이템을 장착, 사용 또는 해제하는 스크립트
+    VRIFItemSystem equipmentScript = new VRIFItemSystem();
 
     // Test : 데이터 베이스 연동 테스트 딕셔너리
     Dictionary<string, int> test = new Dictionary<string, int>();
@@ -628,7 +631,7 @@ public class Inventory : MonoBehaviour
             }
 
             // 인벤토리 현재 페이지의 아이템들을 출력할 때 페이지가 도구 페이지이고, 현재 장착 상태인 아이템이 있을때 실행
-            if (inventoryPage == 1 && useEquipStr != "None")
+            if (inventoryPage == 0 && useEquipStr != "None")
             {
                 // 해당 인벤토리 칸의 아이템이 장착 중인 아이템과 같을때 <장착중> 글을 표시
                 if (itemNames[i + checkCount] == useEquipStr)
@@ -836,7 +839,7 @@ public class Inventory : MonoBehaviour
         // 아이템 큰 이미지를 누르면 아이템 정보가 표시됨 (반대도 가능)
         if (detailOrder == 0) { ChangeItemInfo(); }
         // 아이템 장착, 사용, 장착 해제를 누르면 해당 기능의 함수 실행
-        else if (detailOrder == 1) { UseItem(); }
+        else if (detailOrder == 1) { UseItem(0, itemNames[order + checkCount]); }
         // 퀵슬롯 버튼을 누르면 실행
         else if (detailOrder == 2)
         {
@@ -905,39 +908,192 @@ public class Inventory : MonoBehaviour
     }     // ConnectQuickSlot()
 
     // 아이템 장착, 사용, 장착 해제 기능 함수
-    public void UseItem()
+    public void UseItem(int usingType, string itemName)
     {
-        if (inventoryPage == 0)
+        // 인벤토리에서 아이템을 사용, 장착, 장착해제 기능을 사용하였는지, 퀵슬롯에서 사용하였는지 체크하는 값
+        switch (usingType)
         {
-            // 현재 장착 아이템이 없으면 장착을 누른 아이템을 장착
-            if (useEquipStr == "None")
-            {
-                useEquipStr = itemNames[order + checkCount];
+            // 인벤토리에서 아이템에 대한 사용, 장착, 장착 해제 버튼을 눌렀을 경우
+            case 0:
+                // 도구 아이템 타입일 경우
+                if (inventoryPage == 0)
+                {
+                    // 현재 장착 아이템이 없으면 장착을 누른 아이템을 장착
+                    if (useEquipStr == "None")
+                    {
+                        // 장착한 아이템 이름을 저장함
+                        useEquipStr = itemName;
 
-                CleanInventory();
-                ControlInventory();
-                OnItemInfo(itemNames[order + checkCount]);
-            }
-            // 현재 장착중인 다른 아이템이 있으면 장착을 누른 아이템으로 장착 교체
-            else if (useEquipStr != "None" && itemNames[order + checkCount] != useEquipStr)
-            {
-                useEquipStr = itemNames[order + checkCount];
+                        CleanInventory();
+                        ControlInventory();
+                        OnItemInfo(itemName);
 
-                CleanInventory();
-                ControlInventory();
-                OnItemInfo(itemNames[order + checkCount]);
-            }
-            // 현재 장착중인 아이템을 장착 해제를 누르면 장착 해제
-            else if (useEquipStr != "None" && itemNames[order + checkCount] == useEquipStr)
-            {
-                useEquipStr = "None";
+                        // 아이템 영문 이름으로 변환하는 함수를 실행
+                        ConversionEquipmentName(useEquipStr, 0);
+                    }
+                    // 현재 장착중인 다른 아이템이 있으면 장착을 누른 아이템으로 장착 교체
+                    else if (useEquipStr != "None" && itemName != useEquipStr)
+                    {
+                        // 장착한 아이템 이름을 저장함
+                        useEquipStr = itemName;
 
-                CleanInventory();
-                ControlInventory();
-                OnItemInfo(itemNames[order + checkCount]);
-            }
+                        CleanInventory();
+                        ControlInventory();
+                        OnItemInfo(itemName);
+
+                        // 아이템 영문 이름으로 변환하는 함수를 실행
+                        ConversionEquipmentName(useEquipStr, 0);
+                    }
+                    // 현재 장착중인 아이템을 장착 해제를 누르면 장착 해제
+                    else if (useEquipStr != "None" && itemName == useEquipStr)
+                    {
+                        // 아이템 영문 이름으로 변환하는 함수를 실행
+                        ConversionEquipmentName(useEquipStr, 1);
+
+                        // 장착한 아이템 이름을 None 으로 저장함
+                        useEquipStr = "None";
+
+                        CleanInventory();
+                        ControlInventory();
+                        OnItemInfo(itemName);
+                    }
+                }
+                // 음식 아이템 타입일 경우
+                else if (inventoryPage == 1)
+                {
+                    // 아이템을 사용하는 기능의 함수로 실행 타입과 사용하는 아이템 이름값으로 실행함
+                    UseFoods(0, itemName);
+                }
+                break;
+            // 퀵슬롯에서 아이템에 대한 사용, 장착, 장착 해제 버튼을 눌렀을 경우
+            case 1:
+                if (useEquipStr == "None")
+                {
+                    useEquipStr = itemName;
+
+                    // 아이템 영문 이름으로 변환하는 함수를 실행
+                    ConversionEquipmentName(useEquipStr, 0);
+                }
+                else if (useEquipStr == itemName)
+                {
+                    // 아이템 영문 이름으로 변환하는 함수를 실행
+                    ConversionEquipmentName(useEquipStr, 1);
+
+                    useEquipStr = "None";
+                }
+                else if (useEquipStr != "None" && useEquipStr != itemName)
+                {
+                    useEquipStr = itemName;
+
+                    // 아이템 영문 이름으로 변환하는 함수를 실행
+                    ConversionEquipmentName(useEquipStr, 0);
+                }
+                break;
+            default:
+                break;
         }
     }     // UseItem()
+
+    // 음식 아이템을 사용하는 기능의 함수
+    public void UseFoods(int usingType, string itemName)
+    {
+        ItemsMain itemInfomation = new ItemsMain();
+
+        // 인벤토리에서 아이템을 사용하였는지, 퀵슬롯에서 아이템을 사용하였는지 구분함
+        switch (usingType)
+        {
+            // 인벤토리에서 아이템을 사용했을 경우
+            case 0:
+                // 아이템 매니저에서 아이템 저장 정보를 가져옴
+                ItemManager.instance.ReturnItemInfomation(itemName, 1, out itemInfomation);
+                // 아이템 중첩 수를 감소
+                itemInfomation.itemStack -= 1;
+
+                // 아이템 중첩 수가 0 이하일 경우
+                if (itemInfomation.itemStack <= 0)
+                {
+                    // 퀵슬롯에 저장된 아이템과 중첩값을 동기화
+                    quickSlotTf.GetComponent<QuickSlot>().UseFoodsCheck(itemName);
+                    // 아이템 매니저에서 인벤토리에 저장된 아이템을 삭제하는 함수를 실행
+                    ItemManager.instance.DeleteItem(itemName);
+
+                    OffItemDetailInfo();
+                    CleanInventory();
+                    ControlInventory();
+                }
+                else
+                {
+                    CleanInventory();
+                    ControlInventory();
+                }
+                break;
+            case 1:
+                // 아이템 매니저에서 아이템 저장 정보를 가져옴
+                ItemManager.instance.ReturnItemInfomation(itemName, 1, out itemInfomation);
+                // 아이템 중첩 수를 감소
+                itemInfomation.itemStack -= 1;
+
+                // 아이템 중첩 수가 0 이하일 경우
+                if (itemInfomation.itemStack <= 0)
+                {
+                    // 퀵슬롯에 저장된 아이템과 중첩값을 동기화
+                    quickSlotTf.GetComponent<QuickSlot>().UseFoodsCheck(itemName);
+                    // 아이템 매니저에서 인벤토리에 저장된 아이템을 삭제하는 함수를 실행
+                    ItemManager.instance.DeleteItem(itemName);
+                }
+                
+                break;
+            default:
+                break;
+        }
+
+        // 가져온 음식 정보 메서드값이 null 이 아닐 경우 실행
+        if (itemInfomation != null)
+        {
+            //* Feat : 음식 아이템을 사용한 후 효과 타입을 체크하고, 음식 효과를 VR 플레이어 스크립트 함수에 보내는 기능 추가 예정
+            // 사용한 음식의 효과 타입
+            int foodEffectType = itemInfomation.cookType;
+            // 사용한 음식의 포만감 게이지 증가량
+            int foodSatietyGauge = itemInfomation.satietyGauge;
+            // 사용한 음식의 응가 게이지 증가량
+            int foodPooGauge = itemInfomation.pooGauge;
+
+            switch (foodEffectType)
+            {
+                // 음식 효과 타입이 1 이면
+                case 1:
+
+                    break;
+                // 음식 효과 타입이 2 이면
+                case 2:
+
+                    break;
+                default:
+                    break;
+            }
+        }
+    }     // UseFoods()
+
+    // 도구 장착, 음식 사용 아이템 이름을 영문 이름으로 변환해서 장착 정보를 보내는 함수
+    public void ConversionEquipmentName(string itemName, int itemType)
+    {
+        ItemsMain itemInfomation = new ItemsMain();
+
+        // 아이템 매니저에서 해당 아이템의 정보를 가져옴
+        ItemManager.instance.ReturnItemInfomation(itemName, 0, out itemInfomation);
+
+        // 아이템 타입이 도구 타입이면
+        if (itemType == 0)
+        {
+            // 도구 장착 기능의 스크립트로 영문 아이템 이름으로 정보를 보냄
+            //equipmentScript.MountingItem(itemInfomation.itemEnglishName);
+        }
+        // 아이템 타입이 도구이고 도구를 해제하는 상태면
+        else if (itemType == 1)
+        {
+            //equipmentScript.ReleaseItem(itemInfomation.itemEnglishName);
+        }
+    }     // ConversionEquipmentName()
 
     // 아이템 큰 이미지를 누르면 아이템 정보가 표시되는 함수 (반대도 가능)
     public void ChangeItemInfo()

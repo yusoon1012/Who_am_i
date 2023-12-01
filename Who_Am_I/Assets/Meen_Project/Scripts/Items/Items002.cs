@@ -14,6 +14,7 @@ public class Items002 : ItemsMain
     {
         itemID = 2000;
         itemName = "딸기";
+        itemEnglishName = "Strawberry";
         itemInfo = "빨갛게 잘 익은 딸기";
         rarity = 2;
         itemStack = 0;

@@ -7,6 +7,7 @@ public class ItemCrafting : MonoBehaviour
 {
     #region 변수 설정
 
+    // 메뉴 UI 의 백그라운드 이미지
     public GameObject mainScreen;
     // 제작 창 오브젝트
     public GameObject crafting;
@@ -32,9 +33,9 @@ public class ItemCrafting : MonoBehaviour
     public GameObject[] detailSlotObj = new GameObject[4];
 
     // 제작 창을 보고있는 상태인지 체크
-    public bool lookCrafting = false;
+    public bool lookCrafting { get; set; } = false;
     // 제작 상세 창을 보고있는 상태인지 체크
-    public bool lookCraftingInfo = false;
+    public bool lookCraftingInfo { get; set; } = false;
 
     // 제작 창에서 현재 리스트 선택 색
     private Color currentColor = default;
@@ -82,6 +83,8 @@ public class ItemCrafting : MonoBehaviour
     // 제작 상세 창의 제작 후 완성되는 아이템의 제작 완료 갯수
     private int craftingStack = default;
 
+    private int craftingCount = default;
+
     #endregion 변수 설정
 
     void Awake()
@@ -93,6 +96,7 @@ public class ItemCrafting : MonoBehaviour
         craftingStack = 0;
         order = 0;
         detailOrder = 0;
+        craftingCount = 0;
     }     // Awake()
 
     void Start()
