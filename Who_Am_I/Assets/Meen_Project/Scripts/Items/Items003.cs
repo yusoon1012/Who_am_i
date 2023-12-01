@@ -14,6 +14,7 @@ public class Items003 : ItemsMain
     {
         itemID = 2001;
         itemName = "우유";
+        itemEnglishName = "Milk";
         itemInfo = "갓 짠 신선한 우유";
         rarity = 1;
         itemStack = 0;

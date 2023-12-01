@@ -14,6 +14,7 @@ public class Items001 : ItemsMain
     {
         itemID = 1000;
         itemName = "고기";
+        itemEnglishName = "Meat";
         itemInfo = "불에 구워 먹으면 맛있어 보이는 고기";
         rarity = 1;
         itemStack = 0;

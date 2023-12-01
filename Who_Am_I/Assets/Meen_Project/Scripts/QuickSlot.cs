@@ -7,6 +7,8 @@ public class QuickSlot : MonoBehaviour
 {
     #region 변수 설정
 
+    // 메뉴 백그라운드 스크린 오브젝트
+    public GameObject menuScreenObj;
     // 퀵슬롯 UI 오브젝트
     public GameObject quickSlotObj;
     // 퀵슬롯 칸 이미지 목록
@@ -17,8 +19,13 @@ public class QuickSlot : MonoBehaviour
     public Image[] quickSlotItemImage = new Image[6];
     // 퀵슬롯 아이템 중첩 수 표시 목록
     public Text[] quickSlotStack = new Text[3];
+    // 도구 장착중 텍스트
+    public Text[] usingText = new Text[3];
     // 플레이어 트랜스폼
     public Transform playerTf;
+
+    // 퀵슬롯에 저장된 아이템 이름 목록
+    public string[] quickSlotSaveName { get; set; } = new string[6];
 
     // 퀵슬롯 커서를 움직일 때 변경되는 색
     private Color changeColor = default;
@@ -26,8 +33,6 @@ public class QuickSlot : MonoBehaviour
     // 퀵슬롯 트랜스폼
     private Transform thisQuickSlotObj = default;
 
-    // 퀵슬롯에 저장된 아이템 이름 목록
-    private string[] quickSlotSaveName = new string[6];
     // 퀵슬롯으로 보낸 현재 선택중인 아이템 이름
     private string connectItemName = default;
 
@@ -61,6 +66,13 @@ public class QuickSlot : MonoBehaviour
     {
         ItemsMain items = new ItemsMain();
 
+        string useEquipCheck = playerTf.GetComponent<Inventory>().useEquipStr;
+
+        for (int j = 0; j < 3; j++)
+        {
+            usingText[j].gameObject.SetActive(false);
+        }
+
         for (int i = 0; i < 6; i++)
         {
             // 퀵슬롯에 저장된 아이템 이름이 "None" 이 아니면 실행
@@ -70,6 +82,11 @@ public class QuickSlot : MonoBehaviour
                 if (i < 3)
                 {
                     ItemManager.instance.QuickSlotItemInfo(quickSlotSaveName[i], 0, out items);
+
+                    if (useEquipCheck == quickSlotSaveName[i])
+                    {
+                        usingText[i].gameObject.SetActive(true);
+                    }
                 }
                 // 음식 타입의 퀵슬롯이 선택중이면 실행
                 else if (i >= 3)
@@ -99,11 +116,31 @@ public class QuickSlot : MonoBehaviour
         }
     }     // ResetQuickSlot()
 
+    // 인벤토리에서 사용한 음식이 퀵슬롯에 등록된 음식인지 확인하는 함수
+    public void UseFoodsCheck(string usingItemName)
+    {
+        // 모든 음식 퀵슬롯을 확인
+        for (int i = 3; i < 6; i++)
+        {
+            // 퀵슬롯에 저장된 아이템 이름이 인벤토리에서 사용한 아이템 이름과 같다면
+            if (quickSlotSaveName[i] == usingItemName)
+            {
+                // 퀵슬롯에 저장된 아이템 정보를 삭제
+                quickSlotSaveName[i] = "None";
+            }
+        }
+    }     // UseFoodsCheck()
+
     // 인벤토리에서 선택된 아이템 정보를 초기 설정하는 함수
     public void TakeItemName(string itemName, int itemTypeNum)
     {
         connectItemName = itemName;
         itemType = itemTypeNum;
+
+        if (itemType == 2)
+        {
+            menuScreenObj.SetActive(true);
+        }
 
         quickSlotObj.SetActive(true);
 
@@ -115,6 +152,8 @@ public class QuickSlot : MonoBehaviour
         {
             order = 3;
         }
+
+        ResetQuickSlot();
 
         changeColor = new Color32(255, 255, 255, 255);
         quickSlotImage[order].color = changeColor;
@@ -133,6 +172,24 @@ public class QuickSlot : MonoBehaviour
         playerTf.GetComponent<Inventory>().inventory.SetActive(true);
         playerTf.GetComponent<Inventory>().itemInfo.SetActive(true);
     }     // ConnectInventory()
+
+    // 인벤토리에서가 아닌 바로 퀵슬롯 메뉴를 열었을 때 UI 를 활성화 하는 함수
+    public void SingleOpenQuickSlot()
+    {
+        TakeItemName("None", 2);
+    }     // SingleOpenQuickSlot()
+
+    // 인벤토리에서가 아닌 바로 퀵슬롯 메뉴를 열었을 때 UI 를 비활성화 하는 함수
+    public void SingleCloseQuickSlot()
+    {
+        changeColor = new Color32(155, 155, 155, 255);
+        quickSlotImage[order].color = changeColor;
+
+        connectItemName = string.Empty;
+
+        quickSlotObj.SetActive(false);
+        menuScreenObj.SetActive(false);
+    }     // SingleCloseQuickSlot()
 
     // 퀵슬롯에서 각 칸을 이동하는 기능 함수
     public void DirectionControl(int arrowType)
@@ -270,9 +327,19 @@ public class QuickSlot : MonoBehaviour
             }
         }
         // 현재 선택중인 아이템 이름이 "None" 일 때 (바로 퀵슬롯 UI 를 연 경우)
-        else
+        else if (connectItemName == "None")
         {
-            //* Feat : 도구 장착, 음식 사용 기능 추가 예정
+            if (quickSlotSaveName[order] != "None")
+            {
+                if (order < 3)
+                {
+                    playerTf.GetComponent<Inventory>().UseItem(1, quickSlotSaveName[order]);
+                }
+                else if (order >= 3)
+                {
+                    playerTf.GetComponent<Inventory>().UseFoods(1, quickSlotSaveName[order]);
+                }
+            }
         }
 
         ResetQuickSlot();
