@@ -148,6 +148,7 @@
     <Compile Include="Assets\BNG Framework\Scripts\Weapons\BulletInsert.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Usage\Passthrough\Scripts\PassthroughController.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Extras\Explosive.cs" />
+    <Compile Include="Assets\_PJO\Scripts\ThisData.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Extras\HandModelSwitcher.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Usage\HandsTrainExample\Scripts\WindmillController.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Helpers\StaticBatch.cs" />
@@ -161,6 +162,7 @@
     <Compile Include="Assets\BNG Framework\Scripts\Helpers\TeleportPlayerOnEnter.cs" />
     <Compile Include="Assets\Solbin\Scripts\Oculus\Tool\Nerf Gun\Tool_NerfGun.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Helpers\HandCollision.cs" />
+    <Compile Include="Assets\_PJO\Scripts\Globel\GameManager.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Usage\Passthrough\Scripts\BrushController.cs" />
     <Compile Include="Assets\Solbin\Scripts\Oculus\Tool\Dragonfly Net\Tool_DragonflyNet.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Core\HeadCollisionFade.cs" />
@@ -193,6 +195,7 @@
     <Compile Include="Assets\Meen_Project\Scripts\Items\Items008.cs" />
     <Compile Include="Assets\_PJO\Scripts\TerrainMeshSend.cs" />
     <Compile Include="Assets\BNG Framework\HandPoser\Scripts\EditorHandle.cs" />
+    <Compile Include="Assets\_PJO\Scripts\DropItem.cs" />
     <Compile Include="Assets\Solbin\Scripts\Oculus\Player\Player_Climbing.cs" />
     <Compile Include="Assets\BNG Framework\HandPoser\Scripts\SavePoseBinding.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Usage\SceneManager\Scripts\BouncingBallLogic.cs" />
@@ -282,6 +285,7 @@
     <Compile Include="Assets\Solbin\Scripts\Oculus\Player\PlayerSystem.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Helpers\RagdollHelper.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Usage\Firebase\SampleUI.cs" />
+    <Compile Include="Assets\_PJO\Scripts\SendDamage.cs" />
     <Compile Include="Assets\Solbin\Input System\VRIF\VRIF Action.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Core\Lever.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Core\Locomotion\Scripts\TeleportOrientationHandler.cs" />
@@ -292,6 +296,7 @@
     <Compile Include="Assets\BNG Framework\Scripts\Components\CharacterIK.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Extras\ProjectileLauncher.cs" />
     <Compile Include="Assets\Meen_Project\Scripts\Items\Items001.cs" />
+    <Compile Include="Assets\_PJO\Scripts\AddVertexObject.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Core\PlayerTeleport.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Usage\SpatialAnchor\Scripts\SpatialAnchorLoader.cs" />
     <Compile Include="Assets\_yusoon\Scripts\Quests\QuestItem.cs" />
@@ -334,6 +339,7 @@
     <Compile Include="Assets\BNG Framework\Scripts\Extras\DrawerSound.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Core\DebugUI\Scripts\LaserPointer.cs" />
     <Compile Include="Assets\Solbin\Scripts\VRIF\Controller\VRIFControllerSystem.cs" />
+    <Compile Include="Assets\_PJO\Scripts\AnimalsData.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Usage\AppDeeplink\AppDeeplinkUI.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Usage\SceneManager\Scripts\MyCustomSceneModelLoader.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Usage\TouchPro\Scripts\SceneSettings.cs" />
@@ -342,6 +348,7 @@
     <Compile Include="Assets\BNG Framework\Scripts\Helpers\HandController.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Components\RotateTowards.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Utility\DestroyIfPlayMode.cs" />
+    <Compile Include="Assets\_PJO\Scripts\GetMapVertex.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\UI\UIButtonCollider.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Components\CharacterYOffset.cs" />
     <Compile Include="Assets\BNG Framework\HandPoser\Scripts\XRTrackedPoseDriver.cs" />
@@ -354,6 +361,7 @@
     <Compile Include="Assets\Oculus\SampleFramework\Core\Video\Scripts\MediaPlayerImage.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Core\HeadCollisionMove.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\UI\UICanvasGroup.cs" />
+    <Compile Include="Assets\_PJO\Scripts\Globel\GFunc.cs" />
     <Compile Include="Assets\Solbin\Scripts\Oculus\MBTI\MBTISystem.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Extras\Bow.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Core\GrabbableUnityEvents.cs" />
@@ -367,6 +375,7 @@
     <Compile Include="Assets\Oculus\SampleFramework\Usage\SceneManager\Scripts\FurnitureSpawner.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Core\BNGPlayerController.cs" />
     <Compile Include="Assets\Solbin\Scripts\Oculus\Teleport\TeleportSystem.cs" />
+    <Compile Include="Assets\_PJO\Scripts\AnimalEscapeAI.cs" />
     <Compile Include="Assets\_yusoon\Scripts\Quests\ItemCollector.cs" />
     <Compile Include="Assets\_yusoon\Scripts\Quests\QuestManager.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\UI\VRTextInput.cs" />
@@ -436,6 +445,7 @@
     <None Include="Assets\Oculus\SampleFramework\Usage\SceneManager\Shaders\OverwriteAlpha.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />
     <None Include="Assets\Oculus\SampleFramework\Usage\DistanceGrab\Materials\CrosshairZCheat.shader" />
+    <None Include="Assets\Quirky Series\_Shader\SoftSurface.shader" />
     <None Include="Assets\Firebase\Plugins\iOS\Firebase.Analytics.dll" />
     <None Include="Assets\Oculus\SampleFramework\Usage\HandsTrainExample\Shaders\GradientSkybox.shader" />
     <None Include="Assets\Oculus\SampleFramework\Usage\Passthrough\Materials\PassthroughLine.shader" />
@@ -506,6 +516,7 @@
     <None Include="Assets\TextMesh Pro\Fonts\LiberationSans - OFL.txt" />
     <None Include="Assets\Oculus\SampleFramework\Usage\SceneManager\Shaders\StylizedOcclusions.shader" />
     <None Include="Assets\BNG Framework\Third-Party Notices.txt" />
+    <None Include="Assets\Quirky Series\_Shader\ToonRamp.shader" />
     <None Include="Assets\BNG Framework\HandPoser\Documentation.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile.shader" />
     <None Include="Assets\Oculus\SampleFramework\Core\CustomHands\Shaders\Hands_02.shader" />

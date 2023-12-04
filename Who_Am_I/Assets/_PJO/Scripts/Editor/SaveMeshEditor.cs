@@ -27,11 +27,11 @@ public class SaveMeshEditor : Editor
 
     private void SaveMesh()
     {
-        MeshFilter meshFilter = GetNormalMesh();
+        MeshFilter meshFilter = GFunc.GetComponent<MeshFilter>(thisObject);
 
         if (meshFilter == null)
         {
-            Debug.LogError("ObjectÀÇ MeshFilter°¡ ¾ø°Å³ª Mesh°¡ null");
+            Debug.LogError("Objectì˜ MeshFilterê°€ ì—†ê±°ë‚˜ Meshê°€ null");
             return;
         }
 
@@ -39,7 +39,7 @@ public class SaveMeshEditor : Editor
 
         if (mesh == null)
         {
-            Debug.LogError("ObjectÀÇ Mesh°¡ Null");
+            Debug.LogError("Objectì˜ Meshê°€ Null");
             return;
         }
 
@@ -49,13 +49,6 @@ public class SaveMeshEditor : Editor
         AssetDatabase.SaveAssets();
         AssetDatabase.Refresh();
 
-        Debug.Log("Mesh°¡ ¼º°øÀûÀ¸·Î ÀúÀåµÇ¾ú½À´Ï´Ù. °æ·Î: " + path);
-    }
-
-    private MeshFilter GetNormalMesh()
-    {
-        GameObject object_ = (GameObject)thisObject;
-
-        return object_ != null ? object_.GetComponent<MeshFilter>() : null;
+        Debug.Log("Meshê°€ ì„±ê³µì ìœ¼ë¡œ ì €ì¥ë˜ì—ˆìŠµë‹ˆë‹¤. ê²½ë¡œ: " + path);
     }
 }
