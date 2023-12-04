@@ -138,9 +138,6 @@ public class VRIFStatusSystem : MonoBehaviour
         m_Fullness += _satiety; // 포만감 더하기 
         m_Poo += _poo; // 배출값 더하기 
 
-        Debug.LogFormat("포만감 + {0}, 응가 게이지 + {1}", _satiety, _poo);
-        Debug.LogFormat("현재 포만감 : {0}, 현재 응가 게이지 : {1}", m_Fullness, m_Poo);
-
         if (m_Poo >= 100) { PooEvent(); }
     }
 
