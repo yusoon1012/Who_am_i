@@ -2,134 +2,119 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-// ¿¡µğÅÍ ½ºÅ©¸³Æ®·Î ¼±¾ğÇÏ°Ú´Ù´Â ¾îÆ®¸®ºäÆ®
+// ì—ë””í„° ìŠ¤í¬ë¦½íŠ¸ë¡œ ì„ ì–¸í•˜ê² ë‹¤ëŠ” ì–´íŠ¸ë¦¬ë·°íŠ¸
 [CustomEditor(typeof(TerrainMeshSend))]
 public class TerrainMeshSendEditor : Editor
 {
-    // Terrain¿ÀºêÁ§Æ®ÀÇ ¸Ş½¬¸¦ º¹»ç´çÇÒ ¿ÀºêÁ§Æ®
+    // Terrainì˜¤ë¸Œì íŠ¸ì˜ ë©”ì‰¬ë¥¼ ë³µì‚¬ë‹¹í•  ì˜¤ë¸Œì íŠ¸
     SerializedProperty targetObj;
 
-    // TerrainMeshCopy½ºÅ©¸³Æ®°¡ ÀÖ´Â Terrain ÄÄÆ÷³ÍÆ® ÂüÁ¶
+    // TerrainMeshCopyìŠ¤í¬ë¦½íŠ¸ê°€ ìˆëŠ” Terrain ì»´í¬ë„ŒíŠ¸ ì°¸ì¡°
     private Terrain terrain;
 
     private void OnEnable()
     {
-        // targetObj ÇÁ·ÎÆÛÆ¼ ¹× terrain º¯¼ö ÃÊ±âÈ­
+        // targetObj í”„ë¡œí¼í‹° ë° terrain ë³€ìˆ˜ ì´ˆê¸°í™”
         targetObj = serializedObject.FindProperty("targetObj");
         terrain = ((TerrainMeshSend)target).GetComponent<Terrain>();
     }       // OnEnable()
 
     public override void OnInspectorGUI()
     {
-        // ÀÎ½ºÆåÅÍ Ã¢ ¾÷µ¥ÀÌÆ®
+        // ì¸ìŠ¤í™í„° ì°½ ì—…ë°ì´íŠ¸
         serializedObject.Update();
 
-        // targetObj ÇÁ·ÎÆÛÆ¼¸¦ ÀÎ½ºÆåÅÍ Ã¢¿¡ Ç¥½Ã
+        // targetObj í”„ë¡œí¼í‹°ë¥¼ ì¸ìŠ¤í™í„° ì°½ì— í‘œì‹œ
         EditorGUILayout.PropertyField(targetObj);
 
-        // ÀÎ½ºÆåÅÍÃ¢¿¡ ÇØ´ç ¹öÆ°À» Ãß°¡ÇÏ¿© Apply Å¬¸¯½Ã CopyMesh() ¸Ş¼­µå È£Ãâ
+        // ì¸ìŠ¤í™í„°ì°½ì— í•´ë‹¹ ë²„íŠ¼ì„ ì¶”ê°€í•˜ì—¬ Apply í´ë¦­ì‹œ CopyMesh() ë©”ì„œë“œ í˜¸ì¶œ
         if (GUILayout.Button("Apply"))
         {
             CopyMesh();
         }
 
-        // ÀÎ½ºÆåÅÍ Ã¢¿¡ º¯°æ»çÇ× Àû¿ë
+        // ì¸ìŠ¤í™í„° ì°½ì— ë³€ê²½ì‚¬í•­ ì ìš©
         serializedObject.ApplyModifiedProperties();
     }       // OnInspectorGUI()
 
     private void CopyMesh()
     {
-        // GetTargetMeshFilter() ¸Ş¼­µå¸¦ »ç¿ëÇÏ¿© targetÀÇ MeshFilterÄÄÆ÷³ÍÆ® °¡Á®¿À±â
-        MeshFilter targetMeshFilter = GetTargetMeshFilter();
+        // GetTargetMeshFilter() ë©”ì„œë“œë¥¼ ì‚¬ìš©í•˜ì—¬ targetì˜ MeshFilterì»´í¬ë„ŒíŠ¸ ê°€ì ¸ì˜¤ê¸°
+        MeshFilter targetMeshFilter = GFunc.PropertyGetComponent<MeshFilter>(targetObj);
 
-        // targetMeshFilter Ã¼Å©
+        // targetMeshFilter ì²´í¬
         if (targetMeshFilter == null)
         {
-            Debug.LogError("TargetObjÀÇ MeshFilter°¡ ¾ø°Å³ª Mesh°¡ null");
+            Debug.LogError("TargetObjì˜ MeshFilterê°€ nullì…ë‹ˆë‹¤.");
             return;
         }
 
-        // targetÀÇ ¸Ş½¬ °¡Á®¿À±â
+        // targetì˜ ë©”ì‰¬ ê°€ì ¸ì˜¤ê¸°
         Mesh targetMesh = targetMeshFilter.sharedMesh;
 
-        // targetMesh Ã¼Å©
+        // targetMesh ì²´í¬
         if (targetMesh == null)
         {
-            Debug.LogError("targetObjÀÇ Mesh°¡ nullÀÔ´Ï´Ù.");
+            Debug.LogError("targetObjì˜ Meshê°€ nullì…ë‹ˆë‹¤.");
             return;
         }
 
-        // TerrainMesh¸¦ ±âÁØÀ¸·Î targetObj ¸Ş½¬ÀÇ Á¤Á¡ ¼öÁ¤ 
+        // TerrainMeshë¥¼ ê¸°ì¤€ìœ¼ë¡œ targetObj ë©”ì‰¬ì˜ ì •ì  ìˆ˜ì • 
         Bounds bounds = GetTargetMeshBounds();
 
-        // ¼öÁ¤µÈ Á¤Á¡À» ÀúÀåÇÒ List
+        // ìˆ˜ì •ëœ ì •ì ì„ ì €ì¥í•  List
         List<Vector3> newVector = new List<Vector3>();
 
-        // °¢ Á¤Á¡À» ¼öÁ¤ÇÏ¿© newVector¸®½ºÆ®¿¡ ÀúÀå
-        foreach (Vector3 vertices in targetMesh.vertices)
+        // ê° ì •ì ì„ ìˆ˜ì •í•˜ì—¬ newVectorë¦¬ìŠ¤íŠ¸ì— ì €ì¥
+        foreach (Vector3 vertice in targetMesh.vertices)
         {
-            // ¿ùµå ÁÂÇ¥·Î º¯È¯µÈ Á¤Á¡ À§Ä¡ °è»ê
+            // ì›”ë“œ ì¢Œí‘œë¡œ ë³€í™˜ëœ ì •ì  ìœ„ì¹˜ ê³„ì‚°
             /*
-             * ÀÚ¼¼ÇÑ ¼³¸í ÁÖ¼® ÀÛ¼º
+             * ìì„¸í•œ ì„¤ëª… ì£¼ì„ ì‘ì„±
              */
-            Vector4 worldPos = targetMeshFilter.transform.localToWorldMatrix * vertices;
+            Vector4 worldPos = targetMeshFilter.transform.localToWorldMatrix * vertice;
 
-            // Á¤Á¡ º¹»çº» »ı¼º
-            Vector3 newVertices = vertices;
+            // ì •ì  ë³µì‚¬ë³¸ ìƒì„±
+            Vector3 newVertices = vertice;
 
-            // º¹»çº» Á¤Á¡ÀÇ yÁÂÇ¥¸¦ ÇØ´ç ¿ùµå ÁÂÇ¥¿¡¼­ÀÇ ³ôÀÌ·Î ¼öÁ¤
+            // ë³µì‚¬ë³¸ ì •ì ì˜ yì¢Œí‘œë¥¼ í•´ë‹¹ ì›”ë“œ ì¢Œí‘œì—ì„œì˜ ë†’ì´ë¡œ ìˆ˜ì •
             newVertices.y = terrain.SampleHeight(worldPos);
 
-            // ¼öÁ¤µÈ Á¤Á¡À» newVector¸®½ºÆ®¿¡ ÀúÀå
+            // ìˆ˜ì •ëœ ì •ì ì„ newVectorë¦¬ìŠ¤íŠ¸ì— ì €ì¥
             newVector.Add(newVertices);
         }
 
-        // targetObj ¸Ş½¬ÀÇ Á¤Á¡À» ¼öÁ¤µÈ Á¤Á¡À¸·Î ¼³Á¤
+        // targetObj ë©”ì‰¬ì˜ ì •ì ì„ ìˆ˜ì •ëœ ì •ì ìœ¼ë¡œ ì„¤ì •
         targetMesh.SetVertices(newVector.ToArray());
 
-        // targetObj ¸Ş½¬ÀÇ ¹ı¼±, Á¢¼±, °æ°è¸¦ Àç°è»ê
+        // targetObj ë©”ì‰¬ì˜ ë²•ì„ , ì ‘ì„ , ê²½ê³„ë¥¼ ì¬ê³„ì‚°
         targetMesh.RecalculateNormals();
         targetMesh.RecalculateTangents();
         targetMesh.RecalculateBounds();
     }       // CopyMesh()
 
-    // MeshFilterÀÇ À¯¹«¸¦ È®ÀÎÇÏ±â À§ÇÑ ¸Ş¼­µå
-    private MeshFilter GetTargetMeshFilter()
-    {
-        // ÀÎ½ºÆåÅÍ Ã¢¿¡ ÇÒ´çµÈ targetObjÇÁ·ÎÆÛÆ¼ °¡Á®¿À±â
-        GameObject targetObj_ = (GameObject)targetObj.objectReferenceValue;
-
-        // _targetObj = _ÀÇ ÀÇ¹Ì: °æ·ÂÀÚ°¡ º¸¾ÒÀ» ¶§ private¶ó´Â ¾Ï¹¬ÀûÀÎ ·êÀ»°¡Áö°í ÀÖ´Ù.
-        // tarfetObj = _¸¦ µÚ·Î º¸³»¾î °³ÀÎÀ¸·Î »ç¿ëÇÏ´Â º¯¼ö·Î ÁöÁ¤
-
-        // _targetObj°¡ null À¯¹« È®ÀÎ
-        // true : _targetObjÀÇ MeshFilter ÄÄÆ÷³ÍÆ® ¹İÈ¯
-        // false: null ¹İÈ¯
-        return targetObj_ != null ? targetObj_.GetComponent<MeshFilter>() : null;
-    }       // GetTargetMeshFilter()
-
-    // targetObjÀÇ ¹Ù¿îµå¸¦ °¡Á®¿À±â À§ÇÑ ¸Ş¼­µå
+    // targetObjì˜ ë°”ìš´ë“œë¥¼ ê°€ì ¸ì˜¤ê¸° ìœ„í•œ ë©”ì„œë“œ
     private Bounds GetTargetMeshBounds()
     {
-        // targetObjÀÇ MeshFilter ÄÄÆ÷³ÍÆ®¸¦ °¡Á®¿À´Â °úÁ¤
+        // targetObjì˜ MeshFilter ì»´í¬ë„ŒíŠ¸ë¥¼ ê°€ì ¸ì˜¤ëŠ” ê³¼ì •
         TerrainMeshSend targetObj_ = (TerrainMeshSend)target;
         MeshFilter targetMeshFilter_ = targetObj_.GetComponent<MeshFilter>();
 
-        // _targetMeshFilter À¯¹« È®ÀÎ
+        // _targetMeshFilter ìœ ë¬´ í™•ì¸
         if (targetMeshFilter_ != null)
         {
-            // ¸Ş½¬¸¦ °¡Á®¿À´Â °úÁ¤
+            // ë©”ì‰¬ë¥¼ ê°€ì ¸ì˜¤ëŠ” ê³¼ì •
             Mesh targetMesh_ = targetMeshFilter_.sharedMesh;
 
-            // _targetMesh À¯¹Â È®ÀÎ
+            // _targetMesh ìœ ë®¤ í™•ì¸
             if (targetMesh_ != null)
             {
-                // _targetMesh°¡ nullÀÌ ¾Æ´Ï¶ó¸é _targetMeshÀÇ bounds ¹İÈ¯
+                // _targetMeshê°€ nullì´ ì•„ë‹ˆë¼ë©´ _targetMeshì˜ bounds ë°˜í™˜
                 return targetMesh_.bounds;
             }
         }
 
-        // À§ if¹®¿¡ ÇØ´çÇÏÁö ¾Ê´Â´Ù¸é ±âº»ÀûÀÎ (0, 0, 0)¿¡¼­ (1, 1, 1)±îÁöÀÇ ¹Ù¿îµå ¹İÈ¯
+        // ìœ„ ifë¬¸ì— í•´ë‹¹í•˜ì§€ ì•ŠëŠ”ë‹¤ë©´ ê¸°ë³¸ì ì¸ (0, 0, 0)ì—ì„œ (1, 1, 1)ê¹Œì§€ì˜ ë°”ìš´ë“œ ë°˜í™˜
         return new Bounds(Vector3.zero, Vector3.one);
     }       // GetTerrainMeshBounds()
 }
