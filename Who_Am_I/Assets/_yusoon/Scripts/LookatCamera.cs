@@ -16,6 +16,7 @@ public class LookatCamera : MonoBehaviour
     {
         // Get the vector from this object to the camera
         Vector3 lookDir = transform.position - m_Camera.transform.position;
+        lookDir.y = 0;
 
         // Calculate the rotation to look away from the camera
         Quaternion lookRotation = Quaternion.LookRotation(lookDir);

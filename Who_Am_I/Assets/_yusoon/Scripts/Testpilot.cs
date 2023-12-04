@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using Yarn.Unity;
 public class Testpilot : MonoBehaviour
 {
     public bool isAction=false;
@@ -29,7 +29,7 @@ public class Testpilot : MonoBehaviour
             {
 
             isAction = true;
-            Debug.Log("¾×¼ÇÁß");
+            Debug.Log("ì•¡ì…˜ì¤‘");
             }
         }
         if(isAction)
@@ -41,5 +41,11 @@ public class Testpilot : MonoBehaviour
             isAction=false;
             actionTimer = 0;
         }
+    }
+    [YarnFunction("randomIdx")]
+    public static int RandomIndex()
+    {
+       int number = Random.Range(0, 3);
+        return number;
     }
 }

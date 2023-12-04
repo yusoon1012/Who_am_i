@@ -54,12 +54,15 @@
   </PropertyGroup>
   <ItemGroup>
     <Analyzer Include="C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
+    <Analyzer Include="C:\yusoon\UnityProjects\Who_Am_I\git\yusoon\Who_Am_I\Library\PackageCache\dev.yarnspinner.unity@2.4.0\SourceGenerator\YarnSpinner.Unity.SourceCodeGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Oculus\SampleFramework\Core\Locomotion\Scripts\TeleportAimHandlerParabolic.cs" />
+    <Compile Include="Assets\_yusoon\Scripts\Quests\QuestNPC.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Usage\Firebase\StartCrashlytics.cs" />
     <Compile Include="Assets\Solbin\Input System\Player Action.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Core\TrackedDevice.cs" />
+    <Compile Include="Assets\_yusoon\DialogueSystem\Windows\DSGraphView.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Extras\AutoGrabGrabbable.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Components\ScreenFader.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Extras\ArrowGrabArea.cs" />
@@ -97,6 +100,7 @@
     <Compile Include="Assets\Oculus\SampleFramework\Core\Locomotion\Scripts\TeleportInputHandler.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\UI\VRCanvas.cs" />
     <Compile Include="Assets\_yusoon\Scripts\DatabaseManager.cs" />
+    <Compile Include="Assets\_yusoon\Scripts\DialogueParse.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Usage\SpatialAnchor\Scripts\AnchorSession.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Usage\SpatialAnchor\Scripts\SpatialAnchorSession.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Components\Climbable.cs" />
@@ -142,14 +146,17 @@
     <Compile Include="Assets\BNG Framework\Scripts\Extras\PlayerScaler.cs" />
     <Compile Include="Assets\_yusoon\Scripts\LookatCamera.cs" />
     <Compile Include="Assets\_yusoon\Scripts\Quests\QuestData.cs" />
+    <Compile Include="Assets\_yusoon\Scripts\Select.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Weapons\BulletInsert.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Usage\Passthrough\Scripts\PassthroughController.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Extras\Explosive.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Extras\HandModelSwitcher.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Usage\HandsTrainExample\Scripts\WindmillController.cs" />
+    <Compile Include="Assets\_yusoon\DialogueSystem\Enumerations\DSDialogueType.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Helpers\StaticBatch.cs" />
     <Compile Include="Assets\Meen_Project\Scripts\ItemCrafting.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Core\Locomotion\Scripts\TeleportTransition.cs" />
+    <Compile Include="Assets\_yusoon\Scripts\Quests\QuestStep.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Utility\VRUtils.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Usage\HandsTrainExample\Scripts\SelectionCylinder.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Usage\HandsTrainExample\Scripts\PanelHMDFollower.cs" />
@@ -185,6 +192,7 @@
     <Compile Include="Assets\Oculus\SampleFramework\Usage\Passthrough\Scripts\HandMeshMask.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Components\GrabbableHighlightMaterial.cs" />
     <Compile Include="Assets\Meen_Project\Scripts\ItemManager.cs" />
+    <Compile Include="Assets\_yusoon\DialogueSystem\Windows\DialogueEditorWindow.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Core\Locomotion\Scripts\TeleportTransitionBlink.cs" />
     <Compile Include="Assets\Meen_Project\Scripts\Items\Items008.cs" />
     <Compile Include="Assets\BNG Framework\HandPoser\Scripts\EditorHandle.cs" />
@@ -193,6 +201,7 @@
     <Compile Include="Assets\Oculus\SampleFramework\Usage\SceneManager\Scripts\BouncingBallLogic.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Helpers\VRIFGrabpointUpdater.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Helpers\HandleHelper.cs" />
+    <Compile Include="Assets\_yusoon\DialogueSystem\Elements\DSNode.cs" />
     <Compile Include="Assets\_yusoon\Scripts\Quests\MiscEvent.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Components\GrabbableHighlight.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Components\DamageCollider.cs" />
@@ -201,6 +210,7 @@
     <Compile Include="Assets\_yusoon\Scripts\AuthManager.cs" />
     <Compile Include="Assets\Solbin\Scripts\Tool\Shavel\Tool_Shavel.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Usage\Passthrough\Scripts\OverlayPassthrough.cs" />
+    <Compile Include="Assets\_yusoon\Scripts\InteractionEvent.cs" />
     <Compile Include="Assets\BNG Framework\HandPoser\Scripts\HandPose.cs" />
     <Compile Include="Assets\Solbin\Scripts\Player\Player_Moving.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Usage\Passthrough\Scripts\FlashlightController.cs" />
@@ -209,6 +219,7 @@
     <Compile Include="Assets\BNG Framework\Scripts\Core\SnapZoneOffset.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Core\HandsInteraction\Scripts\Tools\RayToolView.cs" />
     <Compile Include="Assets\Solbin\Scripts\DebugCanvas.cs" />
+    <Compile Include="Assets\Resources\Quests\MeetNPC\MeetNPCStep.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Usage\HandsTrainExample\Scripts\TrainCarBase.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Core\PlayerMovingPlatformSupport.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Helpers\TeleportDestination.cs" />
@@ -218,6 +229,7 @@
     <Compile Include="Assets\Solbin\Scripts\Player\Player_Laser.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Components\RotateWithHMD.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Extras\BulletHole.cs" />
+    <Compile Include="Assets\_yusoon\Scripts\Dialogue.cs" />
     <Compile Include="Assets\BNG Framework\Scenes\XR Demo\DemoScript.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Usage\Passthrough\Scripts\SelectivePassthroughExperience.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Usage\SceneManager\Scripts\CustomSceneManager\BasicSceneManager.cs" />
@@ -258,6 +270,7 @@
     <Compile Include="Assets\Oculus\SampleFramework\Core\Locomotion\Scripts\TeleportInputHandlerHMD.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Core\DistanceGrab\Scripts\GrabManager.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\UI\VRKeyboard.cs" />
+    <Compile Include="Assets\_yusoon\Scripts\NPC.cs" />
     <Compile Include="Assets\BNG Framework\HandPoser\Scripts\SkeletonVisualizer.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Core\Locomotion\Scripts\CharacterCameraConstraint.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Usage\SceneManager\Scripts\SimpleResizer\SimpleResizable.cs" />
@@ -368,6 +381,7 @@
     <Compile Include="Assets\Oculus\SampleFramework\Usage\SceneManager\Scripts\RequestCaptureFlow.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Core\GrabbablesInTrigger.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Weapons\AmmoDispenser.cs" />
+    <Compile Include="Assets\_yusoon\Scripts\DialogueManager.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Weapons\Bullet.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Components\LineToTransform.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Usage\SpatialAnchor\Scripts\Anchor.cs" />
@@ -403,6 +417,7 @@
     <Compile Include="Assets\Oculus\SampleFramework\Usage\OVROverlay\Scripts\OVROverlaySample.cs" />
     <Compile Include="Assets\BNG Framework\HandPoser\Scripts\HandPoser.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Core\Locomotion\Scripts\TeleportTargetHandler.cs" />
+    <Compile Include="Assets\_yusoon\Scripts\SelectParse.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Usage\Passthrough\Scripts\PassthroughStyler.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Usage\SpatialAnchor\Scripts\AnchorUIManager.cs" />
   </ItemGroup>
@@ -446,8 +461,10 @@
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Surface-Mobile.shader" />
     <None Include="Assets\BNG Framework\Integrations\Oculus Integration\Readme.txt" />
     <None Include="Assets\Firebase\Plugins\Firebase.TaskExtension.dll" />
+    <None Include="Assets\Editor Default Resources\DialogueSystem\DSGraphViewStyles.uss" />
     <None Include="Assets\Firebase\m2repository\com\google\firebase\firebase-app-unity\maven-metadata.xml" />
     <None Include="Assets\Firebase\Plugins\Firebase.Auth.dll" />
+    <None Include="Assets\Editor Default Resources\DialogueSystem\DSVariables.uss" />
     <None Include="Assets\Oculus\SampleFramework\Core\Video\Shaders\Multiview Stereo.shader" />
     <None Include="Assets\Oculus\SampleFramework\Core\DebugUI\Fonts\Montserrat\OFL.txt" />
     <None Include="Assets\Oculus\SampleFramework\Usage\OVROverlayCanvas\Shaders\UI Default Correct.shader" />
@@ -750,17 +767,50 @@
     <Reference Include="Unity.VisualScripting.Antlr3.Runtime">
       <HintPath>Library\PackageCache\com.unity.visualscripting@1.8.0\Runtime\VisualScripting.Flow\Dependencies\NCalc\Unity.VisualScripting.Antlr3.Runtime.dll</HintPath>
     </Reference>
+    <Reference Include="Yarn.System.Text.Encodings.Web">
+      <HintPath>Library\PackageCache\dev.yarnspinner.unity@2.4.0\Runtime\DLLs\Yarn.System.Text.Encodings.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="Yarn.Microsoft.Bcl.AsyncInterfaces">
+      <HintPath>Library\PackageCache\dev.yarnspinner.unity@2.4.0\Runtime\DLLs\Yarn.Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="Yarn.System.Threading.Tasks.Extensions">
+      <HintPath>Library\PackageCache\dev.yarnspinner.unity@2.4.0\Runtime\DLLs\Yarn.System.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
     <Reference Include="Firebase.Analytics">
       <HintPath>Assets\Firebase\Plugins\Firebase.Analytics.dll</HintPath>
     </Reference>
     <Reference Include="Google.MiniJson">
       <HintPath>Assets\Firebase\Plugins\Google.MiniJson.dll</HintPath>
     </Reference>
+    <Reference Include="Yarn.System.Text.Json">
+      <HintPath>Library\PackageCache\dev.yarnspinner.unity@2.4.0\Runtime\DLLs\Yarn.System.Text.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Yarn.Microsoft.Extensions.FileSystemGlobbing">
+      <HintPath>Library\PackageCache\dev.yarnspinner.unity@2.4.0\Runtime\DLLs\Yarn.Microsoft.Extensions.FileSystemGlobbing.dll</HintPath>
+    </Reference>
     <Reference Include="Firebase.App">
       <HintPath>Assets\Firebase\Plugins\Firebase.App.dll</HintPath>
     </Reference>
+    <Reference Include="Yarn.System.CommandLine">
+      <HintPath>Library\PackageCache\dev.yarnspinner.unity@2.4.0\Runtime\DLLs\Yarn.System.CommandLine.dll</HintPath>
+    </Reference>
+    <Reference Include="YarnSpinner.Compiler">
+      <HintPath>Library\PackageCache\dev.yarnspinner.unity@2.4.0\Runtime\DLLs\YarnSpinner.Compiler.dll</HintPath>
+    </Reference>
+    <Reference Include="Yarn.System.Drawing.Common">
+      <HintPath>Library\PackageCache\dev.yarnspinner.unity@2.4.0\Runtime\DLLs\Yarn.System.Drawing.Common.dll</HintPath>
+    </Reference>
     <Reference Include="Firebase.Database">
       <HintPath>Assets\Firebase\Plugins\Firebase.Database.dll</HintPath>
+    </Reference>
+    <Reference Include="YarnSpinner">
+      <HintPath>Library\PackageCache\dev.yarnspinner.unity@2.4.0\Runtime\DLLs\YarnSpinner.dll</HintPath>
+    </Reference>
+    <Reference Include="Yarn.System.IO.Packaging">
+      <HintPath>Library\PackageCache\dev.yarnspinner.unity@2.4.0\Runtime\DLLs\Yarn.System.IO.Packaging.dll</HintPath>
+    </Reference>
+    <Reference Include="Yarn.Microsoft.Win32.SystemEvents">
+      <HintPath>Library\PackageCache\dev.yarnspinner.unity@2.4.0\Runtime\DLLs\Yarn.Microsoft.Win32.SystemEvents.dll</HintPath>
     </Reference>
     <Reference Include="Firebase.Platform">
       <HintPath>Assets\Firebase\Plugins\Firebase.Platform.dll</HintPath>
@@ -1185,6 +1235,12 @@
     <Reference Include="UnityEngine.UI">
       <HintPath>Library\ScriptAssemblies\UnityEngine.UI.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.XR.OpenXR.Features.MetaQuestSupport">
+      <HintPath>Library\ScriptAssemblies\Unity.XR.OpenXR.Features.MetaQuestSupport.dll</HintPath>
+    </Reference>
+    <Reference Include="YarnSpinner.Unity">
+      <HintPath>Library\ScriptAssemblies\YarnSpinner.Unity.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.ShaderGraph.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.ShaderGraph.Editor.dll</HintPath>
     </Reference>
@@ -1193,6 +1249,9 @@
     </Reference>
     <Reference Include="Unity.RenderPipeline.Universal.ShaderLibrary">
       <HintPath>Library\ScriptAssemblies\Unity.RenderPipeline.Universal.ShaderLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.XR.OpenXR.Features.MetaQuestSupport.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.XR.OpenXR.Features.MetaQuestSupport.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.XR.Management">
       <HintPath>Library\ScriptAssemblies\Unity.XR.Management.dll</HintPath>
@@ -1214,6 +1273,9 @@
     </Reference>
     <Reference Include="Unity.VisualStudio.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.VisualStudio.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.XR.OpenXR.Features.OculusQuestSupport.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.XR.OpenXR.Features.OculusQuestSupport.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Sysroot.Linux_x86_64">
       <HintPath>Library\ScriptAssemblies\Unity.Sysroot.Linux_x86_64.dll</HintPath>
@@ -1242,6 +1304,9 @@
     <Reference Include="Unity.PlasticSCM.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.PlasticSCM.Editor.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.XR.OpenXR.Features.OculusQuestSupport">
+      <HintPath>Library\ScriptAssemblies\Unity.XR.OpenXR.Features.OculusQuestSupport.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.VisualScripting.Core">
       <HintPath>Library\ScriptAssemblies\Unity.VisualScripting.Core.dll</HintPath>
     </Reference>
@@ -1250,6 +1315,9 @@
     </Reference>
     <Reference Include="Unity.Burst">
       <HintPath>Library\ScriptAssemblies\Unity.Burst.dll</HintPath>
+    </Reference>
+    <Reference Include="YarnSpinnerTests.CommandsInAnAssemblyDefinition">
+      <HintPath>Library\ScriptAssemblies\YarnSpinnerTests.CommandsInAnAssemblyDefinition.dll</HintPath>
     </Reference>
     <Reference Include="Unity.RenderPipelines.Universal.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.RenderPipelines.Universal.Editor.dll</HintPath>
@@ -1263,6 +1331,9 @@
     <Reference Include="Unity.InputSystem.ForUI">
       <HintPath>Library\ScriptAssemblies\Unity.InputSystem.ForUI.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.XR.OpenXR.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.XR.OpenXR.Editor.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.Timeline.Editor.dll</HintPath>
     </Reference>
@@ -1272,44 +1343,32 @@
     <Reference Include="Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary">
       <HintPath>Library\ScriptAssemblies\Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.XR.OpenXR">
+      <HintPath>Library\ScriptAssemblies\Unity.XR.OpenXR.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.XR.Oculus">
       <HintPath>Library\ScriptAssemblies\Unity.XR.Oculus.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.SpatialTracking">
       <HintPath>Library\ScriptAssemblies\UnityEditor.SpatialTracking.dll</HintPath>
     </Reference>
+    <Reference Include="YarnSpinner.Unity.Editor">
+      <HintPath>Library\ScriptAssemblies\YarnSpinner.Unity.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.XR.OpenXR.Features.ConformanceAutomation">
+      <HintPath>Library\ScriptAssemblies\Unity.XR.OpenXR.Features.ConformanceAutomation.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.RenderPipelines.Core.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.RenderPipelines.Core.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.XR.OpenXR.Features.RuntimeDebugger.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.XR.OpenXR.Features.RuntimeDebugger.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.VisualScripting.State">
       <HintPath>Library\ScriptAssemblies\Unity.VisualScripting.State.dll</HintPath>
     </Reference>
     <Reference Include="Unity.SysrootPackage.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.SysrootPackage.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.XR.OpenXR.Features.MetaQuestSupport.Editor">
-      <HintPath>Library\ScriptAssemblies\Unity.XR.OpenXR.Features.MetaQuestSupport.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.XR.OpenXR.Features.OculusQuestSupport">
-      <HintPath>Library\ScriptAssemblies\Unity.XR.OpenXR.Features.OculusQuestSupport.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.XR.OpenXR.Editor">
-      <HintPath>Library\ScriptAssemblies\Unity.XR.OpenXR.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.XR.OpenXR">
-      <HintPath>Library\ScriptAssemblies\Unity.XR.OpenXR.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.XR.OpenXR.Features.MetaQuestSupport">
-      <HintPath>Library\ScriptAssemblies\Unity.XR.OpenXR.Features.MetaQuestSupport.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.XR.OpenXR.Features.OculusQuestSupport.Editor">
-      <HintPath>Library\ScriptAssemblies\Unity.XR.OpenXR.Features.OculusQuestSupport.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.XR.OpenXR.Features.ConformanceAutomation">
-      <HintPath>Library\ScriptAssemblies\Unity.XR.OpenXR.Features.ConformanceAutomation.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.XR.OpenXR.Features.RuntimeDebugger.Editor">
-      <HintPath>Library\ScriptAssemblies\Unity.XR.OpenXR.Features.RuntimeDebugger.Editor.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -1489,17 +1548,9 @@
       <Project>{1B40972E-341E-1EAC-AD15-89547E43631F}</Project>
       <Name>Oculus.Interaction.InterfaceSupport</Name>
     </ProjectReference>
-    <ProjectReference Include="Meta.WitAi.Editor.csproj">
-      <Project>{A73BAC5C-729C-2C42-E2A7-E5280C5C4449}</Project>
-      <Name>Meta.WitAi.Editor</Name>
-    </ProjectReference>
     <ProjectReference Include="VoiceSDK.Editor.csproj">
       <Project>{356CE9C2-0DE1-8F21-ABEC-11AF9AA5729C}</Project>
       <Name>VoiceSDK.Editor</Name>
-    </ProjectReference>
-    <ProjectReference Include="Oculus.Interaction.OVR.Editor.csproj">
-      <Project>{B49B4C17-EE5F-FCC6-959B-3FC100BE8424}</Project>
-      <Name>Oculus.Interaction.OVR.Editor</Name>
     </ProjectReference>
     <ProjectReference Include="Febucci.Attributes.Runtime.csproj">
       <Project>{DD55A4FF-C151-AD10-A1AA-5568ADA90BDC}</Project>
@@ -1508,6 +1559,10 @@
     <ProjectReference Include="VoiceSDK.Dictation.Editor.csproj">
       <Project>{516B8AE4-8905-F954-071F-E6AF16249135}</Project>
       <Name>VoiceSDK.Dictation.Editor</Name>
+    </ProjectReference>
+    <ProjectReference Include="Meta.WitAi.Editor.csproj">
+      <Project>{A73BAC5C-729C-2C42-E2A7-E5280C5C4449}</Project>
+      <Name>Meta.WitAi.Editor</Name>
     </ProjectReference>
     <ProjectReference Include="VoiceSDK.Dictation.Runtime.csproj">
       <Project>{4C242D53-6BEC-663C-855D-BAF469BD8214}</Project>
@@ -1520,6 +1575,10 @@
     <ProjectReference Include="Febucci.TextAnimator.TMP.Runtime.csproj">
       <Project>{14EC484F-ACDD-BD58-1FF7-1C2642632E1C}</Project>
       <Name>Febucci.TextAnimator.TMP.Runtime</Name>
+    </ProjectReference>
+    <ProjectReference Include="Oculus.Interaction.OVR.Editor.csproj">
+      <Project>{B49B4C17-EE5F-FCC6-959B-3FC100BE8424}</Project>
+      <Name>Oculus.Interaction.OVR.Editor</Name>
     </ProjectReference>
     <ProjectReference Include="Oculus.LipSync.csproj">
       <Project>{B72CF9B0-B339-0E8B-0CCE-CEBBA1BA198C}</Project>
