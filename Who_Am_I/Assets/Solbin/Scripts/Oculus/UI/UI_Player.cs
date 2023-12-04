@@ -24,7 +24,7 @@ public class UI_Player : MonoBehaviour
     private void Start()
     {
         fullnessCount = fullnessGage.childCount;
-        pooCount = pooGage.childCount;
+        //pooCount = pooGage.childCount;
 
         SetAray();
     }

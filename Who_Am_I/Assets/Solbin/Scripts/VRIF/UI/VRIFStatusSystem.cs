@@ -6,7 +6,7 @@ using UnityEngine;
 /// <summary>
 /// 플레이어의 정보를 관리한다. 
 /// </summary>
-/// 
+
 public class VRIFStatusSystem : MonoBehaviour
 {
     #region 필드
@@ -21,10 +21,9 @@ public class VRIFStatusSystem : MonoBehaviour
 
     // 소화기 작동 여부
     private bool digestion = true;
-    // 포만감 대분류 리스트 (FullImg, HalfImg)
-    private GameObject[] fullnessArray;
-    // 배출 대분류 리스트 (FullImg, HalfImg)
-    private GameObject[] pooArray;
+
+    private GameObject[] halfFullnessArray;
+    private GameObject[] fullFullnessArray;
     #endregion
 
     private void Start()
@@ -39,13 +38,16 @@ public class VRIFStatusSystem : MonoBehaviour
         m_Fullness = 100; // 포만감 초기값
         m_Poo = 0; // 배출 초기값
 
-        fullnessArray = new GameObject[fullnessGage.childCount];
-        pooArray = new GameObject[pooGage.childCount];
+        Transform halfFullness = fullnessGage.GetChild(0);
+        Transform fullFullness = fullnessGage.GetChild(1);
+
+        halfFullnessArray = new GameObject[halfFullness.childCount];
+        fullFullnessArray = new GameObject[fullFullness.childCount];
 
         for (int i = 0; i < gageCount; i++)
         {
-            fullnessArray[i] = fullnessGage.GetChild(i).gameObject;
-            pooArray[i] = pooGage.GetChild(i).gameObject;
+            halfFullnessArray[i] = halfFullness.GetChild(i).gameObject; // 반개짜리 배열
+            fullFullnessArray[i] = fullFullness.GetChild(i).gameObject; // 한개짜리 배열
         }
     }
 
@@ -56,10 +58,10 @@ public class VRIFStatusSystem : MonoBehaviour
     {
         while (digestion)
         {
-            yield return new WaitForSeconds(60); // TODO: 1분에 5% 떨어지는 것으로 설정
+            yield return new WaitForSeconds(3); // TODO: 1분에 5% 떨어지는 것으로 설정
             m_Fullness -= 5;
 
-            if (m_Fullness <= 0)
+            if (m_Fullness <= 0) // 사망 조건 
             {
                 digestion = false; // 소화기 정지
                 DieEvent(); // 사망 이벤트
@@ -70,14 +72,67 @@ public class VRIFStatusSystem : MonoBehaviour
 
     private void Update()
     {
-        UIUpdate();
+        FullnessCheck();
     }
 
-    private void UIUpdate()
+    #region 포만감 게이지 업데이트
+    private void FullnessCheck()
     {
-        
+        if (1 <= m_Fullness && m_Fullness <= 20)
+        {
+            if (m_Fullness <= 10) { FullnessUpdate(1, "half"); }
+            else { FullnessUpdate(1, "full"); }
+        }
+        else if (21 <= m_Fullness && m_Fullness <= 40)
+        {
+            if (m_Fullness <= 30) { FullnessUpdate(2, "half"); }
+            else { FullnessUpdate(2, "full"); }
+        }
+        else if (41 <= m_Fullness && m_Fullness <= 60)
+        {
+            if (m_Fullness <= 50) { FullnessUpdate(3, "half"); }
+            else { FullnessUpdate(3, "full"); }
+        }
+        else if (61 <= m_Fullness && m_Fullness <= 80)
+        {
+            if (m_Fullness <= 70) { FullnessUpdate(4, "half"); }
+            else { FullnessUpdate(4, "full"); }
+        }
+        else if (81 <= m_Fullness && m_Fullness <= 100)
+        {
+            if (m_Fullness <= 90) { FullnessUpdate(5, "half"); }
+            else { FullnessUpdate(5, "full"); }
+        }
+
+        if (m_Fullness >= 100) { m_Fullness = 100; } // 포만감 초과시 100으로 보정
     }
 
+    private void FullnessUpdate(int _num, string _percent)
+    {
+        if (_percent == "half")
+        {
+            for (int i = 0; i < gageCount; i++)
+            {
+                if (i <= _num - 1) { halfFullnessArray[i].SetActive(true); }
+                else { halfFullnessArray[i].SetActive(false); }
+            }
+        }
+        else if (_percent == "full")
+        {
+            for (int i = 0; i < gageCount; i++)
+            {
+                if (i <= _num - 1) { fullFullnessArray[i].SetActive(true); }
+                else { fullFullnessArray[i].SetActive(false); }
+            }
+        }
+    }
+    #endregion
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="_satiety">얻는 포만도</param>
+    /// <param name="_poo">얻는 배출도</param>
     public void GetFood(int _satiety, int _poo)
     {
         m_Fullness += _satiety; // 포만감 더하기 

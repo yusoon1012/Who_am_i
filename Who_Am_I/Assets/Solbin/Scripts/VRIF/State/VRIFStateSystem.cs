@@ -73,6 +73,11 @@ namespace BNG
                 smoothLocomotion.enabled = true;
             }
 
+            if (!playerRotation.enabled) // 회전 비활성화 상태면
+            {
+                playerRotation.enabled = true; // 회전 활성화
+            }
+
             foreach (Transform child in leftController) { child.gameObject.SetActive(true); } // 왼손 활성화
 
             foreach (Transform child in rightController) { child.gameObject.SetActive(true); } // 오른손 활성화
@@ -87,6 +92,11 @@ namespace BNG
             {
                 locomotionManager.enabled = false; // 이동 비활성화
                 smoothLocomotion.enabled = false;
+            }
+
+            if (playerRotation.enabled) // 회전 활성화 상태면
+            {
+                playerRotation.enabled = false; // 회전 비활성화
             }
 
             foreach (Transform child in leftController) { child.gameObject.SetActive(false); } // 왼손 비활성화
