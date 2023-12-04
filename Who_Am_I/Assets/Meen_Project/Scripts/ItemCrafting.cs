@@ -331,6 +331,10 @@ public class ItemCrafting : MonoBehaviour
                 detailOrder += 1;
             }
         }
+        else if (keyType == 2 && detailOrder == 2)
+        {
+            
+        }
 
         // 상단에 아이템 이름 정보값을 출력
         if (detailOrder == 0)

@@ -357,6 +357,7 @@ MonoBehaviour:
   - {fileID: 1188764572}
   - {fileID: 1109296028}
   playerTf: {fileID: 1912123882}
+  npcSpeed: 1
 --- !u!54 &348269390
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -862,6 +863,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 928677188026d744398552b317ee21b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  speed: 0
 --- !u!1 &2127941631
 GameObject:
   m_ObjectHideFlags: 0

@@ -4,14 +4,15 @@ using UnityEngine;
 
 public class PlayerMoveTest : MonoBehaviour
 {
+    // 움직이는 속도값
+    public float speed = default;
+
     // 플레이어가 입력값을 받아 움직일 최종 위치 Vector 값
     private Vector3 moveVector = Vector3.zero;
 
     // 플레이어 리짓바디
     private Rigidbody playerRb = default;
 
-    // 움직이는 속도값
-    private float speed = default;
     // x 축 입력값
     private float xInput = default;
     // z 축 입력값
