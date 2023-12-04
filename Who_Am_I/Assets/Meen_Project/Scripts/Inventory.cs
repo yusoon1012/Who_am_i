@@ -109,6 +109,7 @@ public class Inventory : MonoBehaviour
 
     // 도구, 음식 아이템을 장착, 사용 또는 해제하는 스크립트
     VRIFItemSystem equipmentScript = new VRIFItemSystem();
+    VRIFStatusSystem playerStatusScript = new VRIFStatusSystem();
 
     // Test : 데이터 베이스 연동 테스트 딕셔너리
     Dictionary<string, int> test = new Dictionary<string, int>();
@@ -1062,11 +1063,11 @@ public class Inventory : MonoBehaviour
             {
                 // 음식 효과 타입이 1 이면
                 case 1:
-
+                    playerStatusScript.GetFood(foodSatietyGauge, foodPooGauge);
                     break;
                 // 음식 효과 타입이 2 이면
                 case 2:
-
+                    //* 음식 효과 타입이 2 면 기능 추가 예정
                     break;
                 default:
                     break;

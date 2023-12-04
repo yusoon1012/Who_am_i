@@ -208,11 +208,73 @@ public class UIController : MonoBehaviour
         }
     }     // OnOffControl()
 
+    // 메인 메뉴 버튼을 눌렀을 때 메인 메뉴를 열고, 다른 메뉴들이 열려있으면 모두 닫고 초기화 시키는 함수
     public void OnMainMenuControl()
     {
-        uiController = 1;
-        playerTf.GetComponent<MainMenu>().OnMainMenu();
-    }
+        switch (uiController)
+        {
+            // 메뉴가 아무것도 안열려 있으면 메뉴 UI 를 연다
+            case 0:
+                playerTf.GetComponent<MainMenu>().OnMainMenu();
+                uiController = 1;
+                break;
+            // 메뉴가 하나라도 켜져있으면 해당 메뉴를 모두 닫고 초기화 화면으로 돌아감
+            case 1:
+                playerTf.GetComponent<MainMenu>().OffMainMenu();
+                uiController = 0;
+                break;
+            case 2:
+                playerTf.GetComponent<Inventory>().ExitInventory();
+                playerTf.GetComponent<MainMenu>().DisconnectMenu();
+                playerTf.GetComponent<MainMenu>().OffMainMenu();
+                uiController = 0;
+                break;
+            case 3:
+                playerTf.GetComponent<Inventory>().OffItemDetailInfo();
+                playerTf.GetComponent<Inventory>().ExitInventory();
+                playerTf.GetComponent<MainMenu>().DisconnectMenu();
+                playerTf.GetComponent<MainMenu>().OffMainMenu();
+                uiController = 0;
+                break;
+            case 4:
+                playerTf.GetComponent<ItemCrafting>().ExitCrafting();
+                uiController = 0;
+                break;
+            case 5:
+                playerTf.GetComponent<Dictionary>().OffDictionary();
+                playerTf.GetComponent<MainMenu>().DisconnectMenu();
+                playerTf.GetComponent<MainMenu>().OffMainMenu();
+                uiController = 0;
+                break;
+            case 6:
+                quickSlotTf.GetComponent<QuickSlot>().ConnectInventory();
+                playerTf.GetComponent<Inventory>().OffItemDetailInfo();
+                playerTf.GetComponent<Inventory>().ExitInventory();
+                playerTf.GetComponent<MainMenu>().DisconnectMenu();
+                playerTf.GetComponent<MainMenu>().OffMainMenu();
+                uiController = 0;
+                break;
+            case 7:
+                playerTf.GetComponent<Inventory>().ExitDropItem(1);
+                playerTf.GetComponent<Inventory>().OffItemDetailInfo();
+                playerTf.GetComponent<Inventory>().ExitInventory();
+                playerTf.GetComponent<MainMenu>().DisconnectMenu();
+                playerTf.GetComponent<MainMenu>().OffMainMenu();
+                uiController = 0;
+                break;
+            case 8:
+                playerTf.GetComponent<ItemCrafting>().ExitDetailCrafting();
+                playerTf.GetComponent<ItemCrafting>().ExitCrafting();
+                uiController = 0;
+                break;
+            case 9:
+                quickSlotTf.GetComponent<QuickSlot>().SingleCloseQuickSlot();
+                uiController = 0;
+                break;
+            default:
+                break;
+        }
+    }     // OnMainMenuControl()
 
     #region Input 키 입력 값 모음
 
@@ -236,7 +298,7 @@ public class UIController : MonoBehaviour
         {
             DirectionControl(3);
         }
-        // <Solbin> 메뉴 진입 
+        // <Solbin> 메뉴 진입
         else if (Input.GetKeyDown(KeyCode.M) || vrifAction.Player.UI_Menu.triggered) // <Solbin> Menu Enter
         {
             OnMainMenuControl();
@@ -250,7 +312,7 @@ public class UIController : MonoBehaviour
         // 모든 진입 키 입력 값
         else if (Input.GetKeyDown(KeyCode.Z) || vrifAction.Player.UI_Click.triggered) // <Solbin> Menu Select
         {
-            OnOffControl(0);  
+            OnOffControl(0);
         }
         // 모든 뒤로가기 키 입력 값
         else if (Input.GetKeyDown(KeyCode.X) || vrifAction.Player.UI_Exit.triggered) // <Solbin> Exit Menu

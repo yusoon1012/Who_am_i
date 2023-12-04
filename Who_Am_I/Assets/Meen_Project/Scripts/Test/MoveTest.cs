@@ -13,6 +13,9 @@ public class MoveTest : MonoBehaviour
     // 플레이어 트랜스폼
     public Transform playerTf;
 
+    // 길안내 NPC 의 속도
+    public float npcSpeed = 1.0f;
+
     // 길안내 NPC 트랜스폼
     private Transform npcTf;
     // 길안내 NPC 리짓바디
@@ -30,6 +33,11 @@ public class MoveTest : MonoBehaviour
 
         pointCheck = 0;
     }     // Awake()
+
+    void Start()
+    {
+        npcSpeed *= 0.0003f;
+    }
 
     void Update()
     {
@@ -87,7 +95,7 @@ public class MoveTest : MonoBehaviour
             // 길안내 목표 지점을 바라보고
             npcTf.transform.LookAt(point[pointCheck]);
             // Lerp 로 부드럽게 목표 지점으로 이동
-            transform.position = Vector3.Lerp(transform.position, point[pointCheck].position, 0.0003f);
+            transform.position = Vector3.Lerp(transform.position, point[pointCheck].position, npcSpeed);
         }
     }     // MoveNPC()
 
