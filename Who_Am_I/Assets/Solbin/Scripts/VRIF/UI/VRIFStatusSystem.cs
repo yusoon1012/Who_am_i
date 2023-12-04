@@ -10,20 +10,28 @@ using UnityEngine;
 public class VRIFStatusSystem : MonoBehaviour
 {
     #region 필드
+    [Header("Gage Transform")]
     [SerializeField] Transform fullnessGage = default;
     [SerializeField] Transform pooGage = default;
+    
+    [Header("GameObject Poo")]
+    [Tooltip("똥")]
+    [SerializeField] GameObject poo = default; // 프리팹
+    [SerializeField] GameObject playerPoo = default;
 
     // 게이지 총 수는 5로 정해졌다.
     private int gageCount = 5;
-
+    // 현 포만감, 배출도 수치 
     private int m_Fullness = default;
     private int m_Poo = default;
-
     // 소화기 작동 여부
     private bool digestion = true;
-
+    // 포만감 게이지 배열
     private GameObject[] halfFullnessArray;
     private GameObject[] fullFullnessArray;
+    // 배출도 게이지 배열 
+    private GameObject[] halfPooArray;
+    private GameObject[] fullPooArray;
     #endregion
 
     private void Start()
@@ -38,16 +46,23 @@ public class VRIFStatusSystem : MonoBehaviour
         m_Fullness = 100; // 포만감 초기값
         m_Poo = 0; // 배출 초기값
 
-        Transform halfFullness = fullnessGage.GetChild(0);
-        Transform fullFullness = fullnessGage.GetChild(1);
+        Transform halfFullness = fullnessGage.GetChild(0); // 반개짜리 배열의 부모 오브젝트
+        Transform fullFullness = fullnessGage.GetChild(1); // 한개짜리 배열의 부모 오브젝트
+        Transform halfPoo = pooGage.GetChild(0);
+        Transform fullPoo = pooGage.GetChild(1);
 
-        halfFullnessArray = new GameObject[halfFullness.childCount];
-        fullFullnessArray = new GameObject[fullFullness.childCount];
+        halfFullnessArray = new GameObject[halfFullness.childCount]; // 반개짜리 배열
+        fullFullnessArray = new GameObject[fullFullness.childCount]; // 한개짜리 배열
+        halfPooArray = new GameObject[halfPoo.childCount];
+        fullPooArray = new GameObject[fullPoo.childCount];
 
         for (int i = 0; i < gageCount; i++)
         {
-            halfFullnessArray[i] = halfFullness.GetChild(i).gameObject; // 반개짜리 배열
-            fullFullnessArray[i] = fullFullness.GetChild(i).gameObject; // 한개짜리 배열
+            halfFullnessArray[i] = halfFullness.GetChild(i).gameObject; // 반개짜리 배열 할당
+            fullFullnessArray[i] = fullFullness.GetChild(i).gameObject; // 한개짜리 배열 할당
+
+            halfPooArray[i] = halfPoo.GetChild(i).gameObject; // 반개짜리 배열 할당
+            fullPooArray[i] = fullPoo.GetChild(i).gameObject; // 한개짜리 배열 할당 
         }
     }
 
@@ -73,6 +88,12 @@ public class VRIFStatusSystem : MonoBehaviour
     private void Update()
     {
         FullnessCheck();
+        PooCheck();
+
+        if (Input.GetKeyDown(KeyCode.G))
+        {
+            GetFood(15, 20);
+        }
     }
 
     #region 포만감 게이지 업데이트
@@ -128,8 +149,61 @@ public class VRIFStatusSystem : MonoBehaviour
     }
     #endregion
 
+    #region 배출도 게이지 업데이트
+    private void PooCheck()
+    {
+        if (1 <= m_Poo && m_Poo <= 20)
+        {
+            if (m_Poo <= 10) { PooUpdate(1, "half"); }
+            else { PooUpdate(1, "full"); }
+        }
+        else if (21 <= m_Poo && m_Poo <= 40)
+        {
+            if (m_Poo <= 30) { PooUpdate(2, "half"); }
+            else { PooUpdate(2, "full"); }
+        }
+        else if (41 <= m_Poo && m_Poo <= 60)
+        {
+            if (m_Poo <= 50) { PooUpdate(3, "half"); }
+            else { PooUpdate(3, "full"); }
+        }
+        else if (61 <= m_Poo && m_Poo <= 80)
+        {
+            if (m_Poo <= 70) { PooUpdate(4, "half"); }
+            else { PooUpdate(4, "full"); }
+        }
+        else if (81 <= m_Poo && m_Poo <= 100)
+        {
+            if (m_Fullness <= 90) { PooUpdate(5, "half"); }
+            else { PooUpdate(5, "full"); }
+        }
+
+        if (m_Poo >= 100) { PooEvent(); } // 배출도 초과시 배출 이벤트 발생 
+    }
+
+    private void PooUpdate(int _num, string _percent)
+    {
+        if (_percent == "half")
+        {
+            for (int i = 0; i < gageCount; i++)
+            {
+                if (i <= _num - 1) { halfPooArray[i].SetActive(true); }
+                else { halfPooArray[i].SetActive(false); }
+            }
+        }
+        else if (_percent == "full")
+        {
+            for (int i = 0; i < gageCount; i++)
+            {
+                if (i <= _num - 1) { fullPooArray[i].SetActive(true); }
+                else { fullPooArray[i].SetActive(false); }
+            }
+        }
+    }
+    #endregion
+
     /// <summary>
-    /// 
+    /// 음식 섭취 메소드
     /// </summary>
     /// <param name="_satiety">얻는 포만도</param>
     /// <param name="_poo">얻는 배출도</param>
@@ -146,7 +220,10 @@ public class VRIFStatusSystem : MonoBehaviour
     /// </summary>
     private void PooEvent()
     {
+        Vector3 pooPos = new Vector3();
         m_Poo = 0; // 배출값 초기화 
+
+        playerPoo = Instantiate(poo); // 생성 
         // TODO: 배출 이벤트 구현 
     }   
     
@@ -157,6 +234,4 @@ public class VRIFStatusSystem : MonoBehaviour
     {
        
     }
-
-    // 20 40 60 80 100
 }
