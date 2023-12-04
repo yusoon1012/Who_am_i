@@ -7,11 +7,11 @@ public class SaveItemInfo : MonoBehaviour
     #region 변수 설정
 
     // 아이템 이름을 인벤토리 칸마다 저장
-    public string itemName = default;
+    public string itemName { get; set; } = default;
     // 아이템 중첩 수를 인벤토리 칸마다 저장
-    public int itemStack = default;
+    public int itemStack { get; set; } = default;
     // 인벤토리 슬롯에 아이템이 존재하는지 체크
-    public bool activeSlotCheck = false;
+    public bool activeSlotCheck { get; set; } = false;
 
     #endregion 변수 설정
 

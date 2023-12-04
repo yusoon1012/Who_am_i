@@ -7,6 +7,8 @@ public class ItemCrafting : MonoBehaviour
 {
     #region 변수 설정
 
+    // 메뉴 UI 의 백그라운드 이미지
+    public GameObject mainScreen;
     // 제작 창 오브젝트
     public GameObject crafting;
     // 제작 창의 제작 가능한 슬롯 목록
@@ -31,9 +33,9 @@ public class ItemCrafting : MonoBehaviour
     public GameObject[] detailSlotObj = new GameObject[4];
 
     // 제작 창을 보고있는 상태인지 체크
-    public bool lookCrafting = false;
+    public bool lookCrafting { get; set; } = false;
     // 제작 상세 창을 보고있는 상태인지 체크
-    public bool lookCraftingInfo = false;
+    public bool lookCraftingInfo { get; set; } = false;
 
     // 제작 창에서 현재 리스트 선택 색
     private Color currentColor = default;
@@ -81,6 +83,8 @@ public class ItemCrafting : MonoBehaviour
     // 제작 상세 창의 제작 후 완성되는 아이템의 제작 완료 갯수
     private int craftingStack = default;
 
+    private int craftingCount = default;
+
     #endregion 변수 설정
 
     void Awake()
@@ -92,6 +96,7 @@ public class ItemCrafting : MonoBehaviour
         craftingStack = 0;
         order = 0;
         detailOrder = 0;
+        craftingCount = 0;
     }     // Awake()
 
     void Start()
@@ -108,6 +113,15 @@ public class ItemCrafting : MonoBehaviour
     }     // Start()
 
     #region 페이지 변경 기능
+
+    // 우측 타입의 방향키 입력 시 키 값 별로 전달하는 함수
+    public void ControlDetailOrder(int arrowType)
+    {
+        if (arrowType == 2 || arrowType == 3)
+        {
+            PageChange();
+        }
+    }     // ControlDetailOrder()
 
     // 제작 타입 페이지 변경 키 누를 시 페이지 변경 함수
     public void PageChange()
@@ -153,7 +167,7 @@ public class ItemCrafting : MonoBehaviour
 
         if (page == 0)
         {
-            craftingStr[0] = "블루 아뮬렛";
+            craftingStr[0] = "딸기 우유";
 
             // Fix : 테스트 이후 5개 슬롯을 for 문을 사용하여 돌릴 예정
             for (int i = 0; i < 1; i++)
@@ -203,6 +217,7 @@ public class ItemCrafting : MonoBehaviour
     {
         if (lookCrafting == false)
         {
+            mainScreen.SetActive(true);
             crafting.SetActive(true);
         }
 
@@ -221,6 +236,7 @@ public class ItemCrafting : MonoBehaviour
 
         craftingInfoObj.SetActive(false);
         crafting.SetActive(false);
+        mainScreen.SetActive(false);
     }     // ExitCrafting()
 
     // 제작 목록에서의 커서 변경 함수
@@ -314,6 +330,10 @@ public class ItemCrafting : MonoBehaviour
             {
                 detailOrder += 1;
             }
+        }
+        else if (keyType == 2 && detailOrder == 2)
+        {
+            
         }
 
         // 상단에 아이템 이름 정보값을 출력
@@ -454,13 +474,15 @@ public class ItemCrafting : MonoBehaviour
         for (int i = 0; i < craftingLength; i++)
         {
             Debug.LogFormat("{0} : {1} 개 소모", stuffName[i], stuffStack[i]);
-            ItemManager.instance.InventoryRemove(stuffName[i], stuffStack[i], stuffItemTypes[i], out itemInfo);
+            ItemManager.instance.RemoveCraftingItem(stuffName[i], stuffStack[i], stuffItemTypes[i], out itemInfo);
         }
 
         // 아이템을 제작 후 인벤토리에 추가
         ItemManager.instance.InventoryAdd(craftingName, 1, out itemInfo);
 
-        // Feat : 제작 창 새로고침 기능 추가 예정
+        Debug.LogFormat("{0} 제작 완료", craftingName);
+
+        ShowOrder();
     }     // Crafting()
 
     #endregion 크래프팅 상세 정보 기능

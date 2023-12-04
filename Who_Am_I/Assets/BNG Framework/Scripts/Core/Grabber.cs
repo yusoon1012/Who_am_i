@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -147,6 +147,7 @@ namespace BNG {
         [HideInInspector]
         public Vector3 PreviousPosition;
 
+        // <Solbin> 모델과 독립적으로 손을 위치시키는데 사용
         /// <summary>
         /// Can be used to position hands independently from model
         /// </summary>
@@ -174,6 +175,9 @@ namespace BNG {
         // For tracking velocity
         [HideInInspector]
         public VelocityTracker velocityTracker;
+
+        // <Solbin> VRIFPlayerClimbing
+        [SerializeField] private VRIFPlayerClimbing vrifPlayerClimbing = default;
 
         void Start() {
             rb = GetComponent<Rigidbody>();
@@ -249,16 +253,23 @@ namespace BNG {
 
             // Check for input to grab or release item
             if ((HoldingItem == false && InputCheckGrab()) || ForceGrab) {
+                // <Solbin> Grab 조건을 평가
                 TryGrab();               
             }
-            else if(((HoldingItem || RemoteGrabbingItem) && inputCheckRelease()) || ForceRelease) {                
+            else if(((HoldingItem || RemoteGrabbingItem) && inputCheckRelease()) || ForceRelease) {  
+                // <Solbin> Release 조건을 평가 
                 TryRelease();
             }
+
+            // <Solbin> 등반 중 측면 점프 시도 시 잡고 있는 등반 물체를 놓도록 하는 메소드 
+            if ((HoldingItem || RemoteGrabbingItem) && vrifPlayerClimbing.sideJump) { TryRelease(); }
+            // <Solbin> ===
         }
 
         protected virtual void updateFreshGrabStatus() {
             // Update Fresh Grab status
             if (getGrabInput(GrabButton.Grip) <= ReleaseGripAmount) {
+                // <Solbin> 그랩을 놓는 동작 구현
                 // We release grab, so this is considered fresh
                 FreshGrip = true;
                 currentGrabTime = 0;
@@ -552,8 +563,8 @@ namespace BNG {
 
             // Activate Nearby Grabbable
             if (grabsInTrigger.ClosestGrabbable != null) {
-                GrabGrabbable(grabsInTrigger.ClosestGrabbable);                
-                
+                GrabGrabbable(grabsInTrigger.ClosestGrabbable);
+
                 return true;
             }
             // If no immediate grabbable, see if remote is available to pull
@@ -634,6 +645,7 @@ namespace BNG {
             }
         }
 
+        // <Solbin> 잡고 있는 물체를 놓는 메소드 
         public virtual void TryRelease() {
             if (HeldGrabbable != null && HeldGrabbable.CanBeDropped) {
                 HeldGrabbable.DropItem(this);

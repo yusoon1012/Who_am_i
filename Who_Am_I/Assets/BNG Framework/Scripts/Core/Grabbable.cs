@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -8,6 +8,7 @@ namespace BNG {
     /// <summary>
     /// An object that can be picked up by a Grabber
     /// </summary>
+    // <Solbin> Grabber가 잡을 수 있는 물체를 말한다
     public class Grabbable : MonoBehaviour {
 
         /// <summary>
@@ -1438,6 +1439,7 @@ namespace BNG {
             return primaryGrabOffset;
         }
 
+        // <Solbin> 물체를 잡을 때의 메소드 
         public virtual void GrabItem(Grabber grabbedBy) {
 
             // Make sure we release this item

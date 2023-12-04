@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 4897344975656598030}
   - component: {fileID: 8319353742856885329}
   - component: {fileID: 8319353742856885328}
+  - component: {fileID: 8319353742580610747}
   m_Layer: 0
   m_Name: Test_Player
   m_TagString: Untagged
@@ -48,7 +49,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b27c86372d2af141a1eb6da36d1e67e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uiController: 0
+  quickSlotTf: {fileID: 0}
+  vrifStateSystem: {fileID: 0}
 --- !u!114 &4897344975656598030
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -172,6 +174,31 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  usingText:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   largeImage: {fileID: 0}
   itemNameText: {fileID: 0}
   itemInfo: {fileID: 0}
@@ -188,9 +215,11 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   inventory: {fileID: 0}
-  lookInventory: 0
-  lookItemDetailInfo: 0
-  maxItemSlot: 0
+  quickSlotTf: {fileID: 0}
+  dropItemInfo: {fileID: 0}
+  dropItemInfoImage:
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!114 &8319353742856885328
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -203,6 +232,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b16ee2dab7e27c4eacec176d17dce1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mainScreen: {fileID: 0}
   crafting: {fileID: 0}
   craftingSlot:
   - {fileID: 0}
@@ -246,8 +276,65 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  lookCrafting: 0
-  lookCraftingInfo: 0
+--- !u!114 &8319353742580610747
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8319353742856885338}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e4c4bd038e9caa4ea4a1c60d80272c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dicObj: {fileID: 0}
+  dicInfoObj: {fileID: 0}
+  itemNameText: {fileID: 0}
+  itemInfoText:
+  - {fileID: 0}
+  - {fileID: 0}
+  dicOutImage:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  dicInImage:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  typeImage:
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!1 &8319353743738993607
 GameObject:
   m_ObjectHideFlags: 0

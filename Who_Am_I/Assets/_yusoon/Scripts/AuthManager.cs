@@ -39,7 +39,7 @@ public class AuthManager : MonoBehaviour
             {
                 if(task.IsCompleted&&!task.IsCanceled&&!task.IsFaulted)
                 {
-                    Debug.Log(emailField.text + "°èÁ¤À¸·Î ·Î±×ÀÎ ÇÏ¿´½À´Ï´Ù.");
+                    Debug.Log(emailField.text + "ê³„ì •ìœ¼ë¡œ ë¡œê·¸ì¸ í•˜ì˜€ìŠµë‹ˆë‹¤.");
                     isLogin = true;
                     UserInfo.userId=emailField.text;
                    
@@ -47,7 +47,7 @@ public class AuthManager : MonoBehaviour
                 }
                 else
                 {
-                    Debug.Log("·Î±×ÀÎ¿¡ ½ÇÆĞÇÏ¿´½À´Ï´Ù.");
+                    Debug.Log("ë¡œê·¸ì¸ì— ì‹¤íŒ¨í•˜ì˜€ìŠµë‹ˆë‹¤.");
                 }
             });
     }
@@ -58,17 +58,17 @@ public class AuthManager : MonoBehaviour
             {
                 if(!task.IsCanceled&&!task.IsFaulted)
                 {
-                    Debug.Log(emailField.text + "°èÁ¤À¸·Î È¸¿ø°¡ÀÔµÇ¾ú½À´Ï´Ù.");
+                    Debug.Log(emailField.text + "ê³„ì •ìœ¼ë¡œ íšŒì›ê°€ì…ë˜ì—ˆìŠµë‹ˆë‹¤.");
                     Debug.Log(userName);
                     if (userName == null)
                     {
                         isUserNameValid = true;
-                        Debug.Log("ÀúÀåµÈ ´Ğ³×ÀÓ ¾øÀ½");
+                        Debug.Log("ì €ì¥ëœ ë‹‰ë„¤ì„ ì—†ìŒ");
                     }
                 }
                 else
                 {
-                    Debug.Log("È¸¿ø°¡ÀÔ¿¡ ½ÇÆĞÇÏ¿´½À´Ï´Ù.");
+                    Debug.Log("íšŒì›ê°€ì…ì— ì‹¤íŒ¨í•˜ì˜€ìŠµë‹ˆë‹¤.");
                 }
             }
             );
@@ -93,7 +93,7 @@ public class AuthManager : MonoBehaviour
         }
         if(isLogin)
         {
-            SceneManager.LoadScene("NextScene");
+            SceneManager.LoadScene("Meen_Scene");
         }
     }
 }

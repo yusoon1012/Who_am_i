@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -68,6 +68,7 @@ namespace BNG {
         private Dictionary<Collider, Grabbable> _filtered;
         private Transform _eyeTransform;
 
+        private Collider thisCollider = default; // 테스트
 
         void Start() {
             NearbyGrabbables = new Dictionary<Collider, Grabbable>();
@@ -78,12 +79,15 @@ namespace BNG {
             if (Camera.main != null) {
                 _eyeTransform = Camera.main.transform;
             }
+
+            thisCollider = GetComponent<Collider>(); // 테스트
         }
 
         void Update() {
             // Sort Grabbales by Distance so we can use that information later if we need it
             updateClosestGrabbable();
             updateClosestRemoteGrabbables();
+
         }
 
         void updateClosestGrabbable() {
@@ -308,12 +312,13 @@ namespace BNG {
             }
         }
 
+        // <Solbin> TODO: 상승점프 사용시 어디까지 감지하는지 확인이 필요함. 
         void OnTriggerEnter(Collider other) {
 
             // Check for standard Grabbables first
             Grabbable g = other.GetComponent<Grabbable>();
-            if (g != null) {
-                AddNearbyGrabbable(other, g);
+            if (g != null) { // <Solbin> 만약 Grabbable 컴포넌트를 가지고 있다면 
+                AddNearbyGrabbable(other, g); 
                 return;
             }
 

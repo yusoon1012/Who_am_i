@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,10 +11,10 @@ namespace BNG {
 
         [Tooltip("If true, will apply gravity to the CharacterController component, or RigidBody if no CC is present.")]
 
-        public bool GravityEnabled = true;
+        public bool GravityEnabled = true; // <Solbin> 기본적으로 중력이 적용 되도록 설정 되어있다. 
 
         [Tooltip("Amount of Gravity to apply to the CharacterController or Rigidbody. Default is 'Physics.gravity'.")]
-        public Vector3 Gravity = Physics.gravity;
+        public Vector3 Gravity = Physics.gravity; // <Solbin> 기본 중력값 y축 -9.82을 말한다.
 
         CharacterController characterController;
         SmoothLocomotion smoothLocomotion;
@@ -22,7 +22,7 @@ namespace BNG {
         Rigidbody playerRigidbody;
 
         private float _movementY;
-        private Vector3 _initialGravityModifier;
+        private Vector3 _initialGravityModifier; // <Solbin> Start()에서 설정되어 기본 중력값을 담고 있는 필드
 
         // Save us a null check in FixedUpdate
         private bool _validRigidBody = false;
@@ -41,21 +41,32 @@ namespace BNG {
         void LateUpdate() {
 
             // Apply Gravity to Character Controller
-            if (GravityEnabled && characterController != null && characterController.enabled) {
+            if (GravityEnabled && characterController != null && characterController.enabled)
+            {
                 _movementY += Gravity.y * Time.deltaTime;
 
                 // Default to smooth locomotion
-                if(smoothLocomotion) {
+                if (smoothLocomotion)
+                {
                     smoothLocomotion.MoveCharacter(new Vector3(0, _movementY, 0) * Time.deltaTime);
                 }
                 // Fallback to character controller
-                else if(characterController) {
+                else if (characterController)
+                {
                     characterController.Move(new Vector3(0, _movementY, 0) * Time.deltaTime);
                 }
-                
+
                 // Reset Y movement if we are grounded
-                if (characterController.isGrounded) {
+                if (characterController.isGrounded)
+                {
                     _movementY = 0;
+
+                    // <Solbin> AddForce의 영향으로 무한 점프하는 문제가 있어 추가
+                    if (playerRigidbody != null)
+                    {
+                        playerRigidbody.velocity = Vector3.zero;
+                    }
+                    // <Solbim> ===
                 }
             }
         }
@@ -70,7 +81,9 @@ namespace BNG {
                     
                 }
 
-                playerRigidbody.AddForce(Gravity * playerRigidbody.mass);
+                /// ORIGINAL LEGACY
+                //playerRigidbody.AddForce(Gravity * playerRigidbody.mass);
+                // <Solbin> Rigidbody를 PlayerController 오브젝트에 추가시 중력이 이중적용 되는 문제가 있어 주석처리. 
             }
         }
 
@@ -78,10 +91,12 @@ namespace BNG {
 
             GravityEnabled = gravityOn;
 
-            if (gravityOn) {
+            if (gravityOn)
+            {
                 Gravity = _initialGravityModifier;
             }
-            else {
+            else
+            {
                 Gravity = Vector3.zero;
             }
         }
