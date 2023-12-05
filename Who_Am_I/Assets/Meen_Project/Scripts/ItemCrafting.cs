@@ -64,10 +64,8 @@ public class ItemCrafting : MonoBehaviour
     private int[] stuffNowStack = new int[5];
     // 재료 아이템들의 아이콘 이미지 값
     private int[] stuffImageNum = new int[5];
-    // 재료 아이템들의 중첩 수 조건 체크
-    private bool[] stuffCheck = new bool[5];
     // 재료 아이템들의 중첩 수 조건 최종 체크
-    private int resultStuffCheck = default;
+    private int resultStuffCount = default;
     // 재료 아이템들의 타입
     private int[] stuffItemTypes = new int[5];
     // 제작 창의 페이지 값
@@ -82,21 +80,25 @@ public class ItemCrafting : MonoBehaviour
     private int[] craftingSlotImageNum = new int[5];
     // 제작 상세 창의 제작 후 완성되는 아이템의 제작 완료 갯수
     private int craftingStack = default;
-
-    private int craftingCount = default;
+    // 제작을 진행할 때 만들어지는 아이템 수량 계산값
+    private int craftingStackNum = default;
+    // 제작을 진행할 때 필요한 재료 아이템 수량 계산값
+    private int[] stuffStackNum = new int[5];
+    // 제작을 진행할 때 제작 조건을 모두 완료 상태인지 체크
+    private bool resultStuffCheck = false;
 
     #endregion 변수 설정
 
     void Awake()
     {
         craftingLength = 0;
-        resultStuffCheck = 0;
+        resultStuffCount = 0;
         completeItemType = 0;
         page = 0;
         craftingStack = 0;
         order = 0;
         detailOrder = 0;
-        craftingCount = 0;
+        craftingStackNum = 0;
     }     // Awake()
 
     void Start()
@@ -305,12 +307,12 @@ public class ItemCrafting : MonoBehaviour
     // 제작 상세 창에서 선택중인 기능 버튼을 확인하는 함수
     public void DetailOrderCheck(int keyType)
     {
-        // 제작 상세 창에서 이전에 선택되어 있던 버튼의 색을 어둡게 변경
-        currentColor = new Color32(155, 155, 155, 255);
-        detailSlotColor[detailOrder].color = currentColor;
-
-        if (keyType == 0 || keyType == 2)
+        if (keyType == 0)
         {
+            // 제작 상세 창에서 이전에 선택되어 있던 버튼의 색을 어둡게 변경
+            currentColor = new Color32(155, 155, 155, 255);
+            detailSlotColor[detailOrder].color = currentColor;
+
             if (detailOrder == 0)
             {
                 detailOrder = 3;
@@ -319,9 +321,16 @@ public class ItemCrafting : MonoBehaviour
             {
                 detailOrder -= 1;
             }
+
+            // 제작 상세창에서 UI 를 순서대로 선택하는 함수 실행
+            DetailOrderUpDown();
         }
-        else if (keyType == 1 || keyType == 3)
+        else if (keyType == 1)
         {
+            // 제작 상세 창에서 이전에 선택되어 있던 버튼의 색을 어둡게 변경
+            currentColor = new Color32(155, 155, 155, 255);
+            detailSlotColor[detailOrder].color = currentColor;
+
             if (detailOrder == 3)
             {
                 detailOrder = 0;
@@ -330,12 +339,79 @@ public class ItemCrafting : MonoBehaviour
             {
                 detailOrder += 1;
             }
+
+            // 제작 상세창에서 UI 를 순서대로 선택하는 함수 실행
+            DetailOrderUpDown();
+        }
+        else if (keyType == 2 && detailOrder != 2)
+        {
+            // 제작 상세 창에서 이전에 선택되어 있던 버튼의 색을 어둡게 변경
+            currentColor = new Color32(155, 155, 155, 255);
+            detailSlotColor[detailOrder].color = currentColor;
+
+            if (detailOrder == 0)
+            {
+                detailOrder = 3;
+            }
+            else
+            {
+                detailOrder -= 1;
+            }
+
+            // 제작 상세창에서 UI 를 순서대로 선택하는 함수 실행
+            DetailOrderUpDown();
         }
         else if (keyType == 2 && detailOrder == 2)
         {
-            
-        }
+            // 증가되는 재료의 갯수를 체크하는 함수 실행
+            if (stuffStackNum[0] > 1 && stuffStackNum[1] > 1)
+            {
+                stuffStackNum[0] -= stuffStack[0];
+                stuffStackNum[1] -= stuffStack[1];
+                craftingStackNum -= craftingStack;
+            }
 
+            // 변경되는 제작 갯수를 표시해주는 함수 실행
+            DetailOrderLeftRight();
+        }
+        else if (keyType == 3 && detailOrder != 2)
+        {
+            // 제작 상세 창에서 이전에 선택되어 있던 버튼의 색을 어둡게 변경
+            currentColor = new Color32(155, 155, 155, 255);
+            detailSlotColor[detailOrder].color = currentColor;
+
+            if (detailOrder == 3)
+            {
+                detailOrder = 0;
+            }
+            else
+            {
+                detailOrder += 1;
+            }
+
+            // 제작 상세창에서 UI 를 순서대로 선택하는 함수 실행
+            DetailOrderUpDown();
+        }
+        else if (keyType == 3 && detailOrder == 2)
+        {
+            // 증가되는 재료의 갯수를 체크하는 함수 실행
+            StuffStackCheck(out bool stuffStackCheck);
+
+            if (stuffStackCheck == true)
+            {
+                stuffStackNum[0] += stuffStack[0];
+                stuffStackNum[1] += stuffStack[1];
+                craftingStackNum += craftingStack;
+            }
+
+            // 변경되는 제작 갯수를 표시해주는 함수 실행
+            DetailOrderLeftRight();
+        }
+    }     // DetailOrderCheck()
+
+    // 제작 상세 창에서 상세 UI 를 순서에 따라 선택하는 함수
+    private void DetailOrderUpDown()
+    {
         // 상단에 아이템 이름 정보값을 출력
         if (detailOrder == 0)
         {
@@ -357,7 +433,71 @@ public class ItemCrafting : MonoBehaviour
         // 제작 상세 창에서 새롭게 선택된 버튼의 색을 밝게 변경
         newColor = new Color32(255, 255, 255, 255);
         detailSlotColor[detailOrder].color = newColor;
-    }     // DetailOrderCheck()
+    }     // DetailOrderUpDown()
+
+    // 제작 상세 창에서 제작할 갯수를 변경하는 함수
+    private void DetailOrderLeftRight()
+    {
+        resultStuffCount = 0;
+        resultStuffCheck = false;
+
+        // 제작 갯수를 키 입력값에 따라 변화시킴
+        for (int j = 0; j < craftingLength + 1; j++)
+        {
+            if (j != 2)
+            {
+                // 0, 1 번째 순서에는 재료 아이템 정보
+                craftingStacks[j].text = string.Format("{0} / {1}", stuffStackNum[j], stuffNowStack[j]);
+            }
+            else
+            {
+                // 2 번째 순서에는 제작 아이템 정보
+                craftingStacks[j].text = string.Format("{0}", craftingStackNum);
+            }
+        }
+
+        // 제작 가능한 수량을 체크
+        for (int i = 0; i < craftingLength; i++)
+        {
+            if (stuffNowStack[i] >= stuffStackNum[i])
+            {
+                resultStuffCount += 1;
+            }
+
+            if (resultStuffCount == craftingLength)
+            {
+                resultStuffCheck = true;
+            }
+            else
+            {
+                resultStuffCheck = false;
+            }
+        }
+    }     // DetailOrderLeftRight()
+
+    // 제작 갯수를 증가시킬 때 현재 소지중인 재료의 갯수보다 같거나 작은지 체크하는 함수
+    private bool StuffStackCheck(out bool stuffStackCheck)
+    {
+        int[] stuffCheck = new int[2];
+
+        // 재료 갯수를 미리 증가시킴
+        stuffCheck[0] = stuffStackNum[0] + stuffStack[0];
+        stuffCheck[1] = stuffStackNum[1] + stuffStack[1];
+
+        // 증가된 재료 갯수가 현재 소지중인 재료의 갯수보다 같거나 작은지 체크
+        if (stuffCheck[0] <= stuffNowStack[0] && stuffCheck[1] <= stuffNowStack[1])
+        {
+            // 현재 소지중인 재료보다 같거나 작다 (true)
+            stuffStackCheck = true;
+        }
+        else
+        {
+            // 현재 소지중인 재료보다 크다 (false)
+            stuffStackCheck = false;
+        }
+
+        return stuffStackCheck;
+    }     // StuffStackCheck()
 
     // 크래프팅 상세 정보창 진입 함수
     public void OnDetailCrafting()
@@ -389,10 +529,13 @@ public class ItemCrafting : MonoBehaviour
     // 제작 가능한 리스트를 선택했을 때 상세 제작 정보 출력 함수
     public void CraftingCheck(string resultType)
     {
-        resultStuffCheck = 0;
+        stuffStackNum[0] = 0;
+        stuffStackNum[1] = 0;
+        resultStuffCount = 0;
         craftingLength = 0;
         craftingName = resultType;
         completeItemType = 0;
+        resultStuffCheck = false;
 
         // 제작 리스트가 존재할 경우에만 제작 상세 창을 연다
         if (craftingSlot[order].GetComponent<SaveCraftingInfo>().activeSlotCheck == false)
@@ -412,6 +555,7 @@ public class ItemCrafting : MonoBehaviour
         ItemManager.instance.CraftingLength(craftingName, out craftingLength);
         ItemManager.instance.LoadItemInfoText(craftingName, 3, out craftingInfo);
         ItemManager.instance.CraftingStack(craftingName, out craftingStack);
+        craftingStackNum = craftingStack;
         //* 제작 될 최종 아이템 정보를 불러옴
 
         //* 제작에 필요한 재료들의 정보를 순차적으로 불러옴
@@ -420,18 +564,9 @@ public class ItemCrafting : MonoBehaviour
             ItemManager.instance.CraftingStuffName(craftingName, i, out stuffName[i]);
             ItemManager.instance.ItemTypeCheck(stuffName[i], out stuffItemTypes[i]);
             ItemManager.instance.CraftingStuffStack(craftingName, i, out stuffStack[i]);
+            stuffStackNum[i] = stuffStack[i];
             ItemManager.instance.InventoryStack(stuffName[i], stuffItemTypes[i], out stuffNowStack[i]);
             ItemManager.instance.ItemImage(stuffName[i], 3, out stuffImageNum[i]);
-
-            if (stuffNowStack[i] >= stuffStack[i])
-            {
-                stuffCheck[i] = true;
-                resultStuffCheck += 1;
-            }
-            else
-            {
-                stuffCheck[i] = false;
-            }
         }
         //* 제작에 필요한 재료들의 정보를 순차적으로 불러옴
 
@@ -441,7 +576,7 @@ public class ItemCrafting : MonoBehaviour
             {
                 // 0, 1 번째 순서에는 재료 아이템 정보
                 craftingImages[j].sprite = ItemManager.instance.itemImages[stuffImageNum[j]].sprite;
-                craftingStacks[j].text = string.Format("{0} / {1}", stuffNowStack[j], stuffStack[j]);
+                craftingStacks[j].text = string.Format("{0} / {1}", stuffStackNum[j], stuffNowStack[j]);
             }
             else
             {
@@ -450,37 +585,52 @@ public class ItemCrafting : MonoBehaviour
                 craftingStacks[j].text = string.Format("{0}", craftingStack);
             }
         }
-        
-        // 제작에 필요한 아이템들의 중첩 수를 총 체크
-        if (resultStuffCheck == craftingLength)
+
+        // 제작 가능한 수량을 체크
+        for (int y = 0; y < craftingLength; y++)
         {
-            Debug.Log("제작 가능");
-        }
-        else
-        {
-            Debug.Log("재료 부족, 제작 불가능");
+            if (stuffNowStack[y] >= stuffStackNum[y])
+            {
+                resultStuffCount += 1;
+            }
+
+            if (resultStuffCount == craftingLength)
+            {
+                resultStuffCheck = true;
+            }
+            else
+            {
+                resultStuffCheck = false;
+            }
         }
     }     // CraftingCheck()
 
-    // 제작 버튼을 눌렀을 때 아이템을 제작하고, 재료 아이템을 소모하는 함수
-    public void Crafting()
+    // 제작 버튼을 눌렀을 때 제작 조건을 체크하고 제작 실행을 연결하는 함수
+    public void ConnectCrafting()
     {
         // 재료 아이템이 충분하지 않으면 실행하지 않음
-        if (resultStuffCheck != craftingLength) { return; }
+        if (detailOrder == 3 && resultStuffCheck == true)
+        {
+            Crafting();
+        }
+    }     // ConnectCrafting()
 
+    // 제작을 실행하는 함수
+    public void Crafting()
+    {
         ItemsMain itemInfo = new ItemsMain();
 
         // 재료 아이템의 갯수만큼 순차적으로 중첩 수를 빼줌
         for (int i = 0; i < craftingLength; i++)
         {
-            Debug.LogFormat("{0} : {1} 개 소모", stuffName[i], stuffStack[i]);
-            ItemManager.instance.RemoveCraftingItem(stuffName[i], stuffStack[i], stuffItemTypes[i], out itemInfo);
+            Debug.LogFormat("{0} : {1} 개 소모", stuffName[i], stuffStackNum[i]);
+            ItemManager.instance.RemoveCraftingItem(stuffName[i], stuffStackNum[i], stuffItemTypes[i], out itemInfo);
         }
 
         // 아이템을 제작 후 인벤토리에 추가
-        ItemManager.instance.InventoryAdd(craftingName, 1, out itemInfo);
+        ItemManager.instance.InventoryAdd(craftingName, craftingStackNum, out itemInfo);
 
-        Debug.LogFormat("{0} 제작 완료", craftingName);
+        Debug.LogFormat("{0} : {1} 개 제작 완료", craftingName, craftingStackNum);
 
         ShowOrder();
     }     // Crafting()
