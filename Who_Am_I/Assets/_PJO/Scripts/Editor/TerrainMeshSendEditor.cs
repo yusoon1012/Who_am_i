@@ -40,7 +40,7 @@ public class TerrainMeshSendEditor : Editor
     private void CopyMesh()
     {
         // GetTargetMeshFilter() 메서드를 사용하여 target의 MeshFilter컴포넌트 가져오기
-        MeshFilter targetMeshFilter = GFunc.PropertyGetComponent<MeshFilter>(targetObj);
+        MeshFilter targetMeshFilter = GFunc.PropertySetComponent<MeshFilter>(targetObj);
 
         // targetMeshFilter 체크
         if (targetMeshFilter == null)

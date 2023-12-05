@@ -9,7 +9,7 @@ public static partial class GFunc
      * SerializedProperty 형식의 오브젝트를 받아
      * <T>컴포넌트를 가지고 있는지 확인하는 메서드
      */
-    public static T PropertyGetComponent<T>(SerializedProperty _object) where T : Component
+    public static T PropertySetComponent<T>(this SerializedProperty _object) where T : Component
     {
         GameObject targetObj_ = (GameObject)_object.objectReferenceValue;
 
@@ -20,7 +20,7 @@ public static partial class GFunc
      * SerializedProperty 형식의 오브젝트를 받아
      * 오브젝트의 transform값 반환
      */
-    public static Transform PropertyGetTransform(SerializedProperty _object)
+    public static Transform PropertySetTransform(this SerializedProperty _object)
     {
         GameObject targetTra_ = (GameObject)_object.objectReferenceValue;
 
@@ -29,33 +29,56 @@ public static partial class GFunc
 
     /*
      * GameObject 형식의 오브젝트를 받아
-     * <T>컴포넌트가 true: 추가하지 않고 반환
-     * <T>컴포넌트가 false: <T>컴포넌트를 추가하여 반환
+     * 컴포넌트를 이미 가지고 있다면 그대로 반환 없다면 생성 후 반환
      */
-    public static T SetComponent<T>(GameObject _object) where T : Component
+    public static T AddComponent<T>(this GameObject _object) where T : Component
     {
-        // 오브젝트가 null인지 체크
-        if (_object == null)
-        {
-            Debug.Log("오브젝트를 가져오지 못했습니다.");
-
-            return null;
-        }
-
         return _object.GetComponent<T>() == true ? _object.GetComponent<T>() : _object.AddComponent<T>();
     }
 
-    public static T GetComponent<T>(GameObject _object) where T : Component
+    /*
+     * GameObject 형식의 오브젝트를 받아
+     * 컴포넌트를 가지고 있다면 그대로 반환 없다면 null 반환
+     */
+    public static T SetComponent<T>(this GameObject _object) where T : Component
     {
-        GameObject targetObj_ = _object;
-
-        return targetObj_.GetComponent<T>() == true ? targetObj_.GetComponent<T>() : null;
+        return _object.GetComponent<T>() == true ? _object.GetComponent<T>() : null;
     }
 
-    public static Vector3[] GetChildArray(GameObject _object)
+    /*
+     * GameObject 형식의 오브젝트를 받아
+     * 부모 오브젝트가 해당 컴포넌트를 가지고 있다면 부모 오브젝트의 컴포넌트 반환 없다면 null 반환
+     */
+    public static T SetParentComponent<T>(this GameObject _object) where T : Component
+    {
+        return _object.GetComponentInParent<T>() == true ? _object.GetComponentInParent<T>() : null;
+    }
+
+    /*
+     * GameObject 형식의 오브젝트를 받아
+     * 해당 오브젝트의 정점 배열을 반환
+     */
+    public static Vector3[] GetMeshVertiesArray(this GameObject _object)
+    {
+        MeshFilter meshFilter_ = SetComponent<MeshFilter>(_object);
+        if (meshFilter_ == null)
+        {
+            SubmitNonFindText<MeshFilter>(_object);
+            return null;
+        }
+        Mesh mesh_ = meshFilter_.mesh;
+
+        return mesh_.vertices;
+    }
+
+    /*
+     * GameObject 형식의 오브젝트를 받아
+     * 해당 오브젝트의 자식을 배열로 반환
+     */
+    public static Vector3[] GetChildArray(this GameObject _object)
     {
         Transform targetObj_ = _object.transform;
-        
+
         Vector3[] array_ = new Vector3[targetObj_.childCount];
 
         for (int i = 0; i < targetObj_.childCount; i++)
@@ -113,8 +136,13 @@ public static partial class GFunc
     }
 
     // 자식 갯수를 반환
-    public static int GetChildCount(GameObject _object)
+    public static int GetChildCount(this GameObject _object)
     {
         return _object.transform.childCount;
+    }
+
+    public static void SubmitNonFindText<T>(this GameObject _object) where T : Component
+    {
+        Debug.Log($"{_object.name} not found {typeof(T).Name}");
     }
 }

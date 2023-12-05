@@ -2,26 +2,31 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
-public class ThisData : MonoBehaviour
+public class ThisAnimalData : MonoBehaviour
 {
-
     [SerializeField]
     [Header("드랍 아이템")]
     private GameObject testPrefab = default;
 
-    private Animator animator = default;
-    //private AnimalEscapeAI animalEscapeAI = default;
+    [SerializeField]
+    [Header("해당 오브젝트 데이터")]
+    public AnimalData data = default;
 
-    private AnimalData data = default;
+    private GameObject player = default;
+    private NavMeshAgent navigation = default;
+    private ThisAnimalAI animalAI = default;
+    private Animator animator = default;
+    private bool isPlayer = default;
+
     private SphereCollider collider = default;
 
-    public bool isIdle = true;
+    public bool isAction = false;
 
     private string NAME_CLONE = "(Clone)";
     private string NAME_NULL = "";
 
-    private int IDLE_NUMBER = 10;
     private float MAX_WAIT_TIME = 10;
 
     private float DROP_FORCE = 10;
@@ -29,20 +34,22 @@ public class ThisData : MonoBehaviour
 
     private void Start()
     {
-        animator = GFunc.GetComponent<Animator>(this.gameObject);
+        // { 애니메이션 컴포넌트
+        animator = GFunc.SetComponent<Animator>(this.gameObject);
         if (animator == null)
         {
-            Debug.LogError("animator컴포넌트를 찾지 못했습니다.");
+            GFunc.SubmitNonFindText<Animator>(this.gameObject);
             return;
         }
-
-        //animalEscapeAI = GFunc.GetComponent<AnimalEscapeAI>(this.gameObject);
-        //if (animalEscapeAI == null)
-        //{
-        //    Debug.LogError("AnimalEscapeAI스크립트가 null입니다.");
-        //    return;
-        //}
-
+        // } 애니메이션 컴포넌트
+        // { AI 컴포넌트
+        animalAI = GFunc.SetComponent<ThisAnimalAI>(this.gameObject);
+        if (animalAI == null)
+        {
+            GFunc.SubmitNonFindText<ThisAnimalAI>(this.gameObject);
+            return;
+        }
+        // } AI 컴포넌트
         // { AnimalsType 설정
         AnimalsType? type = new AnimalsType();
 
@@ -53,7 +60,6 @@ public class ThisData : MonoBehaviour
             return;
         }
         // } AnimalsType 설정
-
         // { AnimalData 설정
         data = new AnimalData();
 
@@ -64,33 +70,40 @@ public class ThisData : MonoBehaviour
             return;
         }
         // } AnimalData 설정
+        // { 네비게이션 컴포넌트
+        navigation = GFunc.SetComponent<NavMeshAgent>(this.gameObject);
+        if (navigation == null)
+        {
+            GFunc.SubmitNonFindText<NavMeshAgent>(this.gameObject);
+            return;
+        }
 
+        navigation.speed = data.speed;
+        // } 네비게이션 컴포넌트
         // { collider 설정
-        collider = GFunc.GetComponent<SphereCollider>(this.gameObject);
+        collider = GFunc.SetComponent<SphereCollider>(this.gameObject);
         if (collider == null)
         {
-            Debug.LogError("SphereCollider가 null입니다.");
+            GFunc.SubmitNonFindText<SphereCollider>(this.gameObject);
             return;
         }
 
         collider.radius = data.range_Rec;
         // } collider 설정
-
-        StartCoroutine(Test());
-    }
-
-    private IEnumerator Test()
-    {
-        yield return new WaitForSeconds(5);
-
-        Hit(1);
     }
 
     private void Update()
     {
-        if (isIdle == true)
+        if (isAction == false)
         {
-            //animator
+            if (isPlayer == false)
+            {
+                animalAI.UnEscape();
+            }
+            else
+            {
+                animalAI.Escape(player.transform.position);
+            }
         }
     }
 
@@ -100,7 +113,7 @@ public class ThisData : MonoBehaviour
 
         if (data.hp <= 0)
         {
-            GameObject newObject = Instantiate(testPrefab, transform.position + new Vector3(0,1,0), Quaternion.identity);
+            GameObject newObject = Instantiate(testPrefab, transform.position + new Vector3(0, 1, 0), Quaternion.identity);
 
             DropItem(newObject.GetComponent<Rigidbody>());
 
@@ -144,21 +157,26 @@ public class ThisData : MonoBehaviour
     #endregion
 
     #region 충돌 처리
-    //private void OnTriggerEnter(Collider other)
-    //{
-    //    if (other.CompareTag("Player"))
-    //    {
-    //        animalEscapeAI.isPlayer = true;
-    //    }
-    //}
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            isPlayer = true;
 
-    //private void OnTriggerExit(Collider other)
-    //{
-    //    if (other.CompareTag("Player"))
-    //    {
-    //        animalEscapeAI.isPlayer = false;
-    //    }
-    //}
+            if (player == null) { player = other.gameObject; }
+
+            animalAI.SetCoroutine();
+            animalAI.Escape(other.transform.position);
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            isPlayer = false;
+        }
+    }
     #endregion
 
     #region 초기화
