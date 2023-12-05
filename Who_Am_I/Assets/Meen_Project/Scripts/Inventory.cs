@@ -151,25 +151,6 @@ public class Inventory : MonoBehaviour
         }
     }     // Start()
 
-    void Update()
-    {
-        //* Test : 해당 키를 누르면 인벤토리에 아이템 추가 기능
-        if (Input.GetKeyDown(KeyCode.T))
-        {
-            Test();
-        }
-        else if (Input.GetKeyDown(KeyCode.Y))
-        {
-            ReadTest();
-        }
-        else if (Input.GetKeyDown(KeyCode.P))
-        {
-            useEquipStr = "None";
-        }
-
-        //* End Test : 해당 키를 누르면 인벤토리에 아이템 추가 기능
-    }     // Update()
-
     #region 아이템 획득 기능
 
     // 아이템 매니저의 인벤토리에 아이템이 없을 때 새로운 아이템을 추가하고, 아이템이 있을 시 갯수를 중첩시키는 함수
@@ -189,21 +170,22 @@ public class Inventory : MonoBehaviour
 
     #endregion 아이템 획득 기능
 
-    public void Test()
-    {
-        test = ItemManager.instance.testDic;
-    }
+    //* Feat : 아이템 파이어 데이터 베이스에서 아이템 모두 가져오기 기능 추가 예정
+    //public void Test()
+    //{
+    //    test = ItemManager.instance.testDic;
+    //}
 
-    public void ReadTest()
-    {
-        foreach (KeyValuePair<string, int> pair in test)
-        {
-            string name = pair.Key;
-            int stack = pair.Value;
+    //public void ReadTest()
+    //{
+    //    foreach (KeyValuePair<string, int> pair in test)
+    //    {
+    //        string name = pair.Key;
+    //        int stack = pair.Value;
 
-            AddInventory(name, stack);
-        }
-    }
+    //        AddInventory(name, stack);
+    //    }
+    //}
 
     #region 인벤토리 아이템 타입 창 이동 기능
 
