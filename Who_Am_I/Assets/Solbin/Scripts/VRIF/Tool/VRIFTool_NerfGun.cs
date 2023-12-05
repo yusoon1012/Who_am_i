@@ -1,6 +1,8 @@
+using OVR.OpenVR;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.TextCore.Text;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -8,6 +10,8 @@ public class VRIFTool_NerfGun : MonoBehaviour
 {
     // VRIF Action
     private VRIFAction vrifAction = default;
+    // Test Action
+    private TestAction testAction = default;
     // 레이 발사 지점
     [SerializeField] Transform firePos = default;
     // 사정거리
@@ -36,11 +40,14 @@ public class VRIFTool_NerfGun : MonoBehaviour
     {
         vrifAction = new VRIFAction();
         vrifAction.Enable();
+        testAction = new TestAction();
+        testAction.Enable();
     }
 
     private void OnDisable()
     {
         vrifAction?.Disable();
+        testAction?.Disable();
     }
 
     private void Update()
@@ -67,7 +74,8 @@ public class VRIFTool_NerfGun : MonoBehaviour
             pointer.position = hit.point;
             trajectory.SetPosition(1, hit.point);
 
-            if (vrifAction.Player.RightTrigger.triggered) { Shoot(hit.transform.gameObject); }
+            if (vrifAction.Player.RightTrigger.triggered || testAction.Test.Click.triggered)
+            { Shoot(hit.transform.gameObject); }
         }
     }
 
@@ -78,16 +86,19 @@ public class VRIFTool_NerfGun : MonoBehaviour
     {
         if (_prey.layer == LayerMask.NameToLayer("Animal"))
         {
-            Debug.LogWarning("Shoot Animal");
-        }
-        else
-        {
-            Debug.LogWarning("Not Shoot Animal");
+            if (_prey.GetComponent<ThisData>()) // 데이터 스크립트가 있는 동물이면
+            {
+                ThisData thisData = _prey.GetComponent<ThisData>();
+                thisData.Hit(1); // 1만큼 데미지 
+            }
         }
 
         // TODO: 레이가 닿은 부분, 총구에 파티클(혹은 다른 효과) 발생
     }
 
+    /// <summary>
+    /// 슬로우 타임 
+    /// </summary>
     private void ActivateSlowTime()
     {
         if (vrifAction.Player.SlowMode.triggered) // B버튼을 누르면 

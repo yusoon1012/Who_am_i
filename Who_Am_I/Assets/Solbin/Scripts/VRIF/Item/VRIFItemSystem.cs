@@ -9,7 +9,7 @@ using UnityEngine;
 public class VRIFItemSystem : MonoBehaviour
 {
     // 아이템 이름 - 아이템 오브젝트 딕셔너리
-    private Dictionary<string, GameObject> mountingItem = new Dictionary<string, GameObject>();
+    private Dictionary<string, GameObject> mountingItem = default;
 
     [Header("Items")]
     // (장착) 너프건 
@@ -22,6 +22,9 @@ public class VRIFItemSystem : MonoBehaviour
     [SerializeField] private GameObject dragonflyNet = default;
     // LEGACY: (장착) 새총
     //[SerializeField] private GameObject slingShot = default;
+
+    // TestAction
+    private TestAction testAction = default;
 
     private void Start()
     {
@@ -41,11 +44,24 @@ public class VRIFItemSystem : MonoBehaviour
         dragonflyNet.SetActive(false);
     }
 
+    private void OnEnable()
+    {
+        testAction = new TestAction();
+        testAction.Enable();
+    }
+
+    private void OnDisable()
+    {
+        testAction?.Disable();
+    }
+
     /// <summary>
     /// 딕셔너리 세팅
     /// </summary>
     private void DicSetting()
     {
+        mountingItem = new Dictionary<string, GameObject>();
+
         mountingItem["NerfGun"] = nerfGun;
         mountingItem["Shavel"] = shavel;
         mountingItem["FishingRod"] = fishingRod;
@@ -55,13 +71,13 @@ public class VRIFItemSystem : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.K)) // 테스트용 코드
+        if (testAction.Test.NerfGun.triggered)
         {
-            MountingItem("NerfGun");
-        }
-        else if (Input.GetKeyDown(KeyCode.L))
-        {
-            MountingItem("Shavel");
+            if (!nerfGun.activeSelf)
+            {
+                MountingItem("NerfGun");
+            }
+            else { ReleaseItem("NerfGun"); }
         }
     }
 

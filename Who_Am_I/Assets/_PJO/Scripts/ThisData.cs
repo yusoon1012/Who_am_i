@@ -73,10 +73,9 @@ public class ThisData : MonoBehaviour
             return;
         }
 
-        collider.radius = data.range_Rec;
+        collider.radius = 1;
         // } collider 설정
 
-        StartCoroutine(Test());
     }
 
     private IEnumerator Test()

@@ -13,6 +13,8 @@ public class VRIFPlayerItem : MonoBehaviour
 {
     // VRIF Action
     VRIFAction vrifAction;
+    // Test Action
+    private TestAction testAction;
     // Shining Material Initial Value
     private const float shiningInitialValue = 1.05f;
     // Inventory Component
@@ -37,11 +39,14 @@ public class VRIFPlayerItem : MonoBehaviour
     {
         vrifAction = new VRIFAction();
         vrifAction.Enable();
+        testAction = new TestAction();
+        testAction.Enable();
     }
 
     private void OnDisable()
     {
         vrifAction?.Disable();
+        testAction?.Disable();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -62,7 +67,7 @@ public class VRIFPlayerItem : MonoBehaviour
     {
         if (other.gameObject.layer == LayerMask.NameToLayer("Item"))
         {
-            if (vrifAction.Player.Interaction.triggered)
+            if (vrifAction.Player.Interaction.triggered || testAction.Test.Interaction.triggered)
             {
                 GetItem(other.gameObject); // 아이템 획득 가능
             }

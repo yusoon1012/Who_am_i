@@ -10,22 +10,27 @@ using UnityEngine;
 public class VRIFStatusSystem : MonoBehaviour
 {
     #region 필드
-    [Header("Gage Transform")]
+    [Header("게이지 트랜스폼")]
     [SerializeField] Transform fullnessGage = default;
     [SerializeField] Transform pooGage = default;
-    
-    [Header("GameObject Poo")]
-    [Tooltip("똥")]
+
+    [Header("똥")]
     [SerializeField] GameObject poo = default; // 프리팹
-    [SerializeField] GameObject playerPoo = default;
+    private GameObject playerPoo = default;
+
+    [Header("플레이어 트랜스폼")]
+    [SerializeField] private Transform player = default; // 플레이어 트랜스폼 
+
+    [Header("포만감 하락 타이머")]
+    public int hungerTimer = 10; // TODO: 테스트를 위해 설정, 이후 60초로 교체하기 
 
     // 게이지 총 수는 5로 정해졌다.
     private int gageCount = 5;
     // 현 포만감, 배출도 수치 
-    private int m_Fullness = default;
-    private int m_Poo = default;
+    public int m_Fullness = default;
+    public int m_Poo = default;
     // 소화기 작동 여부
-    private bool digestion = true;
+    public bool digestion = true;
     // 포만감 게이지 배열
     private GameObject[] halfFullnessArray;
     private GameObject[] fullFullnessArray;
@@ -73,7 +78,7 @@ public class VRIFStatusSystem : MonoBehaviour
     {
         while (digestion)
         {
-            yield return new WaitForSeconds(3); // TODO: 1분에 5% 떨어지는 것으로 설정
+            yield return new WaitForSeconds(hungerTimer); // TODO: 1분에 5% 떨어지는 것으로 설정
             m_Fullness -= 5;
 
             if (m_Fullness <= 0) // 사망 조건 
@@ -89,11 +94,6 @@ public class VRIFStatusSystem : MonoBehaviour
     {
         FullnessCheck();
         PooCheck();
-
-        if (Input.GetKeyDown(KeyCode.G))
-        {
-            GetFood(15, 20);
-        }
     }
 
     #region 포만감 게이지 업데이트
@@ -212,7 +212,7 @@ public class VRIFStatusSystem : MonoBehaviour
         m_Fullness += _satiety; // 포만감 더하기 
         m_Poo += _poo; // 배출값 더하기 
 
-        if (m_Poo >= 100) { PooEvent(); }
+        if (m_Poo >= 100) { PooEvent(); } // 배출도 100 이상 시 배출 이벤트 발생 
     }
 
     /// <summary>
@@ -220,11 +220,14 @@ public class VRIFStatusSystem : MonoBehaviour
     /// </summary>
     private void PooEvent()
     {
-        Vector3 pooPos = new Vector3();
+        Vector3 pooPos = -player.forward * 1f; // 플레이어의 2만큼 뒤 
+        Quaternion playerRotation = Quaternion.Euler(player.eulerAngles); // 플레이어의 Euler
+
         m_Poo = 0; // 배출값 초기화 
 
-        playerPoo = Instantiate(poo); // 생성 
-        // TODO: 배출 이벤트 구현 
+        Instantiate(poo, pooPos, playerRotation);
+
+        // TODO: 후에 NPC에 영향이 가도록 구현 
     }   
     
     /// <summary>
@@ -232,6 +235,6 @@ public class VRIFStatusSystem : MonoBehaviour
     /// </summary>
     private void DieEvent()
     {
-       
+        Debug.Log("플레이어 사망!");
     }
 }

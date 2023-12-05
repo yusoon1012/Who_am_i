@@ -32,8 +32,12 @@ public class UIController : MonoBehaviour
     private VRIFAction vrifAction = default;
     // <Solbin> VRIF State System
     [SerializeField] private VRIFStateSystem vrifStateSystem = default;
+    // <Solbin> VRIF Time System
+    [SerializeField] private VRIFTimeSystem vrifTimeSystem = default;
     // <Solbin> UI 조이스틱 입력 기준값
     private float joystickInput = 0.95f;
+    // <Solbin> Input Delay를 위한 bool 값
+    private bool inputDelay = false;
 
     void Awake()
     {
@@ -129,6 +133,7 @@ public class UIController : MonoBehaviour
                 case 0:
                     uiController = 9;
                     quickSlotTf.GetComponent<QuickSlot>().SingleOpenQuickSlot();
+                    // TODO: 슬로우타임, UI 상태 변경
                     break;
                 case 1:
                     playerTf.GetComponent<MainMenu>().ConnectMenu();
@@ -217,6 +222,7 @@ public class UIController : MonoBehaviour
             case 0:
                 playerTf.GetComponent<MainMenu>().OnMainMenu();
                 uiController = 1;
+                // TODO: 메인메뉴 열릴 때
                 break;
             // 메뉴가 하나라도 켜져있으면 해당 메뉴를 모두 닫고 초기화 화면으로 돌아감
             case 1:
@@ -278,69 +284,107 @@ public class UIController : MonoBehaviour
 
     #region Input 키 입력 값 모음
 
+    // 퀵슬롯이 열릴때 게임 시간 슬로우 효과
+    private void OpenQuickSlot()
+    {
+        // TODO: 타임 슬로우 효과 연결 
+    }
+
+    // 어떤 메뉴든 열릴 때 게임 시간 정지
+    private void OpenMenuCheck()
+    {
+        // TODO: 어떤 메뉴든 열릴 때
+    }
+
+    // 어떤 메뉴든 닫았을 때 게임 시간 재개
+    private void ExitMenuCheck()
+    {
+        // TODO: 메인메뉴를 끌때 처리 
+    }
+
     void Update()
     {
         // 모든 상, 하, 좌, 우 기본 키보드 키 입력 값
         if (Input.GetKeyDown(KeyCode.UpArrow) || vrifAction.Player.LeftController.ReadValue<Vector2>().y >= joystickInput)
         {
-            // <Solbin> GetKey 같은 느낌이라 너무 예민하다고 느껴진다. 수정 필요
-            DirectionControl(0);
+            if (!inputDelay) { inputDelay = true; DirectionControl(0); }
         }
         else if (Input.GetKeyDown(KeyCode.DownArrow) || vrifAction.Player.LeftController.ReadValue<Vector2>().y <= -joystickInput)
         {
-            DirectionControl(1);
+            if (!inputDelay) { inputDelay = true; DirectionControl(1); }
         }
         else if (Input.GetKeyDown(KeyCode.LeftArrow) || vrifAction.Player.LeftController.ReadValue<Vector2>().x <= -joystickInput)
         {
-            DirectionControl(2);
+            if (!inputDelay) { inputDelay = true; DirectionControl(2); }
         }
         else if (Input.GetKeyDown(KeyCode.RightArrow) || vrifAction.Player.LeftController.ReadValue<Vector2>().x >= joystickInput)
         {
-            DirectionControl(3);
+            if (!inputDelay) { inputDelay = true; DirectionControl(3); }
         }
         // <Solbin> 메뉴 진입
         else if (Input.GetKeyDown(KeyCode.M) || vrifAction.Player.UI_Menu.triggered) // <Solbin> Menu Enter
         {
-            OnMainMenuControl();
+            //OnMainMenuControl();
 
-            //if (vrifStateSystem.gameState == VRIFStateSystem.GameState.NORMAL)
-            //{   // <Solbin> 메뉴는 NORMAL 상태에서만 진입 가능 
-            //    OnMainMenuControl();
-            //    vrifStateSystem.ChangeState(VRIFStateSystem.GameState.UI);
-            //}// <Solbin> UI 상태로 전환 
+            // <Solbin>
+            if (VRIFStateSystem.gameState == VRIFStateSystem.GameState.NORMAL)
+            {  
+                OnMainMenuControl();
+                VRIFStateSystem.gameState = VRIFStateSystem.GameState.UI;
+            }
+            else if (VRIFStateSystem.gameState == VRIFStateSystem.GameState.UI)
+            {
+                vrifTimeSystem.OffSlowTime(); // 슬로우 타임 종료 
+
+                OnMainMenuControl();
+                VRIFStateSystem.gameState = VRIFStateSystem.GameState.NORMAL;
+            }
+            // <Solbin> ===
         }
         // 모든 진입 키 입력 값
         else if (Input.GetKeyDown(KeyCode.Z) || vrifAction.Player.UI_Click.triggered) // <Solbin> Menu Select
         {
             OnOffControl(0);
+
+            //if (VRIFStateSystem.gameState == VRIFStateSystem.GameState.NORMAL)
+            //{
+            //    OnOffControl(0);
+
+            //    vrifTimeSystem.OnSlowTime(); // 슬로우 타임 시작 
+
+            //    VRIFStateSystem.gameState = VRIFStateSystem.GameState.UI;
+            //}
         }
         // 모든 뒤로가기 키 입력 값
         else if (Input.GetKeyDown(KeyCode.X) || vrifAction.Player.UI_Exit.triggered) // <Solbin> Exit Menu
         {
             OnOffControl(1);
 
-            //if (vrifStateSystem.gameState == VRIFStateSystem.GameState.UI) // <Solbin> UI 상태일때
+            //if (VRIFStateSystem.gameState == VRIFStateSystem.GameState.UI)
             //{
             //    OnOffControl(1);
-            //    vrifStateSystem.ChangeState(VRIFStateSystem.GameState.NORMAL); // <Solbin> NORMAL 상태로 전환 
+
+            //    vrifTimeSystem.OffSlowTime(); // 슬로우 타임 종료 
+
+            //    VRIFStateSystem.gameState = VRIFStateSystem.GameState.NORMAL;
             //}
         }
         // 모든 두번째 상, 하, 좌, 우 키보드 키 입력 값
         else if (Input.GetKeyDown(KeyCode.Keypad8) || vrifAction.Player.RightController.ReadValue<Vector2>().y >= joystickInput)
         {
-            RightDirectionControl(0);
+            if (!inputDelay) { inputDelay = true; RightDirectionControl(0); }
         }
         else if (Input.GetKeyDown(KeyCode.Keypad2) || vrifAction.Player.RightController.ReadValue<Vector2>().y <= -joystickInput)
         {
-            RightDirectionControl(1);
+            if (!inputDelay) { inputDelay = true; RightDirectionControl(1); }
         }
         else if (Input.GetKeyDown(KeyCode.Keypad4) || vrifAction.Player.RightController.ReadValue<Vector2>().x <= -joystickInput)
         {
-            RightDirectionControl(2);
+            if (!inputDelay) { inputDelay = true; RightDirectionControl(2); }
         }
         else if (Input.GetKeyDown(KeyCode.Keypad6) || vrifAction.Player.RightController.ReadValue<Vector2>().x >= joystickInput)
         {
-            RightDirectionControl(3);
+            if (!inputDelay) { inputDelay = true; RightDirectionControl(3); }
         }
         else if (Input.GetKeyDown(KeyCode.P) && uiController == 0)
         {
@@ -348,6 +392,9 @@ public class UIController : MonoBehaviour
             playerTf.GetComponent<ItemCrafting>().OnCrafting();
         }
 
+        // <Solbin> 지나치게 예민한 입력값을 막기 위함
+        if (inputDelay) { Invoke("ClearInputDelay", 0.5f); }
+        // <Solbin> ===
 
         #region LAGACY
         //* LEGACY CODE
@@ -551,4 +598,8 @@ public class UIController : MonoBehaviour
     #endregion LAGACY
 
     #endregion Input 키 입력 값 모음
+
+    // <Solbin>
+    private void ClearInputDelay() { inputDelay = false; }
+
 }
