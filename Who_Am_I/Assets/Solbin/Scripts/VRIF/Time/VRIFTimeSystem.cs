@@ -41,8 +41,8 @@ public class VRIFTimeSystem : MonoBehaviour
     #endregion
 
     #region (퀵슬롯 등 UI 적용) 시간 제한이 없는 Slow Time
-    private void OnSlowTime() { Time.timeScale = slowTimeScale; }
+    public void OnSlowTime() { Time.timeScale = slowTimeScale; }
 
-    private void OffSlowTime() { Time.timeScale = 1; } // TODO: 후에 퀵슬롯 추가 시 슬로우 타임 적용 
+    public void OffSlowTime() { Time.timeScale = 1; } // TODO: 후에 퀵슬롯 추가 시 슬로우 타임 적용 
     #endregion
 }

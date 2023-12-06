@@ -17,11 +17,11 @@ namespace DS.Elements
         {
             dialogueName = "Dialogue Name";
             choices = new List<string>();
-            text = new string[]{ "Dialogue Text"};
+            text = new string[] { "Dialogue Text" };
         }
         public void ApplyDialogueData(Dialogue dialogue)
         {
-            dialogueName=dialogue.name;
+            dialogueName = dialogue.name;
             text = dialogue.contexts;
         }
         public void Draw()
@@ -30,15 +30,15 @@ namespace DS.Elements
             {
                 value = dialogueName
             };
-            titleContainer.Insert(0,dialogueNameTextField);
-            Port inputPort = InstantiatePort(Orientation.Horizontal, Direction.Input, Port.Capacity.Multi,typeof(bool));
+            titleContainer.Insert(0, dialogueNameTextField);
+            Port inputPort = InstantiatePort(Orientation.Horizontal, Direction.Input, Port.Capacity.Multi, typeof(bool));
             inputPort.portName = "Dialogue Connection";
             inputContainer.Add(inputPort);
 
             VisualElement customDataContainer = new VisualElement();
             Foldout textFoldout = new Foldout()
             {
-                text ="Dialogue Text"
+                text = "Dialogue Text"
             };
             // 기존의 textFoldout 대신, 배열의 각 텍스트를 TextField로 생성하여 추가
             for (int i = 0; i < text.Length; i++)
@@ -49,7 +49,7 @@ namespace DS.Elements
                 };
                 customDataContainer.Add(textTextField);
             }
-            
+
             customDataContainer.Add(textFoldout);
             extensionContainer.Add(customDataContainer);
             RefreshExpandedState();

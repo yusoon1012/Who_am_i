@@ -10,6 +10,8 @@ public class ItemManager : MonoBehaviour
 
     // 인스턴스로 생성
     public static ItemManager instance;
+    // 퀵슬롯 트랜스폼
+    public Transform quickSlotTf;
 
     // 아이템마다 등록된 아이콘 이미지 목록
     public Image[] itemImages = new Image[30];
@@ -618,6 +620,7 @@ public class ItemManager : MonoBehaviour
                     itemInfo.itemStack -= stack;
                     if (itemInfo.itemStack <= 0)
                     {
+                        quickSlotTf.GetComponent<QuickSlot>().UseFoodsCheck(itemName);
                         foods.Remove(itemName);
                         itemInfo.itemStack = 0;
                     }

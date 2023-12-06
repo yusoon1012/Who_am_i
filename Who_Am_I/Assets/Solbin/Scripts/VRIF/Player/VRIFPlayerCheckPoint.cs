@@ -15,6 +15,8 @@ public class VRIFPlayerCheckPoint : MonoBehaviour
     private float shiningInitialValue = 1.06f;
     // VRIF Action
     private VRIFAction vrifAction = default;
+    // Test Action
+    private TestAction testAction = default;
     // CheckPoint UI
     [SerializeField] private GameObject checkPointUI = default;
     // VRIF State System
@@ -32,11 +34,15 @@ public class VRIFPlayerCheckPoint : MonoBehaviour
     {
         vrifAction = new VRIFAction();
         vrifAction.Enable();
+
+        testAction = new TestAction();
+        testAction.Enable();
     }
 
     private void OnDisable()
     {
         vrifAction?.Disable();
+        testAction?.Disable();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -57,14 +63,9 @@ public class VRIFPlayerCheckPoint : MonoBehaviour
     {
         if (other.gameObject.layer == LayerMask.NameToLayer("CheckPoint"))
         {
-            if (vrifAction.Player.Interaction.triggered)
+            if (vrifAction.Player.Interaction.triggered || testAction.Test.Interaction.triggered)
             {
                 ActivateCheckPointUI(); // Activate CheckPoint UI
-            }
-
-            if (checkPointUI.activeSelf) // 만약 CheckPointUI가 활성화 되어있다면
-            {
-                UIControl();
             }
         }
     }
@@ -91,9 +92,16 @@ public class VRIFPlayerCheckPoint : MonoBehaviour
     private void ActivateCheckPointUI()
     {
         checkPointUI.SetActive(true);
-        vrifStateSystem.ChangeState(VRIFStateSystem.GameState.UI); // 게임 UI 상태로 변경 
+        VRIFStateSystem.gameState = VRIFStateSystem.GameState.UI;
     }
 
+    private void Update()
+    {
+        if (checkPointUI.activeSelf) // 만약 CheckPointUI가 활성화 되어있다면
+        {
+            UIControl();
+        }
+    }
 
     /// <summary>
     /// UI 컨트롤
@@ -107,19 +115,25 @@ public class VRIFPlayerCheckPoint : MonoBehaviour
             else { saveSelect = true; }
         }
 
+        if (testAction.Test.UpArrow.triggered || testAction.Test.DownArrow.triggered) // 테스트
+        {
+            if (saveSelect) { saveSelect = false; }
+            else { saveSelect = true; }
+        }
+
         if (saveSelect) // 저장 선택 시 
         {
             saveImage.SetActive(true);
             returnImage.SetActive(false);
 
-            if (vrifAction.Player.UI_Click.triggered) { PressSave(); }
+            if (vrifAction.Player.UI_Click.triggered || testAction.Test.Enter.triggered) { PressSave(); }
         }
         else if (!saveSelect) // 되돌아가기 선택 시 
         {
             saveImage.SetActive(false);
             returnImage.SetActive(true);
 
-            if (vrifAction.Player.UI_Click.triggered) { DeactivateCheckPointUI(); }
+            if (vrifAction.Player.UI_Click.triggered || testAction.Test.Enter.triggered) { DeactivateCheckPointUI(); }
         }
 
     }
@@ -139,7 +153,7 @@ public class VRIFPlayerCheckPoint : MonoBehaviour
     public void DeactivateCheckPointUI()
     {
         checkPointUI.SetActive(false);
-        vrifStateSystem.ChangeState(VRIFStateSystem.GameState.NORMAL); // 게임 NORMAL 상태로 변경 
+        VRIFStateSystem.gameState = VRIFStateSystem.GameState.NORMAL;
     }
 
 }

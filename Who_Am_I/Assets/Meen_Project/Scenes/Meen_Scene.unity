@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2966,21 +2966,6 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 1530236288}
-    - target: {fileID: 4143863109132792438, guid: 0085ad4d3ba941b469c932151fae8123,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4143863109387449837, guid: 0085ad4d3ba941b469c932151fae8123,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8541282830391558035, guid: 0085ad4d3ba941b469c932151fae8123,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0085ad4d3ba941b469c932151fae8123, type: 3}
 --- !u!1 &4143863108564937513 stripped
@@ -4182,6 +4167,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 8670115538682982401, guid: 6023b667300c666438dac88a04813077,
+        type: 3}
+      propertyPath: quickSlotTf
+      value: 
+      objectReference: {fileID: 1606530927}
     - target: {fileID: 8670115538682982406, guid: 6023b667300c666438dac88a04813077,
         type: 3}
       propertyPath: m_RootOrder
