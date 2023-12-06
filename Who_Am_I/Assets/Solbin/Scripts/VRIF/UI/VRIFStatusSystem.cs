@@ -1,6 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 /// <summary>
@@ -41,9 +39,12 @@ public class VRIFStatusSystem : MonoBehaviour
 
     private void Start()
     {
-        Setting();
+        Setting(); // 초기 세팅
 
-        StartCoroutine(Digestion());
+        FullnessCheck(); // 게이지 체크
+        PooCheck();
+
+        StartCoroutine(Digestion()); // 소화기 작동 시작
     }
 
     private void Setting()
@@ -82,6 +83,8 @@ public class VRIFStatusSystem : MonoBehaviour
             yield return new WaitForSeconds(hungerTimer); // TODO: 1분에 5% 떨어지는 것으로 설정
             m_Fullness -= 5;
 
+            FullnessCheck();
+
             if (m_Fullness <= 0) // 사망 조건 
             {
                 digestion = false; // 소화기 정지
@@ -89,12 +92,6 @@ public class VRIFStatusSystem : MonoBehaviour
                 break;
             }
         }
-    }
-
-    private void Update()
-    {
-        FullnessCheck();
-        PooCheck();
     }
 
     #region 포만감 게이지 업데이트
@@ -129,25 +126,24 @@ public class VRIFStatusSystem : MonoBehaviour
         if (m_Fullness >= 100) { m_Fullness = 100; } // 포만감 초과시 100으로 보정
     }
 
-    private void FullnessUpdate(int _num, string _percent) // 50으로 가정,3에 half를 받아왔을 것이다. 
+    private void FullnessUpdate(int _num, string _percent) // 48이면 4, half
     {
-        // TODO: 아래 두 상태 모두 서로를 체크해야 한다. 
-
         if (_percent == "half")
         {
             for (int i = 0; i < gageCount; i++)
             {
-                if (i < _num) { halfFullnessArray[i].SetActive(true); } // 0, 1, 2를 활성화 / 3, 4를 비활성화 => 큰거 2, 3, 4는 비활성화 해야 함 
+                if (i < _num) { halfFullnessArray[i].SetActive(true); }
                 else { halfFullnessArray[i].SetActive(false); }
 
-                if (i >= _num - 1) { fullFullnessArray[i].SetActive(false); } // Full 비활성화
+                if (i >= _num - 1) { fullFullnessArray[i].SetActive(false); } // Full 비활성화.
+                else { fullFullnessArray[i].SetActive(true); }
             }
         }
         else if (_percent == "full")
         {
             for (int i = 0; i < gageCount; i++)
             {
-                if (i < _num) { fullFullnessArray[i].SetActive(true); }
+                if (i < _num) { fullFullnessArray[i].SetActive(true); } // 0, 1을 활성화
                 else { fullFullnessArray[i].SetActive(false); }
             }
         }
@@ -214,8 +210,13 @@ public class VRIFStatusSystem : MonoBehaviour
     /// <param name="_poo">얻는 배출도</param>
     public void GetFood(int _satiety, int _poo)
     {
+        Debug.Log("음식 섭취 전 포만도: " + m_Fullness);
         m_Fullness += _satiety; // 포만감 더하기 
+        Debug.Log("음식 섭취 후 포만도: " + m_Fullness);
         m_Poo += _poo; // 배출값 더하기 
+
+        FullnessCheck();
+        PooCheck();
 
         if (m_Poo >= 100) { PooEvent(); } // 배출도 100 이상 시 배출 이벤트 발생 
     }
