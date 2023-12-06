@@ -35,7 +35,7 @@ public class AddVertexObjectEditor : Editor
 
     private void AddObject()
     {
-        Transform targetParent = GFunc.PropertySetTransform(targetObjParent);
+        Transform targetParent = GFuncE.PropertySetTransform(targetObjParent);
 
         if (targetParent == null)
         {
@@ -48,7 +48,7 @@ public class AddVertexObjectEditor : Editor
             return;
         }
 
-        MeshFilter targetMeshFilter = GFunc.PropertySetComponent<MeshFilter>(targetObj);
+        MeshFilter targetMeshFilter = GFuncE.PropertySetComponent<MeshFilter>(targetObj);
 
         if (targetMeshFilter == null)
         {
