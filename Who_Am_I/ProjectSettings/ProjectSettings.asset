@@ -198,9 +198,9 @@ PlayerSettings:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 11400000, guid: e8540f14074cefa40b704d91740dcb63, type: 2}
+  - {fileID: 0}
   - {fileID: 11400000, guid: 6e6ef9fdc5088804aac823dcc77f768d, type: 2}
   - {fileID: 1748407206226516825, guid: 1d54a8e66867db8468f6366d7c8830b2, type: 2}
-  - {fileID: 135576949319218061, guid: 83626aa6f65e90448920099114765455, type: 2}
   metroInputSource: 0
   wsaTransparentSwapchain: 0
   m_HolographicPauseOnTrackingLoss: 1
@@ -228,8 +228,8 @@ PlayerSettings:
     tvOS: 0
   overrideDefaultApplicationIdentifier: 1
   AndroidBundleVersionCode: 1
-  AndroidMinSdkVersion: 29
-  AndroidTargetSdkVersion: 29
+  AndroidMinSdkVersion: 26
+  AndroidTargetSdkVersion: 0
   AndroidPreferredInstallLocation: 0
   aotOptions: 
   stripEngineCode: 1
@@ -304,12 +304,12 @@ PlayerSettings:
   clonedFromGUID: faa1288a57094514db58bdfeeca64429
   templatePackageId: 
   templateDefaultScene: Assets/Scenes/SampleScene.unity
-  useCustomMainManifest: 0
+  useCustomMainManifest: 1
   useCustomLauncherManifest: 0
   useCustomMainGradleTemplate: 0
   useCustomLauncherGradleManifest: 0
   useCustomBaseGradleTemplate: 0
-  useCustomGradlePropertiesTemplate: 0
+  useCustomGradlePropertiesTemplate: 1
   useCustomProguardFile: 0
   AndroidTargetArchitectures: 2
   AndroidTargetDevices: 0

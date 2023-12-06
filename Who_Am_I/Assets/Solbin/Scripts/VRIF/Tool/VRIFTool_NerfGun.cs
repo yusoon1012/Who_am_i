@@ -85,11 +85,11 @@ public class VRIFTool_NerfGun : MonoBehaviour
     {
         if (_prey.layer == LayerMask.NameToLayer("Animal"))
         {
-            if (_prey.GetComponent<ThisData>()) // 데이터 스크립트가 있는 동물이면
-            {
-                ThisData thisData = _prey.GetComponent<ThisData>();
-                thisData.Hit(1); // 1만큼 데미지 
-            }
+            //if (_prey.GetComponent<ThisData>()) // 데이터 스크립트가 있는 동물이면
+            //{
+            //    ThisData thisData = _prey.GetComponent<ThisData>();
+            //    thisData.Hit(1); // 1만큼 데미지 
+            //}
         }
 
         // TODO: 레이가 닿은 부분, 총구에 파티클(혹은 다른 효과) 발생

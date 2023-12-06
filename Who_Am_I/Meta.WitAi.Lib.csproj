@@ -54,7 +54,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Analyzer Include="C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
-    <Analyzer Include="D:\Github\Unity\UnityWhoamI\Park\Who_Am_I\Library\PackageCache\dev.yarnspinner.unity@2.4.0\SourceGenerator\YarnSpinner.Unity.SourceCodeGenerator.dll" />
+    <Analyzer Include="C:\yusoon\UnityProjects\Who_Am_I\git\yusoon\Who_Am_I\Library\PackageCache\dev.yarnspinner.unity@2.4.0\SourceGenerator\YarnSpinner.Unity.SourceCodeGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Oculus\Voice\Lib\Wit.ai\Lib\Wit\Runtime\Requests\NLP\INLPAudioRequestOptions.cs" />
@@ -387,6 +387,9 @@
     </Reference>
     <Reference Include="UnityEditor.WindowsStandalone.Extensions">
       <HintPath>C:\Program Files\Unity 2021.3.27f1\Editor\Data\PlaybackEngines\WindowsStandaloneSupport\UnityEditor.WindowsStandalone.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.UWP.Extensions">
+      <HintPath>C:\Program Files\Unity 2021.3.27f1\Editor\Data\PlaybackEngines\MetroSupport\UnityEditor.UWP.Extensions.dll</HintPath>
     </Reference>
     <Reference Include="Google.VersionHandler">
       <HintPath>Assets\ExternalDependencyManager\Editor\Google.VersionHandler.dll</HintPath>
