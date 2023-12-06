@@ -196,7 +196,7 @@ public class VRIFStatusSystem : MonoBehaviour
         {
             for (int i = 0; i < gageCount; i++)
             {
-                if (i < _num) { fullPooArray[i].SetActive(true); }
+                if (i < _num) { fullPooArray[i].SetActive(true); } // TODO: Null 발생 수정하기 
                 else { fullPooArray[i].SetActive(false); }
             }
         }
