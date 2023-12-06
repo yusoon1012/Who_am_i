@@ -35,7 +35,7 @@ public class AddVertexObjectEditor : Editor
 
     private void AddObject()
     {
-        Transform targetParent = GFunc.PropertyGetTransform(targetObjParent);
+        Transform targetParent = GFuncE.PropertySetTransform(targetObjParent);
 
         if (targetParent == null)
         {
@@ -48,7 +48,7 @@ public class AddVertexObjectEditor : Editor
             return;
         }
 
-        MeshFilter targetMeshFilter = GFunc.PropertyGetComponent<MeshFilter>(targetObj);
+        MeshFilter targetMeshFilter = GFuncE.PropertySetComponent<MeshFilter>(targetObj);
 
         if (targetMeshFilter == null)
         {
@@ -76,7 +76,7 @@ public class AddVertexObjectEditor : Editor
             }
             else
             {
-                BoxCollider newCol = Instantiate(GFunc.SetComponent<BoxCollider>(newObject),
+                BoxCollider newCol = Instantiate(GFunc.AddComponent<BoxCollider>(newObject),
                     worldPos,
                     Quaternion.identity,
                     targetParent);

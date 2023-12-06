@@ -1,15 +1,15 @@
 using UnityEngine;
 
-public class SendDemage : MonoBehaviour
+public class SendDamage : MonoBehaviour
 {
-    private ThisData thisData = default;
+    private ThisAnimalData thisData = default;
 
     private void Start()
     {
-        thisData = GetComponentInParent<ThisData>();
+        thisData = GFunc.SetParentComponent<ThisAnimalData>(this.gameObject);
         if (thisData == null)
         {
-            Debug.LogError("부모오브젝트에 ThisData 컴포넌트가 null입니다.");
+            GFunc.SubmitNonFindText<ThisAnimalData>(this.gameObject);
             return;
         }
     }

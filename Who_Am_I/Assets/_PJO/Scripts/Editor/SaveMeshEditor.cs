@@ -27,8 +27,7 @@ public class SaveMeshEditor : Editor
 
     private void SaveMesh()
     {
-        MeshFilter meshFilter = GFunc.GetComponent<MeshFilter>(thisObject);
-
+        MeshFilter meshFilter = GFunc.SetComponent<MeshFilter>(thisObject);
         if (meshFilter == null)
         {
             Debug.LogError("Object의 MeshFilter가 없거나 Mesh가 null");
