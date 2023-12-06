@@ -2,7 +2,6 @@ using OVR.OpenVR;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.TextCore.Text;
 using UnityEngine;
 using UnityEngine.EventSystems;
 

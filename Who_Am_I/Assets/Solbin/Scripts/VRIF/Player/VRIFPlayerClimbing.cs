@@ -72,8 +72,6 @@ namespace BNG
         private void Update()
         {
             if (VRIFStateSystem.gameState == VRIFStateSystem.GameState.CLIMBING) { SuperJump(); }
-
-            Debug.LogWarning("Before=" + playerRigid.velocity); // TODO: 밑 After 로그와 비교해 언제 velocity가 0이 되는지
             // 확인할 것 요망 
         }
         #endregion

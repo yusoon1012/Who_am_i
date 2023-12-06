@@ -35,10 +35,10 @@ namespace DS.Windows
         }
         private void CreateNode()
         {
-            DSNode node = new DSNode();
-            node.Initialize();
-            node.Draw();
-            AddElement(node);
+            //DSNode node = new DSNode();
+            //node.Initialize();
+            //node.Draw();
+            //AddElement(node);
         }
     }
 }
