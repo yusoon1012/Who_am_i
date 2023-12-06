@@ -49,6 +49,7 @@ public class VRIFStatusSystem : MonoBehaviour
     private void Setting()
     {
         m_Fullness = 100; // 포만감 초기값
+        m_Fullness = 50; // 테스트
         m_Poo = 0; // 배출 초기값
 
         Transform halfFullness = fullnessGage.GetChild(0); // 반개짜리 배열의 부모 오브젝트
@@ -128,21 +129,25 @@ public class VRIFStatusSystem : MonoBehaviour
         if (m_Fullness >= 100) { m_Fullness = 100; } // 포만감 초과시 100으로 보정
     }
 
-    private void FullnessUpdate(int _num, string _percent)
+    private void FullnessUpdate(int _num, string _percent) // 50으로 가정,3에 half를 받아왔을 것이다. 
     {
+        // TODO: 아래 두 상태 모두 서로를 체크해야 한다. 
+
         if (_percent == "half")
         {
             for (int i = 0; i < gageCount; i++)
             {
-                if (i <= _num - 1) { halfFullnessArray[i].SetActive(true); }
+                if (i < _num) { halfFullnessArray[i].SetActive(true); } // 0, 1, 2를 활성화 / 3, 4를 비활성화 => 큰거 2, 3, 4는 비활성화 해야 함 
                 else { halfFullnessArray[i].SetActive(false); }
+
+                if (i >= _num - 1) { fullFullnessArray[i].SetActive(false); } // Full 비활성화
             }
         }
         else if (_percent == "full")
         {
             for (int i = 0; i < gageCount; i++)
             {
-                if (i <= _num - 1) { fullFullnessArray[i].SetActive(true); }
+                if (i < _num) { fullFullnessArray[i].SetActive(true); }
                 else { fullFullnessArray[i].SetActive(false); }
             }
         }
@@ -187,7 +192,7 @@ public class VRIFStatusSystem : MonoBehaviour
         {
             for (int i = 0; i < gageCount; i++)
             {
-                if (i <= _num - 1) { halfPooArray[i].SetActive(true); }
+                if (i < _num) { halfPooArray[i].SetActive(true); }
                 else { halfPooArray[i].SetActive(false); }
             }
         }
@@ -195,7 +200,7 @@ public class VRIFStatusSystem : MonoBehaviour
         {
             for (int i = 0; i < gageCount; i++)
             {
-                if (i <= _num - 1) { fullPooArray[i].SetActive(true); }
+                if (i < _num) { fullPooArray[i].SetActive(true); }
                 else { fullPooArray[i].SetActive(false); }
             }
         }
