@@ -5,13 +5,13 @@ using UnityEngine;
 public class InteractionEvent : MonoBehaviour
 {
     [SerializeField] DialogueEvent dialogue;
-    [SerializeField] private string questName;
+    [SerializeField] public string questName;
 
-    public Dialogue[] GetDialogue()
+    public Dialogue[] GetDialogue(int firstline,int endline)
     {
         Debug.Log("InteractionEvent GetDialogue ");
-        DialogueManager.instance.GetParsing(questName);
-        dialogue.dialogues = DialogueManager.instance.GetDialogue((int)dialogue.line.x,(int)dialogue.line.y);
+        
+        dialogue.dialogues = DialogueManager.instance.GetDialogue(firstline, endline);
         return dialogue.dialogues;
     }
 

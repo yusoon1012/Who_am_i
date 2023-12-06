@@ -17,12 +17,14 @@ public class DialogueManager : MonoBehaviour
         {
             Debug.Log("DialogueManager Awake");
             instance = this;
-           
-          
+            GetParsing("Tutorial_01");
+
+
         }
     }
     public void GetParsing(string name)
     {
+        dialogueDict.Clear();
         DialogueParse dialogueParse = GetComponent<DialogueParse>();
         Dialogue[] dialogues = dialogueParse.Parse(name);
         for (int i = 0; i < dialogues.Length; i++)
