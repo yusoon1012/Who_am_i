@@ -118,6 +118,7 @@ public class UIController : MonoBehaviour
         {
             uiController = 4;
             playerTf.GetComponent<ItemCrafting>().OnCrafting();
+            OpenMenuCheck();
         }
         //* Test : 아래의 해당 키를 누르면 인벤토리에 아이템 추가 기능
         else if (Input.GetKeyDown(KeyCode.Alpha1))
@@ -222,7 +223,7 @@ public class UIController : MonoBehaviour
                 case 0:
                     uiController = 9;
                     quickSlotTf.GetComponent<QuickSlot>().SingleOpenQuickSlot();
-                    // TODO: 슬로우타임, UI 상태 변경
+                    OpenQuickSlot();
                     break;
                 case 1:
                     playerTf.GetComponent<MainMenu>().ConnectMenu();
@@ -261,6 +262,7 @@ public class UIController : MonoBehaviour
                 case 1:
                     uiController = 0;
                     playerTf.GetComponent<MainMenu>().OffMainMenu();
+                    ExitMenuCheck();
                     break;
                 case 2:
                     uiController = 1;
@@ -274,6 +276,7 @@ public class UIController : MonoBehaviour
                 case 4:
                     uiController = 0;
                     playerTf.GetComponent<ItemCrafting>().ExitCrafting();
+                    ExitMenuCheck();
                     break;
                 case 5:
                     uiController = 1;
@@ -295,6 +298,7 @@ public class UIController : MonoBehaviour
                 case 9:
                     uiController = 0;
                     quickSlotTf.GetComponent<QuickSlot>().SingleCloseQuickSlot();
+                    ExitQuickSlot();
                     break;
                 default:
                     break;
@@ -310,19 +314,21 @@ public class UIController : MonoBehaviour
             // 메뉴가 아무것도 안열려 있으면 메뉴 UI 를 연다
             case 0:
                 playerTf.GetComponent<MainMenu>().OnMainMenu();
+                OpenMenuCheck();
                 uiController = 1;
                 // TODO: 메인메뉴 열릴 때
                 break;
             // 메뉴가 하나라도 켜져있으면 해당 메뉴를 모두 닫고 초기화 화면으로 돌아감
             case 1:
                 playerTf.GetComponent<MainMenu>().OffMainMenu();
-
+                ExitMenuCheck();
                 uiController = 0;
                 break;
             case 2:
                 playerTf.GetComponent<Inventory>().ExitInventory();
                 playerTf.GetComponent<MainMenu>().DisconnectMenu();
                 playerTf.GetComponent<MainMenu>().OffMainMenu();
+                ExitMenuCheck();
                 uiController = 0;
                 break;
             case 3:
@@ -330,16 +336,19 @@ public class UIController : MonoBehaviour
                 playerTf.GetComponent<Inventory>().ExitInventory();
                 playerTf.GetComponent<MainMenu>().DisconnectMenu();
                 playerTf.GetComponent<MainMenu>().OffMainMenu();
+                ExitMenuCheck();
                 uiController = 0;
                 break;
             case 4:
                 playerTf.GetComponent<ItemCrafting>().ExitCrafting();
+                ExitMenuCheck();
                 uiController = 0;
                 break;
             case 5:
                 playerTf.GetComponent<Dictionary>().OffDictionary();
                 playerTf.GetComponent<MainMenu>().DisconnectMenu();
                 playerTf.GetComponent<MainMenu>().OffMainMenu();
+                ExitMenuCheck();
                 uiController = 0;
                 break;
             case 6:
@@ -348,6 +357,7 @@ public class UIController : MonoBehaviour
                 playerTf.GetComponent<Inventory>().ExitInventory();
                 playerTf.GetComponent<MainMenu>().DisconnectMenu();
                 playerTf.GetComponent<MainMenu>().OffMainMenu();
+                ExitMenuCheck();
                 uiController = 0;
                 break;
             case 7:
@@ -356,15 +366,18 @@ public class UIController : MonoBehaviour
                 playerTf.GetComponent<Inventory>().ExitInventory();
                 playerTf.GetComponent<MainMenu>().DisconnectMenu();
                 playerTf.GetComponent<MainMenu>().OffMainMenu();
+                ExitMenuCheck();
                 uiController = 0;
                 break;
             case 8:
                 playerTf.GetComponent<ItemCrafting>().ExitDetailCrafting();
                 playerTf.GetComponent<ItemCrafting>().ExitCrafting();
+                ExitMenuCheck();
                 uiController = 0;
                 break;
             case 9:
                 quickSlotTf.GetComponent<QuickSlot>().SingleCloseQuickSlot();
+                ExitQuickSlot();
                 uiController = 0;
                 break;
             default:
@@ -374,10 +387,16 @@ public class UIController : MonoBehaviour
 
     #region Input 키 입력 값 모음
 
-    // 퀵슬롯이 열릴때 게임 시간 슬로우 효과
+    // 단일 퀵슬롯이 열릴때 게임 시간 슬로우 효과
     private void OpenQuickSlot()
     {
-        // TODO: 타임 슬로우 효과 연결 
+        // TODO: 타임 슬로우 효과 연결
+    }
+
+    // 단일 퀵슬롯을 닫았을 때 슬로우 효과 해제
+    private void ExitQuickSlot()
+    {
+        // TODO: 타임 슬로우 효과 해제 연결
     }
 
     // 어떤 메뉴든 열릴 때 게임 시간 정지
@@ -391,7 +410,6 @@ public class UIController : MonoBehaviour
     {
         // TODO: 메인메뉴를 끌때 처리 
     }
-
 
     #region LAGACY
     //* LEGACY CODE
@@ -597,6 +615,5 @@ public class UIController : MonoBehaviour
     // <Solbin> ===
 
 }     // Update()
-
 
 #endregion Input 키 입력 값 모음

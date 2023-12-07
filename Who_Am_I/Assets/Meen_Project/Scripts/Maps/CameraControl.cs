@@ -1,8 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerMoveTest : MonoBehaviour
+public class CameraControl : MonoBehaviour
 {
     public Transform mapController;
 
@@ -24,12 +22,9 @@ public class PlayerMoveTest : MonoBehaviour
     // z 축 움직임 게산값
     private float zSpeed = default;
 
-    private bool playerMoveCheck = false;
-
     void Awake()
     {
-        speed = 10f;
-        playerMoveCheck = true;
+        speed = 100f;
     }     // Awake()
 
     void Start()
@@ -39,7 +34,7 @@ public class PlayerMoveTest : MonoBehaviour
 
     void Update()
     {
-        if (mapController.GetComponent<MapControl>().moveCheck != 0) { return; }
+        if (mapController.GetComponent<MapControl>().moveCheck != 1) { return; }
 
         // "Horizontal" 과 "Vertical" 움직임 입력을 받음
         xInput = Input.GetAxis("Horizontal");
@@ -64,7 +59,5 @@ public class PlayerMoveTest : MonoBehaviour
 
         // 플레이어 리짓바디를 이동시킴
         playerRb.velocity = moveVector;
-
-        Debug.LogFormat("X : {0}, Z : {1}", transform.position.x, transform.position.z);
     }     // MovePlayer()
 }
