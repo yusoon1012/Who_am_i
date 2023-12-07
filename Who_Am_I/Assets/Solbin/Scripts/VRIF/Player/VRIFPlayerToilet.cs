@@ -41,9 +41,8 @@ public class VRIFPlayerToilet : MonoBehaviour
     /// 화장실 방문 메소드 
     /// </summary>
     private void VisitToilet()
-    {
-        vrifStatusSystem.m_Poo = 0; // 배출 수치 초기화 
-        Debug.Log("플레이어는 장을 비웠다. 용변 수치: " + vrifStatusSystem.m_Poo);
+    { 
+        vrifStatusSystem.GetPoo(); // 배출 수치 초기화 
     }
 }
 

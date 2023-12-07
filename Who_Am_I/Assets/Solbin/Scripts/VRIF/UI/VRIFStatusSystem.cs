@@ -20,9 +20,14 @@ public class VRIFStatusSystem : MonoBehaviour
     [SerializeField] private Transform player = default; // 플레이어 트랜스폼 
 
     [Header("포만감 하락 타이머")]
-    public int hungerTimer = 10; // TODO: 테스트를 위해 설정, 이후 60초로 교체하기 
+    public int hungerTimer = 60; // 소화기 타이머
+    public int hungerTimer_Origin { get; private set; } // 타이머의 원래 값
 
-    // 게이지 총 수는 5로 정해졌다.
+    [Header("시간당 수치 조절값")]
+    [SerializeField] private int getHunger = 5; // 분당 떨어지는 포만감
+    [SerializeField] private int getPoo = 1; // 분당 얻는 배출값
+
+    // 게이지 총 수는 5로 정해졌다. TODO: 후에 수정 필요 
     private int gageCount = 5;
     // 현 포만감, 배출도 수치 
     public int m_Fullness = default;
@@ -50,8 +55,9 @@ public class VRIFStatusSystem : MonoBehaviour
     private void Setting()
     {
         m_Fullness = 100; // 포만감 초기값
-        m_Fullness = 50; // 테스트
         m_Poo = 0; // 배출 초기값
+
+        hungerTimer_Origin = hungerTimer; // 본래 타이머 값 저장
 
         Transform halfFullness = fullnessGage.GetChild(0); // 반개짜리 배열의 부모 오브젝트
         Transform fullFullness = fullnessGage.GetChild(1); // 한개짜리 배열의 부모 오브젝트
@@ -80,8 +86,9 @@ public class VRIFStatusSystem : MonoBehaviour
     {
         while (digestion)
         {
-            yield return new WaitForSeconds(hungerTimer); // TODO: 1분에 5% 떨어지는 것으로 설정
-            m_Fullness -= 5;
+            yield return new WaitForSeconds(hungerTimer);
+            m_Fullness -= getHunger;
+            m_Poo += getPoo;
 
             FullnessCheck();
 
@@ -117,7 +124,7 @@ public class VRIFStatusSystem : MonoBehaviour
             if (m_Fullness <= 70) { FullnessUpdate(4, "half"); }
             else { FullnessUpdate(4, "full"); }
         }
-        else if (81 <= m_Fullness && m_Fullness <= 100)
+        else if (81 <= m_Fullness)
         {
             if (m_Fullness <= 90) { FullnessUpdate(5, "half"); }
             else { FullnessUpdate(5, "full"); }
@@ -151,9 +158,15 @@ public class VRIFStatusSystem : MonoBehaviour
     #endregion
 
     #region 배출도 게이지 업데이트
+    
+    /// <summary>
+    /// 똥 쌈
+    /// </summary>
+    public void GetPoo() { Debug.Log("플레이어는 용변을 해결했다."); m_Poo = 0; PooCheck(); }
+
     private void PooCheck()
     {
-        if (1 <= m_Poo && m_Poo <= 20)
+        if (0 <= m_Poo && m_Poo <= 20)
         {
             if (m_Poo <= 10) { PooUpdate(1, "half"); }
             else { PooUpdate(1, "full"); }
@@ -173,7 +186,7 @@ public class VRIFStatusSystem : MonoBehaviour
             if (m_Poo <= 70) { PooUpdate(4, "half"); }
             else { PooUpdate(4, "full"); }
         }
-        else if (81 <= m_Poo && m_Poo <= 100)
+        else if (81 <= m_Poo)
         {
             if (m_Fullness <= 90) { PooUpdate(5, "half"); }
             else { PooUpdate(5, "full"); }
@@ -210,13 +223,13 @@ public class VRIFStatusSystem : MonoBehaviour
     /// <param name="_poo">얻는 배출도</param>
     public void GetFood(int _satiety, int _poo)
     {
-        Debug.Log("음식 섭취 전 포만도: " + m_Fullness);
         m_Fullness += _satiety; // 포만감 더하기 
-        Debug.Log("음식 섭취 후 포만도: " + m_Fullness);
         m_Poo += _poo; // 배출값 더하기 
 
         FullnessCheck();
         PooCheck();
+
+        if (m_Fullness >= 100) { m_Fullness = 100; } // 포만도 100 이상 시 고정 
 
         if (m_Poo >= 100) { PooEvent(); } // 배출도 100 이상 시 배출 이벤트 발생 
     }

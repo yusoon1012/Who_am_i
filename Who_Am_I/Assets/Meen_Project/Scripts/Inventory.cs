@@ -109,7 +109,10 @@ public class Inventory : MonoBehaviour
 
     // 도구, 음식 아이템을 장착, 사용 또는 해제하는 스크립트
     VRIFItemSystem equipmentScript = new VRIFItemSystem();
-    VRIFStatusSystem playerStatusScript = new VRIFStatusSystem();
+    //VRIFStatusSystem playerStatusScript = new VRIFStatusSystem(); // <Solbin> new 할당말고 해당 스크립트를 직접 가져와야 합니다! 
+    // <Solbin> VRIFStatusSystem 재설정
+    [SerializeField] VRIFStatusSystem playerStatusScript = default;
+    // <Solbin> ===
 
     // Test : 데이터 베이스 연동 테스트 딕셔너리
     Dictionary<string, int> test = new Dictionary<string, int>();

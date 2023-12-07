@@ -108,7 +108,7 @@ namespace BNG
 
             vrifStatusSystem.digestion = true; // 소화기 활성화
 
-            vrifStatusSystem.hungerTimer = 10;
+            vrifStatusSystem.hungerTimer = vrifStatusSystem.hungerTimer_Origin; // 본래 지정된 값으로 회귀
 
             quickSlot.enabled = true;
             uiController.enabled = true;
@@ -142,7 +142,7 @@ namespace BNG
         /// </summary>
         private void ClimbingState()
         {
-            vrifStatusSystem.hungerTimer = 3;
+            vrifStatusSystem.hungerTimer = 30;
 
             quickSlot.enabled = false;
             uiController.enabled = false;
