@@ -74,7 +74,10 @@ public class VRIFTool_NerfGun : MonoBehaviour
             trajectory.SetPosition(1, hit.point);
 
             if (vrifAction.Player.RightTrigger.triggered || testAction.Test.Click.triggered)
-            { Shoot(hit.transform.gameObject); }
+            {
+                GameObject prey = hit.transform.gameObject;
+                Shoot(prey);
+            }
         }
     }
 
@@ -85,11 +88,13 @@ public class VRIFTool_NerfGun : MonoBehaviour
     {
         if (_prey.layer == LayerMask.NameToLayer("Animal"))
         {
-            //if (_prey.GetComponent<ThisData>()) // 데이터 스크립트가 있는 동물이면
-            //{
-            //    ThisData thisData = _prey.GetComponent<ThisData>();
-            //    thisData.Hit(1); // 1만큼 데미지 
-            //}
+            if (_prey.GetComponentInChildren<SendDamage>()) // 데이터 스크립트가 있는 동물이면
+            {
+                Debug.Log(_prey.name);
+
+                SendDamage sendDamage = _prey.GetComponentInChildren<SendDamage>();
+                sendDamage.Hit(1); // 1만큼 데미지 
+            }
         }
 
         // TODO: 레이가 닿은 부분, 총구에 파티클(혹은 다른 효과) 발생

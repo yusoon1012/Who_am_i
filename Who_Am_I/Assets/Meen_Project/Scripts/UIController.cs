@@ -74,12 +74,6 @@ public class UIController : MonoBehaviour
         else if (Input.GetKeyDown(KeyCode.M) || vrifAction.Player.UI_Menu.triggered) // <Solbin> Menu Enter
         {
             OnMainMenuControl();
-
-            //if (vrifStateSystem.gameState == VRIFStateSystem.GameState.NORMAL)
-            //{   // <Solbin> 메뉴는 NORMAL 상태에서만 진입 가능 
-            //    OnMainMenuControl();
-            //    vrifStateSystem.ChangeState(VRIFStateSystem.GameState.UI);
-            //}// <Solbin> UI 상태로 전환 
         }
         // 모든 진입 키 입력 값
         else if (Input.GetKeyDown(KeyCode.Z) || vrifAction.Player.UI_Click.triggered) // <Solbin> Menu Select
@@ -222,7 +216,7 @@ public class UIController : MonoBehaviour
                 case 0:
                     uiController = 9;
                     quickSlotTf.GetComponent<QuickSlot>().SingleOpenQuickSlot();
-                    // TODO: 슬로우타임, UI 상태 변경
+                    OpenQuickSlot(); // <Solbin> 퀵슬롯을 열었을 때 처리 
                     break;
                 case 1:
                     playerTf.GetComponent<MainMenu>().ConnectMenu();
@@ -311,12 +305,13 @@ public class UIController : MonoBehaviour
             case 0:
                 playerTf.GetComponent<MainMenu>().OnMainMenu();
                 uiController = 1;
-                // TODO: 메인메뉴 열릴 때
+                OpenMenuCheck(); // <Solbin> 메인메뉴 열릴 때 => UI 상태로 전환 
                 break;
             // 메뉴가 하나라도 켜져있으면 해당 메뉴를 모두 닫고 초기화 화면으로 돌아감
             case 1:
                 playerTf.GetComponent<MainMenu>().OffMainMenu();
-
+                Debug.Log("메인메뉴 닫기");
+                ExitMenuCheck(); // <Solbin> 메인메뉴 닫힐 때 => NORMAL 상태로 전환
                 uiController = 0;
                 break;
             case 2:
@@ -380,16 +375,35 @@ public class UIController : MonoBehaviour
         // TODO: 타임 슬로우 효과 연결 
     }
 
+
+
     // 어떤 메뉴든 열릴 때 게임 시간 정지
     private void OpenMenuCheck()
     {
-        // TODO: 어떤 메뉴든 열릴 때
+        // TODO: 시간 정지 필요 
+
+        // <Solbin> 메뉴를 열 때 NORMAL 상태라면 UI 상태로 전환
+        if (VRIFStateSystem.gameState == VRIFStateSystem.GameState.NORMAL)
+        {
+            VRIFStateSystem.gameState = VRIFStateSystem.GameState.UI;
+        }// <Solbin> UI 상태로 전환 
+
+        Debug.Log("UI 상태");
     }
 
     // 어떤 메뉴든 닫았을 때 게임 시간 재개
     private void ExitMenuCheck()
     {
-        // TODO: 메인메뉴를 끌때 처리 
+        // TODO: 시간 원상 복귀 필요
+
+        // <Solbin> 메뉴를 닫을 때 UI 상태라면 NORMAL 상태로 전환
+        if (VRIFStateSystem.gameState == VRIFStateSystem.GameState.UI)
+        {
+            VRIFStateSystem.gameState = VRIFStateSystem.GameState.NORMAL;
+        }// <Solbin> NORMAL 상태로 전환 
+
+        Debug.Log("NORMAL 상태");
+
     }
 
 

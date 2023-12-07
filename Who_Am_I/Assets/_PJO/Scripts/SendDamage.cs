@@ -14,7 +14,7 @@ public class SendDamage : MonoBehaviour
         }
     }
 
-    public void Hit(int _damage)
+    public void Hit(int _damage) // <Solbin> 데미지를 받는 메소드
     {
         thisData.Hit(_damage);
     }

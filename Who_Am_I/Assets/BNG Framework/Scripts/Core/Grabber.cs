@@ -264,6 +264,8 @@ namespace BNG {
             // <Solbin> 등반 중 측면 점프 시도 시 잡고 있는 등반 물체를 놓도록 하는 메소드 
             if ((HoldingItem || RemoteGrabbingItem) && vrifPlayerClimbing.sideJump) { TryRelease(); }
             // <Solbin> ===
+
+            // TODo
         }
 
         protected virtual void updateFreshGrabStatus() {
