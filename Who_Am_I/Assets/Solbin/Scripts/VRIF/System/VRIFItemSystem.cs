@@ -79,6 +79,24 @@ public class VRIFItemSystem : MonoBehaviour
             }
             else { ReleaseItem("NerfGun"); }
         }
+        
+        if (Input.GetKeyDown(KeyCode.O))
+        {
+            if (!shavel.activeSelf)
+            {
+                MountingItem("Shavel");
+            }
+            else { ReleaseItem("Shavel"); }
+        }
+    }
+
+    public void TestItemMounting() // 테스트: 프로토타입 때 임시 사용할 메소드로, Test UI의 버튼과 연결
+    {
+        if (!nerfGun.activeSelf)
+        {
+            MountingItem("NerfGun");
+        }
+        else { ReleaseItem("NerfGun"); }
     }
 
     #region 구현: 아이템 장착/해제 메소드

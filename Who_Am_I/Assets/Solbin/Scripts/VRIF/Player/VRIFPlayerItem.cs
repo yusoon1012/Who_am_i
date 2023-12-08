@@ -53,11 +53,11 @@ public class VRIFPlayerItem : MonoBehaviour
     {
         if (other.gameObject.layer == LayerMask.NameToLayer("Item"))
         {
-            Renderer renderer = other.GetComponentInChildren<Renderer>(); // 렌더러
+            Renderer renderer = other.transform.parent.GetComponent<Renderer>(); // 렌더러
             Material[] materials = renderer.materials;
 
             for (int i = 0; i < materials.Length; i++) 
-            {
+            {       
                 materials[materials.Length - 1].SetFloat("_Scale", shiningInitialValue); // Material Scale Up 
             }
         }
@@ -69,7 +69,8 @@ public class VRIFPlayerItem : MonoBehaviour
         {
             if (vrifAction.Player.Interaction.triggered || testAction.Test.Interaction.triggered)
             {
-                GetItem(other.gameObject); // 아이템 획득 가능
+                GameObject realItem = other.transform.parent.gameObject;
+                GetItem(realItem); // 아이템 획득 가능
             }
         }
     }
@@ -78,7 +79,7 @@ public class VRIFPlayerItem : MonoBehaviour
     {
         if (other.gameObject.layer == LayerMask.NameToLayer("Item"))
         {
-            Renderer renderer = other.GetComponentInChildren<Renderer>(); // 렌더러
+            Renderer renderer = other.transform.parent.GetComponent<Renderer>(); // 렌더러
             Material[] materials = renderer.materials;
 
             for (int i = 0; i < materials.Length; i++)

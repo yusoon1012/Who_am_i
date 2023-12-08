@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.CommandLine;
 using System.Linq;
 using UnityEngine;
 
@@ -538,8 +539,8 @@ namespace BNG {
 
         public virtual void Update() {
 
+            // <Solbin> Grabber에 의해 잡힌 상태인지 체크 
             if (BeingHeld) {
-
                 // ResetLockResets();
 
                 // Something happened to our Grabber. Drop the item

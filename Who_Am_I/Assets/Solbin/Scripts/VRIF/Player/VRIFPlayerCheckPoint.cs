@@ -187,4 +187,6 @@ public class VRIFPlayerCheckPoint : MonoBehaviour
     /// 바로 퀵슬롯이 입력을 받아 켜지는 것을 막기 위함
     /// </summary>
     private void ReturnNORMALState() { VRIFStateSystem.gameState = VRIFStateSystem.GameState.NORMAL; }
+
+    // TODO: 체크포인트 UI가 켜진 상태에서 a키를 누르면 UI가 꺼진 후 CLIMBING 입력을 받아 점프를 진행한다. 
 }

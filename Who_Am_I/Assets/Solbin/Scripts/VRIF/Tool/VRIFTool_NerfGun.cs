@@ -1,3 +1,4 @@
+using Meta.WitAi;
 using OVR.OpenVR;
 using System;
 using System.Collections;
@@ -14,11 +15,15 @@ public class VRIFTool_NerfGun : MonoBehaviour
     // 레이 발사 지점
     [SerializeField] Transform firePos = default;
     // 사정거리
-    private float distance = 8.5f;
+    private float distance = 100f;
     // 포인터(크로스 헤어)
     [SerializeField] Transform pointer = default;
     // 너프건 궤적
     [SerializeField] LineRenderer trajectory = default;
+    // 오브젝트 풀
+    private Vector3 poolPos = new Vector3(0, -10, 0);
+
+    private Vector3[] trajectoryPos = new Vector3[2];
 
     public static event EventHandler slowTimeEvent;
 
@@ -51,33 +56,44 @@ public class VRIFTool_NerfGun : MonoBehaviour
 
     private void Update()
     {
-        Debug.DrawRay(firePos.position, firePos.forward * distance, Color.green);
-
         Aiming();
 
         ActivateSlowTime();
     }
+
+    private void LateUpdate()
+    {
+        trajectory.SetPositions(trajectoryPos);
+    }
+
+    // TODO: Line Renderer의 업데이트 주기가 느린가...?
 
     /// <summary>
     /// 너프건을 조준, 크로스 헤어를 표시한다. 
     /// </summary>
     private void Aiming()
     {
-        trajectory.SetPosition(0, firePos.position);
+        trajectoryPos[0] = firePos.position;
 
         Ray ray = new Ray(firePos.position, firePos.forward);
         RaycastHit hit;
 
-        if (Physics.Raycast(ray, out hit, distance))
+        if (Physics.Raycast(ray, out hit, distance)) // 총구가 물체를 향하고 있을때
         {
             pointer.position = hit.point;
-            trajectory.SetPosition(1, hit.point);
+            trajectoryPos[1] = pointer.position;
 
             if (vrifAction.Player.RightTrigger.triggered || testAction.Test.Click.triggered)
             {
                 GameObject prey = hit.transform.gameObject;
                 Shoot(prey);
             }
+        }
+        else // 총구가 허공을 향하고
+        {
+            pointer.position = poolPos;
+            trajectoryPos[0] = poolPos;
+            trajectoryPos[1] = poolPos;
         }
     }
 

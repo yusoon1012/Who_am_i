@@ -116,11 +116,14 @@ namespace BNG
         /// </summary>
         private void ActivateSideJump(object sender, EventArgs e)
         {
-            int left = 0;
-            int right = 1;
+            if (VRIFStateSystem.gameState == VRIFStateSystem.GameState.CLIMBING)
+            {
+                int left = 0;
+                int right = 1;
 
-            vrifAction.Player.ClimbingLeftJump.started += context => SideJump(left);
-            vrifAction.Player.ClimbingRightJump.started += context => SideJump(right);
+                vrifAction.Player.ClimbingLeftJump.started += context => SideJump(left);
+                vrifAction.Player.ClimbingRightJump.started += context => SideJump(right);
+            }
         }
 
         /// <summary>

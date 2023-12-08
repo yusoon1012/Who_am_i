@@ -10,6 +10,7 @@ namespace BNG
         {
             NORMAL,
             CLIMBING,
+            LADDER,
             UI,
             POO
         }
