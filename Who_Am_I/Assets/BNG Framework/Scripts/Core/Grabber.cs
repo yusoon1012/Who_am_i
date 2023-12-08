@@ -683,19 +683,19 @@ namespace BNG {
         /// <param name="other"></param>
         private void OnTriggerStay(Collider other)
         {
-            if (HoldingItem && other.GetComponentInChildren<Climbable>()) // 등반 물체가 사다리인지 일반 등반 물체인지 판단함
-            {
-                if (other.transform.parent.parent.GetComponent<VRIFTool_Ladder>() != null) // 접촉한 등반 물체 최상위 오브젝트가 사다리 TODO: 개선 필요
-                {
-                    VRIFStateSystem.gameState = VRIFStateSystem.GameState.LADDER;
-                }
-            }
+            //if (HoldingItem && other.GetComponentInChildren<Climbable>()) // 등반 물체가 사다리인지 일반 등반 물체인지 판단함
+            //{
+            //    if (other.transform.parent.parent.GetComponent<VRIFTool_Ladder>() != null) // 접촉한 등반 물체 최상위 오브젝트가 사다리 TODO: 개선 필요. 여기서 계속 null 발생
+            //    {
+            //        VRIFStateSystem.gameState = VRIFStateSystem.GameState.LADDER;
+            //    }
+            //}
 
-            if (HoldingItem && other.GetComponentInChildren<VRIFItem_TreeFruit>()) // 나무에 달려있는 과일이면 
-            {
-                VRIFItem_TreeFruit treeFruit = GetComponent<VRIFItem_TreeFruit>();
-                treeFruit.ActivateGravity(); // 중력 활성화
-            }
+            //if (HoldingItem && other.GetComponentInChildren<VRIFItem_TreeFruit>()) // 나무에 달려있는 과일이면 
+            //{
+            //    VRIFItem_TreeFruit treeFruit = GetComponent<VRIFItem_TreeFruit>();
+            //    treeFruit.ActivateGravity(); // 중력 활성화
+            //}
         }
         // <Solbin> ===
     }

@@ -128,7 +128,7 @@
     <Compile Include="Assets\BNG Framework\Scripts\Components\LookAtTransform.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Usage\Passthrough\Scripts\Flashlight.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Usage\SpatialAnchor\Scripts\AnchorSpawner.cs" />
-    <Compile Include="Assets\Solbin\Scripts\VRIF\Item\Tree Fruit\VRIFItem_TreeFruit.cs" />
+    <Compile Include="Assets\Solbin\Scripts\VRIF\Item\VRIFItem_TreeFruit.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Usage\Locomotion\Scripts\CharacterCapsule.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Extras\ToggleActiveOnInputAction.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Core\Locomotion\Scripts\LocomotionController.cs" />
@@ -277,6 +277,7 @@
     <Compile Include="Assets\Solbin\Input System\VRIF\Test Action.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Core\Locomotion\Scripts\SimpleCapsuleWithStickMovement.cs" />
     <Compile Include="Assets\BNG Framework\HandPoser\Scripts\HandPoseBlender.cs" />
+    <Compile Include="Assets\Solbin\Scripts\VRIF\Item\VRIFItem_GroundCrop.cs" />
     <Compile Include="Assets\Solbin\Scripts\VRIF\UI\VRIFTeleportCanvas.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Weapons\WeaponSlide.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Extras\VehicleController.cs" />
@@ -453,7 +454,8 @@
     <Compile Include="Assets\_yusoon\Scripts\SelectParse.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Usage\Passthrough\Scripts\PassthroughStyler.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Usage\SpatialAnchor\Scripts\AnchorUIManager.cs" />
-    <Compile Include="Assets\Solbin\Scripts\VRIF\Item\Ground Crop\VRIFItem_GroundCrop.cs" />
+    <Compile Include="Assets\Solbin\Scripts\VRIF\Item\VRIFItem_DropItem.cs" />
+    <Compile Include="Assets\Solbin\Scripts\VRIF\Map Object\VRIFMap_DirtFile.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Oculus\SampleFramework\Usage\HandsTrainExample\Shaders\XingLightShader.shader" />
