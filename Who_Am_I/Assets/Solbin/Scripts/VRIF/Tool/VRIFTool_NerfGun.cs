@@ -3,6 +3,7 @@ using OVR.OpenVR;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices.ComTypes;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -27,18 +28,6 @@ public class VRIFTool_NerfGun : MonoBehaviour
 
     public static event EventHandler slowTimeEvent;
 
-    private void Start()
-    {
-        Setting();
-    }
-
-    /// <summary>
-    /// 초기세팅
-    /// </summary>
-    private void Setting()
-    {
-        trajectory.positionCount = 2; // 궤적의 포인트는 두 개 
-    }
 
     private void OnEnable()
     {
@@ -54,11 +43,16 @@ public class VRIFTool_NerfGun : MonoBehaviour
         testAction?.Disable();
     }
 
+    private void Start()
+    {
+        trajectory.positionCount = 2; // 궤적의 포인트는 두 개 
+        //vrifAction.Player.SlowMode.performed += ctx => ActivateSlowTime();
+        VRIFInputSystem.Instance.slowMode += ActivateSlowTime; 
+    }
+
     private void Update()
     {
         Aiming();
-
-        ActivateSlowTime();
     }
 
     private void LateUpdate()
@@ -119,11 +113,8 @@ public class VRIFTool_NerfGun : MonoBehaviour
     /// <summary>
     /// 슬로우 타임 
     /// </summary>
-    private void ActivateSlowTime()
+    private void ActivateSlowTime(object sender, EventArgs e)
     {
-        if (vrifAction.Player.SlowMode.triggered) // B버튼을 누르면 
-        {
-            slowTimeEvent?.Invoke(this, EventArgs.Empty);
-        }
+        slowTimeEvent?.Invoke(this, EventArgs.Empty);
     }
 }

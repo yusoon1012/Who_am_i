@@ -83,7 +83,7 @@ namespace BNG
             {
                 float jump = -1f; // 상승 점프 조건 
 
-                if (VRIFControllerSystem.lVelocity.y <= jump && VRIFControllerSystem.rVelocity.y <= jump) // 아래로 휘두르기 
+                if (VRIFInputSystem.Instance.lVelocity.y <= jump && VRIFInputSystem.Instance.rVelocity.y <= jump) // 아래로 휘두르기 
                 {
                     readySuperJump = true; // 상승 점프 가능 상태 
                 }

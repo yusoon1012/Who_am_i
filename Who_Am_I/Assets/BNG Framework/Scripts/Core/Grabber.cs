@@ -691,11 +691,17 @@ namespace BNG {
             //    }
             //}
 
-            //if (HoldingItem && other.GetComponentInChildren<VRIFItem_TreeFruit>()) // 나무에 달려있는 과일이면 
-            //{
-            //    VRIFItem_TreeFruit treeFruit = GetComponent<VRIFItem_TreeFruit>();
-            //    treeFruit.ActivateGravity(); // 중력 활성화
-            //}
+            if (HoldingItem && other.GetComponent<VRIFItem_TreeFruit>()) // 나무에 달려있는 과일이면 
+            {
+                VRIFItem_TreeFruit treeFruit = other.GetComponent<VRIFItem_TreeFruit>();
+                treeFruit.ActivateGravity(); // 중력 활성화
+            }
+
+            if (HoldingItem && other.GetComponent<FruitTest>())
+            {
+                FruitTest fruitTest = other.GetComponent<FruitTest>();
+                fruitTest.GravityTest();
+            }
         }
         // <Solbin> ===
     }

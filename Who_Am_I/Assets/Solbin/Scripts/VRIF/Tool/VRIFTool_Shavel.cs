@@ -19,7 +19,7 @@ public class VRIFTool_Shavel : MonoBehaviour
     {
         if (other.name.Contains("Dirt File")) // TODO: 이후 합의 시 레이어 등으로 교체 
         {
-            if (VRIFControllerSystem.rVelocity.y >= 0.03f) // 위로 삽질
+            if (VRIFInputSystem.Instance.rVelocity.y >= 0.03f) // 위로 삽질
             {
                 Digging(other.gameObject);
             }

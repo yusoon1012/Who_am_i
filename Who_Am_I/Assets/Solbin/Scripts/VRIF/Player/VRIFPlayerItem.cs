@@ -1,3 +1,4 @@
+using BNG;
 using Oculus.Interaction;
 using System.Collections;
 using System.Collections.Generic;
@@ -19,7 +20,6 @@ public class VRIFPlayerItem : MonoBehaviour
     private const float shiningInitialValue = 1.05f;
     // Inventory Component
     [SerializeField] private Inventory inventory = default;
-
     // Item Manager
     [SerializeField] private ItemManager itemManager = default;
 
@@ -34,6 +34,20 @@ public class VRIFPlayerItem : MonoBehaviour
     // UI - 아이템 설명
     [SerializeField] private Text itemInfo = default;
 
+    [Header("Grabbers")]
+    [Tooltip("아이템 획득 전 손을 놓게 하는 것부터 처리하기 위함")]
+    [SerializeField] private Grabber leftGrabber = default;
+    [SerializeField] private Grabber rightGrabber = default;
+    // 양쪽 Grabber
+    private Grabber[] grabbers = default;
+
+
+    private void Start()
+    {
+        grabbers = new Grabber[2];
+        grabbers[0] = leftGrabber;
+        grabbers[1] = rightGrabber;
+    }
 
     private void OnEnable()
     {
@@ -94,7 +108,12 @@ public class VRIFPlayerItem : MonoBehaviour
     /// </summary>
     private void GetItem(GameObject _item)
     {
-        _item.transform.position = poolPos; // 테스트용 
+        for (int i = 0; i < grabbers.Length; i++)
+        {
+            grabbers[i].ReleaseGrab(); // 아이템 획득 전 먼저 손을 놓게 한다. 
+        }
+
+        _item.transform.position = poolPos; // 오브젝트 풀로 이동 
        
         string name = default; // 아이템 이름
 

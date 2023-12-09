@@ -6,7 +6,7 @@ using UnityEngine;
 public class VRIFTimeSystem : MonoBehaviour
 {
     // SlowTime Scale 
-    private float slowTimeScale = 0.35f;
+    private float slowTimeScale = 0.5f; // 시간은 50%로 늦춘다. 
     // VRIFTool_NerfGun
     //private VRIFTool_NerfGun vRIFTool_NerfGun = default;
 
