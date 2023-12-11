@@ -11,8 +11,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Oculus.Interaction", "Oculu
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Oculus.VR", "Oculus.VR.csproj", "{018B60A2-CFBC-700A-1BFE-1CD529079E7A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp-Editor", "Assembly-CSharp-Editor.csproj", "{7536AA47-4A92-D373-66B7-F8197E141924}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Febucci.TextAnimator.Runtime", "Febucci.TextAnimator.Runtime.csproj", "{1934AF4D-ED8E-9144-C6ED-3980DD3C3818}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Meta.XR.BuildingBlocks", "Meta.XR.BuildingBlocks.csproj", "{D034C64C-B675-D7BD-36C9-C36254518DD8}"
@@ -78,6 +76,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Febucci.TextAnimator.Editor", "Febucci.TextAnimator.Editor.csproj", "{FCCC7AE7-31A0-66D9-61C5-5FD92651029E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Meta.WitAI.Lib.Editor", "Meta.WitAI.Lib.Editor.csproj", "{6A08DE7D-68D7-50DF-C794-8BB9C636827E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp-Editor", "Assembly-CSharp-Editor.csproj", "{7536AA47-4A92-D373-66B7-F8197E141924}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Oculus.VR.Editor", "Oculus.VR.Editor.csproj", "{7F05825E-E608-202B-53BA-1D3397B57956}"
 EndProject
@@ -149,10 +149,6 @@ Global
 		{018B60A2-CFBC-700A-1BFE-1CD529079E7A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{018B60A2-CFBC-700A-1BFE-1CD529079E7A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{018B60A2-CFBC-700A-1BFE-1CD529079E7A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7536AA47-4A92-D373-66B7-F8197E141924}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7536AA47-4A92-D373-66B7-F8197E141924}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7536AA47-4A92-D373-66B7-F8197E141924}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7536AA47-4A92-D373-66B7-F8197E141924}.Release|Any CPU.Build.0 = Release|Any CPU
 		{1934AF4D-ED8E-9144-C6ED-3980DD3C3818}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{1934AF4D-ED8E-9144-C6ED-3980DD3C3818}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1934AF4D-ED8E-9144-C6ED-3980DD3C3818}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -285,6 +281,10 @@ Global
 		{6A08DE7D-68D7-50DF-C794-8BB9C636827E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6A08DE7D-68D7-50DF-C794-8BB9C636827E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6A08DE7D-68D7-50DF-C794-8BB9C636827E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7536AA47-4A92-D373-66B7-F8197E141924}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7536AA47-4A92-D373-66B7-F8197E141924}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7536AA47-4A92-D373-66B7-F8197E141924}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7536AA47-4A92-D373-66B7-F8197E141924}.Release|Any CPU.Build.0 = Release|Any CPU
 		{7F05825E-E608-202B-53BA-1D3397B57956}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{7F05825E-E608-202B-53BA-1D3397B57956}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7F05825E-E608-202B-53BA-1D3397B57956}.Release|Any CPU.ActiveCfg = Release|Any CPU
