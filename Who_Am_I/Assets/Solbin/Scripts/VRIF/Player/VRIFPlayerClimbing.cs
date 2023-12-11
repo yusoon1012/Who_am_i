@@ -21,8 +21,6 @@ namespace BNG
         private bool rightGrab = false;
         // 상승 점프 대기 상태 
         private bool readySuperJump = false;
-        // 잡고 있는 물체를 놓게 하는 bool 값
-        public bool sideJump = false;
         // 호출에 대한 AddForce 실행 수 제한 
         private bool addForce = false;
 
@@ -32,10 +30,16 @@ namespace BNG
         [Header("Player State.cs")]
         [SerializeField] private VRIFStateSystem vrifStateSystem = default;
 
+        [Header("Grabbers")]
+        [SerializeField] private Grabber leftGrabber = default;
+        [SerializeField] private Grabber rightGrabber = default;
+
         [Header("점프값")]
         public float upJumpForce = 3.5f; // 위로 점프하는 힘
         public float sideJumpForce = 1.5f; // 측면으로 점프하는 힘
 
+        [Header("Climbing Anchor")]
+        [SerializeField]private Transform climbingAnchor = default;
         private void Start()
         {
             Setting();
@@ -71,7 +75,7 @@ namespace BNG
 
         private void Update()
         {
-            if (VRIFStateSystem.gameState == VRIFStateSystem.GameState.CLIMBING) { SuperJump(); }
+            if (VRIFStateSystem.Instance.gameState == VRIFStateSystem.GameState.CLIMBING) { SuperJump(); }
             // 확인할 것 요망 
         }
         #endregion
@@ -116,7 +120,7 @@ namespace BNG
         /// </summary>
         private void ActivateSideJump(object sender, EventArgs e)
         {
-            if (VRIFStateSystem.gameState == VRIFStateSystem.GameState.CLIMBING)
+            if (VRIFStateSystem.Instance.gameState == VRIFStateSystem.GameState.CLIMBING)
             {
                 int left = 0;
                 int right = 1;
@@ -132,10 +136,12 @@ namespace BNG
         /// <param name="dir"> 방향 값</param>
         private void SideJump(int dir)
         {
-            if (VRIFStateSystem.gameState != VRIFStateSystem.GameState.NORMAL && !addForce) // 호출이 수백번 되기 때문에 실행 수 제한
+            if (VRIFStateSystem.Instance.gameState != VRIFStateSystem.GameState.NORMAL && !addForce) // 호출이 수백번 되기 때문에 실행 수 제한
             {
                 addForce = true;
-                sideJump = true; // 잡고 있는 물체를 놓게 한다
+
+                leftGrabber.ReleaseGrab(); // 양쪽 손을 놓게 한다. 
+                rightGrabber.ReleaseGrab();
 
                 // TODO: 왜 두번째 측면 점프는 제대로 작동하지 않는가?
                 // 두 번째 점프 시 중력도 제대로 적용되고, velocity에 힘도 주어지나 점프가 이루어지지 않고 추락한다.
@@ -145,17 +151,14 @@ namespace BNG
                 if (dir == 0)
                 {
                     playerRigid.AddForce(Vector3.up * upJumpForce, ForceMode.Impulse); // 위쪽으로 점프
-                    playerRigid.AddForce(Vector3.left * sideJumpForce, ForceMode.Impulse); // 왼쪽으로 점프 
+                    playerRigid.AddForce(-climbingAnchor.right * sideJumpForce, ForceMode.Impulse); // 왼쪽으로 점프 
                 }
                 else if (dir == 1)
                 {
                     playerRigid.AddForce(Vector3.up * upJumpForce, ForceMode.Impulse); // 위쪽으로 점프
-                    playerRigid.AddForce(Vector3.right * sideJumpForce, ForceMode.Impulse); // 왼쪽으로 점프 
+                    playerRigid.AddForce(climbingAnchor.right * sideJumpForce, ForceMode.Impulse); // 왼쪽으로 점프 
                 }
 
-                Debug.LogWarning("After=" + playerRigid.velocity);
-
-                Invoke("ClearSideJump", 0.3f);
                 Invoke("ClearAddForce", 0.5f);
             }
         }
@@ -163,7 +166,6 @@ namespace BNG
         /// <summary>
         /// 재작동을 위해 bool 값 초기화 
         /// </summary>
-        private void ClearSideJump() { sideJump = false; }
         private void ClearAddForce() { addForce = false; }
         #endregion
     }

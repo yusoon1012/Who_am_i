@@ -227,7 +227,7 @@ public class UIController : MonoBehaviour
             {
                 // 아무 UI 도 안켜져 있을 때 A 버튼을 누르면 퀵슬롯이 켜짐
                 case 0:
-                    if (VRIFStateSystem.gameState == VRIFStateSystem.GameState.NORMAL) // <Solbin> 퀵슬롯 제한 추가 
+                    if (VRIFStateSystem.Instance.gameState == VRIFStateSystem.GameState.NORMAL) // <Solbin> 퀵슬롯 제한 추가 
                     {
                         uiController = 9;
                         quickSlotTf.GetComponent<QuickSlot>().SingleOpenQuickSlot();
@@ -402,9 +402,9 @@ public class UIController : MonoBehaviour
         // TODO: 슬로우 타임 필요
 
         // <Solbin> 메뉴를 열 때 NORMAL 상태라면 UI 상태로 전환
-        if (VRIFStateSystem.gameState == VRIFStateSystem.GameState.NORMAL)
+        if (VRIFStateSystem.Instance.gameState == VRIFStateSystem.GameState.NORMAL)
         {
-            VRIFStateSystem.gameState = VRIFStateSystem.GameState.UI;
+            VRIFStateSystem.Instance.ChangeState(VRIFStateSystem.GameState.UI);
         }// <Solbin> UI 상태로 전환 
     }
 
@@ -414,9 +414,9 @@ public class UIController : MonoBehaviour
         // TODO: 시간 원상 복귀 필요
 
         // <Solbin> 메뉴를 닫을 때 UI 상태라면 NORMAL 상태로 전환
-        if (VRIFStateSystem.gameState == VRIFStateSystem.GameState.UI)
+        if (VRIFStateSystem.Instance.gameState == VRIFStateSystem.GameState.UI)
         {
-            VRIFStateSystem.gameState = VRIFStateSystem.GameState.NORMAL;
+            VRIFStateSystem.Instance.ChangeState(VRIFStateSystem.GameState.NORMAL);
         }// <Solbin> NORMAL 상태로 전환 
     }
 
@@ -426,9 +426,9 @@ public class UIController : MonoBehaviour
         // TODO: 시간 정지 필요 
 
         // <Solbin> 메뉴를 열 때 NORMAL 상태라면 UI 상태로 전환
-        if (VRIFStateSystem.gameState == VRIFStateSystem.GameState.NORMAL)
+        if (VRIFStateSystem.Instance.gameState == VRIFStateSystem.GameState.NORMAL)
         {
-            VRIFStateSystem.gameState = VRIFStateSystem.GameState.UI;
+            VRIFStateSystem.Instance.ChangeState(VRIFStateSystem.GameState.UI);
         }// <Solbin> UI 상태로 전환 
     }
 
@@ -438,9 +438,9 @@ public class UIController : MonoBehaviour
         // TODO: 시간 원상 복귀 필요
 
         // <Solbin> 메뉴를 닫을 때 UI 상태라면 NORMAL 상태로 전환
-        if (VRIFStateSystem.gameState == VRIFStateSystem.GameState.UI)
+        if (VRIFStateSystem.Instance.gameState == VRIFStateSystem.GameState.UI)
         {
-            VRIFStateSystem.gameState = VRIFStateSystem.GameState.NORMAL;
+            VRIFStateSystem.Instance.ChangeState(VRIFStateSystem.GameState.NORMAL);
         }// <Solbin> NORMAL 상태로 전환 
     }
 

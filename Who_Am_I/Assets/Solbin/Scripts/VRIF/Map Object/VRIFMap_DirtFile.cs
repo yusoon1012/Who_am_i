@@ -4,5 +4,17 @@ using UnityEngine;
 
 public class VRIFMap_DirtFile : MonoBehaviour
 {
-    // TODO: 일정 횟수 이상 파면 파괴 (이후 오브젝트 풀 이용할 예정)
+    private int destroyCount = 3;
+
+    public void AddDestroy() 
+    {
+        destroyCount -= 1;
+
+        if (destroyCount <= 0) // 흙더미 HP가 0보다 작거나 같으면 
+        {
+            transform.GetComponent<VRIFItem_DropItem>().DropItem(); // 아이템 드롭 
+
+            Destroy(gameObject); // 흙더미 오브젝트 파괴 
+        }
+    }
 }

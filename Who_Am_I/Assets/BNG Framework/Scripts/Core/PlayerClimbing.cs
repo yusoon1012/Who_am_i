@@ -288,12 +288,12 @@ namespace BNG {
             }
         }
 
-        // <Solbin> 등반 중일때
+        // <Solbin> 등반 물체를 잡았을 때 한 번만 실행 
         void onGrabbedClimbable() {
 
-            if (VRIFStateSystem.gameState != VRIFStateSystem.GameState.LADDER) // 사다리를 타고 있는 중이 아닐 때만 CLIMBING
+            if (VRIFStateSystem.Instance.gameState != VRIFStateSystem.GameState.LADDER) // 사다리를 타고 있는 중이 아닐 때만 CLIMBING
             {
-                VRIFStateSystem.gameState = VRIFStateSystem.GameState.CLIMBING;
+                VRIFStateSystem.Instance.ChangeState(VRIFStateSystem.GameState.CLIMBING);
             }
 
             // <Solbin> 등반 중 그랩은 Velocity에 힘이 가해지고 있는 중이면 제대로 작동하지 않는다. 
@@ -314,7 +314,7 @@ namespace BNG {
         // <Solbin> 등반 중이 아닐때 (public으로 교체함)
         public void onReleasedClimbable() {
 
-            VRIFStateSystem.gameState = VRIFStateSystem.GameState.NORMAL;
+            VRIFStateSystem.Instance.ChangeState(VRIFStateSystem.GameState.NORMAL);
 
             // Reset back to our original values
             if (smoothLocomotion) {

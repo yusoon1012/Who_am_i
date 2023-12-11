@@ -29,7 +29,6 @@ public class VRIFTool_Shavel : MonoBehaviour
     private void Digging(GameObject _dirt)
     {
         _dirt.transform.localScale /= 2;
+        _dirt.GetComponent<VRIFMap_DirtFile>().AddDestroy(); // 파괴 횟수 증가 
     }
-
-    // TODO: 한 번 밖에 Digging이 넘어오지 않는 이유는...?
 }

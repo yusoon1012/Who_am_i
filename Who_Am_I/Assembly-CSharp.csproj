@@ -70,6 +70,7 @@
     <Compile Include="Assets\Oculus\SampleFramework\Usage\SceneManager\Scripts\CustomSceneManager\SnapshotSceneManager.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Components\ScaleBetweenPoints.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Usage\Passthrough\Scripts\PassthroughProjectionSurface.cs" />
+    <Compile Include="Assets\Solbin\Scripts\VRIF\Player\VRIFPlayerClimbingHelper.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Core\SteeringWheel.cs" />
     <Compile Include="Assets\Solbin\Scripts\Oculus\Tool\Fishing Rod\Tool_FishingRod.cs" />
     <Compile Include="Assets\Meen_Project\Scripts\Crafting\Crafting001.cs" />
@@ -92,6 +93,7 @@
     <Compile Include="Assets\Oculus\SampleFramework\Usage\TouchPro\Scripts\Ui\UiBoolInspector.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Usage\Passthrough\Scripts\GrabObject.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Usage\Passthrough\Scripts\AugmentedObject.cs" />
+    <Compile Include="Assets\Solbin\Scripts\VRIF\Map Object\VRIFMap_DirtFile.cs" />
     <Compile Include="Assets\BNG Framework\Scenes\XR Demo\DemoCube.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Core\HandsInteraction\Scripts\InteractableRegistry.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Usage\SceneManager\Scripts\PassthroughPlayInEditor.cs" />
@@ -145,6 +147,7 @@
     <Compile Include="Assets\BNG Framework\Scripts\Helpers\DetachableLimb.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Usage\Passthrough\Scripts\PassthroughSurface.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Core\Locomotion\Scripts\TeleportPoint.cs" />
+    <Compile Include="Assets\Solbin\Scripts\VRIF\System\VRIFInputSystem.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Extras\MovingPlatform.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Usage\TouchPro\Scripts\Ui\UiDeviceInspector.cs" />
     <Compile Include="Assets\Meen_Project\Scripts\CamRotate.cs" />
@@ -219,6 +222,7 @@
     <Compile Include="Assets\BNG Framework\Scripts\Components\GrabbableHighlight.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Components\DamageCollider.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Core\Locomotion\Scripts\TeleportTransitionInstant.cs" />
+    <Compile Include="Assets\Solbin\Scripts\VRIF\Item\VRIFItem_DropItem.cs" />
     <Compile Include="Assets\_yusoon\Scripts\ItemDatabase.cs" />
     <Compile Include="Assets\_yusoon\Scripts\AuthManager.cs" />
     <Compile Include="Assets\Solbin\Scripts\Oculus\Tool\Shavel\Tool_Shavel.cs" />
@@ -293,6 +297,7 @@
     <Compile Include="Assets\BNG Framework\HandPoser\Scripts\SkeletonVisualizer.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Core\Locomotion\Scripts\CharacterCameraConstraint.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Usage\SceneManager\Scripts\SimpleResizer\SimpleResizable.cs" />
+    <Compile Include="Assets\Solbin\Scripts\VRIF\For Test\FruitTest.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Core\InputBridge.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Components\ReturnToSnapZone.cs" />
     <Compile Include="Assets\Meen_Project\Scripts\Items\Items003.cs" />
@@ -363,7 +368,6 @@
     <Compile Include="Assets\Oculus\SampleFramework\Usage\Passthrough\Scripts\SPPquad.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Extras\DrawerSound.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Core\DebugUI\Scripts\LaserPointer.cs" />
-    <Compile Include="Assets\Solbin\Scripts\VRIF\System\VRIFControllerSystem.cs" />
     <Compile Include="Assets\_PJO\Scripts\AnimalsData.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Usage\AppDeeplink\AppDeeplinkUI.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Usage\SceneManager\Scripts\MyCustomSceneModelLoader.cs" />
@@ -454,8 +458,7 @@
     <Compile Include="Assets\_yusoon\Scripts\SelectParse.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Usage\Passthrough\Scripts\PassthroughStyler.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Usage\SpatialAnchor\Scripts\AnchorUIManager.cs" />
-    <Compile Include="Assets\Solbin\Scripts\VRIF\Item\VRIFItem_DropItem.cs" />
-    <Compile Include="Assets\Solbin\Scripts\VRIF\Map Object\VRIFMap_DirtFile.cs" />
+    <Compile Include="Assets\Solbin\Scripts\VRIF\Map Object\VRIFMap_ZipLine.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Oculus\SampleFramework\Usage\HandsTrainExample\Shaders\XingLightShader.shader" />

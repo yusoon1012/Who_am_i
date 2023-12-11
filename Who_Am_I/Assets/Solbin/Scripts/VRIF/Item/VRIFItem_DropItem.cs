@@ -1,8 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing.Text;
 using UnityEngine;
 
 public class VRIFItem_DropItem : MonoBehaviour
 {
-    // TODO: VRIFMap_DirtFile에서 파괴 신호를 받으면 아이템 출력 (Instantiate 활용)
+    [SerializeField] private GameObject p_dropItem = default;
+
+    public void DropItem()
+    {
+        Vector3 dropPos = transform.position;
+        Instantiate(p_dropItem, dropPos, Quaternion.identity); // 아이템 드롭 
+    }
 }
