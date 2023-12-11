@@ -7,6 +7,7 @@ public class GameEventManager : MonoBehaviour
     public static GameEventManager instance { get; private set; }
 
     public MiscEvent miscEvent;
+    public QuestEvent questEvent;
     public QuestLoadEvent questLoadEvent;
     private void Awake()
     {
@@ -16,5 +17,6 @@ public class GameEventManager : MonoBehaviour
         }
         miscEvent = new MiscEvent();
         questLoadEvent=new QuestLoadEvent();
+        questEvent = new QuestEvent();
     }
 }

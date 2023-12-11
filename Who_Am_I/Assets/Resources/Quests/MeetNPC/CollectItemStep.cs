@@ -2,13 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ItemCollector : MonoBehaviour
+public class CollectItemStep : MonoBehaviour
 {
-
-    private void Awake()
-    {
-        GameEventManager.instance.miscEvent.onItemCollected += ItemCollect;
-    }
     // Start is called before the first frame update
     void Start()
     {
@@ -19,9 +14,5 @@ public class ItemCollector : MonoBehaviour
     void Update()
     {
         
-    }
-    public void ItemCollect()
-    {
-
     }
 }

@@ -16,7 +16,7 @@ public class DialogueParse : MonoBehaviour
         {
             string[] row = data[i].Split(new char[] { ',' });
 
-            Debug.Log(row[2]);
+            //Debug.Log(row[2]); //이름
             Dialogue dialogue = new Dialogue();//대사 리스트 생성
 
             dialogue.name = row[2];
@@ -28,7 +28,7 @@ public class DialogueParse : MonoBehaviour
                 contextList.Add(row[3]);
                 eventNumberList.Add(row[4]);
                 //jumpList.Add(row[5]);
-                Debug.Log(row[3]);// 스크립트
+               // Debug.Log(row[3]);// 스크립트
 
                 if (++i < data.Length)
                 {

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class MeetNPCStep : QuestStep
 {
+    private HashSet<string> talkedNPCs = new HashSet<string>();
     private int npcTalkCount = 0;
     private int npcTalkComplete = 3;
 
@@ -19,13 +20,20 @@ public class MeetNPCStep : QuestStep
 
     private void NpcTalk(string name)
     {
-        if(npcTalkCount<npcTalkComplete)
+        // Check if the NPC has not been talked to yet
+        if (!talkedNPCs.Contains(name))
         {
-            npcTalkCount += 1;
-        }
-        if(npcTalkCount==npcTalkComplete)
-        {
-            FinishQuestStep();
+            talkedNPCs.Add(name);
+
+            // Increment the talk count
+            npcTalkCount++;
+
+            // Check if the required number of unique NPCs have been talked to
+            if (npcTalkCount == npcTalkComplete)
+            {
+                FinishQuestStep();
+            }
         }
     }
+
 }

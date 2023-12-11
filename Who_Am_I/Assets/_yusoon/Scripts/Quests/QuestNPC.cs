@@ -43,11 +43,17 @@ public class QuestNPC : MonoBehaviour
     public void Chat()
     {
         chatUI.SetActive(true);
+        Debug.Log(dialogues.Length);
+        if(dialogues[talkCount].name!="")
+        {
         nameText.text = dialogues[talkCount].name;
+
+        }
         contexts = dialogues[contextIndex].contexts;
         chatText.text = contexts[talkCount];
         if(talkCount<contexts.Length-1&&contexts.Length-1!=0)
         {
+            Debug.Log("TalkCount : " + talkCount);
             talkCount += 1;
         }
         else
@@ -66,7 +72,7 @@ public class QuestNPC : MonoBehaviour
     public void EndChat()
     {
         
-        QuestManager.Instance.CheckNpcTalked(npcName);
+       // QuestManager.Instance.CheckNpcTalked(npcName);
         chatUI.SetActive(false);
         isTalkEnd = false;
         talkCount = 0;

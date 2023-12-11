@@ -5,39 +5,24 @@ using UnityEngine;
 public class QuestItem : MonoBehaviour
 {
     public string questName;
-    public string itemName;
-   
-    private void Awake()
-    {
-
-
-    }
+    public string npcName;
+  
     private void Start()
     {
-
-        if (GameEventManager.instance != null && GameEventManager.instance.miscEvent != null)
-        {
-            GameEventManager.instance.miscEvent.onItemCollected += CollectItem;
-           // Debug.Log("성공");
-        }
-        else
-        {
-            Debug.LogWarning("GameEventManager.instance 또는 GameEventManager.instance.miscEvent가 null입니다.");
-        }
+        GameEventManager.instance.miscEvent.onNpcTalked+= TalkNPC;      
     }
     private void OnTriggerEnter(Collider other)
     {
         if(other.tag.Equals("Player"))
         {
 
-            GameEventManager.instance.miscEvent.ItemCollected();
+            GameEventManager.instance.miscEvent.NpcTalked(npcName);
 
 
         }
     }
-    public void CollectItem()
+    private void TalkNPC(string name)
     {
-        Debug.Log(itemName + "획득");
-        Debug.Log(questName);
+        Debug.Log(npcName + "과 대화");
     }
 }

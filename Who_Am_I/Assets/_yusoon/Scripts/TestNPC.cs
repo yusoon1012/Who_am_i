@@ -122,7 +122,7 @@ public class TestNPC : MonoBehaviour
                     if(conditionClears.All(x => x))
                     {
                         Debug.Log("모든 조건 클리어");
-                        questData.questState = QuestData.QuestState.CAN_FINISH;
+                       
                         isAccept = false;
                         isClear = true;
 
@@ -162,7 +162,7 @@ public class TestNPC : MonoBehaviour
                     if (conditionClears.All(x => x))
                     {
                         Debug.Log("모든 조건 클리어");
-                        questData.questState = QuestData.QuestState.CAN_FINISH;
+                      
                         isAccept = false;
                         isClear = true;
 
@@ -174,7 +174,7 @@ public class TestNPC : MonoBehaviour
             if (conditionClears.All(x => x))
         {
             Debug.Log("모든 조건 클리어");
-            questData.questState = QuestData.QuestState.CAN_FINISH;
+           
             isAccept = false;
             isClear = true;
 
@@ -270,7 +270,7 @@ public class TestNPC : MonoBehaviour
     public void AcceptQuest()
     {
         acceptImg.enabled = false;
-        questData.questState = QuestData.QuestState.IN_PROGRESS;
+       
         clearImg.enabled = true;
         clearImg.color = Color.gray;
         chatObj.SetActive(false);

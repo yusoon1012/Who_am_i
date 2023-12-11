@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9097c9c7bc299b94f8fca44c65f19866, type: 3}
   m_Name: MeetNPC
   m_EditorClassIdentifier: 
-  prevQuestID: 0
-  nextQuestID: 0
-  questID: 0
-  questName: 
-  questState: 0
+  <id>k__BackingField: MeetNPC
+  questName: "\uBB49\uBE44\uD0C0\uC774\uC5D0 \uC628 \uAC78 \uD658\uC601\uD574"
+  questIndex: 0
+  questPrerequisites: []
+  questStepPrefabs:
+  - {fileID: 1819943488830865419, guid: fa5de91d91f73c24d88a374945a8306e, type: 3}
