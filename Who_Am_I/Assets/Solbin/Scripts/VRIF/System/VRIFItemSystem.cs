@@ -8,6 +8,8 @@ using UnityEngine;
 /// </summary>
 public class VRIFItemSystem : MonoBehaviour
 {
+    public static VRIFItemSystem Instance;
+
     // 아이템 이름 - 아이템 오브젝트 딕셔너리
     private Dictionary<string, GameObject> mountingItem = default;
 
@@ -25,6 +27,18 @@ public class VRIFItemSystem : MonoBehaviour
 
     // TestAction
     private TestAction testAction = default;
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
 
     private void Start()
     {
@@ -170,6 +184,15 @@ public class VRIFItemSystem : MonoBehaviour
         }
 
         item.SetActive(false);
+    }
+
+    public void ReleaseAllItem()
+    {
+        foreach (var _item in mountingItem)
+        {
+            GameObject item = _item.Value;
+            item.SetActive(false);
+        }
     }
     #endregion
 }

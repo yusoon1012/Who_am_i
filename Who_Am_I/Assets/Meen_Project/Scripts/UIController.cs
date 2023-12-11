@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using BNG;
+using System;
 
 public class UIController : MonoBehaviour
 {
@@ -38,6 +39,7 @@ public class UIController : MonoBehaviour
     private float joystickInput = 0.55f;
     // <Solbin> Input Delay를 위한 bool 값
     private bool inputDelay = false;
+
 
     void Awake()
     {
@@ -122,6 +124,21 @@ public class UIController : MonoBehaviour
             playerTf.GetComponent<Inventory>().AddInventory("고기", 1);
         }
     }
+
+    // <Solbin>
+    /// <summary>
+    /// 조합대 상호작용으로 UI Controller 활성화
+    /// </summary>
+    public void OpenCraftingUI()
+    {
+        if (uiController == 0)
+        {
+            uiController = 4;
+            playerTf.GetComponent<ItemCrafting>().OnCrafting();
+            OpenMenuCheck();
+        }
+    }
+    // <Solbin> ===
 
     private void OnEnable()
     {

@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -58,6 +58,7 @@ namespace BNG {
             }
         }
 
+        // <Solbin> 손잡이를 잡은 것을 인식한다. 
         public override void OnTrigger(float triggerValue) {
 
             if (triggerValue > 0.5f) {
@@ -69,16 +70,30 @@ namespace BNG {
 
         public override void OnButton1() {
 
+            // <Solbin> A 버튼
             moveTowards(ZiplineStart.position, false);
 
             base.OnButton1();
         }
         public override void OnButton2() {
+
+            // <Solbin> B 버튼
             moveTowards(ZiplineEnd.position, true);
 
             base.OnButton2();
         }
 
+        // <Solbin>
+        /// <summary>
+        /// 가속력 구현을 위한 메소드 
+        /// </summary>
+        private void AccelerationForce()
+        {
+            // TODO: 가속력 구현 
+        }
+        // <Solbin> ===
+
+        // <Solbin> 앞으로 진행을 위해 실행되는 메소드 
         void moveTowards(Vector3 pos, bool forwardDirection) {
 
             lastMoveTime = Time.time;

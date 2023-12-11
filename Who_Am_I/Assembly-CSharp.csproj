@@ -70,7 +70,7 @@
     <Compile Include="Assets\Oculus\SampleFramework\Usage\SceneManager\Scripts\CustomSceneManager\SnapshotSceneManager.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Components\ScaleBetweenPoints.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Usage\Passthrough\Scripts\PassthroughProjectionSurface.cs" />
-    <Compile Include="Assets\Solbin\Scripts\VRIF\Player\VRIFPlayerClimbingHelper.cs" />
+    <Compile Include="Assets\Solbin\Scripts\VRIF\Player\Player Controller\VRIFPlayerClimbingHelper.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Core\SteeringWheel.cs" />
     <Compile Include="Assets\Solbin\Scripts\Oculus\Tool\Fishing Rod\Tool_FishingRod.cs" />
     <Compile Include="Assets\Meen_Project\Scripts\Crafting\Crafting001.cs" />
@@ -81,7 +81,7 @@
     <Compile Include="Assets\_yusoon\Scripts\TestNPC.cs" />
     <Compile Include="Assets\Meen_Project\Scripts\Inventory.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Core\HandsInteraction\Scripts\Tools\InteractableTool.cs" />
-    <Compile Include="Assets\Solbin\Scripts\VRIF\Player\VRIFPlayerClimbing.cs" />
+    <Compile Include="Assets\Solbin\Scripts\VRIF\Player\Player Controller\VRIFPlayerClimbing.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Components\VelocityTracker.cs" />
     <Compile Include="Assets\_PJO\Scripts\MeshController.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Core\Video\Plugins\Android\NativeVideoPlayer.cs" />
@@ -124,7 +124,7 @@
     <Compile Include="Assets\Oculus\SampleFramework\Core\HandsInteraction\Scripts\ButtonController.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Core\CustomHands\Scripts\Hand.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Extras\Waypoint.cs" />
-    <Compile Include="Assets\Solbin\Scripts\VRIF\Player\VRIFPlayerCheckPoint.cs" />
+    <Compile Include="Assets\Solbin\Scripts\VRIF\Player\Player Range\VRIFPlayerCheckPoint.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Components\Tooltip.cs" />
     <Compile Include="Assets\Solbin\Scripts\Oculus\Player\Player_Status.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Components\LookAtTransform.cs" />
@@ -243,7 +243,7 @@
     <Compile Include="Assets\Oculus\SampleFramework\Core\HandsInteraction\Scripts\Tools\RayTool.cs" />
     <Compile Include="Assets\Solbin\Scripts\Oculus\Climbing\Climbing_GrabCheck.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Weapons\Projectile.cs" />
-    <Compile Include="Assets\Solbin\Scripts\VRIF\Player\VRIFPlayerItem.cs" />
+    <Compile Include="Assets\Solbin\Scripts\VRIF\Player\Player Range\VRIFPlayerItem.cs" />
     <Compile Include="Assets\Solbin\Scripts\Oculus\Player\Player_Laser.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Components\RotateWithHMD.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Extras\BulletHole.cs" />
@@ -397,7 +397,7 @@
     <Compile Include="Assets\BNG Framework\Scripts\Core\GrabbableUnityEvents.cs" />
     <Compile Include="Assets\Meen_Project\Scripts\Maps\MapControl.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Core\DistanceGrab\Scripts\GrabbableCrosshair.cs" />
-    <Compile Include="Assets\Solbin\Scripts\VRIF\Player\VRIFPlayerToilet.cs" />
+    <Compile Include="Assets\Solbin\Scripts\VRIF\Player\Player Range\VRIFPlayerToilet.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Extras\TimeController.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Core\Grabbable.cs" />
     <Compile Include="Assets\Meen_Project\Scripts\Test\PlayerMoveTest.cs" />
@@ -450,7 +450,7 @@
     <Compile Include="Assets\BNG Framework\Scripts\Core\ArmSwingLocomotion.cs" />
     <Compile Include="Assets\Meen_Project\Scripts\Maps\CameraControl.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Components\GrabbableRingHelper.cs" />
-    <Compile Include="Assets\Solbin\Scripts\VRIF\Player\VRIFPlayerTeleport.cs" />
+    <Compile Include="Assets\Solbin\Scripts\VRIF\Player\Player Controller\VRIFPlayerTeleport.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Core\HandsInteraction\Scripts\Tools\FingerTipPokeToolView.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Usage\OVROverlay\Scripts\OVROverlaySample.cs" />
     <Compile Include="Assets\BNG Framework\HandPoser\Scripts\HandPoser.cs" />
@@ -459,6 +459,7 @@
     <Compile Include="Assets\Oculus\SampleFramework\Usage\Passthrough\Scripts\PassthroughStyler.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Usage\SpatialAnchor\Scripts\AnchorUIManager.cs" />
     <Compile Include="Assets\Solbin\Scripts\VRIF\Map Object\VRIFMap_ZipLine.cs" />
+    <Compile Include="Assets\Solbin\Scripts\VRIF\Player\Player Range\VRIFPlayerCrafting.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Oculus\SampleFramework\Usage\HandsTrainExample\Shaders\XingLightShader.shader" />

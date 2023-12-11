@@ -15,7 +15,8 @@ namespace BNG
             CLIMBING,
             LADDER,
             UI,
-            POO
+            POO,
+            ZIPLINE
         }
 
         // 현재 게임 상태 
@@ -100,6 +101,10 @@ namespace BNG
                 case GameState.POO: // POO 상태 (배출 상태)
                     PooState();
                     break;
+
+                case GameState.ZIPLINE: // ZIPLINE 상태 (짚라인 상태)
+                    ZipLineState(); 
+                    break;
             }
         }
 
@@ -166,7 +171,7 @@ namespace BNG
 
             vrifStatusSystem.hungerTimer = 30;
 
-            quickSlot.enabled = false;
+            quickSlot.enabled = false; // UI 열기 불가
             uiController.enabled = false;
         }
 
@@ -182,6 +187,16 @@ namespace BNG
                 locomotionManager.enabled = false; // 이동 비활성화
                 smoothLocomotion.enabled = false;
             }
+        }
+
+        private void ZipLineState()
+        {
+            gameState = GameState.ZIPLINE;
+
+            VRIFItemSystem.Instance.ReleaseAllItem(); // 모든 아이템 장착 해제 
+
+            quickSlot.enabled = false;
+            uiController.enabled = false;
         }
         #endregion
     }
