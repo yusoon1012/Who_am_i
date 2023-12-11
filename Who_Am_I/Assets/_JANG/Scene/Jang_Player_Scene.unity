@@ -4412,9 +4412,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 615edaa94a6068240a823a2ddc03e3a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerTeleportRange: {fileID: 1607047758}
-  teleportUI: {fileID: 994205334}
-  vrifStateSystem: {fileID: 0}
 --- !u!65 &468488165
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5571,9 +5568,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72199623dd200064fb318ffad82cefcd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  locomotionManager: {fileID: 6065732223295516175}
-  smoothLocomotion: {fileID: 3719865057957183704}
-  playerRotation: {fileID: 3719865057957183705}
+  player: {fileID: 0}
+  uiController: {fileID: 0}
+  quickSlot: {fileID: 0}
   leftController: {fileID: 8320362179269590445}
   rightController: {fileID: 8320362180240683470}
 --- !u!114 &600326004
@@ -5602,6 +5599,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fullnessGage: {fileID: 1253869347}
   pooGage: {fileID: 0}
+  poo: {fileID: 0}
+  player: {fileID: 0}
+  hungerTimer: 10
+  m_Fullness: 0
+  m_Poo: 0
+  digestion: 1
 --- !u!114 &600326006
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8475,7 +8478,7 @@ Transform:
   m_GameObject: {fileID: 1037921758}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 2.5, y: -6, z: 0}
-  m_LocalScale: {x: 100, y: 10, z: 100}
+  m_LocalScale: {x: 200, y: 10, z: 200}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 948156390}
@@ -12547,9 +12550,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 615edaa94a6068240a823a2ddc03e3a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerTeleportRange: {fileID: 1607047758}
-  teleportUI: {fileID: 994205334}
-  vrifStateSystem: {fileID: 0}
 --- !u!65 &1360373100
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -14656,9 +14656,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 615edaa94a6068240a823a2ddc03e3a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerTeleportRange: {fileID: 1607047758}
-  teleportUI: {fileID: 994205334}
-  vrifStateSystem: {fileID: 0}
 --- !u!65 &1520020714
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -18848,9 +18845,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 615edaa94a6068240a823a2ddc03e3a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerTeleportRange: {fileID: 1607047758}
-  teleportUI: {fileID: 994205334}
-  vrifStateSystem: {fileID: 0}
 --- !u!65 &1959117998
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -69234,6 +69228,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef7a229f34ae987418b0ebbde8d98c5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  quickSlotTf: {fileID: 0}
   itemImages:
   - {fileID: 704009943922775597, guid: f8244e708dde50046bdc32a716e55c05, type: 3}
   - {fileID: 827706604576083156, guid: b491af2cad1c93c4ebbdb3189b9ba61b, type: 3}
@@ -88735,6 +88730,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   quickSlotTf: {fileID: 8543854266909427620}
   vrifStateSystem: {fileID: 600326003}
+  vrifTimeSystem: {fileID: 0}
 --- !u!4 &6193099240923664403
 Transform:
   m_ObjectHideFlags: 0
@@ -105171,6 +105167,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sideJump: 0
+  player: {fileID: 0}
+  vrifStateSystem: {fileID: 0}
+  upJumpForce: 3.5
+  sideJumpForce: 1.5
 --- !u!54 &8449739409524565380
 Rigidbody:
   m_ObjectHideFlags: 0
