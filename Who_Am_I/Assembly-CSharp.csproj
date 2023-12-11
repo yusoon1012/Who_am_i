@@ -1547,6 +1547,10 @@
       <Project>{3EAFB6AB-A86B-3BF9-8035-D0FE40893D57}</Project>
       <Name>Meta.Voice.Samples.Dictation</Name>
     </ProjectReference>
+    <ProjectReference Include="Oculus.Interaction.Editor.csproj">
+      <Project>{A4E5F67E-F70D-3FA4-C85A-3B89275355F8}</Project>
+      <Name>Oculus.Interaction.Editor</Name>
+    </ProjectReference>
     <ProjectReference Include="Oculus.VR.Scripts.Editor.csproj">
       <Project>{FBA66A29-8424-F252-E6BE-B3F4BEDB1CD9}</Project>
       <Name>Oculus.VR.Scripts.Editor</Name>
@@ -1554,10 +1558,6 @@
     <ProjectReference Include="Oculus.Spatializer.csproj">
       <Project>{3E0C0C02-835C-EFE1-1489-33B1F70FE27A}</Project>
       <Name>Oculus.Spatializer</Name>
-    </ProjectReference>
-    <ProjectReference Include="Oculus.Interaction.Editor.csproj">
-      <Project>{A4E5F67E-F70D-3FA4-C85A-3B89275355F8}</Project>
-      <Name>Oculus.Interaction.Editor</Name>
     </ProjectReference>
     <ProjectReference Include="Meta.VoiceSDK.Mic.Other.csproj">
       <Project>{102E033A-7227-4CD3-F4CF-2953D7461083}</Project>
@@ -1583,6 +1583,10 @@
       <Project>{1B40972E-341E-1EAC-AD15-89547E43631F}</Project>
       <Name>Oculus.Interaction.InterfaceSupport</Name>
     </ProjectReference>
+    <ProjectReference Include="Meta.WitAi.Editor.csproj">
+      <Project>{A73BAC5C-729C-2C42-E2A7-E5280C5C4449}</Project>
+      <Name>Meta.WitAi.Editor</Name>
+    </ProjectReference>
     <ProjectReference Include="VoiceSDK.Editor.csproj">
       <Project>{356CE9C2-0DE1-8F21-ABEC-11AF9AA5729C}</Project>
       <Name>VoiceSDK.Editor</Name>
@@ -1595,9 +1599,9 @@
       <Project>{516B8AE4-8905-F954-071F-E6AF16249135}</Project>
       <Name>VoiceSDK.Dictation.Editor</Name>
     </ProjectReference>
-    <ProjectReference Include="Meta.WitAi.Editor.csproj">
-      <Project>{A73BAC5C-729C-2C42-E2A7-E5280C5C4449}</Project>
-      <Name>Meta.WitAi.Editor</Name>
+    <ProjectReference Include="Oculus.Interaction.OVR.Editor.csproj">
+      <Project>{B49B4C17-EE5F-FCC6-959B-3FC100BE8424}</Project>
+      <Name>Oculus.Interaction.OVR.Editor</Name>
     </ProjectReference>
     <ProjectReference Include="VoiceSDK.Dictation.Runtime.csproj">
       <Project>{4C242D53-6BEC-663C-855D-BAF469BD8214}</Project>
@@ -1610,10 +1614,6 @@
     <ProjectReference Include="Febucci.TextAnimator.TMP.Runtime.csproj">
       <Project>{14EC484F-ACDD-BD58-1FF7-1C2642632E1C}</Project>
       <Name>Febucci.TextAnimator.TMP.Runtime</Name>
-    </ProjectReference>
-    <ProjectReference Include="Oculus.Interaction.OVR.Editor.csproj">
-      <Project>{B49B4C17-EE5F-FCC6-959B-3FC100BE8424}</Project>
-      <Name>Oculus.Interaction.OVR.Editor</Name>
     </ProjectReference>
     <ProjectReference Include="Oculus.LipSync.csproj">
       <Project>{B72CF9B0-B339-0E8B-0CCE-CEBBA1BA198C}</Project>
