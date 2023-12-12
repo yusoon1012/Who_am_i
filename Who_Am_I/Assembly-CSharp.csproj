@@ -85,6 +85,7 @@
     <Compile Include="Assets\_PJO\Scripts\MeshController.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Core\Video\Plugins\Android\NativeVideoPlayer.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Extras\LiquidWobble.cs" />
+    <Compile Include="Assets\_yusoon\Scripts\Quests\QuestPoint.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Core\LocomotionManager.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Usage\TouchPro\Scripts\Ui\UiAxis1dInspector.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Core\Locomotion\Scripts\TeleportDestination.cs" />
@@ -97,6 +98,7 @@
     <Compile Include="Assets\Oculus\SampleFramework\Usage\SceneManager\Scripts\PassthroughPlayInEditor.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Weapons\MagazineSlide.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Helpers\DoorHelper.cs" />
+    <Compile Include="Assets\_yusoon\Scripts\Quests\QuestInfo.cs" />
     <Compile Include="Assets\_yusoon\Scripts\Quests\GameEventManager.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Core\Locomotion\Scripts\TeleportInputHandler.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\UI\VRCanvas.cs" />
@@ -121,6 +123,7 @@
     <Compile Include="Assets\Oculus\SampleFramework\Core\HandsInteraction\Scripts\ButtonController.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Core\CustomHands\Scripts\Hand.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Extras\Waypoint.cs" />
+    <Compile Include="Assets\_yusoon\Scripts\Quests\QuestState.cs" />
     <Compile Include="Assets\Solbin\Scripts\VRIF\Player\VRIFPlayerCheckPoint.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Components\Tooltip.cs" />
     <Compile Include="Assets\Solbin\Scripts\Oculus\Player\Player_Status.cs" />
@@ -207,6 +210,7 @@
     <Compile Include="Assets\Oculus\SampleFramework\Core\Locomotion\Scripts\TeleportTransitionBlink.cs" />
     <Compile Include="Assets\_PJO\Scripts\TerrainMeshSend.cs" />
     <Compile Include="Assets\BNG Framework\HandPoser\Scripts\EditorHandle.cs" />
+    <Compile Include="Assets\_yusoon\Scripts\Quests\PlayerEvent.cs" />
     <Compile Include="Assets\_PJO\Scripts\DropItem.cs" />
     <Compile Include="Assets\Solbin\Scripts\Oculus\Player\Player_Climbing.cs" />
     <Compile Include="Assets\BNG Framework\HandPoser\Scripts\SavePoseBinding.cs" />
@@ -224,13 +228,14 @@
     <Compile Include="Assets\_yusoon\Scripts\InteractionEvent.cs" />
     <Compile Include="Assets\BNG Framework\HandPoser\Scripts\HandPose.cs" />
     <Compile Include="Assets\Solbin\Scripts\Oculus\Player\Player_Moving.cs" />
+    <Compile Include="Assets\_yusoon\Scripts\Quests\QuestIcon.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Usage\Passthrough\Scripts\FlashlightController.cs" />
     <Compile Include="Assets\BNG Framework\HandPoser\Scripts\HandPoseDefinition.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Usage\SpatialAnchor\Scripts\AnchorHelpers.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Core\SnapZoneOffset.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Core\HandsInteraction\Scripts\Tools\RayToolView.cs" />
     <Compile Include="Assets\Solbin\Scripts\DebugCanvas.cs" />
-    <Compile Include="Assets\Resources\Quests\MeetNPC\MeetNPCStep.cs" />
+    <Compile Include="Assets\Resources\Quests\QuestSteps\MeetNPCStep.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Usage\HandsTrainExample\Scripts\TrainCarBase.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Core\PlayerMovingPlatformSupport.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Helpers\TeleportDestination.cs" />
@@ -341,6 +346,7 @@
     <Compile Include="Assets\Oculus\SampleFramework\Usage\SceneManager\Scripts\Spawnable.cs" />
     <Compile Include="Assets\Meen_Project\Scripts\Test\MoveTest.cs" />
     <Compile Include="Assets\Meen_Project\Scripts\QuickSlot.cs" />
+    <Compile Include="Assets\_yusoon\Scripts\Quests\Quest.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Core\Video\Scripts\ButtonDownListener.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Core\SmoothLocomotion.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Extras\CalibratePlayerHeight.cs" />
@@ -352,6 +358,7 @@
     <Compile Include="Assets\BNG Framework\Scripts\Helpers\ControllerOffsetHelper.cs" />
     <Compile Include="Assets\Meen_Project\Scripts\UIController.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Extras\Flashlight.cs" />
+    <Compile Include="Assets\Resources\Quests\QuestSteps\CollectItemStep.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Usage\Passthrough\Scripts\PassthroughBrush.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Usage\SceneManager\Scripts\CustomSceneManager\DynamicSceneManager.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Core\HandsInteraction\Scripts\ColliderZone.cs" />
@@ -410,6 +417,7 @@
     <Compile Include="Assets\Oculus\SampleFramework\Core\Locomotion\Scripts\TeleportInputHandlerTouch.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Usage\SceneManager\Scripts\RequestCaptureFlow.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Core\GrabbablesInTrigger.cs" />
+    <Compile Include="Assets\_yusoon\Scripts\Quests\QuestEvent.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Weapons\AmmoDispenser.cs" />
     <Compile Include="Assets\_yusoon\Scripts\DialogueManager.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Weapons\Bullet.cs" />
@@ -439,6 +447,7 @@
     <Compile Include="Assets\BNG Framework\Scripts\Core\Slider.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Core\PlayerClimbing.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Core\PointerEvents.cs" />
+    <Compile Include="Assets\_yusoon\Scripts\Quests\QuestStepState.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Core\ArmSwingLocomotion.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Components\GrabbableRingHelper.cs" />
     <Compile Include="Assets\Solbin\Scripts\VRIF\Player\VRIFPlayerTeleport.cs" />
@@ -449,13 +458,7 @@
     <Compile Include="Assets\_yusoon\Scripts\SelectParse.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Usage\Passthrough\Scripts\PassthroughStyler.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Usage\SpatialAnchor\Scripts\AnchorUIManager.cs" />
-    <Compile Include="Assets\_yusoon\Scripts\Quests\QuestState.cs" />
-    <Compile Include="Assets\_yusoon\Scripts\Quests\Quest.cs" />
-    <Compile Include="Assets\_yusoon\Scripts\Quests\QuestEvent.cs" />
-    <Compile Include="Assets\_yusoon\Scripts\Quests\QuestPoint.cs" />
-    <Compile Include="Assets\_yusoon\Scripts\Quests\QuestIcon.cs" />
-    <Compile Include="Assets\_yusoon\Scripts\Quests\PlayerEvent.cs" />
-    <Compile Include="Assets\Resources\Quests\MeetNPC\CollectItemStep.cs" />
+    <Compile Include="Assets\_yusoon\Scripts\Talk.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Oculus\SampleFramework\Usage\HandsTrainExample\Shaders\XingLightShader.shader" />

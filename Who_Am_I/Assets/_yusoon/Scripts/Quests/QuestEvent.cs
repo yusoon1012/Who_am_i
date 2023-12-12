@@ -11,12 +11,12 @@ public class QuestEvent
         }
     }
 
-    public event Action<string> onAdvancedQuest;
-    public void AdvancedQuest(string id)
+    public event Action<string> onAdvanceQuest;
+    public void AdvanceQuest(string id)
     {
-        if (onAdvancedQuest != null)
+        if (onAdvanceQuest != null)
         {
-            onAdvancedQuest(id);
+            onAdvanceQuest(id);
         }
     }
 
@@ -37,7 +37,14 @@ public class QuestEvent
             onQuestStateChange(quest);
         }
     }
-
+    public event Action<string,int,QuestStepState> onQuestStepStateChange;
+    public void QuestStepStateChange(string id, int stepIndex, QuestStepState stepState)
+    {
+        if (onQuestStepStateChange != null)
+        {
+            onQuestStepStateChange(id,stepIndex,stepState);
+        }
+    }
     public event Action<int> onQuestIndexChange;
     public void QuestIndexChange(int index_)
     {

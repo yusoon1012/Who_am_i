@@ -4,25 +4,22 @@ using UnityEngine;
 
 public class QuestItem : MonoBehaviour
 {
-    public string questName;
-    public string npcName;
-  
+    [SerializeField] private string itemName;
     private void Start()
     {
-        GameEventManager.instance.miscEvent.onNpcTalked+= TalkNPC;      
+        GameEventManager.instance.miscEvent.onItemCollected += CollectedItem;
     }
+
     private void OnTriggerEnter(Collider other)
     {
-        if(other.tag.Equals("Player"))
+        if(other.CompareTag("Player"))
         {
-
-            GameEventManager.instance.miscEvent.NpcTalked(npcName);
-
-
+            GameEventManager.instance.miscEvent.ItemCollected(itemName);
         }
     }
-    private void TalkNPC(string name)
+    private void CollectedItem(string name)
     {
-        Debug.Log(npcName + "과 대화");
+        Debug.Log(name + "획득");
     }
+
 }

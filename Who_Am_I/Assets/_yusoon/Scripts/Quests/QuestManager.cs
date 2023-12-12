@@ -1,14 +1,20 @@
+using Firebase.Database;
+using Oculus.Interaction.DebugTree;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class QuestManager : MonoBehaviour
 {
     private Dictionary<string, Quest> questMap;
    [SerializeField] private int currentQuestIndex;
+    private int saveQuestIndex = 0;
+    DatabaseReference m_Reference;
     private void Awake()
     {
         questMap = CreateQuestMap();
+        m_Reference = FirebaseDatabase.DefaultInstance.GetReference("users");
         //Quest quest = GetQuestById("MeetNPC");
         //Debug.Log(quest.info.name);
         //Debug.Log(quest.info.id);
@@ -18,17 +24,20 @@ public class QuestManager : MonoBehaviour
     private void OnEnable()
     {
         GameEventManager.instance.questEvent.onStartQuest += StartQuest;
-        GameEventManager.instance.questEvent.onAdvancedQuest += AdvancedQuest;
+        GameEventManager.instance.questEvent.onAdvanceQuest += AdvanceQuest;
         GameEventManager.instance.questEvent.onFinishQuest += FinishQuest;
         GameEventManager.instance.questEvent.onQuestIndexChange += QuestIndexChange;
+        GameEventManager.instance.questEvent.onQuestStepStateChange += QuestStepStateChange;
 
     }
     private void OnDisable()
     {
         GameEventManager.instance.questEvent.onStartQuest -= StartQuest;
-        GameEventManager.instance.questEvent.onAdvancedQuest -= AdvancedQuest;
+        GameEventManager.instance.questEvent.onAdvanceQuest -= AdvanceQuest;
         GameEventManager.instance.questEvent.onFinishQuest -= FinishQuest;
         GameEventManager.instance.questEvent.onQuestIndexChange -= QuestIndexChange;
+        GameEventManager.instance.questEvent.onQuestStepStateChange -= QuestStepStateChange;
+
     }
     private void Start()
     {
@@ -57,7 +66,12 @@ public class QuestManager : MonoBehaviour
     {
         currentQuestIndex = index_;
     }
-
+    private void QuestStepStateChange(string id,int stepIdx,QuestStepState queststepState)
+    {
+        Quest quest = GetQuestById(id);
+        quest.StoreQuestStepState(queststepState, stepIdx);
+        ChangeQuestState(id, quest.state);
+    }
     private bool CheckRequirementsMet(Quest quest)
     {
         bool meetRequirements = true;
@@ -81,7 +95,7 @@ public class QuestManager : MonoBehaviour
         quest.InstantiateCurrentQuestStep(this.transform);
         ChangeQuestState(quest.info.id, QuestState.IN_PROGRESS);
     }
-    private void AdvancedQuest(string id)
+    private void AdvanceQuest(string id)
     {
         Debug.Log("Advanced Quest : " + id);
         Quest quest = GetQuestById(id);
@@ -120,6 +134,7 @@ public class QuestManager : MonoBehaviour
                 Debug.LogWarning("Duplicate ID found when creating quest map : " + questInfo.id);
             }
             idToQuestMap.Add(questInfo.id, new Quest(questInfo));
+            Debug.Log("All Quest ID: " + questInfo.id);
         }
         return idToQuestMap;
     }
@@ -132,6 +147,42 @@ public class QuestManager : MonoBehaviour
         }
         return quest;
     }
+    private void OnApplicationQuit()
+    {
+        saveQuestIndex = questMap.Values.Count-1;
+        foreach(Quest quest in questMap.Values)
+        {
+            SaveQuest(quest, saveQuestIndex);
+            saveQuestIndex--;
+
+
+        }
+    }
+    private void SaveQuest(Quest quest,int questNumber)
+    {
+        try
+        {
+            QuestInfo info = quest.GetQuestInfo();
+            string serializedData = JsonUtility.ToJson(info);
+            m_Reference.Child("Quest").Child(questNumber.ToString()).SetRawJsonValueAsync(serializedData).ContinueWith(task =>
+            {
+                if(task.IsFaulted)
+                {
+                    Debug.Log(serializedData + "전송실패");
+
+                }
+                else if (task.IsCompleted)
+                {
+                    Debug.Log(serializedData + "전송완료");
+                }
+            });
+        }
+        catch(System.Exception e)
+        {
+            Debug.LogWarning("Failed to save quest with id  " + quest.info.id + ":" + e);
+        }
+    }
+    
     #region legacy
     //private static QuestManager instance;
     //public static QuestManager Instance { get { return instance; } }
@@ -202,7 +253,7 @@ public class QuestManager : MonoBehaviour
     //}
     //public bool IsTargetNpc(string npcName)
     //{
-        
+
     //    // 특정 NPC인지 확인하는 로직을 추가 (예: 미리 지정된 NPC 이름들과 비교)
     //    // 예시로 "NPC1", "NPC2", "NPC3"이라는 NPC를 타겟으로 설정
     //    return npcName.Equals("NPC1") || npcName.Equals("NPC2") || npcName.Equals("NPC3");

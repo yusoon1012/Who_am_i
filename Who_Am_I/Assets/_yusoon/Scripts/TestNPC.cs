@@ -45,7 +45,7 @@ public class TestNPC : MonoBehaviour
     {
         
         GameEventManager.instance.questLoadEvent.onQuestLoaded += QuestListUpdate;
-        GameEventManager.instance.miscEvent.onItemCollected += AddQuestItem;
+       
 
     }
 

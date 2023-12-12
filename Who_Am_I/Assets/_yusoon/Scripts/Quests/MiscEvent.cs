@@ -2,14 +2,14 @@ using System;
 
 public class MiscEvent
 {
-    public event Action onItemCollected;
+    public event Action<string> onItemCollected;
     public event Action<string> onNpcTalked;
     public event Action<string> onClearbleQuest;
-    public void ItemCollected()
+    public void ItemCollected(string item)
     {
         if(onItemCollected != null) 
         {
-            onItemCollected();
+            onItemCollected(item);
         }
     }
     public void NpcTalked(string name)
@@ -29,4 +29,5 @@ public class MiscEvent
            
         }
     }
+    
 }

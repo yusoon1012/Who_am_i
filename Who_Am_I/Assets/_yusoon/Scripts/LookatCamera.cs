@@ -12,7 +12,7 @@ public class LookatCamera : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         // Get the vector from this object to the camera
         Vector3 lookDir = transform.position - m_Camera.transform.position;

@@ -10,7 +10,7 @@ public class DialogueManager : MonoBehaviour
 
     Dictionary<int, Dialogue> dialogueDict = new Dictionary<int, Dialogue>();
     public static bool isFinish = false;
-
+    
     private void Awake()
     {
         if(instance==null)
