@@ -23,6 +23,10 @@ public class VRIFInputSystem : MonoBehaviour
     public event EventHandler interaction;
     public event EventHandler uiClick;
 
+    [Tooltip("양쪽 컨트롤러")]
+    public Transform lController;
+    public Transform rController;
+
     [Tooltip("컨트롤러 입력값")]
     // 왼쪽 컨트롤러 Velocity
     public Vector3 lVelocity { get; private set; }

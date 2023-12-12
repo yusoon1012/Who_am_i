@@ -76,7 +76,6 @@ namespace BNG {
         }
 
         public void OnPoseChanged() {
-
             // Allow pose to change animation
             editorAnimationTime = 0;
             doSingleAnimation = true;

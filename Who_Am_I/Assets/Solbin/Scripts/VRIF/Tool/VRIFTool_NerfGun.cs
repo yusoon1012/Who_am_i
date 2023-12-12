@@ -74,13 +74,16 @@ public class VRIFTool_NerfGun : MonoBehaviour
 
         if (Physics.Raycast(ray, out hit, distance)) // 총구가 물체를 향하고 있을때
         {
-            pointer.position = hit.point;
-            trajectoryPos[1] = pointer.position;
-
-            if (vrifAction.Player.RightTrigger.triggered || testAction.Test.Click.triggered)
+            if (!hit.collider.isTrigger) // 실체를 가지고 있을 때 
             {
-                GameObject prey = hit.transform.gameObject;
-                Shoot(prey);
+                pointer.position = hit.point;
+                trajectoryPos[1] = pointer.position;
+
+                if (vrifAction.Player.RightTrigger.triggered || testAction.Test.Click.triggered)
+                {
+                    GameObject prey = hit.transform.gameObject;
+                    Shoot(prey);
+                }
             }
         }
         else // 총구가 허공을 향하고

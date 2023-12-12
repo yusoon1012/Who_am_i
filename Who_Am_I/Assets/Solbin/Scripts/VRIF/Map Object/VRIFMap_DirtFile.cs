@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class VRIFMap_DirtFile : MonoBehaviour
 {
-    private int destroyCount = 3;
+    private int destroyCount = 2;
 
     public void AddDestroy() 
     {

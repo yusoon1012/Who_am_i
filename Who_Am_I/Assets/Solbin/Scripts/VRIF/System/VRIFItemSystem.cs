@@ -19,6 +19,8 @@ public class VRIFItemSystem : MonoBehaviour
     // (장착) 삽
     [SerializeField] private GameObject shavel = default;
     // (장착) 낚시대
+    [SerializeField] private GameObject ladder = default;
+    // (장착) 낚시대
     [SerializeField] private GameObject fishingRod = default;
     // (장착) 곤충 채집망
     [SerializeField] private GameObject dragonflyNet = default;
@@ -114,6 +116,14 @@ public class VRIFItemSystem : MonoBehaviour
                 }
                 else { ReleaseItem("Shavel"); }
                 break;
+
+            case "Ladder":
+                if (!ladder.activeSelf)
+                {
+                    MountingItem("Ladder");
+                }
+                else { ReleaseItem("Ladder"); }
+                break;
         }
     }
 
@@ -134,6 +144,9 @@ public class VRIFItemSystem : MonoBehaviour
                 break;
             case "Shavel":
                 item = shavel;
+                break;
+            case "Ladder":
+                item = ladder;
                 break;
             case "FishingRod":
                 item = fishingRod;
