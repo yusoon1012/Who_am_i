@@ -59,6 +59,7 @@
   <ItemGroup>
     <Compile Include="Assets\Oculus\SampleFramework\Core\Locomotion\Scripts\TeleportAimHandlerParabolic.cs" />
     <Compile Include="Assets\_yusoon\Scripts\Quests\QuestNPC.cs" />
+    <Compile Include="Assets\_PJO\Scripts\ThisAnimalAI.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Usage\Firebase\StartCrashlytics.cs" />
     <Compile Include="Assets\Solbin\Input System\Oculus\Player Action.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Core\TrackedDevice.cs" />
@@ -159,6 +160,7 @@
     <Compile Include="Assets\BNG Framework\Scripts\Extras\Explosive.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Extras\HandModelSwitcher.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Usage\HandsTrainExample\Scripts\WindmillController.cs" />
+    <Compile Include="Assets\_PJO\Scripts\ThisAnimalData.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Helpers\StaticBatch.cs" />
     <Compile Include="Assets\Meen_Project\Scripts\Test\ZoneTest.cs" />
     <Compile Include="Assets\Meen_Project\Scripts\ItemCrafting.cs" />
@@ -448,8 +450,6 @@
     <Compile Include="Assets\_yusoon\Scripts\SelectParse.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Usage\Passthrough\Scripts\PassthroughStyler.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Usage\SpatialAnchor\Scripts\AnchorUIManager.cs" />
-    <Compile Include="Assets\_PJO\Scripts\ThisAnimalAI.cs" />
-    <Compile Include="Assets\_PJO\Scripts\ThisAnimalData.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Oculus\SampleFramework\Usage\HandsTrainExample\Shaders\XingLightShader.shader" />
