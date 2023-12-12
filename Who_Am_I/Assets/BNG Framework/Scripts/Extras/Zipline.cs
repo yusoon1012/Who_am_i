@@ -11,12 +11,21 @@ namespace BNG {
 
         public Transform ZiplineStart;
         public Transform ZiplineEnd;
-        public float ZiplineSpeed = 1;
         public bool UseLinearMovement = true;
+
+        [Header("짚라인 출발 속도")]
+        public float ZiplineSpeed = 1;
 
         float lastMoveTime = -1f;
         bool movingForward = true;
         AudioSource audioSource;
+
+        // <Solbin> 짚라인 이동 bool값  
+        private bool move = false;
+        // <Solbin> 짚라인 원래 위치
+        private Vector3 originPos = default;
+        // <Solbin> 짚라인 원래 출발속도 
+        private float originZiplineSpeed = default;
 
         void Start() {
             // Start off by orienting the zipline holder
@@ -25,6 +34,11 @@ namespace BNG {
             }
 
             audioSource = GetComponent<AudioSource>();
+
+            // <Solbin>
+            originPos = transform.position;
+            originZiplineSpeed = ZiplineSpeed;
+            // <Solbin> ===
         }
 
         void Update() {           
@@ -48,6 +62,8 @@ namespace BNG {
             else if(audioSource.isPlaying) {
                 audioSource.Stop();
             }
+
+            ShakingController();
         }
 
         void OnDrawGizmosSelected() {
@@ -75,9 +91,9 @@ namespace BNG {
 
             base.OnButton1();
         }
-        public override void OnButton2() {
-
-            // <Solbin> B 버튼
+        public override void OnButton2()
+        {
+            // <Solbin> B 버튼 => 원 에셋은 해당 버튼을 누르면 앞으로 나아간다.
             moveTowards(ZiplineEnd.position, true);
 
             base.OnButton2();
@@ -85,15 +101,71 @@ namespace BNG {
 
         // <Solbin>
         /// <summary>
-        /// 가속력 구현을 위한 메소드 
+        /// 컨트롤러를 흔들면 앞으로 나아가도록 한다. (아래로) 
         /// </summary>
-        private void AccelerationForce()
+        private void ShakingController()
         {
-            // TODO: 가속력 구현 
+            // 컨트롤러를 아래로 흔들면 (가속력 구분)
+            if (VRIFInputSystem.Instance.lVelocity.y <= -0.5f || VRIFInputSystem.Instance.rVelocity.y <= -0.5f)
+            {
+                move = true;
+
+                StartCoroutine(AccelerationForce()); // 가속력 코루틴
+            }
+            else if (VRIFInputSystem.Instance.lVelocity.y <= -0.75f || VRIFInputSystem.Instance.rVelocity.y <= -0.75f)
+            {
+                move = true;
+                ZiplineSpeed += 3;
+
+                StartCoroutine(AccelerationForce()); // 가속력 코루틴
+            }
+
+            if (move) // 이동 bool값일때
+            {
+                moveTowards(ZiplineEnd.position, true);
+
+                if (Vector3.Distance(transform.position, ZiplineEnd.position) <= 0.1f ||
+                    VRIFStateSystem.Instance.gameState != VRIFStateSystem.GameState.ZIPLINE) // 끝에 도달했거나 짚라인 상태가 아니면 
+                {
+                    move = false;
+                    StartCoroutine(ResetPosition());
+                }
+            }
+        }
+
+        /// <summary>
+        /// 짚라인을 재위치로 이동시키는 메소드 
+        /// </summary>
+        private IEnumerator ResetPosition()
+        {
+            yield return new WaitForSeconds(60); // 60초 뒤 
+
+            transform.position = originPos; // 원 위치로 이동 
+        }
+
+        /// <summary>
+        /// 가속력 구현을 위한 코루틴
+        /// </summary>
+        private IEnumerator AccelerationForce()
+        {
+            while(move) // 짚라인이 움직이는 동안
+            {
+                yield return new WaitForSeconds(2.5f);
+
+                ZiplineSpeed += 1;
+
+                if (!move) { break; }
+            }
+
+            ZiplineSpeed = originZiplineSpeed;
         }
         // <Solbin> ===
 
-        // <Solbin> 앞으로 진행을 위해 실행되는 메소드 
+        /// <summary>
+        /// 전진 메소드
+        /// </summary>
+        /// <param name="pos">ZiplineEnd.position</param>
+        /// <param name="forwardDirection">전진 여부</param>
         void moveTowards(Vector3 pos, bool forwardDirection) {
 
             lastMoveTime = Time.time;

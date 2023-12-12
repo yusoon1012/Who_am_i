@@ -686,10 +686,9 @@ namespace BNG {
             {
                 if (other.transform.parent.GetComponent<VRIFMap_ZipLine>() != null) // 짚라인이면 
                 {
-                    return;
+                    VRIFStateSystem.Instance.ChangeState(VRIFStateSystem.GameState.ZIPLINE);
                 }
-
-                if (other.transform.parent.parent.GetComponent<VRIFTool_Ladder>() != null) // 접촉한 등반 물체 최상위 오브젝트가 사다리 
+                else if (other.transform.parent.parent.GetComponent<VRIFTool_Ladder>() != null) // 접촉한 등반 물체 최상위 오브젝트가 사다리 
                 {
                     VRIFStateSystem.Instance.ChangeState(VRIFStateSystem.GameState.LADDER);
                 }

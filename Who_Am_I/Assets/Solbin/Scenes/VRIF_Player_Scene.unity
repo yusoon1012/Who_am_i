@@ -4319,7 +4319,7 @@ PrefabInstance:
     - target: {fileID: 4875892505466408128, guid: 13049a06e1e88ab42b7949927a970b75,
         type: 3}
       propertyPath: ZiplineSpeed
-      value: 15
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 4875892505466408128, guid: 13049a06e1e88ab42b7949927a970b75,
         type: 3}
@@ -12524,8 +12524,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ZiplineStart: {fileID: 571299758}
   ZiplineEnd: {fileID: 1129153340}
-  ZiplineSpeed: 2
   UseLinearMovement: 1
+  ZiplineSpeed: 2
 --- !u!114 &964386837
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23955,8 +23955,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ZiplineStart: {fileID: 571299758}
   ZiplineEnd: {fileID: 1129153340}
-  ZiplineSpeed: 2
   UseLinearMovement: 1
+  ZiplineSpeed: 2
 --- !u!114 &1694230626
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -71650,7 +71650,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2683195716079164338}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 17.15, z: 6.494}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
