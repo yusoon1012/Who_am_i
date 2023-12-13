@@ -10,10 +10,15 @@ public class VRIFPlayerLadder : MonoBehaviour
     [Header("사다리 아이템")]
     [SerializeField] private Transform ladderItem = default;
 
+    [Header("플레이어")]
+    [SerializeField] private Transform playerController = default;
+
     // 나무 근방에 있음을 나타냄
     private bool triggerStay = false;
     // 오브젝트 풀
     private Vector3 poolPos = new Vector3(0, -10, 0);
+    // 사다리가 활성화 중
+    private bool activeLadder = false;
 
     private void Start()
     {
@@ -43,17 +48,13 @@ public class VRIFPlayerLadder : MonoBehaviour
         Ray ray = new Ray(VRIFInputSystem.Instance.rController.position, VRIFInputSystem.Instance.rController.forward);
         RaycastHit hit;
 
-        Debug.DrawRay(VRIFInputSystem.Instance.rController.position, VRIFInputSystem.Instance.rController.forward, Color.green);
-
-        if (Physics.Raycast(ray, out hit, LayerMask.NameToLayer("Floor"))) // 바닥을 향하고 있을 떄 
+        if (Physics.Raycast(ray, out hit)) // 바닥을 향하고 있을 떄 
         {
-            if (Vector3.Distance(_tree.transform.position, hit.point) <= 3)
+            if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Floor") && !activeLadder) // 사다리가 비활성화 중일때
             {
-                ladderPointer.transform.position = hit.point;
-                //Vector3 rotation = VRIFInputSystem.Instance.rController.rotation;
-                //rotation = new Vector3 (0, rotation.y, 0);
-                //ladderPointer.rotation = rotation;
+                ladderPointer.position = hit.point;
 
+                ladderPointer.LookAt(playerController);
             }
         }
     }
@@ -63,7 +64,13 @@ public class VRIFPlayerLadder : MonoBehaviour
         if (triggerStay)
         {
             ladderItem.position = ladderPointer.position;
-            ladderPointer.position = poolPos;
+            ladderItem.rotation = ladderPointer.rotation;
+            ladderPointer.transform.position = poolPos;
+
+            activeLadder = true;
         }
     }
+        
+    // TODO: 설치된 사다리 앞에서 Y키를 누르면 사다리는 인벤토리로 회수
+    // TODO: PC가 설치한 사다리 앞에서 20이상 떨어진 후 10초가 넘으면 사다리는 인벤토리로 회수 
 }
