@@ -9,11 +9,13 @@ namespace BNG {
     public class HandPoser : MonoBehaviour {
         public bool ShowGizmos = true;
 
+        // <Solbin> HandPose는 Resources 폴더 안에 보관되어야 한다. 
         [Tooltip("Path of the directory where handposes should be stored. Tip : Keep these in a 'Resources' directory so you can use Resources.Load().")]
         public string ResourcePath = "Assets/BNG Framework/HandPoser/Poses/Resources/";
 
         public string PoseName = "Default";
 
+        // <Solbin> Update 내에서 포즈를 자동 업데이트 하려면 변경
         [Tooltip("The currently selected hand pose. Change this to automatically update the pose in Update")]
         public HandPose CurrentPose;
 
@@ -21,12 +23,15 @@ namespace BNG {
         [Tooltip("The speed at which to lerp the bones when changing hand poses")]
         public float AnimationSpeed = 15f;
 
+        // <Solbin> 아래 사항이 참일 경우 손가락 관절의 회전이 업데이트 된다. 
         [Tooltip("If true the local rotation of each bone will be updated while changing hand poses. This should generally be true if you are adjusting a hand pose.")]
         public bool UpdateJointRotations = true;
 
+        // <Solbin> 아래 사항이 참일 경우 손가락 관절의 위치가 업데이트 된다. 
         [Tooltip("If true the local position of each bone will be updated while changing hand poses. Typically this will be false as joints only adjust their rotations.")]
         public bool UpdateJointPositions = false;
 
+        // <Solbin> 아래 사항이 참일 경우 손목 위치가 업데이트 된다. 
         [Tooltip("If true the local position of the wrist will be updated. Useful if you need to move the entire hand.")]
         public bool UpdateWristPosition = true;
 
@@ -52,6 +57,7 @@ namespace BNG {
         public bool ContinuousUpdate = false;
 
         void Start() {
+            // <Solbin> 애니메이션 변경을 위한 트리고
             // Trigger a pose change to start the animation
             OnPoseChanged();
         }
@@ -115,6 +121,7 @@ namespace BNG {
                 return 0;
             }
 
+            // <Solbin> 모든 관절의 개수를 더한다. 
             return ThumbJoints.Count + IndexJoints.Count + MiddleJoints.Count + RingJoints.Count + PinkyJoints.Count + OtherJoints.Count + (WristJoint != null ? 1 : 0);
         }
 
@@ -188,6 +195,7 @@ namespace BNG {
             UpdateHandPose(handPose.Joints, lerp);
         }
 
+        // <Solbin> 아래 메소드에서 관절 업데이트
         public virtual void UpdateHandPose(HandPoseDefinition pose, bool lerp) {
             UpdateJoint(pose.WristJoint, WristJoint, lerp, UpdateWristPosition, UpdateJointRotations);
             UpdateJoints(pose.ThumbJoints, ThumbJoints, lerp);
@@ -198,6 +206,7 @@ namespace BNG {
             UpdateJoints(pose.OtherJoints, OtherJoints, lerp);
         }
 
+        // <Solbin> 손목 업데이트
         public virtual void UpdateJoint(FingerJoint fromJoint, Transform toTransform, bool doLerp, bool updatePosition, bool updateRotation) {
             UpdateJoint(fromJoint, toTransform, doLerp ? Time.deltaTime * AnimationSpeed : 1, updatePosition, updateRotation);
         }
@@ -229,14 +238,18 @@ namespace BNG {
             }
         }
 
+        // <Solbin> 손가락 움직임 업데이트
         public virtual void UpdateJoints(List<FingerJoint> joints, List<Transform> toTransforms, bool doLerp) {
             UpdateJoints(joints, toTransforms, doLerp ? Time.deltaTime * AnimationSpeed : 1);
         }
 
+        // <Solbin> HandPoseBlender에서 인자를 받아온다.
+        // 예시: handPoser.UpdateJoints(Pose2.Joints.IndexJoints, handPoser.IndexJoints, amount);
         public virtual void UpdateJoints(List<FingerJoint> joints, List<Transform> toTransforms, float lerpAmount) {
 
+            // <Solbin> 손가락 유효 체크
             // Sanity check
-            if (joints == null || toTransforms == null) {
+            if (joints == null || toTransforms == null) { 
                 return;
             }
 
@@ -244,6 +257,7 @@ namespace BNG {
             int jointCount = joints.Count;
             int transformsCount = toTransforms.Count;
 
+            // <Solbin> 관절이 제대로 배치되었는지, 이름은 일치하는지 확인하기
             // If our joint counts don't add up, then make sure the names match before applying any changes
             // Otherwise there is a good chance the wwrong transforms are being updated
             bool verifyTransformName = jointCount != transformsCount;

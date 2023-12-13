@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,18 +6,24 @@ using UnityEngine;
 namespace BNG {
     public class HandPoseBlender : MonoBehaviour {
 
+        // <Solbin> 아랫값이 참이면 입력값을 읽는다. 
         [Header("Run in Update")]
         [Tooltip("If true the HandPoser will be updated in Update by reading ThumbValue, IndexValue, and GripValue")]
         public bool UpdatePose = true;
 
+        /// <Point> 다른 아바타와 Rig가 적용된 3D 손모델을 적용했을때 움직임이 적용되지 않는 문제가 있는데, 아래 Pose1과 Pose2의 세팅이 잘못되었기 때문이다.
+        /// 새로 세팅한 Rig를 적용한 HandPose를 지정해주어야 한다.
+
+        // <Solbin> 아래 Pose1에서 Pose2로 혼합된다. 
         [Header("Blend From / To")]
         [Tooltip("(Required) Blend from this hand pose to the Pose2 hand pose.")]
-        public HandPose Pose1;
+        public HandPose Pose1; 
 
+        // <Solbin> 아래 Pose2에 Pose1을 혼합한다. 
         [Tooltip("(Required) Blend from the Pose1 hand pose to this hand pose.")]
         public HandPose Pose2;
 
-        [Header("Inputs")]
+        [Header("Inputs")] // <Solbin> Rig만 짜여진 새로운 3D 손모델 삽입시에도 입력은 받는 것을 확인했다. (문제: 새로 Rig를 배치해도 적용되지 않는다.)
         [Range(0, 1)]
         public float ThumbValue = 0f;
 
@@ -93,8 +99,7 @@ namespace BNG {
             _lastGripValue = amount;
         }
 
-
-
+        // <Solbin> 입력값에 따라 손 포즈를 바꾼다. 
         public virtual void DoIdleBlendPose() {
             if (Pose1) {
                 // Start at idle
