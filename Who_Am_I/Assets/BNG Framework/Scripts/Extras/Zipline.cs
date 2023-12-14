@@ -16,6 +16,9 @@ namespace BNG {
         [Header("짚라인 출발 속도")]
         public float ZiplineSpeed = 1;
 
+        [Header("짚라인 최대 속도")]
+        public float ZipLineMaxSpeed = default;
+
         float lastMoveTime = -1f;
         bool movingForward = true;
         AudioSource audioSource;
@@ -150,7 +153,7 @@ namespace BNG {
         {
             while(move) // 짚라인이 움직이는 동안
             {
-                yield return new WaitForSeconds(2.5f);
+                yield return new WaitForSeconds(1.5f);
 
                 ZiplineSpeed += 1;
 

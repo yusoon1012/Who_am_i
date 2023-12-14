@@ -94,6 +94,10 @@ namespace BNG
                     ClimbingState();
                     break;
 
+                case GameState.LADDER:
+                    LadderState();
+                    break;
+
                 case GameState.UI: // UI 상태 
                     UIState();
                     break;
@@ -161,6 +165,17 @@ namespace BNG
         }
 
         /// <summary>
+        /// 사다리 상태
+        /// </summary>
+        private void LadderState()
+        {
+            gameState = GameState.LADDER;
+
+            quickSlot.enabled = false;
+            uiController.enabled = false;
+        }
+
+        /// <summary>
         /// 등반 상태 
         /// </summary>
         private void ClimbingState()
@@ -193,7 +208,7 @@ namespace BNG
         {
             gameState = GameState.ZIPLINE;
 
-            VRIFItemSystem.Instance.ReleaseAllItem(); // 모든 아이템 장착 해제 
+            VRIFItemSystem.Instance.ReleaseItem(); // 모든 아이템 장착 해제 
 
             quickSlot.enabled = false;
             uiController.enabled = false;

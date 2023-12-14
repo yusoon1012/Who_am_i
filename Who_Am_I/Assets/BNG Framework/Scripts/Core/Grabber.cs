@@ -694,7 +694,7 @@ namespace BNG {
                 }
                 else // 일반 등반 물체면 
                 {
-                    if (!oneGrabCheck)
+                    if (!oneGrabCheck) // 등반 각도 전환을 한 번만 실행하기 위함. 
                     {
                         oneGrabCheck = true;
                         VRIFPlayerClimbingHelper.Instance.SetAnchor(other.gameObject);

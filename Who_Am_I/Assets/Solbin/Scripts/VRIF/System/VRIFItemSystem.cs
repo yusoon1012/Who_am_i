@@ -13,7 +13,7 @@ public class VRIFItemSystem : MonoBehaviour
     // 아이템 이름 - 아이템 오브젝트 딕셔너리
     private Dictionary<string, GameObject> mountingItem = default;
 
-    [Header("Items")]
+    [Header("장착 아이템")]
     // (장착) 너프건 
     [SerializeField] private GameObject nerfGun = default;
     // (장착) 삽
@@ -26,6 +26,18 @@ public class VRIFItemSystem : MonoBehaviour
     [SerializeField] private GameObject dragonflyNet = default;
     // LEGACY: (장착) 새총
     //[SerializeField] private GameObject slingShot = default;
+
+    public enum ItemType
+    {
+        NONE,
+        NERFGUN,
+        SHAVEL,
+        LADDER,
+        FISHINGROD,
+        DRAGONFLYNET    
+    }
+
+    public ItemType itemType;
 
     // TestAction
     private TestAction testAction = default;
@@ -56,6 +68,7 @@ public class VRIFItemSystem : MonoBehaviour
     {
         nerfGun.SetActive(false);
         shavel.SetActive(false);
+        ladder.SetActive(false);
         fishingRod.SetActive(false);
         dragonflyNet.SetActive(false);
     }
@@ -80,6 +93,7 @@ public class VRIFItemSystem : MonoBehaviour
 
         mountingItem["NerfGun"] = nerfGun;
         mountingItem["Shavel"] = shavel;
+        mountingItem["Ladder"] = ladder;
         mountingItem["FishingRod"] = fishingRod;
         mountingItem["DragonflyNet"] = dragonflyNet;
     }
@@ -93,7 +107,7 @@ public class VRIFItemSystem : MonoBehaviour
             {
                 MountingItem("NerfGun");
             }
-            else { ReleaseItem("NerfGun"); }
+            else { ReleaseItem(); }
         }
     }
 
@@ -106,7 +120,7 @@ public class VRIFItemSystem : MonoBehaviour
                 {
                     MountingItem("NerfGun");
                 }
-                else { ReleaseItem("NerfGun"); }
+                else { ReleaseItem(); }
                 break;
 
             case "Shavel":
@@ -114,7 +128,7 @@ public class VRIFItemSystem : MonoBehaviour
                 {
                     MountingItem("Shavel");
                 }
-                else { ReleaseItem("Shavel"); }
+                else { ReleaseItem(); }
                 break;
 
             case "Ladder":
@@ -122,7 +136,7 @@ public class VRIFItemSystem : MonoBehaviour
                 {
                     MountingItem("Ladder");
                 }
-                else { ReleaseItem("Ladder"); }
+                else { ReleaseItem(); }
                 break;
         }
     }
@@ -141,18 +155,23 @@ public class VRIFItemSystem : MonoBehaviour
         {
             case "NerfGun":
                 item = nerfGun;
+                itemType = ItemType.NERFGUN;
                 break;
             case "Shavel":
                 item = shavel;
+                itemType = ItemType.SHAVEL;
                 break;
             case "Ladder":
                 item = ladder;
+                itemType = ItemType.LADDER;
                 break;
             case "FishingRod":
                 item = fishingRod;
+                itemType = ItemType.FISHINGROD;
                 break;
             case "DragonflyNet":
                 item = dragonflyNet;
+                itemType = ItemType.DRAGONFLYNET;
                 break;
             default:
                 Debug.LogError("<Solbin> Item Error");
@@ -171,41 +190,15 @@ public class VRIFItemSystem : MonoBehaviour
     /// <summary>
     /// 플레이어가 아이템 장착을 해제하는 메소드
     /// </summary>
-    /// <param name="_item">해제할 아이템</param>
-    public void ReleaseItem(string _name)
-    {
-        string name = _name;
-        GameObject item = default;
-
-        switch (name)
-        {
-            case "NerfGun":
-                item = nerfGun;
-                break;
-            case "Shavel":
-                item = shavel;
-                break;
-            case "FishingRod":
-                item = fishingRod;
-                break;
-            case "DragonflyNet":
-                item = dragonflyNet;
-                break;
-            default:
-                Debug.LogError("<Solbin> Item Error");
-                break;
-        }
-
-        item.SetActive(false);
-    }
-
-    public void ReleaseAllItem()
+    public void ReleaseItem()
     {
         foreach (var _item in mountingItem)
         {
             GameObject item = _item.Value;
             item.SetActive(false);
         }
+
+        itemType = ItemType.NONE; // 아이템 미장착 상태 
     }
     #endregion
 }
