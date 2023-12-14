@@ -138,6 +138,14 @@ public class VRIFItemSystem : MonoBehaviour
                 }
                 else { ReleaseItem(); }
                 break;
+
+            case "DragonflyNet":
+                if (!dragonflyNet.activeSelf)
+                {
+                    MountingItem("DragonflyNet");
+                }
+                else { ReleaseItem(); }
+                break;
         }
     }
 
