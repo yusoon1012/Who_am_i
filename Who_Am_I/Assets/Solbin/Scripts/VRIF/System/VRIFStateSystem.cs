@@ -120,6 +120,8 @@ namespace BNG
         /// </summary>
         private void NormalState()
         {
+            VRIFItemSystem.Instance.ReleaseItem();
+
             gameState = GameState.NORMAL;
 
             locomotionManager.enabled = true; // 이동 활성화

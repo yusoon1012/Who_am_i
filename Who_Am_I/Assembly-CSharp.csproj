@@ -151,6 +151,8 @@
     <Compile Include="Assets\BNG Framework\Scripts\Extras\MovingPlatform.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Usage\TouchPro\Scripts\Ui\UiDeviceInspector.cs" />
     <Compile Include="Assets\Solbin\Scripts\VRIF\Player\Player Range\VRIFPlayerCrafting.cs" />
+    <Compile Include="Assets\Solbin\Scripts\VRIF\Tool\Dragonfly Net\VRIFTool_DragonflyOrigin.cs" />
+    <Compile Include="Assets\Solbin\Scripts\VRIF\Tool\Dragonfly Net\VRIFTool_DragonflyDir.cs" />
     <Compile Include="Assets\Meen_Project\Scripts\CamRotate.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Extras\ExtensionMethods.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Usage\TouchPro\Scripts\Ui\UiAxis2dInspector.cs" />
@@ -260,6 +262,7 @@
     <Compile Include="Assets\BNG Framework\Scripts\UI\VRKeyboardKey.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Core\SnapZoneScale.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Usage\SceneManager\Scripts\BouncingBallMgr.cs" />
+    <Compile Include="Assets\Solbin\Scripts\VRIF\Tool\Dragonfly Net\VRIFTool_DragonflyRestricted.cs" />
     <Compile Include="Assets\_PJO\Scripts\SaveMesh.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Helpers\JointHelper.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Extras\FPSText.cs" />
@@ -373,6 +376,7 @@
     <Compile Include="Assets\Oculus\SampleFramework\Core\DebugUI\Scripts\LaserPointer.cs" />
     <Compile Include="Assets\_PJO\Scripts\AnimalsData.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Usage\AppDeeplink\AppDeeplinkUI.cs" />
+    <Compile Include="Assets\Solbin\Scripts\VRIF\Tool\Dragonfly Net\VRIFTool_DragonflyNet.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Usage\SceneManager\Scripts\MyCustomSceneModelLoader.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Usage\TouchPro\Scripts\SceneSettings.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Core\HandsInteraction\Scripts\ButtonTriggerZone.cs" />
@@ -461,10 +465,7 @@
     <Compile Include="Assets\_yusoon\Scripts\SelectParse.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Usage\Passthrough\Scripts\PassthroughStyler.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Usage\SpatialAnchor\Scripts\AnchorUIManager.cs" />
-    <Compile Include="Assets\Solbin\Scripts\VRIF\Tool\Dragonfly Net\VRIFTool_DragonflyNet.cs" />
-    <Compile Include="Assets\Solbin\Scripts\VRIF\Tool\Dragonfly Net\VRIFTool_DragonflyDir.cs" />
-    <Compile Include="Assets\Solbin\Scripts\VRIF\Tool\Dragonfly Net\VRIFTool_DragonflyOrigin.cs" />
-    <Compile Include="Assets\Solbin\Scripts\VRIF\Tool\Dragonfly Net\VRIFTool_DragonflyRestricted.cs" />
+    <Compile Include="Assets\Scifi-Gun\ReadMe.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Oculus\SampleFramework\Usage\HandsTrainExample\Shaders\XingLightShader.shader" />

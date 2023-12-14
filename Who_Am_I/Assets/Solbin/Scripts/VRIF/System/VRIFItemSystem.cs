@@ -13,11 +13,14 @@ public class VRIFItemSystem : MonoBehaviour
     // 아이템 이름 - 아이템 오브젝트 딕셔너리
     private Dictionary<string, GameObject> mountingItem = default;
 
+    [Header("움직임 적용 손 모델")]
+    [SerializeField] private GameObject modelsRight = default;
+
     [Header("장착 아이템")]
     // (장착) 너프건 
     [SerializeField] private GameObject nerfGun = default;
     // (장착) 삽
-    [SerializeField] private GameObject shavel = default;
+    [SerializeField] private GameObject shovel = default;
     // (장착) 낚시대
     [SerializeField] private GameObject ladder = default;
     // (장착) 낚시대
@@ -31,7 +34,7 @@ public class VRIFItemSystem : MonoBehaviour
     {
         NONE,
         NERFGUN,
-        SHAVEL,
+        SHOVEL,
         LADDER,
         FISHINGROD,
         DRAGONFLYNET    
@@ -67,7 +70,7 @@ public class VRIFItemSystem : MonoBehaviour
     private void Setting()
     {
         nerfGun.SetActive(false);
-        shavel.SetActive(false);
+        shovel.SetActive(false);
         ladder.SetActive(false);
         fishingRod.SetActive(false);
         dragonflyNet.SetActive(false);
@@ -87,12 +90,12 @@ public class VRIFItemSystem : MonoBehaviour
     /// <summary>
     /// 딕셔너리 세팅
     /// </summary>
-    private void DicSetting()
+    private void DicSetting() // TODO: 굳이 딕셔너리를 사용해야 할 필요가 없어 보인다. 배열로 변경 요망.
     {
         mountingItem = new Dictionary<string, GameObject>();
 
         mountingItem["NerfGun"] = nerfGun;
-        mountingItem["Shavel"] = shavel;
+        mountingItem["Shovel"] = shovel;
         mountingItem["Ladder"] = ladder;
         mountingItem["FishingRod"] = fishingRod;
         mountingItem["DragonflyNet"] = dragonflyNet;
@@ -123,10 +126,10 @@ public class VRIFItemSystem : MonoBehaviour
                 else { ReleaseItem(); }
                 break;
 
-            case "Shavel":
-                if (!shavel.activeSelf)
+            case "Shovel":
+                if (!shovel.activeSelf)
                 {
-                    MountingItem("Shavel");
+                    MountingItem("Shovel");
                 }
                 else { ReleaseItem(); }
                 break;
@@ -165,9 +168,9 @@ public class VRIFItemSystem : MonoBehaviour
                 item = nerfGun;
                 itemType = ItemType.NERFGUN;
                 break;
-            case "Shavel":
-                item = shavel;
-                itemType = ItemType.SHAVEL;
+            case "Shovel":
+                item = shovel;
+                itemType = ItemType.SHOVEL;
                 break;
             case "Ladder":
                 item = ladder;
@@ -192,6 +195,8 @@ public class VRIFItemSystem : MonoBehaviour
             myItem.SetActive(false);
         }
 
+        modelsRight.SetActive(false); // 기존 손 모델 OFF
+
         item.SetActive(true); // 지정 아이템만 활성화
     }
 
@@ -206,7 +211,15 @@ public class VRIFItemSystem : MonoBehaviour
             item.SetActive(false);
         }
 
+        modelsRight.SetActive(true); // 기존 손 모델 ON
+
         itemType = ItemType.NONE; // 아이템 미장착 상태 
     }
     #endregion
 }
+
+/// <Point> 아이템을 장착한 상태로 UI를 ON/OFF하면 오류가 발생하기 때문에 임시방편 조치로
+/// NORMAL 상태로 돌아가기 전 모든 아이템을 손에서 놓도록 했다. 
+/// 이후 아이템 장착 상태를 임시로 저장해놨다가 다시 NORMAL 상태 전환 이후 다시 활성화시키는 코드 작성 요망.
+
+// TODO: 위 문제 수리하기
