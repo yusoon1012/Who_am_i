@@ -41,5 +41,10 @@ public class MeetNPCStep : QuestStep
         string state = npcTalkCount.ToString();
         ChangeState(state);
     }
+    protected override void SetQuestStepState(string state)
+    {
+        this.npcTalkCount=System.Int32.Parse(state);
+        UpdateState();
+    }
 
 }

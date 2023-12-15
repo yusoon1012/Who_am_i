@@ -1,4 +1,5 @@
 using Firebase.Database;
+using Firebase.Extensions;
 using Oculus.Interaction.DebugTree;
 using System.Collections;
 using System.Collections.Generic;
@@ -7,14 +8,18 @@ using UnityEngine;
 
 public class QuestManager : MonoBehaviour
 {
+    public QuestData testData;
     private Dictionary<string, Quest> questMap;
    [SerializeField] private int currentQuestIndex;
     private int saveQuestIndex = 0;
     DatabaseReference m_Reference;
+    private bool isLoadDone = false;
+    private int questmapcount = 0;
     private void Awake()
     {
+       
         questMap = CreateQuestMap();
-        m_Reference = FirebaseDatabase.DefaultInstance.GetReference("users");
+        //LoadQuest(testData);
         //Quest quest = GetQuestById("MeetNPC");
         //Debug.Log(quest.info.name);
         //Debug.Log(quest.info.id);
@@ -28,6 +33,8 @@ public class QuestManager : MonoBehaviour
         GameEventManager.instance.questEvent.onFinishQuest += FinishQuest;
         GameEventManager.instance.questEvent.onQuestIndexChange += QuestIndexChange;
         GameEventManager.instance.questEvent.onQuestStepStateChange += QuestStepStateChange;
+       
+
 
     }
     private void OnDisable()
@@ -37,25 +44,34 @@ public class QuestManager : MonoBehaviour
         GameEventManager.instance.questEvent.onFinishQuest -= FinishQuest;
         GameEventManager.instance.questEvent.onQuestIndexChange -= QuestIndexChange;
         GameEventManager.instance.questEvent.onQuestStepStateChange -= QuestStepStateChange;
-
     }
     private void Start()
     {
         foreach (Quest quest in questMap.Values)
         {
+            if(quest.state==QuestState.IN_PROGRESS)
+            {
+                quest.InstantiateCurrentQuestStep(this.transform);
+            }
             GameEventManager.instance.questEvent.QuestStateChange(quest);
         }
+
     }
     private void Update()
     {
+          
         foreach(Quest quest in questMap.Values)
         {
+            
             if(quest.state==QuestState.NOT_MET&&CheckRequirementsMet(quest))
             {
+
                 ChangeQuestState(quest.info.id, QuestState.CAN_START);
             }
         }
+        
     }
+
     private void ChangeQuestState(string id,QuestState state_)
     {
         Quest quest = GetQuestById(id);
@@ -133,9 +149,11 @@ public class QuestManager : MonoBehaviour
             {
                 Debug.LogWarning("Duplicate ID found when creating quest map : " + questInfo.id);
             }
-            idToQuestMap.Add(questInfo.id, new Quest(questInfo));
+            idToQuestMap.Add(questInfo.id,LoadQuest(questInfo));
+            Debug.Log(idToQuestMap.Values);
             Debug.Log("All Quest ID: " + questInfo.id);
         }
+        Debug.Log("CreateQuestMap Done");
         return idToQuestMap;
     }
     private Quest GetQuestById(string id)
@@ -149,38 +167,50 @@ public class QuestManager : MonoBehaviour
     }
     private void OnApplicationQuit()
     {
-        saveQuestIndex = questMap.Values.Count-1;
+        Debug.Log("OnApplicationQuit");
         foreach(Quest quest in questMap.Values)
         {
-            SaveQuest(quest, saveQuestIndex);
-            saveQuestIndex--;
-
-
+            SaveQuest(quest);
         }
     }
-    private void SaveQuest(Quest quest,int questNumber)
+    private void SaveQuest(Quest quest)
     {
         try
         {
             QuestInfo info = quest.GetQuestInfo();
             string serializedData = JsonUtility.ToJson(info);
-            m_Reference.Child("Quest").Child(questNumber.ToString()).SetRawJsonValueAsync(serializedData).ContinueWith(task =>
-            {
-                if(task.IsFaulted)
-                {
-                    Debug.Log(serializedData + "전송실패");
-
-                }
-                else if (task.IsCompleted)
-                {
-                    Debug.Log(serializedData + "전송완료");
-                }
-            });
+            PlayerPrefs.SetString(quest.info.id,serializedData);
+            Debug.Log(serializedData + "전송완료");
+            
         }
         catch(System.Exception e)
         {
             Debug.LogWarning("Failed to save quest with id  " + quest.info.id + ":" + e);
         }
+    }
+    public Quest LoadQuest(QuestData qData)
+    {
+        Quest quest = null;
+        try
+        {
+           if(PlayerPrefs.HasKey(qData.id))
+            {
+                string serializedData = PlayerPrefs.GetString(qData.id);
+                QuestInfo questInfo = JsonUtility.FromJson<QuestInfo>(serializedData);
+                quest = new Quest(qData, questInfo.state, questInfo.questStepIndex, questInfo.queststepStates);
+            }
+           else
+            {
+                quest = new Quest(qData);
+            }
+            
+        }
+        catch(System.Exception e)
+        {
+            Debug.LogError("Failed to load quest with id: "+quest.info.id+e);  
+        }
+        
+        return quest;
     }
     
     #region legacy

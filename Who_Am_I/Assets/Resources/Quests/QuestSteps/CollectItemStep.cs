@@ -28,4 +28,14 @@ public class CollectItemStep : QuestStep
             FinishQuestStep();
         }
     }
+    private void UpdateState()
+    {
+        string state = collectItemCount.ToString();
+        ChangeState(state);
+    }
+    protected override void SetQuestStepState(string state)
+    {
+        this.collectItemCount = System.Int32.Parse(state);
+        UpdateState();
+    }
 }

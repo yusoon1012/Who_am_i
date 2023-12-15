@@ -47,6 +47,31 @@ public class AuthManager : MonoBehaviour
                 }
                 else
                 {
+                    if (task.Exception != null)
+                    {
+                        Firebase.FirebaseException firebaseException = task.Exception.GetBaseException() as Firebase.FirebaseException;
+
+                        if (firebaseException != null)
+                        {
+                            Firebase.Auth.AuthError errorCode = (Firebase.Auth.AuthError)firebaseException.ErrorCode;
+
+                            switch (errorCode)
+                            {
+                                case Firebase.Auth.AuthError.WrongPassword:
+                                    Debug.Log("잘못된 비밀번호입니다.");
+                                    break;
+                                case Firebase.Auth.AuthError.InvalidEmail:
+                                    Debug.Log("등록되지않은 이메일입니다.");
+                                    break;
+                                case Firebase.Auth.AuthError.Failure:
+                                    Debug.Log("로그인에 실패하였습니다. 오류 메시지: " + firebaseException.Message);
+                                    break;
+                                default:
+                                    Debug.Log("로그인에 실패하였습니다. Error Code: " + errorCode);
+                                    break;
+                            }
+                        }
+                    }
                     Debug.Log("로그인에 실패하였습니다.");
                 }
             });
@@ -64,10 +89,37 @@ public class AuthManager : MonoBehaviour
                     {
                         isUserNameValid = true;
                         Debug.Log("저장된 닉네임 없음");
+                        userNameInput.SetActive(true);
+
                     }
                 }
-                else
+                else 
                 {
+                    if (task.Exception != null)
+                    {
+                        Firebase.FirebaseException firebaseException = task.Exception.GetBaseException() as Firebase.FirebaseException;
+
+                        if (firebaseException != null)
+                        {
+                            Firebase.Auth.AuthError errorCode = (Firebase.Auth.AuthError)firebaseException.ErrorCode;
+
+                            switch (errorCode)
+                            {
+                                case Firebase.Auth.AuthError.EmailAlreadyInUse:
+                                    // Handle the case where the email is already in use
+                                    Debug.Log("Email already in use.");
+                                    break;
+                                case Firebase.Auth.AuthError.WeakPassword:
+                                    Debug.Log("비밀번호의 보안이 약합니다.7자리 이상으로 설정해 주십시오.");
+                                    break;
+                                // Add more cases for other error codes if needed
+
+                                default:
+                                    Debug.Log("회원가입에 실패하였습니다. Error Code: " + errorCode);
+                                    break;
+                            }
+                        }
+                    }
                     Debug.Log("회원가입에 실패하였습니다.");
                 }
             }
@@ -86,14 +138,7 @@ public class AuthManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(isUserNameValid) 
-        {
-            userNameInput.SetActive(true);
-
-        }
-        if(isLogin)
-        {
-            SceneManager.LoadScene("Meen_Scene");
-        }
+        
+        
     }
 }

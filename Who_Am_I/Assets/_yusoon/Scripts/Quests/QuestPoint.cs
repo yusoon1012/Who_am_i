@@ -11,7 +11,7 @@ public class QuestPoint : MonoBehaviour
     private bool playerIsNear = false;
     private QuestIcon questIcon;
    [SerializeField] private string questId;
-    private QuestState currentQuestState;
+    [SerializeField] private QuestState currentQuestState;
 
     private void Awake()
     {

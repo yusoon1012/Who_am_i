@@ -8,10 +8,14 @@ public abstract class QuestStep : MonoBehaviour
     private string questId;
     private int stepIndex;
 
-    public void InitializeQeustStep(string questId_,int stepIndex_)
+    public void InitializeQeustStep(string questId_,int stepIndex_,string questStepState)
     {
         this.questId = questId_;
         this.stepIndex = stepIndex_;
+        if(questStepState!=null&&questStepState!="")
+        {
+            SetQuestStepState(questStepState);
+        }
 
     }
     protected void  FinishQuestStep()
@@ -27,4 +31,7 @@ public abstract class QuestStep : MonoBehaviour
     {
         GameEventManager.instance.questEvent.QuestStepStateChange(questId, stepIndex, new QuestStepState(newState));
     }
+
+    protected abstract void SetQuestStepState(string state);
+
 }
