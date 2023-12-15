@@ -116,13 +116,41 @@ public class VRIFPlayerLadder : MonoBehaviour
     /// </summary>
     private IEnumerator CheckDistance()
     {
-        while (Vector3.Distance(playerController.position, installObj.transform.position) < 20)
+        while (Vector3.Distance(playerController.position, installObj.transform.position) < 20) // 거리가 20 이하일때는 대기 
         {
             yield return null;
         }
 
-        WithDrawLadder();
+        StartCoroutine(OverCounter()); // 카운터 시작 
     }
+
+    private IEnumerator OverCounter()
+    {
+        int timer = 0;
+
+        while (Vector3.Distance(playerController.position, installObj.transform.position) >= 20) // 거리가 20 이상일때 카운트 
+        {
+            yield return new WaitForSeconds(1); // 1초 대기 
+
+            timer += 1;
+
+            if (timer >= 10) // 타이머 10초 초과시
+            {
+                WithDrawLadder(); // 사다리 회수 
+
+                yield break; // 타이머 즉시 종료
+            }
+        }
+
+        if (timer < 10) // 10초 내에 범위에 진입했다면 
+        {
+            StartCoroutine(CheckDistance()); // 거리 체크 재시작 
+
+            yield break; // 타이머 즉시 종료 
+        }
+    }
+
+    // TODO: 사다리 회수 후 다시 타이머가 시작된다. 
 
     /// <summary>
     /// 회수 조건 체크 (회수 키)

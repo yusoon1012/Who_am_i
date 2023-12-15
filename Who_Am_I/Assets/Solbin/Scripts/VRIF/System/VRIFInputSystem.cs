@@ -33,6 +33,12 @@ public class VRIFInputSystem : MonoBehaviour
     // 오른쪽 컨트롤러 Velocity
     public Vector3 rVelocity { get; private set; }
 
+    [Tooltip("컨트롤러 그랩값")]
+    // 왼쪽 컨트롤러 그랩값
+    public float lGrab { get; private set; }
+    // 오른쪽 컨트롤러 그랩값
+    public float rGrab { get; private set; }
+
     private void OnEnable()
     {
         vrifAction = new VRIFAction();
@@ -94,6 +100,7 @@ public class VRIFInputSystem : MonoBehaviour
     private void FixedUpdate()
     {
         DeviceVelocity();
+        DeviceGrab();
     }
 
     /// <summary>
@@ -103,6 +110,15 @@ public class VRIFInputSystem : MonoBehaviour
     {
         lVelocity = vrifAction.Player.LeftVelocity.ReadValue<Vector3>();
         rVelocity = vrifAction.Player.RightVelocity.ReadValue<Vector3>();
+    }
+
+    /// <summary>
+    /// 컨트롤러 디바이스의 그랩 여부 측정 
+    /// </summary>
+    private void DeviceGrab()
+    {
+        lGrab = vrifAction.Player.LeftGrip.ReadValue<float>();
+        rGrab = vrifAction.Player.RightGrip.ReadValue<float>();
     }
 
     #endregion

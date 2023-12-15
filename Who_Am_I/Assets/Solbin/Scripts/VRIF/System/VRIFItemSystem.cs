@@ -10,11 +10,14 @@ public class VRIFItemSystem : MonoBehaviour
 {
     public static VRIFItemSystem Instance;
 
-    // 아이템 이름 - 아이템 오브젝트 딕셔너리
-    private Dictionary<string, GameObject> mountingItem = default;
+    // 아이템 배열
+    private GameObject[] mountingItem = default;
 
     [Header("움직임 적용 손 모델")]
     [SerializeField] private GameObject modelsRight = default;
+
+    [Header("장갑이 없는 손")]
+    [SerializeField] private GameObject[] bareHands = new GameObject[2];
 
     [Header("장착 아이템")]
     // (장착) 너프건 
@@ -27,9 +30,19 @@ public class VRIFItemSystem : MonoBehaviour
     [SerializeField] private GameObject fishingRod = default;
     // (장착) 곤충 채집망
     [SerializeField] private GameObject dragonflyNet = default;
-    // LEGACY: (장착) 새총
-    //[SerializeField] private GameObject slingShot = default;
+    // (장착) 장갑
+    [SerializeField] private GameObject[] gloves = new GameObject[2];
 
+    // 손 타입 (맨손 vs 장갑)
+    public enum HandType
+    {
+        BAREHANDS,
+        GLOVES
+    }
+
+    public HandType handType { get; private set; }
+
+    // 아이템 타입
     public enum ItemType
     {
         NONE,
@@ -37,10 +50,10 @@ public class VRIFItemSystem : MonoBehaviour
         SHOVEL,
         LADDER,
         FISHINGROD,
-        DRAGONFLYNET    
+        DRAGONFLYNET,
     }
 
-    public ItemType itemType;
+    public ItemType itemType { get; private set; }
 
     // TestAction
     private TestAction testAction = default;
@@ -60,7 +73,7 @@ public class VRIFItemSystem : MonoBehaviour
     private void Start()
     {
         Setting();
-        DicSetting(); // 딕셔너리 세팅
+        ArraySetting(); // 딕셔너리 세팅
     }
 
     #region 초기 세팅
@@ -74,6 +87,11 @@ public class VRIFItemSystem : MonoBehaviour
         ladder.SetActive(false);
         fishingRod.SetActive(false);
         dragonflyNet.SetActive(false);
+        
+        foreach (var glove in gloves)
+        {
+            glove.SetActive(false);
+        }
     }
 
     private void OnEnable()
@@ -90,18 +108,19 @@ public class VRIFItemSystem : MonoBehaviour
     /// <summary>
     /// 딕셔너리 세팅
     /// </summary>
-    private void DicSetting() // TODO: 굳이 딕셔너리를 사용해야 할 필요가 없어 보인다. 배열로 변경 요망.
+    private void ArraySetting() // TODO: 굳이 딕셔너리를 사용해야 할 필요가 없어 보인다. 배열로 변경 요망.
     {
-        mountingItem = new Dictionary<string, GameObject>();
+        mountingItem = new GameObject[5];
 
-        mountingItem["NerfGun"] = nerfGun;
-        mountingItem["Shovel"] = shovel;
-        mountingItem["Ladder"] = ladder;
-        mountingItem["FishingRod"] = fishingRod;
-        mountingItem["DragonflyNet"] = dragonflyNet;
+        mountingItem[0] = nerfGun;
+        mountingItem[1] = shovel;
+        mountingItem[2] = ladder;
+        mountingItem[3] = fishingRod;
+        mountingItem[4] = dragonflyNet;
     }
     #endregion
 
+#if UNITY_EDITOR
     private void Update()
     {
         if (testAction.Test.NerfGun.triggered)
@@ -113,41 +132,35 @@ public class VRIFItemSystem : MonoBehaviour
             else { ReleaseItem(); }
         }
     }
+#endif // UNITY_EDITOR
 
-    public void TestItemMounting(string name) // 테스트: 프로토타입 때 임시 사용할 메소드로, Test UI의 버튼과 연결
+    public void InputItem(string name) // 현재는 Test UI의 버튼과 연결
     {
         switch(name)
         {
             case "NerfGun":
-                if (!nerfGun.activeSelf)
-                {
-                    MountingItem("NerfGun");
-                }
+                if (!nerfGun.activeSelf) { MountingItem("NerfGun"); }
                 else { ReleaseItem(); }
                 break;
 
             case "Shovel":
-                if (!shovel.activeSelf)
-                {
-                    MountingItem("Shovel");
-                }
+                if (!shovel.activeSelf) { MountingItem("Shovel"); }
                 else { ReleaseItem(); }
                 break;
 
             case "Ladder":
-                if (!ladder.activeSelf)
-                {
-                    MountingItem("Ladder");
-                }
+                if (!ladder.activeSelf) { MountingItem("Ladder"); }
                 else { ReleaseItem(); }
                 break;
 
             case "DragonflyNet":
-                if (!dragonflyNet.activeSelf)
-                {
-                    MountingItem("DragonflyNet");
-                }
+                if (!dragonflyNet.activeSelf) { MountingItem("DragonflyNet"); }
                 else { ReleaseItem(); }
+                break;
+
+            case "Gloves":
+                if (!gloves[0].activeSelf && !gloves[1].activeSelf) { OnGloves(); }
+                else { OffGloves(); }
                 break;
         }
     }
@@ -157,7 +170,7 @@ public class VRIFItemSystem : MonoBehaviour
     /// 플레이어가 아이템을 장착하는 메소드
     /// </summary>
     /// <param name="_item">장착할 아이템</param>
-    public void MountingItem(string _name)
+    private void MountingItem(string _name)
     {
         string name = _name;
         GameObject item = default;
@@ -184,18 +197,18 @@ public class VRIFItemSystem : MonoBehaviour
                 item = dragonflyNet;
                 itemType = ItemType.DRAGONFLYNET;
                 break;
+
             default:
                 Debug.LogError("<Solbin> Item Error");
                 break;
         }
 
-        foreach (var obj in mountingItem) // 아이템 활성화 전 중복을 막기 위해 모든 아이템 비활성화 처리 
+        foreach (var _item in mountingItem) // 아이템 활성화 전 중복을 막기 위해 모든 아이템 비활성화 처리 
         {
-            GameObject myItem = obj.Value;
-            myItem.SetActive(false);
+            _item.SetActive(false);
         }
 
-        modelsRight.SetActive(false); // 기존 손 모델 OFF
+        modelsRight.SetActive(false); // 기존 손 모델 OFF (임시방편)
 
         item.SetActive(true); // 지정 아이템만 활성화
     }
@@ -207,13 +220,42 @@ public class VRIFItemSystem : MonoBehaviour
     {
         foreach (var _item in mountingItem)
         {
-            GameObject item = _item.Value;
-            item.SetActive(false);
+            _item.SetActive(false);
         }
 
-        modelsRight.SetActive(true); // 기존 손 모델 ON
+        modelsRight.SetActive(true); // 기존 손 모델 ON (임시방편)
 
         itemType = ItemType.NONE; // 아이템 미장착 상태 
+    }
+    #endregion
+
+    #region 구현: 장갑 장착/해제 메소드 
+    /// <summary>
+    /// 장갑을 장착하는 메소드
+    /// </summary>
+    private void OnGloves()
+    {
+        for (int i = 0; i < 2; i++)
+        {
+            bareHands[i].SetActive(false); // 맨손 OFF
+            gloves[i].SetActive(true); // 장갑 ON
+        }
+
+        handType = HandType.GLOVES;
+    }
+
+    /// <summary>
+    /// 장갑을 벗는 메소드 
+    /// </summary>
+    private void OffGloves()
+    {
+        for (int i = 0; i < 2; i++)
+        {
+            gloves[i].SetActive(false); // 장갑 OFF
+            bareHands[i].SetActive(true); // 맨손 ON
+        }
+
+        handType = HandType.BAREHANDS;
     }
     #endregion
 }
