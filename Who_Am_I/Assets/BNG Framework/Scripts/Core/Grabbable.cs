@@ -1802,6 +1802,11 @@ namespace BNG {
                         {
                             rigid.useGravity = usedGravity;
                         }
+                        
+                        if (rigid.gameObject.GetComponent<VRIFMap_Crop>()) // 뿌리 작물일때 첫세팅이 중력 비활성화 상태이므로 
+                        {
+                            rigid.useGravity = true; // Grabbable 활성화 시 무조건 중력 설정하도록 한다
+                        }
                         // <Solbin> ===
 
                         // <Origin Legacy> rigid.useGravity = usedGravity;

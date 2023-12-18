@@ -6,26 +6,34 @@ using UnityEngine;
 
 public class VRIFMap_Crop : MonoBehaviour
 {
-    [Header("잎")]
-    [SerializeField] private GameObject leaf = default;
-
     // 작물의 HP (몇 번 잡아당겨야 뽑히는가?)
     public int hp = 2;
     // 작물의 Grabbable 스크립트
     private Grabbable grabbable = default;
-    // TODO: 인스펙터에서 VRIFMap_CropStretch를 지우면 정상작동한다. 
-
     // 잡고 있는 손 
     public GameObject hand { get; private set; }
+    // 잎의 Bone 위치 (잎이 늘어나게 되는 Armature 위치)
+    [SerializeField] private Transform leafBone = default;
+    // 위 Bone의 원래 위치 
+    private Vector3 leafOriginPos = default;
+    // 본체 콜라이더
+    [SerializeField] private Collider radishCollider = default;
+    // 당김 정도를 나타내는 bool값
+    private bool firstPull = false;
+    private bool secondPull = false;
+    // 무 본체의 Rigidbody
+    private Rigidbody radishRigid = default;
+    // Item Collider
+    [Tooltip("아이템 인식범위")]
+    [SerializeField] private Collider itemCollider = default;
 
     private void Start()
     {
         grabbable = transform.GetComponent<Grabbable>();
+        leafOriginPos = leafBone.localPosition;
+        radishRigid = GetComponent<Rigidbody>();
 
-        if (grabbable != null)
-        {
-            Debug.Log("Grabbable이 있다.");
-        }
+        itemCollider.enabled = false; // 뿌리 작물을 뽑은 이후부터 활성화
     }
 
     private void OnTriggerStay(Collider other)
@@ -60,13 +68,12 @@ public class VRIFMap_Crop : MonoBehaviour
         if (hand != null)
         {
             CheckRelease(); // 손을 놓는 것을 체크 
-            StretchLeaf();
+            StretchLeaf(); // 잎을 늘린다. 
             Harvesting();
         }
-
-        if (grabbable == null)
+        else
         {
-            Debug.LogWarning("Grabbable is null!"); // TODO: 왜 계속 grabbable이 null인가?
+            ResetLeaf();
         }
     }
 
@@ -76,14 +83,9 @@ public class VRIFMap_Crop : MonoBehaviour
     /// </summary>
     private void CheckRelease()
     {
-        if (hand.CompareTag("Left") && VRIFInputSystem.Instance.lGrab <= 0.5f)
+        if ((hand.CompareTag("Left") && VRIFInputSystem.Instance.lGrab <= 0.5f) ||
+            (hand.CompareTag("Right") && VRIFInputSystem.Instance.rGrab <= 0.5f))
         {
-            //Debug.LogWarning("Release Left Hand");
-            hand = null;
-        }
-        else if (hand.CompareTag("Right") && VRIFInputSystem.Instance.rGrab <= 0.5f)
-        {
-            //Debug.LogWarning("Release Right Hand");
             hand = null;
         }
     }
@@ -91,22 +93,58 @@ public class VRIFMap_Crop : MonoBehaviour
     /// <summary>
     /// 손을 놓는 것을 체크 (거리)
     /// </summary>
-    protected void CheckDistance() { Debug.LogWarning("Too Far"); hand = null; }
+    protected void CheckDistance() { hand = null; }
 
     #endregion
 
+    /// <summary>
+    /// 잎을 잡아당기면 늘어난다. 
+    /// </summary>
     private void StretchLeaf()
     {
-
+        if (hand != null && !grabbable.enabled)
+        {
+            leafBone.position = hand.transform.position;
+        }
     }
+
+    /// <summary>
+    /// 잎을 잡아당기지 않을 때 원상 복귀
+    /// </summary>
+    public void ResetLeaf() { leafBone.localPosition = leafOriginPos; }
 
     private void Harvesting()
     {
-        if (hp <= 0)
+        if (hp == 1 && !firstPull)
         {
+            firstPull = true;
+            radishRigid.AddForce(Vector3.up * 1.2f, ForceMode.Impulse);
+
+            Invoke("ResetVelocity", 0.1f); // 작물이 어느정도 빠져나오다 멈추도록 
+        }
+        else if (hp <= 0 && !secondPull)
+        {
+            secondPull = true;
+            radishRigid.AddForce(Vector3.up * 1.2f, ForceMode.Impulse);
+
             grabbable.enabled = true;
+            radishCollider.enabled = true;
+            Invoke("ActivateGravity", 0.1f); // 땅에서 탈출할 시간 이후 중력 활성화
+
+            Invoke("NatureFall", 0.2f); // 작물이 땅에서 빠져나온 후 똑바로 서있기 때문에 자연스러운 동작을 위해
+
+            itemCollider.enabled = true; // 아이템 획득 가능 
+
+            // TODO: 풀로 돌아간 후 재세팅?
         }
     }
-}
 
-// TODO: 뽑히긴 뽑히는데 작물이 부드럽게 움직이지 않는다. 
+    // 중력 활성화
+    private void ActivateGravity() { radishRigid.useGravity = true; }
+
+    // velocity zero
+    private void ResetVelocity() { radishRigid.velocity = Vector3.zero; }
+
+    // 자연스러운 쓰러짐을 위해 
+    private void NatureFall() { radishRigid.AddForce(Vector3.back * 0.5f,ForceMode.Impulse); }
+}

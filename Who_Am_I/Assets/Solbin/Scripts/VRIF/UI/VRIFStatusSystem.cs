@@ -91,6 +91,7 @@ public class VRIFStatusSystem : MonoBehaviour
             m_Poo += getPoo;
 
             FullnessCheck();
+            PooCheck();
 
             if (m_Fullness <= 0) // 사망 조건 
             {
@@ -166,50 +167,64 @@ public class VRIFStatusSystem : MonoBehaviour
 
     private void PooCheck()
     {
-        if (0 <= m_Poo && m_Poo <= 20)
+        if (m_Poo <= 10)
         {
-            if (m_Poo <= 10) { PooUpdate(1, "half"); }
-            else { PooUpdate(1, "full"); }
+            PooUpdate(0, "zero");
         }
-        else if (21 <= m_Poo && m_Poo <= 40)
+        else if (11 <= m_Poo && m_Poo <= 30)
         {
-            if (m_Poo <= 30) { PooUpdate(2, "half"); }
+            if (m_Poo <= 20) { PooUpdate(1, "half"); } 
+            else { PooUpdate(1, "full"); } 
+        }
+        else if (31 <= m_Poo && m_Poo <= 50)
+        {
+            if (m_Poo <= 40) { PooUpdate(2, "half"); } 
             else { PooUpdate(2, "full"); }
         }
-        else if (41 <= m_Poo && m_Poo <= 60)
+        else if (51 <= m_Poo && m_Poo <= 70)
         {
-            if (m_Poo <= 50) { PooUpdate(3, "half"); }
-            else { PooUpdate(3, "full"); }
+            if (m_Poo <= 60) { PooUpdate(3, "half"); }
+            else { PooUpdate(3, "full"); } 
         }
-        else if (61 <= m_Poo && m_Poo <= 80)
+        else if (71 <= m_Poo && m_Poo <= 90)
         {
-            if (m_Poo <= 70) { PooUpdate(4, "half"); }
+            if (m_Poo <= 80) { PooUpdate(4, "half"); }
             else { PooUpdate(4, "full"); }
         }
-        else if (81 <= m_Poo)
+        else if (91 <= m_Poo && m_Poo < 100)
         {
-            if (m_Fullness <= 90) { PooUpdate(5, "half"); }
-            else { PooUpdate(5, "full"); }
+            PooUpdate(5, "half");
         }
 
-        if (m_Poo >= 100) { PooEvent(); } // 배출도 초과시 배출 이벤트 발생 
+        if (m_Poo >= 100) { PooUpdate(5, "full"); Invoke("PooEvent", 3); } // 5개, 배출도 초과시 배출 이벤트 발생 
     }
 
     private void PooUpdate(int _num, string _percent)
     {
-        if (_percent == "half")
+        if (_percent == "zero")
+        {
+            for (int i = 0; i < gageCount; i++)
+            {
+                halfPooArray[i].SetActive(false);
+                fullPooArray[i].SetActive(false);
+            }
+        }
+        else if (_percent == "half")
         {
             for (int i = 0; i < gageCount; i++)
             {
                 if (i < _num) { halfPooArray[i].SetActive(true); }
                 else { halfPooArray[i].SetActive(false); }
+
+                if (i < _num - 1) { fullPooArray[i].SetActive(true); }
+                else { fullPooArray[i].SetActive(false); }
             }
         }
         else if (_percent == "full")
         {
             for (int i = 0; i < gageCount; i++)
             {
-                if (i < _num) { fullPooArray[i].SetActive(true); } // TODO: Null 발생 수정하기 
+                if (i < _num) { fullPooArray[i].SetActive(true); }
                 else { fullPooArray[i].SetActive(false); }
             }
         }
@@ -228,10 +243,6 @@ public class VRIFStatusSystem : MonoBehaviour
 
         FullnessCheck();
         PooCheck();
-
-        if (m_Fullness >= 100) { m_Fullness = 100; } // 포만도 100 이상 시 고정 
-
-        if (m_Poo >= 100) { PooEvent(); } // 배출도 100 이상 시 배출 이벤트 발생 
     }
 
     /// <summary>
@@ -239,14 +250,14 @@ public class VRIFStatusSystem : MonoBehaviour
     /// </summary>
     private void PooEvent()
     {
-        Vector3 pooPos = -player.forward * 1f; // 플레이어의 2만큼 뒤 
+        Vector3 pooPos = -player.forward * 0.2f; // 플레이어의 2만큼 뒤 
         Quaternion playerRotation = Quaternion.Euler(player.eulerAngles); // 플레이어의 Euler
 
         m_Poo = 0; // 배출값 초기화 
 
         Instantiate(poo, pooPos, playerRotation);
 
-        // TODO: 후에 NPC에 영향이 가도록 구현 
+        // TODO: 후에 NPC에 영향이 가도록 구현, 사운드 출력 
     }   
     
     /// <summary>
