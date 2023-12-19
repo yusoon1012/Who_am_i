@@ -59,31 +59,46 @@ public class Talk : MonoBehaviour
     public void StartTalk()
     {
         talkCanvas.SetActive(true);
+        contexts[currentTalkIndex] = contexts[currentTalkIndex].Replace("*", ",");
+
         talkerNameTxt.text = talkerName;
         talkScriptTxt.text = contexts[currentTalkIndex];
     }
     public void AdvanceTalk()
     {
-        if(currentTalkIndex>contexts.Length-2)
+
+        if (currentTalkIndex < contexts.Length - 1)
+        {
+            currentTalkIndex++;
+            contexts[currentTalkIndex] = contexts[currentTalkIndex].Replace("*", ",");
+            talkerNameTxt.text = talkerName;
+            talkScriptTxt.text = contexts[currentTalkIndex];
+        }
+        else if (contextIndex < dialogues.Length - 1)
         {
             contextIndex++;
+
             currentTalkIndex = 0;
-            contexts = dialogues[contextIndex].contexts; 
+            contexts[currentTalkIndex] = contexts[currentTalkIndex].Replace("*", ",");
+            contexts = dialogues[contextIndex].contexts;
+            talkerName = dialogues[contextIndex].name;
+            eventNumber = dialogues[contextIndex].number;
 
-            Debug.Log(contexts);
+            // Reset isNotTalking to true for the next dialogue
+            isNotTalking = true;
+
+            // 대화를 시작할 때 현재 대화 인덱스를 0으로 설정
+            StartTalk();
         }
-        else if(currentTalkIndex < contexts.Length - 1)
+        else
         {
-        currentTalkIndex++;
-        talkerNameTxt.text = talkerName;
-        talkScriptTxt.text = contexts[currentTalkIndex];
-        
-
+            // 모든 대화가 끝났을 때 대화 종료
+            EndTalk();
         }
     }
     public void EndTalk()
     {
-
+        Debug.Log("EndTalk");
     }
     private void OnTriggerEnter(Collider other)
     {

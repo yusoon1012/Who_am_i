@@ -471,8 +471,11 @@
     <Compile Include="Assets\_yusoon\Scripts\SelectParse.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Usage\Passthrough\Scripts\PassthroughStyler.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Usage\SpatialAnchor\Scripts\AnchorUIManager.cs" />
+    <Compile Include="Assets\Suriyun\Scripts\Camera Scripts\MouseOrbitImproved.cs" />
+    <Compile Include="Assets\Suriyun\Scripts\AnimatorController.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\Suriyun\UnityChanShader\Shader\Unitychan_chara_fuku.shader" />
     <None Include="Assets\Oculus\SampleFramework\Usage\HandsTrainExample\Shaders\XingLightShader.shader" />
     <None Include="Assets\BNG Framework\Integrations\PUN\Readme.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
@@ -490,17 +493,21 @@
     <None Include="Assets\BNG Framework\HandPoser\Third-Party Notices.txt" />
     <None Include="Assets\Oculus\SampleFramework\Usage\Passthrough\Materials\SelectivePassthroughSoft.shader" />
     <None Include="Assets\Oculus\SampleFramework\Usage\SceneManager\Shaders\OverwriteAlpha.shader" />
+    <None Include="Assets\Suriyun\UnityChanShader\Shader\Unitychan_chara_akarami_blend.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />
     <None Include="Assets\Oculus\SampleFramework\Usage\DistanceGrab\Materials\CrosshairZCheat.shader" />
     <None Include="Assets\Quirky Series\_Shader\SoftSurface.shader" />
     <None Include="Assets\Firebase\Plugins\iOS\Firebase.Analytics.dll" />
+    <None Include="Assets\Suriyun\UnityChanShader\Shader\CharaOutline.cginc" />
     <None Include="Assets\Oculus\SampleFramework\Usage\HandsTrainExample\Shaders\GradientSkybox.shader" />
     <None Include="Assets\Oculus\SampleFramework\Usage\Passthrough\Materials\PassthroughLine.shader" />
+    <None Include="Assets\Suriyun\UnityChanShader\Shader\Unitychan_chara_hair_ds.shader" />
     <None Include="Assets\Oculus\SampleFramework\Usage\Passthrough\Materials\BackgroundColor.shader" />
     <None Include="Assets\BNG Framework\Textures\particleTextures.txt" />
     <None Include="Assets\Firebase\Plugins\Firebase.App.dll" />
     <None Include="Assets\Oculus\SampleFramework\Usage\Passthrough\Materials\FatFingers.shader" />
     <None Include="Assets\BNG Framework\Fonts\license.txt" />
+    <None Include="Assets\Suriyun\UnityChanShader\Shader\Unitychan_chara_hada.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMPro_Mobile.cginc" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF SSD.shader" />
     <None Include="Assets\Firebase\Plugins\x86_64\FirebaseCppAnalytics.dll" />
@@ -515,7 +522,10 @@
     <None Include="Assets\BNG Framework\Integrations\Oculus Integration\Readme.txt" />
     <None Include="Assets\Firebase\Plugins\Firebase.TaskExtension.dll" />
     <None Include="Assets\Editor Default Resources\DialogueSystem\DSGraphViewStyles.uss" />
+    <None Include="Assets\Suriyun\UnityChanShader\Shader\Unitychan_chara_fuku_ds.shader" />
     <None Include="Assets\Firebase\m2repository\com\google\firebase\firebase-app-unity\maven-metadata.xml" />
+    <None Include="Assets\Suriyun\UnityChanShader\Shader\Unitychan_chara_eyelash_blend.shader" />
+    <None Include="Assets\Suriyun\README.txt" />
     <None Include="Assets\Firebase\Plugins\Firebase.Auth.dll" />
     <None Include="Assets\Editor Default Resources\DialogueSystem\DSVariables.uss" />
     <None Include="Assets\Oculus\SampleFramework\Core\Video\Shaders\Multiview Stereo.shader" />
@@ -532,12 +542,17 @@
     <None Include="Assets\Firebase\m2repository\com\google\firebase\firebase-analytics-unity\maven-metadata.xml" />
     <None Include="Assets\TextMesh Pro\Shaders\TMPro_Properties.cginc" />
     <None Include="Assets\Firebase\m2repository\com\google\firebase\firebase-auth-unity\maven-metadata.xml" />
+    <None Include="Assets\Suriyun\UnityChanShader\Shader\CharaMain.cginc" />
     <None Include="Assets\TextMesh Pro\Shaders\TMPro_Surface.cginc" />
     <None Include="Assets\Firebase\Plugins\iOS\Firebase.Auth.dll" />
+    <None Include="Assets\Suriyun\UnityChanShader\Shader\Unitychan_chara_hada_blend.shader" />
     <None Include="Assets\Oculus\SampleFramework\Core\HandsInteraction\Shaders\OculusSampleAlphaHandOutline.shader" />
     <None Include="Assets\_PJO\FX\Grass\Shader\CustomLighting.hlsl" />
+    <None Include="Assets\Suriyun\UnityChanShader\Shader\readme.txt" />
     <None Include="Assets\TextMesh Pro\Resources\LineBreaking Following Characters.txt" />
+    <None Include="Assets\Suriyun\UnityChanShader\Shader\CharaSkin.cginc" />
     <None Include="Assets\BNG Framework\Integrations\Invector\Instructions.txt" />
+    <None Include="Assets\Suriyun\UnityChanShader\Shader\Unitychan_chara_eye.shader" />
     <None Include="Assets\BNG Framework\Integrations\FinalIK\Readme.txt" />
     <None Include="Assets\Oculus\SampleFramework\Usage\Passthrough\Materials\GlowEffect.shader" />
     <None Include="Assets\BNG Framework\Models\models.txt" />
@@ -570,6 +585,7 @@
     <None Include="Assets\BNG Framework\Third-Party Notices.txt" />
     <None Include="Assets\Quirky Series\_Shader\ToonRamp.shader" />
     <None Include="Assets\BNG Framework\HandPoser\Documentation.txt" />
+    <None Include="Assets\Suriyun\UnityChanShader\Shader\Unitychan_chara_hair.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile.shader" />
     <None Include="Assets\Oculus\SampleFramework\Core\CustomHands\Shaders\Hands_02.shader" />
     <None Include="Assets\Oculus\SampleFramework\Usage\SceneManager\Shaders\GlassMask.shader" />
@@ -577,6 +593,7 @@
     <None Include="Assets\Firebase\Plugins\iOS\Firebase.App.dll" />
     <None Include="Assets\BNG Framework\Documentation\Documentation.txt" />
     <None Include="Assets\BNG Framework\Integrations\WebXR\Readme.txt" />
+    <None Include="Assets\Suriyun\UnityChanShader\Shader\Unitychan_chara_eye_blend.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_Sprite.shader" />
     <None Include="Assets\Oculus\SampleFramework\license.txt" />
   </ItemGroup>

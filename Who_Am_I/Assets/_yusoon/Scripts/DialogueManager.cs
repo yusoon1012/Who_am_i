@@ -17,7 +17,7 @@ public class DialogueManager : MonoBehaviour
         {
             Debug.Log("DialogueManager Awake");
             instance = this;
-            GetParsing("Tutorial_01");
+            GetParsing(csv_FileName);
 
 
         }

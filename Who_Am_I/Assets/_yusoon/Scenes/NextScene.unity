@@ -3381,8 +3381,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 24
-  m_fontSizeBase: 24
+  m_fontSize: 20
+  m_fontSizeBase: 20
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -3854,7 +3854,7 @@ MonoBehaviour:
     name: 
     line: {x: 0, y: 0}
     dialogues: []
-  questName: Tutorial_1
+  questName: FirstQuest
 --- !u!114 &723657882
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3871,7 +3871,7 @@ MonoBehaviour:
   talkScriptTxt: {fileID: 632079095}
   talkCanvas: {fileID: 765593150}
   startNum: 0
-  endNum: 2
+  endNum: 4
 --- !u!1 &747190216
 GameObject:
   m_ObjectHideFlags: 0
@@ -7522,7 +7522,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c41f114ca48a2c4e8bfb9fd51168c2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  csv_FileName: Tutorial_01
+  csv_FileName: FirstQuest
 --- !u!1 &1527530200
 GameObject:
   m_ObjectHideFlags: 0
