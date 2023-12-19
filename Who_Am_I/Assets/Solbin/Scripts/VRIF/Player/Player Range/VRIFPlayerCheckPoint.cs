@@ -28,16 +28,19 @@ public class VRIFPlayerCheckPoint : MonoBehaviour
     {
         if (other.gameObject.layer == LayerMask.NameToLayer("CheckPoint"))
         {
-            Renderer renderer = other.GetComponent<Renderer>(); // 렌더러
-            Material[] materials = renderer.materials;
-
-            for (int i = 0; i < materials.Length; i++)
+            if (!other.GetComponent<VRIFMap_CheckPoint>().activated) // 아직 비활성화된 체크포인트라면 
             {
-                materials[materials.Length - 1].SetFloat("_Scale", shiningInitialValue); // Material Scale Up 
-            }
+                Renderer renderer = other.GetComponent<Renderer>(); // 렌더러
+                Material[] materials = renderer.materials;
 
-            checkPoint = other.gameObject.transform;
-            inTrigger = true;
+                for (int i = 0; i < materials.Length; i++)
+                {
+                    materials[materials.Length - 1].SetFloat("_Scale", shiningInitialValue); // Material Scale Up 
+                }
+
+                checkPoint = other.gameObject.transform;
+                inTrigger = true;
+            }
         }
     }
 
@@ -45,23 +48,27 @@ public class VRIFPlayerCheckPoint : MonoBehaviour
     {
         if (other.gameObject.layer == LayerMask.NameToLayer("CheckPoint"))
         {
-            Renderer renderer = other.GetComponent<Renderer>(); // 렌더러
-            Material[] materials = renderer.materials;
-
-            for (int i = 0; i < materials.Length; i++)
+            if (!other.GetComponent<VRIFMap_CheckPoint>().activated) // 비활성화 체크포인트일때
             {
-                materials[materials.Length - 1].SetFloat("_Scale", 0); // Material Scale Down
-            }
+                Renderer renderer = other.GetComponent<Renderer>(); // 렌더러
+                Material[] materials = renderer.materials;
 
-            inTrigger = false;
+                for (int i = 0; i < materials.Length; i++)
+                {
+                    materials[materials.Length - 1].SetFloat("_Scale", 0); // Material Scale Down
+                }
+
+                inTrigger = false;
+                checkPoint = null;
+            }
         }
     }
 
     private void PressInteraction(object sender, EventArgs e)
     {
-        if (inTrigger) // 만약 체크포인트 범위 내에 있다면
+        if (inTrigger) // 만약 비활성화 체크포인트 범위 내에 있다면
         {
-            // TODO: 체크포인트의 스크립트 이용해 빛을 켜고 활성화시키기
+            checkPoint.GetComponent<VRIFMap_CheckPoint>().Activated(); // 활성화
         }
     }
 }
