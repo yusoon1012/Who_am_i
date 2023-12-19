@@ -1,11 +1,11 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace BNG {
     public class VRTextInput : MonoBehaviour {
 
-        UnityEngine.UI.InputField thisInputField;
+        TMPro.TMP_InputField  thisInputField;
 
         public bool AttachToVRKeyboard = true;
 
@@ -19,7 +19,7 @@ namespace BNG {
         float lastActivatedTime = 0;
 
         void Awake() {
-            thisInputField = GetComponent<UnityEngine.UI.InputField>();
+            thisInputField = GetComponent<TMPro.TMP_InputField>();
             
             if(thisInputField && AttachedKeyboard != null) {
                 AttachedKeyboard.AttachToInputField(thisInputField);

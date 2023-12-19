@@ -7,8 +7,8 @@ using UnityEngine;
 namespace BNG {
     public class VRKeyboard : MonoBehaviour {
 
-        public UnityEngine.UI.InputField AttachedInputField;
-
+        public TMPro.TMP_InputField AttachedInputField;
+        
         public bool UseShift = false;
 
         [Header("Sound FX")]
@@ -130,7 +130,7 @@ namespace BNG {
             AttachedInputField.ForceLabelUpdate();
         }
 
-        public void AttachToInputField(UnityEngine.UI.InputField inputField) {
+        public void AttachToInputField(TMPro.TMP_InputField inputField) {
             AttachedInputField = inputField;
         }
     }
