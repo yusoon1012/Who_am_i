@@ -149,11 +149,11 @@ public class VRIFSceneManager : MonoBehaviour
         else if (inRegion.Contains("Fall")) { inRegion = "Fall"; }
         else if (inRegion.Contains("Winter")) { inRegion = "Winter"; }
 
-        if (inRegion == _region) // 현재 있는 지역과 체크포인트 지역이 같으면
+        if (inRegion == _region) // 현 지역과 체크포인트 지역이 같으면
         {
             SameRegion(_number); // TODO: 암전효과를 얹어야 한다. 
         }
-        else if (inRegion != _region) // 다르면
+        else if (inRegion != _region) // 현 지역과 체크포인트 지역이 다르면
         {
             StartCoroutine(DifferentRegion(_region, _number)); // TODO: 로딩씬을 얹어야 한다. 
         }    

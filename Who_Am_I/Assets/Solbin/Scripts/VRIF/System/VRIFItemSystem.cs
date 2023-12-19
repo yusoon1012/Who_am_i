@@ -131,6 +131,11 @@ public class VRIFItemSystem : MonoBehaviour
             }
             else { ReleaseItem(); }
         }
+
+        if (Input.GetKeyDown(KeyCode.L)) // 테스트용 코드 
+        {
+            MountingItem("FishingRod");
+        }
     }
 #endif // UNITY_EDITOR
 
@@ -150,6 +155,11 @@ public class VRIFItemSystem : MonoBehaviour
 
             case "Ladder":
                 if (!ladder.activeSelf) { MountingItem("Ladder"); }
+                else { ReleaseItem(); }
+                break;
+
+            case "FishingRod":
+                if (!fishingRod.activeSelf) { MountingItem("FishingRod"); }
                 else { ReleaseItem(); }
                 break;
 
