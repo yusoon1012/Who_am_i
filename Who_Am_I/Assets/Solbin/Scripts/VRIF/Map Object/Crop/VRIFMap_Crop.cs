@@ -148,3 +148,5 @@ public class VRIFMap_Crop : MonoBehaviour
     // 자연스러운 쓰러짐을 위해 
     private void NatureFall() { radishRigid.AddForce(Vector3.back * 0.5f,ForceMode.Impulse); }
 }
+
+// TODO: 왜 한 번 놓았다가 다시 잡아당기려 하면 작동하지 않는가

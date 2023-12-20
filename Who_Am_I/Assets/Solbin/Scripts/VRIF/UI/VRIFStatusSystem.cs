@@ -1,4 +1,6 @@
+using BNG;
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 /// <summary>
@@ -26,6 +28,10 @@ public class VRIFStatusSystem : MonoBehaviour
     [Header("시간당 수치 조절값")]
     [SerializeField] private int getHunger = 5; // 분당 떨어지는 포만감
     [SerializeField] private int getPoo = 1; // 분당 얻는 배출값
+
+    [Header("손")]
+    [SerializeField] private Grabber leftGrabber = default; // 왼쪽 손 
+    [SerializeField] private Grabber rightGrabber = default; // 오른쪽 손 
 
     // 게이지 총 수는 5로 정해졌다. TODO: 후에 수정 필요 
     private int gageCount = 5;
@@ -253,12 +259,31 @@ public class VRIFStatusSystem : MonoBehaviour
         Vector3 pooPos = -player.forward * 0.2f; // 플레이어의 2만큼 뒤 
         Quaternion playerRotation = Quaternion.Euler(player.eulerAngles); // 플레이어의 Euler
 
+        if (VRIFStateSystem.Instance.gameState == VRIFStateSystem.GameState.CLIMBING) // 등반 중이었다면 
+        {
+            // TODO: UI 출력이 필요하다. 
+
+            // 손을 놓게 한다. 
+            leftGrabber.ReleaseGrab();
+            rightGrabber.ReleaseGrab();
+
+            leftGrabber.enabled = false;
+            rightGrabber.enabled = false;
+
+            Invoke("ClearGrabbers", 3); // N초 후 다시 그랩이 가능하도록 한다. 
+        }
+
         m_Poo = 0; // 배출값 초기화 
 
         Instantiate(poo, pooPos, playerRotation);
 
         // TODO: 후에 NPC에 영향이 가도록 구현, 사운드 출력 
-    }   
+    }
+
+    /// <summary>
+    /// 등반 중 배출 이벤트로 인해 손을 놓게 되었을 때 Grabber를 다시 ON
+    /// </summary>
+    private void ClearGrabbers() { leftGrabber.enabled = true; rightGrabber.enabled = true; }
     
     /// <summary>
     /// 사망 이벤트

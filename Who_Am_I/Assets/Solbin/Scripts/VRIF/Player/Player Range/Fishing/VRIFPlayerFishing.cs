@@ -10,7 +10,7 @@ public class VRIFPlayerFishing : MonoBehaviour
     {
         if (other.name.Contains("Water")) // TODO: 후에 레이어 등으로 변경
         {
-            activateFishing = true;
+            activateFishing = true; // 낚시 가능 상태로 전환
         }
     }
 
@@ -18,7 +18,7 @@ public class VRIFPlayerFishing : MonoBehaviour
     {
         if (other.name.Contains("Water"))
         {
-            activateFishing = false;
+            activateFishing = false; // 낚시 불가능 상태로 전환
         }
     }
 }

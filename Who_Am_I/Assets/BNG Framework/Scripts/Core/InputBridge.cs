@@ -1,4 +1,4 @@
-﻿#define VRIF
+#define VRIF
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -1566,6 +1566,7 @@ namespace BNG {
             }
         }
 
+        // <Solbin> 컨트롤러에 진동을 일으킨다. (빈도, 진폭, 유지시간, 컨트롤러 방향)
         // Start Vibration on controller
         public void VibrateController(float frequency, float amplitude, float duration, ControllerHand hand) {
             

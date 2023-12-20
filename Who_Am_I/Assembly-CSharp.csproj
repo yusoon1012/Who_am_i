@@ -125,6 +125,7 @@
     <Compile Include="Assets\Oculus\SampleFramework\Core\CustomHands\Scripts\Hand.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Extras\Waypoint.cs" />
     <Compile Include="Assets\Solbin\Scripts\VRIF\Player\Player Range\VRIFPlayerCheckPoint.cs" />
+    <Compile Include="Assets\Solbin\Scripts\VRIF\Player\Player Range\Fishing\VRIFPlayerFishing.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Components\Tooltip.cs" />
     <Compile Include="Assets\Solbin\Scripts\Oculus\Player\Player_Status.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Components\LookAtTransform.cs" />
@@ -173,6 +174,7 @@
     <Compile Include="Assets\BNG Framework\Scripts\Helpers\StaticBatch.cs" />
     <Compile Include="Assets\Meen_Project\Scripts\Test\ZoneTest.cs" />
     <Compile Include="Assets\Meen_Project\Scripts\ItemCrafting.cs" />
+    <Compile Include="Assets\Solbin\Scripts\VRIF\System\VRIFCheckPointSystem.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Core\Locomotion\Scripts\TeleportTransition.cs" />
     <Compile Include="Assets\_yusoon\Scripts\Quests\QuestStep.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Utility\VRUtils.cs" />
@@ -209,6 +211,7 @@
     <Compile Include="Assets\BNG Framework\Scripts\Components\CharacterConstraint.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Usage\HandsTrainExample\Scripts\TrainLocomotive.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Core\Locomotion\Scripts\TeleportOrientationHandlerThumbstick.cs" />
+    <Compile Include="Assets\Solbin\Scripts\VRIF\Tool\Fishing Rod\VRIFTool_FishingBobber.cs" />
     <Compile Include="Assets\Solbin\Scripts\Oculus\Item\ItemSystem.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Usage\HandsTrainExample\Scripts\TrainCrossingController.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Usage\Passthrough\Scripts\HandMeshMask.cs" />
@@ -381,6 +384,7 @@
     <Compile Include="Assets\_PJO\Scripts\AnimalsData.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Usage\AppDeeplink\AppDeeplinkUI.cs" />
     <Compile Include="Assets\Solbin\Scripts\VRIF\Tool\Dragonfly Net\VRIFTool_DragonflyNet.cs" />
+    <Compile Include="Assets\Solbin\Scripts\VRIF\Tool\Fishing Rod\VRIFTool_FishingRod.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Usage\SceneManager\Scripts\MyCustomSceneModelLoader.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Usage\TouchPro\Scripts\SceneSettings.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Core\HandsInteraction\Scripts\ButtonTriggerZone.cs" />
@@ -468,10 +472,6 @@
     <Compile Include="Assets\_yusoon\Scripts\SelectParse.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Usage\Passthrough\Scripts\PassthroughStyler.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Usage\SpatialAnchor\Scripts\AnchorUIManager.cs" />
-    <Compile Include="Assets\Solbin\Scripts\VRIF\System\VRIFCheckPointSystem.cs" />
-    <Compile Include="Assets\Solbin\Scripts\VRIF\Player\Player Range\Fishing\VRIFPlayerFishing.cs" />
-    <Compile Include="Assets\Solbin\Scripts\VRIF\Tool\VRIFTool_FishingRod.cs" />
-    <Compile Include="Assets\Solbin\Scripts\VRIF\Player\Player Range\Fishing\VRIFPlayerFishingHit.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Oculus\SampleFramework\Usage\HandsTrainExample\Shaders\XingLightShader.shader" />
