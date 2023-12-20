@@ -1,53 +1,67 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.ProBuilder;
-using UnityEngine.ProBuilder.MeshOperations;
 
+// 에디터 스크립트로 선언하겠다는 어트리뷰트
 [CustomEditor(typeof(SaveMesh))]
 public class SaveMeshEditor : Editor
 {
-    private GameObject thisObject;
+    // 저장할 오브젝트
+    SerializedProperty targetObject;
+    SerializedProperty meshName;
 
     private void OnEnable()
     {
-        thisObject = ((SaveMesh)target).gameObject;
-    }
+        // targetObject 프로퍼티 초기화
+        targetObject = serializedObject.FindProperty("targetObject");
+        meshName = serializedObject.FindProperty("meshName");
+    }       // OnEnable()
 
     public override void OnInspectorGUI()
     {
+        // 인스펙터 창 업데이트
         serializedObject.Update();
 
+        // 인스펙터에 targetObject변수를 편집 가능한 필드로 표시
+        EditorGUILayout.PropertyField(targetObject, new GUIContent("저장할 오브젝트"));
+        EditorGUILayout.PropertyField(meshName, new GUIContent("저장될 메쉬 이름"));
+        // "Apply" 버튼 클릭시 메쉬 저장
         if (GUILayout.Button("Apply"))
         {
             SaveMesh();
         }
-    }
+
+        // SerializedProperty 변경사항 적용
+        serializedObject.ApplyModifiedProperties();
+    }       // OnInspectorGUI()
 
     private void SaveMesh()
     {
-        MeshFilter meshFilter = GFunc.SetComponent<MeshFilter>(thisObject);
-        if (meshFilter == null)
+        // { 저장할 타겟 오브젝트 메쉬 가져오기
+        MeshFilter targetMeshFilter = GFuncE.SetComponent<MeshFilter>(targetObject);
+        if (targetMeshFilter == null)
         {
-            Debug.LogError("Object의 MeshFilter가 없거나 Mesh가 null");
+            GFuncE.SubmitNonFindText(targetObject, typeof(MeshFilter));
             return;
         }
-
-        Mesh mesh = meshFilter.sharedMesh;
-
-        if (mesh == null)
+        Mesh targetMesh = targetMeshFilter.sharedMesh != null ? targetMeshFilter.sharedMesh : null;
+        if (targetMesh == null)
         {
-            Debug.LogError("Object의 Mesh가 Null");
+            GFuncE.SubmitNonFindText(targetObject, typeof(Mesh));
             return;
         }
+        // } 저장할 타겟 오브젝트 메쉬 가져오기
 
-        string path = "Assets/Meshes/YourMeshName.asset";
+        // 저장 위치 설정
+        string path = $"Assets/Meshes/{meshName.stringValue}.asset";
 
-        AssetDatabase.CreateAsset(mesh, path);
+        // targetMesh를 path에 지정된 경로에 새로운 에셋으로 생성
+        AssetDatabase.CreateAsset(targetMesh, path);
+        // 에셋 데이터베이스를 저장
         AssetDatabase.SaveAssets();
+        // 에셋 데이터베이스를 설정
         AssetDatabase.Refresh();
 
-        Debug.Log("Mesh가 성공적으로 저장되었습니다. 경로: " + path);
-    }
+        // 저장완료 표시
+        Debug.Log("Mesh saved successfully. Path: " + path);
+    }       // SaveMesh()
 }

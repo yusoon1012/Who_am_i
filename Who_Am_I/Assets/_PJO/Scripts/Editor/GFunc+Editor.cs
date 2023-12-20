@@ -1,47 +1,113 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
+using System.Linq;
+using System.Transactions;
 using UnityEditor;
 using UnityEngine;
 
 public static partial class GFuncE
 {
-    /*
-     * SerializedProperty 형식의 오브젝트를 받아
-     * <T>컴포넌트를 가지고 있는지 확인하는 메서드
-     */
-    public static T PropertySetComponent<T>(this SerializedProperty _object) where T : Component
+    #region SerializedProperty
+    public static T SetComponent<T>(this SerializedProperty _object) where T : Component
     {
-        GameObject targetObj_ = (GameObject)_object.objectReferenceValue;
+        GameObject targetObject_ = (GameObject)_object.objectReferenceValue;
 
-        return targetObj_.GetComponent<T>() == true ? targetObj_.GetComponent<T>() : null;
+        return targetObject_.GetComponent<T>() == true ? targetObject_.GetComponent<T>() : null;
     }
 
-    /*
-     * SerializedProperty 형식의 오브젝트를 받아
-     * 오브젝트의 transform값 반환
-     */
-    public static Transform PropertySetTransform(this SerializedProperty _object)
+    public static T AddComponent<T>(this SerializedProperty _object) where T : Component
     {
-        GameObject targetTra_ = (GameObject)_object.objectReferenceValue;
+        GameObject targetObject_ = (GameObject)_object.objectReferenceValue;
 
-        return targetTra_ != null ? targetTra_.transform : null;
+        return targetObject_.GetComponent<T>() == true ? targetObject_.GetComponent<T>() : targetObject_.AddComponent<T>();
     }
 
-    /*
-     * GameObject 형식의 오브젝트를 받아
-     * 컴포넌트를 가지고 있다면 그대로 반환 없다면 null 반환
-     */
+    public static Transform SetTransform(this SerializedProperty _object)
+    {
+        GameObject targetTransform_ = (GameObject)_object.objectReferenceValue;
+
+        return targetTransform_ != null ? targetTransform_.transform : null;
+    }
+
+    public static void SubmitNonFindText(this SerializedProperty _object, Type _componentType)
+    {
+        Debug.Log($"{_object.name} not found {_componentType}");
+    }
+    #endregion
+
+    #region GameObject
     public static T SetComponent<T>(this GameObject _object) where T : Component
     {
         return _object.GetComponent<T>() == true ? _object.GetComponent<T>() : null;
     }
 
-    /*
-     * GameObject 형식의 오브젝트를 받아
-     * 컴포넌트를 이미 가지고 있다면 그대로 반환 없다면 생성 후 반환
-     */
     public static T AddComponent<T>(this GameObject _object) where T : Component
     {
         return _object.GetComponent<T>() == true ? _object.GetComponent<T>() : _object.AddComponent<T>();
     }
+
+    public static bool HasComponent(this GameObject _object, Type _type)
+    {
+        return _object.GetComponent(_type) != null ? true : false;
+    }
+
+    public static void SubmitNonFindText(this GameObject _object, Type _componentType)
+    {
+        Debug.Log($"{_object.name} not found {_componentType}");
+    }
+
+    public static GameObject PrimitiveObject(this PrimitiveType _type)
+    {
+        if (!Enum.IsDefined(typeof(PrimitiveType), _type))
+        {
+            Debug.Log($"{_type} is not a valid PrimitiveType");
+
+            return null;
+        }
+
+        GameObject primitiveObject_ = GameObject.CreatePrimitive(_type);
+
+        return primitiveObject_;
+    }
+
+    public static Mesh CopyMesh(this Mesh _mesh)
+    {
+        if (_mesh == null) { return null; }
+
+        Mesh copyMesh_ = new Mesh();
+
+        copyMesh_.vertices = _mesh.vertices;
+        copyMesh_.triangles = _mesh.triangles;
+        copyMesh_.normals = _mesh.normals;
+        copyMesh_.uv = _mesh.uv;
+        if (_mesh.name.StartsWith("Copy") == false)
+        {
+            copyMesh_.name = "Copy" + _mesh.name;
+        }
+        else { copyMesh_.name = _mesh.name; }
+
+        return copyMesh_;
+    }
+
+    public static bool HasChild(this Transform _transform)
+    {
+        if (_transform.childCount <= 0)
+        {
+            Debug.Log($"{_transform.name} has no children");
+            return false;
+        }
+
+        return true;
+    }
+
+    public static Type GetType(string _type)
+    {
+        string typeName_ = Define.UNITY_ENGINE + Define.DOT + _type;
+
+        Type type_ = AppDomain.CurrentDomain.GetAssemblies()
+        .SelectMany(s => s.GetTypes())
+        .FirstOrDefault(p => p.FullName == typeName_);
+
+        return type_ != null ? type_ : null;
+    }
+    #endregion
 }
