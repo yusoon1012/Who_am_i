@@ -4,6 +4,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
 
 namespace BNG {
 
@@ -178,6 +179,8 @@ namespace BNG {
 
         // <Solbin> VRIFPlayerClimbing
         [SerializeField] private VRIFPlayerClimbing vrifPlayerClimbing = default;
+        // <Solbin> 등반 각도 전환을 한 번만 실행하기 위한 bool값. 
+        private bool oneGrabCheck = false;
 
         void Start() {
             rb = GetComponent<Rigidbody>();
@@ -260,11 +263,11 @@ namespace BNG {
                 // <Solbin> Release 조건을 평가 
                 TryRelease();
             }
-
-            // <Solbin> 등반 중 측면 점프 시도 시 잡고 있는 등반 물체를 놓도록 하는 메소드 
-            if ((HoldingItem || RemoteGrabbingItem) && vrifPlayerClimbing.sideJump) { TryRelease(); }
-            // <Solbin> ===
         }
+
+        // <Solbin>
+        public void ReleaseGrab() { if (HoldingItem) TryRelease(); } // 잡고 있는 것을 놓게 한다. 
+        // <Solbin> ===
 
         protected virtual void updateFreshGrabStatus() {
             // Update Fresh Grab status
@@ -671,5 +674,51 @@ namespace BNG {
         public virtual Vector3 GetGrabberAveragedAngularVelocity() {
             return velocityTracker.GetAveragedAngularVelocity();
         }
+
+        // <Solbin>
+        /// <summary>
+        /// 등반 물체를 판단하기 위함. 
+        /// </summary>
+        /// <param name="other"></param>
+        private void OnTriggerStay(Collider other)
+        {
+            if (HoldingItem && other.GetComponent<Climbable>()) // 그랩 중인 등반 물체가 사다리인지 일반 등반 물체인지 판단함
+            {
+                if (other.transform.parent.GetComponent<VRIFMap_ZipLine>() != null) // 짚라인이면 
+                {
+                    VRIFStateSystem.Instance.ChangeState(VRIFStateSystem.GameState.ZIPLINE);
+                }
+                else if (other.transform.parent.parent.GetComponent<VRIFTool_Ladder>() != null) // 접촉한 등반 물체 최상위 오브젝트가 사다리 
+                {
+                    VRIFStateSystem.Instance.ChangeState(VRIFStateSystem.GameState.LADDER);
+                }
+                else // 일반 등반 물체면 
+                {
+                    if (!oneGrabCheck) // 등반 각도 전환을 한 번만 실행하기 위함. 
+                    {
+                        oneGrabCheck = true;
+                        VRIFPlayerClimbingHelper.Instance.SetAnchor(other.gameObject);
+                    }
+                }
+            }
+
+            if (HoldingItem && other.GetComponent<VRIFItem_TreeFruit>()) // 나무에 달려있는 과일인지 판단
+            {
+                VRIFItem_TreeFruit treeFruit = other.GetComponent<VRIFItem_TreeFruit>();
+                treeFruit.ActivateGravity(); // 중력 활성화
+            }
+        }
+
+        private void OnTriggerExit(Collider other)
+        {
+            if (other.GetComponent<Climbable>())
+            {
+                if (oneGrabCheck)
+                {
+                    oneGrabCheck = false;
+                }
+            }
+        }
+        // <Solbin> ===
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using BNG;
+using System;
 
 public class UIController : MonoBehaviour
 {
@@ -35,9 +36,10 @@ public class UIController : MonoBehaviour
     // <Solbin> VRIF Time System
     [SerializeField] private VRIFTimeSystem vrifTimeSystem = default;
     // <Solbin> UI 조이스틱 입력 기준값
-    private float joystickInput = 0.95f;
+    private float joystickInput = 0.55f;
     // <Solbin> Input Delay를 위한 bool 값
     private bool inputDelay = false;
+
 
     void Awake()
     {
@@ -49,37 +51,31 @@ public class UIController : MonoBehaviour
         playerTf = GetComponent<Transform>().transform;
     }     // Start()
 
-
     void Update()
     {
+        if (inputDelay) { return; } // <Solbin> 입력 딜레이 중 입력 금지
+
         // 모든 상, 하, 좌, 우 기본 키보드 키 입력 값
         if (Input.GetKeyDown(KeyCode.UpArrow) || vrifAction.Player.LeftController.ReadValue<Vector2>().y >= joystickInput)
         {
-            // <Solbin> GetKey 같은 느낌이라 너무 예민하다고 느껴진다. 수정 필요
-            DirectionControl(0);
+            if (!inputDelay) { DirectionControl(0); } // <Solbin> 키감 수정 포함
         }
         else if (Input.GetKeyDown(KeyCode.DownArrow) || vrifAction.Player.LeftController.ReadValue<Vector2>().y <= -joystickInput)
         {
-            DirectionControl(1);
+            if (!inputDelay) { DirectionControl(1); } // <Solbin>
         }
         else if (Input.GetKeyDown(KeyCode.LeftArrow) || vrifAction.Player.LeftController.ReadValue<Vector2>().x <= -joystickInput)
         {
-            DirectionControl(2);
+            if (!inputDelay) { DirectionControl(2); } // <Solbin> 
         }
         else if (Input.GetKeyDown(KeyCode.RightArrow) || vrifAction.Player.LeftController.ReadValue<Vector2>().x >= joystickInput)
         {
-            DirectionControl(3);
+            if (!inputDelay) { DirectionControl(3); } // <Solbin> 
         }
         // <Solbin> 메뉴 진입
         else if (Input.GetKeyDown(KeyCode.M) || vrifAction.Player.UI_Menu.triggered) // <Solbin> Menu Enter
         {
             OnMainMenuControl();
-
-            //if (vrifStateSystem.gameState == VRIFStateSystem.GameState.NORMAL)
-            //{   // <Solbin> 메뉴는 NORMAL 상태에서만 진입 가능 
-            //    OnMainMenuControl();
-            //    vrifStateSystem.ChangeState(VRIFStateSystem.GameState.UI);
-            //}// <Solbin> UI 상태로 전환 
         }
         // 모든 진입 키 입력 값
         else if (Input.GetKeyDown(KeyCode.Z) || vrifAction.Player.UI_Click.triggered) // <Solbin> Menu Select
@@ -90,34 +86,29 @@ public class UIController : MonoBehaviour
         else if (Input.GetKeyDown(KeyCode.X) || vrifAction.Player.UI_Exit.triggered) // <Solbin> Exit Menu
         {
             OnOffControl(1);
-
-            //if (vrifStateSystem.gameState == VRIFStateSystem.GameState.UI) // <Solbin> UI 상태일때
-            //{
-            //    OnOffControl(1);
-            //    vrifStateSystem.ChangeState(VRIFStateSystem.GameState.NORMAL); // <Solbin> NORMAL 상태로 전환 
-            //}
         }
         // 모든 두번째 상, 하, 좌, 우 키보드 키 입력 값
         else if (Input.GetKeyDown(KeyCode.Keypad8) || vrifAction.Player.RightController.ReadValue<Vector2>().y >= joystickInput)
         {
-            RightDirectionControl(0);
+            if (!inputDelay) { inputDelay = true; RightDirectionControl(0); } // <Solbin> 키감 수정 포함
         }
         else if (Input.GetKeyDown(KeyCode.Keypad2) || vrifAction.Player.RightController.ReadValue<Vector2>().y <= -joystickInput)
         {
-            RightDirectionControl(1);
+            if (!inputDelay) { inputDelay = true; RightDirectionControl(1); } // <Solbin>
         }
         else if (Input.GetKeyDown(KeyCode.Keypad4) || vrifAction.Player.RightController.ReadValue<Vector2>().x <= -joystickInput)
         {
-            RightDirectionControl(2);
+            if (!inputDelay) { inputDelay = true; RightDirectionControl(2); } // <Solbin>
         }
         else if (Input.GetKeyDown(KeyCode.Keypad6) || vrifAction.Player.RightController.ReadValue<Vector2>().x >= joystickInput)
         {
-            RightDirectionControl(3);
+            if (!inputDelay) { inputDelay = true; RightDirectionControl(3); } // <Solbin>
         }
         else if (Input.GetKeyDown(KeyCode.P) && uiController == 0)
         {
             uiController = 4;
             playerTf.GetComponent<ItemCrafting>().OnCrafting();
+            OpenMenuCheck();
         }
         //* Test : 아래의 해당 키를 누르면 인벤토리에 아이템 추가 기능
         else if (Input.GetKeyDown(KeyCode.Alpha1))
@@ -132,11 +123,22 @@ public class UIController : MonoBehaviour
         {
             playerTf.GetComponent<Inventory>().AddInventory("고기", 1);
         }
-
-        // <Solbin> 지나치게 예민한 입력값을 막기 위함
-        if (inputDelay) { Invoke("ClearInputDelay", 0.5f); }
-        // <Solbin> ===
     }
+
+    // <Solbin>
+    /// <summary>
+    /// 조합대 상호작용으로 UI Controller 활성화
+    /// </summary>
+    public void OpenCraftingUI()
+    {
+        if (uiController == 0)
+        {
+            uiController = 4;
+            playerTf.GetComponent<ItemCrafting>().OnCrafting();
+            OpenMenuCheck();
+        }
+    }
+    // <Solbin> ===
 
     private void OnEnable()
     {
@@ -152,61 +154,83 @@ public class UIController : MonoBehaviour
     // 모든 UI 에서 방향키 입력을 받아 전달하는 함수
     public void DirectionControl(int arrowType)
     {
-        if (uiController == 1)
+        // <Solbin> 
+        inputDelay = true;
+        // <Solbin> ===
+
+        if (inputDelay)
         {
-            playerTf.GetComponent<MainMenu>().ChangeOrder(arrowType);
-        }
-        else if (uiController == 2)
-        {
-            playerTf.GetComponent<Inventory>().OrderCheck(arrowType);
-        }
-        else if (uiController == 3)
-        {
-            playerTf.GetComponent<Inventory>().DetailOrderCheck(arrowType);
-        }
-        else if (uiController == 4)
-        {
-            playerTf.GetComponent<ItemCrafting>().OrderCheck(arrowType);
-        }
-        else if (uiController == 5)
-        {
-            playerTf.GetComponent<Dictionary>().ChangeOrder(arrowType);
-        }
-        else if (uiController == 6 || uiController == 9)
-        {
-            quickSlotTf.GetComponent<QuickSlot>().DirectionControl(arrowType);
-        }
-        else if (uiController == 7)
-        {
-            playerTf.GetComponent<Inventory>().DropItemOrderCheck(arrowType);
-        }
-        else if (uiController == 8)
-        {
-            playerTf.GetComponent<ItemCrafting>().DetailOrderCheck(arrowType);
+            if (uiController == 1)
+            {
+                playerTf.GetComponent<MainMenu>().ChangeOrder(arrowType);
+            }
+            else if (uiController == 2)
+            {
+                playerTf.GetComponent<Inventory>().OrderCheck(arrowType);
+            }
+            else if (uiController == 3)
+            {
+                playerTf.GetComponent<Inventory>().DetailOrderCheck(arrowType);
+            }
+            else if (uiController == 4)
+            {
+                playerTf.GetComponent<ItemCrafting>().OrderCheck(arrowType);
+            }
+            else if (uiController == 5)
+            {
+                playerTf.GetComponent<Dictionary>().ChangeOrder(arrowType);
+            }
+            else if (uiController == 6 || uiController == 9)
+            {
+                quickSlotTf.GetComponent<QuickSlot>().DirectionControl(arrowType);
+            }
+            else if (uiController == 7)
+            {
+                playerTf.GetComponent<Inventory>().DropItemOrderCheck(arrowType);
+            }
+            else if (uiController == 8)
+            {
+                playerTf.GetComponent<ItemCrafting>().DetailOrderCheck(arrowType);
+            }
+
+            // <Solbin>
+            Invoke("ClearInputDelay", 0.5f);
+            // <Solbin> ===
         }
     }     // DirectionControl()
 
     // 모든 UI 에서 다른 방향키 입력을 받아 전달하는 함수
     public void RightDirectionControl(int arrowType)
     {
-        if (uiController == 2)
+        // <Solbin>
+        inputDelay = true;
+        // <Solbin> ===
+
+        if (inputDelay)
         {
-            if (arrowType == 2 || arrowType == 3)
+            if (uiController == 2)
             {
-                playerTf.GetComponent<Inventory>().ChangePage(arrowType);
+                if (arrowType == 2 || arrowType == 3)
+                {
+                    playerTf.GetComponent<Inventory>().ChangePage(arrowType);
+                }
+                else if (arrowType == 0 || arrowType == 1)
+                {
+                    playerTf.GetComponent<Inventory>().ChangeItemGroupPage(arrowType);
+                }
             }
-            else if (arrowType == 0 || arrowType == 1)
+            else if (uiController == 4)
             {
-                playerTf.GetComponent<Inventory>().ChangeItemGroupPage(arrowType);
+                playerTf.GetComponent<ItemCrafting>().ControlDetailOrder(arrowType);
             }
-        }
-        else if (uiController == 4)
-        {
-            playerTf.GetComponent<ItemCrafting>().ControlDetailOrder(arrowType);
-        }
-        else if (uiController == 5)
-        {
-            playerTf.GetComponent<Dictionary>().OtherChangeOrder(arrowType);
+            else if (uiController == 5)
+            {
+                playerTf.GetComponent<Dictionary>().OtherChangeOrder(arrowType);
+            }
+
+            // <Solbin>
+            Invoke("ClearInputDelay", 0.5f);
+            // <Solbin> ===
         }
     }     // RightDirectionControl()
 
@@ -220,9 +244,12 @@ public class UIController : MonoBehaviour
             {
                 // 아무 UI 도 안켜져 있을 때 A 버튼을 누르면 퀵슬롯이 켜짐
                 case 0:
-                    uiController = 9;
-                    quickSlotTf.GetComponent<QuickSlot>().SingleOpenQuickSlot();
-                    // TODO: 슬로우타임, UI 상태 변경
+                    if (VRIFStateSystem.Instance.gameState == VRIFStateSystem.GameState.NORMAL) // <Solbin> 퀵슬롯 제한 추가 
+                    {
+                        uiController = 9;
+                        quickSlotTf.GetComponent<QuickSlot>().SingleOpenQuickSlot();
+                        OpenQuickSlot();
+                    }
                     break;
                 case 1:
                     playerTf.GetComponent<MainMenu>().ConnectMenu();
@@ -261,6 +288,7 @@ public class UIController : MonoBehaviour
                 case 1:
                     uiController = 0;
                     playerTf.GetComponent<MainMenu>().OffMainMenu();
+                    ExitMenuCheck();
                     break;
                 case 2:
                     uiController = 1;
@@ -274,6 +302,7 @@ public class UIController : MonoBehaviour
                 case 4:
                     uiController = 0;
                     playerTf.GetComponent<ItemCrafting>().ExitCrafting();
+                    ExitMenuCheck();
                     break;
                 case 5:
                     uiController = 1;
@@ -295,6 +324,7 @@ public class UIController : MonoBehaviour
                 case 9:
                     uiController = 0;
                     quickSlotTf.GetComponent<QuickSlot>().SingleCloseQuickSlot();
+                    ExitQuickSlot();
                     break;
                 default:
                     break;
@@ -310,19 +340,21 @@ public class UIController : MonoBehaviour
             // 메뉴가 아무것도 안열려 있으면 메뉴 UI 를 연다
             case 0:
                 playerTf.GetComponent<MainMenu>().OnMainMenu();
+                OpenMenuCheck();
                 uiController = 1;
-                // TODO: 메인메뉴 열릴 때
+                OpenMenuCheck(); // <Solbin> 메인메뉴 열릴 때 => UI 상태로 전환 
                 break;
             // 메뉴가 하나라도 켜져있으면 해당 메뉴를 모두 닫고 초기화 화면으로 돌아감
             case 1:
                 playerTf.GetComponent<MainMenu>().OffMainMenu();
-
+                ExitMenuCheck();
                 uiController = 0;
                 break;
             case 2:
                 playerTf.GetComponent<Inventory>().ExitInventory();
                 playerTf.GetComponent<MainMenu>().DisconnectMenu();
                 playerTf.GetComponent<MainMenu>().OffMainMenu();
+                ExitMenuCheck();
                 uiController = 0;
                 break;
             case 3:
@@ -330,16 +362,19 @@ public class UIController : MonoBehaviour
                 playerTf.GetComponent<Inventory>().ExitInventory();
                 playerTf.GetComponent<MainMenu>().DisconnectMenu();
                 playerTf.GetComponent<MainMenu>().OffMainMenu();
+                ExitMenuCheck();
                 uiController = 0;
                 break;
             case 4:
                 playerTf.GetComponent<ItemCrafting>().ExitCrafting();
+                ExitMenuCheck();
                 uiController = 0;
                 break;
             case 5:
                 playerTf.GetComponent<Dictionary>().OffDictionary();
                 playerTf.GetComponent<MainMenu>().DisconnectMenu();
                 playerTf.GetComponent<MainMenu>().OffMainMenu();
+                ExitMenuCheck();
                 uiController = 0;
                 break;
             case 6:
@@ -348,6 +383,7 @@ public class UIController : MonoBehaviour
                 playerTf.GetComponent<Inventory>().ExitInventory();
                 playerTf.GetComponent<MainMenu>().DisconnectMenu();
                 playerTf.GetComponent<MainMenu>().OffMainMenu();
+                ExitMenuCheck();
                 uiController = 0;
                 break;
             case 7:
@@ -356,15 +392,18 @@ public class UIController : MonoBehaviour
                 playerTf.GetComponent<Inventory>().ExitInventory();
                 playerTf.GetComponent<MainMenu>().DisconnectMenu();
                 playerTf.GetComponent<MainMenu>().OffMainMenu();
+                ExitMenuCheck();
                 uiController = 0;
                 break;
             case 8:
                 playerTf.GetComponent<ItemCrafting>().ExitDetailCrafting();
                 playerTf.GetComponent<ItemCrafting>().ExitCrafting();
+                ExitMenuCheck();
                 uiController = 0;
                 break;
             case 9:
                 quickSlotTf.GetComponent<QuickSlot>().SingleCloseQuickSlot();
+                ExitQuickSlot();
                 uiController = 0;
                 break;
             default:
@@ -374,24 +413,53 @@ public class UIController : MonoBehaviour
 
     #region Input 키 입력 값 모음
 
-    // 퀵슬롯이 열릴때 게임 시간 슬로우 효과
+    // 단일 퀵슬롯이 열릴때 게임 시간 슬로우 효과
     private void OpenQuickSlot()
     {
-        // TODO: 타임 슬로우 효과 연결 
+        // TODO: 슬로우 타임 필요
+
+        // <Solbin> 메뉴를 열 때 NORMAL 상태라면 UI 상태로 전환
+        if (VRIFStateSystem.Instance.gameState == VRIFStateSystem.GameState.NORMAL)
+        {
+            VRIFStateSystem.Instance.ChangeState(VRIFStateSystem.GameState.UI);
+        }// <Solbin> UI 상태로 전환 
+    }
+
+    // 단일 퀵슬롯을 닫았을 때 슬로우 효과 해제
+    private void ExitQuickSlot()
+    {
+        // TODO: 시간 원상 복귀 필요
+
+        // <Solbin> 메뉴를 닫을 때 UI 상태라면 NORMAL 상태로 전환
+        if (VRIFStateSystem.Instance.gameState == VRIFStateSystem.GameState.UI)
+        {
+            VRIFStateSystem.Instance.ChangeState(VRIFStateSystem.GameState.NORMAL);
+        }// <Solbin> NORMAL 상태로 전환 
     }
 
     // 어떤 메뉴든 열릴 때 게임 시간 정지
     private void OpenMenuCheck()
     {
-        // TODO: 어떤 메뉴든 열릴 때
+        // TODO: 시간 정지 필요 
+
+        // <Solbin> 메뉴를 열 때 NORMAL 상태라면 UI 상태로 전환
+        if (VRIFStateSystem.Instance.gameState == VRIFStateSystem.GameState.NORMAL)
+        {
+            VRIFStateSystem.Instance.ChangeState(VRIFStateSystem.GameState.UI);
+        }// <Solbin> UI 상태로 전환 
     }
 
     // 어떤 메뉴든 닫았을 때 게임 시간 재개
     private void ExitMenuCheck()
     {
-        // TODO: 메인메뉴를 끌때 처리 
-    }
+        // TODO: 시간 원상 복귀 필요
 
+        // <Solbin> 메뉴를 닫을 때 UI 상태라면 NORMAL 상태로 전환
+        if (VRIFStateSystem.Instance.gameState == VRIFStateSystem.GameState.UI)
+        {
+            VRIFStateSystem.Instance.ChangeState(VRIFStateSystem.GameState.NORMAL);
+        }// <Solbin> NORMAL 상태로 전환 
+    }
 
     #region LAGACY
     //* LEGACY CODE
@@ -597,6 +665,5 @@ public class UIController : MonoBehaviour
     // <Solbin> ===
 
 }     // Update()
-
 
 #endregion Input 키 입력 값 모음

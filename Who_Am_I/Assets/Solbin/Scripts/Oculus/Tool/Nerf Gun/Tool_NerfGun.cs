@@ -16,7 +16,7 @@ public class Tool_NerfGun : MonoBehaviour
     // 포인터(크로스 헤어)
     [SerializeField] Transform pointer = default;
     // 수렵 가능 여부(동물 조준)
-    //private bool aimingPrey = false;
+    private bool aimingPrey = false;
     // 너프건 궤적
     [SerializeField] LineRenderer trajectory = default;
 
@@ -59,15 +59,14 @@ public class Tool_NerfGun : MonoBehaviour
             pointer.position = hit.point;
             trajectory.SetPosition(1, hit.point);
 
-            // 임시 주석
-            //if (hit.transform.CompareTag("Animal")) // TODO: 후에 동물의 태그에 따라 수정
-            //{
-            //    aimingPrey = true; // 동물 조준 O
-            //}
-            //else
-            //{
-            //    aimingPrey = false; // 동물 조준 X
-            //}
+            if (hit.transform.CompareTag("Animal")) // TODO: 후에 동물의 태그에 따라 수정
+            {
+                aimingPrey = true; // 동물 조준 O
+            }
+            else
+            {
+                aimingPrey = false; // 동물 조준 X
+            }
         }
     }
 
@@ -78,6 +77,8 @@ public class Tool_NerfGun : MonoBehaviour
     {
         Debug.Log("발사!");
         // TODO: 레이가 닿은 부분, 총구에 파티클(혹은 다른 효과) 발생
+
+
     }
 
     #region LEGACY: 궤적 재세팅

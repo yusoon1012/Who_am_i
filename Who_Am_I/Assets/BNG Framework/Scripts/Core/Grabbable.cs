@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.CommandLine;
 using System.Linq;
 using UnityEngine;
 
@@ -538,8 +539,8 @@ namespace BNG {
 
         public virtual void Update() {
 
+            // <Solbin> Grabber에 의해 잡힌 상태인지 체크 
             if (BeingHeld) {
-
                 // ResetLockResets();
 
                 // Something happened to our Grabber. Drop the item
@@ -1657,7 +1658,7 @@ namespace BNG {
             }
 
             // Disable Gravity to prevent fighting physics with the hand object
-            rigid.useGravity = false;            
+            rigid.useGravity = false; // <Solbin> 물체를 잡을 때 중력을 무시하도록 변경된다. 
         }
 
         public virtual void GrabRemoteItem(Grabber grabbedBy) {
@@ -1785,7 +1786,7 @@ namespace BNG {
                     }
                 }
                 // Release the object
-                if(releaseItem) {
+                if(releaseItem) { // <Solbin> 오브젝트를 손에서 놓을 때
 
                     // We know the item is no longer being held. Can set this before calling any drop events
                     BeingHeld = false;
@@ -1795,8 +1796,24 @@ namespace BNG {
                     // Release item and apply physics force to it
                     if (rigid != null && GrabPhysics != GrabPhysics.None) {
                         rigid.isKinematic = wasKinematic;
-                        rigid.useGravity = usedGravity;
+
+                        // <Solbin> 과일이 아닐 때만 중력 재세팅하도록 수정 
+                        if (!rigid.gameObject.GetComponent<VRIFItem_TreeFruit>())
+                        {
+                            rigid.useGravity = usedGravity;
+                        }
+                        
+                        if (rigid.gameObject.GetComponent<VRIFMap_Crop>()) // 뿌리 작물일때 첫세팅이 중력 비활성화 상태이므로 
+                        {
+                            rigid.useGravity = true; // Grabbable 활성화 시 무조건 중력 설정하도록 한다
+                        }
+                        // <Solbin> ===
+
+                        // <Origin Legacy> rigid.useGravity = usedGravity;
+
+                        // <Solbin> 물리엔진에서 움직임을 자연스럽게 보정
                         rigid.interpolation = initialInterpolationMode;
+                        // <Solbin> 물체의 속도가 빠를 때 충돌 감지값 보정 
                         rigid.collisionDetectionMode = initialCollisionMode;
                     }
 

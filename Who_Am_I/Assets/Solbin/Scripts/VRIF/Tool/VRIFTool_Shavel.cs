@@ -17,19 +17,18 @@ public class VRIFTool_Shavel : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Crop")) // 작물 콜라이더에 접촉한 상태에서
+        if (other.name.Contains("Dirt File")) // TODO: 이후 합의 시 레이어 등으로 교체 
         {
-            if (VRIFControllerSystem.rVelocity.y >= 0.3f) // 위로 삽질
+            if (VRIFInputSystem.Instance.rVelocity.y >= 0.03f) // 위로 삽질
             {
-                string cropName = other.name; // 작물의 이름 전달 
-                GetCrop(cropName); // 작물을 얻는다. 
+                Digging(other.gameObject);
             }
         }
     }
 
-    private void GetCrop(string _name)
+    private void Digging(GameObject _dirt)
     {
-        // TODO: 무슨 작물을 얻는지 추가되어야 한다. (작물의 구분은 이름? 태그?)
-        Debug.LogWarning("Get Crop!");
+        _dirt.transform.localScale /= 2;
+        _dirt.GetComponent<VRIFMap_DirtFile>().AddDestroy(); // 파괴 횟수 증가 
     }
 }
