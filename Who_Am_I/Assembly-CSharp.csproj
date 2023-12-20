@@ -203,10 +203,8 @@
     <Compile Include="Assets\BNG Framework\Scripts\Core\GrabbableEvents.cs" />
     <Compile Include="Assets\Solbin\Scripts\Oculus\Player\Player_State.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Components\CharacterConstraint.cs" />
-    <Compile Include="Assets\Suriyun\Scripts\Swapper.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Usage\HandsTrainExample\Scripts\TrainLocomotive.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Core\Locomotion\Scripts\TeleportOrientationHandlerThumbstick.cs" />
-    <Compile Include="Assets\Suriyun\Scripts\AnimatorController.cs" />
     <Compile Include="Assets\Solbin\Scripts\Oculus\Item\ItemSystem.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Usage\HandsTrainExample\Scripts\TrainCrossingController.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Usage\Passthrough\Scripts\HandMeshMask.cs" />
@@ -285,7 +283,6 @@
     <Compile Include="Assets\BNG Framework\Scripts\Core\PlayerGravity.cs" />
     <Compile Include="Assets\Solbin\Input System\VRIF\Test Action.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Core\Locomotion\Scripts\SimpleCapsuleWithStickMovement.cs" />
-    <Compile Include="Assets\GUI Kit The Stone\Scripts\Panel.cs" />
     <Compile Include="Assets\BNG Framework\HandPoser\Scripts\HandPoseBlender.cs" />
     <Compile Include="Assets\Solbin\Scripts\VRIF\UI\VRIFTeleportCanvas.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Weapons\WeaponSlide.cs" />
@@ -301,7 +298,6 @@
     <Compile Include="Assets\_yusoon\Scripts\NPC.cs" />
     <Compile Include="Assets\BNG Framework\HandPoser\Scripts\SkeletonVisualizer.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Core\Locomotion\Scripts\CharacterCameraConstraint.cs" />
-    <Compile Include="Assets\Suriyun\Scripts\Camera Scripts\MouseOrbitImproved.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Usage\SceneManager\Scripts\SimpleResizer\SimpleResizable.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Core\InputBridge.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Components\ReturnToSnapZone.cs" />
@@ -370,7 +366,6 @@
     <Compile Include="Assets\BNG Framework\Scripts\Extras\Flashlight.cs" />
     <Compile Include="Assets\Resources\Quests\QuestSteps\CollectItemStep.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Usage\Passthrough\Scripts\PassthroughBrush.cs" />
-    <Compile Include="Assets\GUI Kit The Stone\Scripts\PanelControl.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Usage\SceneManager\Scripts\CustomSceneManager\DynamicSceneManager.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Core\HandsInteraction\Scripts\ColliderZone.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Core\Video\Scripts\MoviePlayerSampleControls.cs" />
@@ -474,6 +469,11 @@
     <Compile Include="Assets\_yusoon\Scripts\SelectParse.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Usage\Passthrough\Scripts\PassthroughStyler.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Usage\SpatialAnchor\Scripts\AnchorUIManager.cs" />
+    <Compile Include="Assets\GUI Kit The Stone\Scripts\PanelControl.cs" />
+    <Compile Include="Assets\Suriyun\Scripts\Camera Scripts\MouseOrbitImproved.cs" />
+    <Compile Include="Assets\Suriyun\Scripts\Swapper.cs" />
+    <Compile Include="Assets\GUI Kit The Stone\Scripts\Panel.cs" />
+    <Compile Include="Assets\Suriyun\Scripts\AnimatorController.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Suriyun\UnityChanShader\Shader\Unitychan_chara_fuku.shader" />
@@ -1376,9 +1376,6 @@
     <Reference Include="Unity.Burst.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.Burst.Editor.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.2D.Sprite.Editor">
-      <HintPath>Library\ScriptAssemblies\Unity.2D.Sprite.Editor.dll</HintPath>
-    </Reference>
     <Reference Include="Unity.RenderPipelines.Core.Runtime">
       <HintPath>Library\ScriptAssemblies\Unity.RenderPipelines.Core.Runtime.dll</HintPath>
     </Reference>
@@ -1450,6 +1447,9 @@
     </Reference>
     <Reference Include="Unity.SysrootPackage.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.SysrootPackage.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.2D.Sprite.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.2D.Sprite.Editor.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
