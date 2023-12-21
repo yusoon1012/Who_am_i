@@ -17,12 +17,12 @@ public class VRIFPlayerCrafting : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.name.Contains("Crafting")) { triggerEnter = true; } // TODO: 이후 레이어 비교로 수정 
+        if (other.name.Contains("Colletor")) { triggerEnter = true; } // TODO: 이후 레이어 비교로 수정 
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.name.Contains("Crafting")) 
+        if (other.name.Contains("Colletor")) 
         {
             triggerEnter = false; 
         }
