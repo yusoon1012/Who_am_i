@@ -108,7 +108,7 @@ public class VRIFItemSystem : MonoBehaviour
     /// <summary>
     /// 딕셔너리 세팅
     /// </summary>
-    private void ArraySetting() // TODO: 굳이 딕셔너리를 사용해야 할 필요가 없어 보인다. 배열로 변경 요망.
+    private void ArraySetting()
     {
         mountingItem = new GameObject[5];
 

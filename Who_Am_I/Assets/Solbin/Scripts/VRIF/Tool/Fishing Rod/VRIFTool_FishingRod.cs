@@ -63,7 +63,7 @@ public class VRIFTool_FishingRod : MonoBehaviour
     {
         if (vrifPlayerFishing.activateFishing && other == fishingHitRange) // 물가에 접촉해있고 낚시대를 위로 들어올렸을 때 
         {
-            if (!isFishing) { StartCoroutine(CheckSwing()); } // 이미 낚시 중이 아닐 때  
+            if (!isFishing) { StartCoroutine(CheckSwing()); } // 낚시 중이 아닐 때  
         }
     }
 

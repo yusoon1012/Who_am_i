@@ -12,6 +12,7 @@ public class VRIFMap_CheckPoint : MonoBehaviour
     public string region = default;
 
     [Header("소속 번호")]
+    [Range(0, 10)]
     [Tooltip("지도 내 아이콘에서 해당 정보를 가져가야 하나, 위 지역 변수와 다르게 분류 번호는 직접 입력해야 한다.")]
     public int number = default;
 

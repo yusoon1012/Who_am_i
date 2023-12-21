@@ -68,12 +68,6 @@ public class VRIFPlayerItem : MonoBehaviour
         if (other.gameObject.layer == LayerMask.NameToLayer("Item"))
         {
             Renderer renderer = other.transform.parent.GetComponent<Renderer>(); // 렌더러
-            
-            if (renderer == null) // 뿌리 작물의 경우 구성이 약간 다르다. 
-            {
-                renderer = other.transform.GetComponent<Renderer>();
-            }
-
             Material[] materials = renderer.materials;
 
             for (int i = 0; i < materials.Length; i++) 
