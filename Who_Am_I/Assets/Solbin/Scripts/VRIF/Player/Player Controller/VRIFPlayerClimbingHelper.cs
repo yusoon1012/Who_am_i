@@ -49,20 +49,40 @@ public class VRIFPlayerClimbingHelper : MonoBehaviour
             climbingAnchor.position = anchor.position;
             climbingAnchor.LookAt(_grabbable.transform);
 
-            playerController.rotation = climbingAnchor.rotation;
+            // playerController.rotation = climbingAnchor.rotation;
+
+            StartCoroutine(Rotate());
         }
     }
 
-    private IEnumerator Test()
+    private IEnumerator Rotate()
     {
-        bool test = true;
+        //float time = 0f;
 
-        while (test)
-        {
-            Debug.LogWarning(playerController.position);
+        //while (time < 1f)
+        //{
+        //    time += Time.deltaTime;
 
-            yield return null;
-        }
+        //    playerController.rotation = 
+        //        Quaternion.RotateTowards(playerController.rotation, climbingAnchor.rotation, 100f * Time.deltaTime);
+
+        //    playerController.rotation = Quaternion.Euler(0, playerController.rotation.y, 0);
+
+        //    yield return null;
+        //}
+
+        //while (Vector3.Distance(playerController.position, climbingAnchor.position) > 0.1f)
+        //{
+        //    playerController.position = Vector3.MoveTowards(playerController.position, climbingAnchor.position, 10f * Time.deltaTime);
+
+        //    yield return null;
+        //}
+
+        playerController.rotation = climbingAnchor.rotation;
+
+        yield return null;
     }
 }
+
+// TODO: 어떻게 하면 자연스럽게 회전하도록 할 수 있는가? (y축만 회전하도록)
 

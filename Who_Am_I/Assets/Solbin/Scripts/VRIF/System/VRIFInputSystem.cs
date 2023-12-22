@@ -22,6 +22,8 @@ public class VRIFInputSystem : MonoBehaviour
     public event EventHandler slowMode;
     public event EventHandler interaction;
     public event EventHandler uiClick;
+    public event EventHandler lClimbingJump;
+    public event EventHandler rClimbingJump;
 
     [Tooltip("양쪽 컨트롤러")]
     public Transform lController;
@@ -82,6 +84,8 @@ public class VRIFInputSystem : MonoBehaviour
         vrifAction.Player.SlowMode.performed += ctx => SlowMode();
         vrifAction.Player.Interaction.performed += ctx => Interaction();
         vrifAction.Player.UI_Click.performed += ctx => UIClick();
+        vrifAction.Player.ClimbingLeftJump.performed += ctv => LClimbingJump();
+        vrifAction.Player.ClimbingRightJump.performed += ctx => RClimbingJump();
     }
 
 #if UNITY_EDITOR
@@ -94,6 +98,9 @@ public class VRIFInputSystem : MonoBehaviour
     private void SlowMode() { slowMode?.Invoke(this, EventArgs.Empty); }
     private void Interaction() { interaction?.Invoke(this, EventArgs.Empty); }
     private void UIClick() { uiClick?.Invoke(this, EventArgs.Empty); }
+
+    private void LClimbingJump() { lClimbingJump?.Invoke(this, EventArgs.Empty); }
+    private void RClimbingJump() { rClimbingJump?.Invoke(this, EventArgs.Empty); }
     #endregion
 
     #region 지속 입력(velocity, 조이스틱) 체크

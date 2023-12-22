@@ -421,17 +421,6 @@
                 },
                 {
                     "name": "",
-                    "id": "e870334b-3dcf-4446-80da-692913c748ee",
-                    "path": "<XRController>{LeftHand}/thumbstickClicked",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Generic XR Controller",
-                    "action": "Locomotion Mode Toggle",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "73a6d359-40f8-4581-9827-91d1d6b66a4e",
                     "path": "<Keyboard>/leftShift",
                     "interactions": "",
@@ -506,6 +495,17 @@
                     "action": "Teleport Start",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "b6c2fba3-d062-4ac5-9fdc-92ba10847bd5",
+                    "path": "<XRController>{LeftHand}/thumbstickClicked",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Locomotion Mode Toggle",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },
