@@ -35,45 +35,48 @@ public class VRIFSceneManager : MonoBehaviour
 
     private void Start()
     {
-        playerController = xrRigPlayer.transform.GetChild(0);
+        playerController = xrRigPlayer.transform.GetChild(1);
     }
 
     void Update()
     {
+        // if (Input.GetKeyDown(KeyCode.R)) { LoadCheckPoint("Summer", 2); } // 체크포인트를 이용한 이동 예시 
+
+        // if (Input.GetKeyDown(KeyCode.L)) { StartCoroutine(LoadHallScene("Summer")); } // 로딩통로를 이용한 이동 예시 
+
         if (setting)
         {
+            setting = false;
+
             Transform birthPoint = GameObject.Find("Birth Point").transform;
 
             playerController.position = birthPoint.position;
             playerController.rotation = birthPoint.rotation;
         }
-
-        // if (Input.GetKeyDown(KeyCode.R)) { LoadCheckPoint("Summer", 2); } // 체크포인트를 이용한 이동 예시 
-
-        // if (Input.GetKeyDown(KeyCode.L)) { StartCoroutine(LoadHallScene("Summer")); } // 로딩통로를 이용한 이동 예시 
     }
 
     #region 로딩 통로를 통한 씬 이동
     public IEnumerator LoadHallScene(string _season)
     {
+        Debug.Log("0");
+
         AsyncOperation loadingOperation = SceneManager.LoadSceneAsync("Loading_Scene");
         loadingOperation.allowSceneActivation = false;
 
-        while (loadingOperation.progress < 0.9f) // 로딩씬이 로드되지 않았다면 대기 
-        {
-            yield return null;
-        }
+        Debug.Log("1");
 
-        loadingOperation.allowSceneActivation = true; // 로드 
-
-        while (!loadingOperation.isDone) // 로딩씬이 다시 완벽히 로드되기까지 대기 
+        while (!loadingOperation.isDone) // 씬이 완전히 로드되지 않았을때
         {
+            if (loadingOperation.progress >= 0.9f) // 0.9 이상 로드에 성공했다면
+            {
+                loadingOperation.allowSceneActivation = true; // 씬 활성화
+                break;
+            }
+
             yield return null;
         }
 
         setting = true;
-
-        Invoke("SettingClear", 1);
 
         StartCoroutine(OpenMainScene(_season));
     }
@@ -121,7 +124,6 @@ public class VRIFSceneManager : MonoBehaviour
         while (time < 10)
         {
             time += Time.deltaTime;
-            Debug.Log(time);
             yield return null;
         }
         // <Solbin> ===
@@ -134,8 +136,6 @@ public class VRIFSceneManager : MonoBehaviour
         }
 
         setting = true;
-
-        Invoke("SettingClear", 1);
     }
     #endregion
 
