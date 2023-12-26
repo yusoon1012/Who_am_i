@@ -137,7 +137,7 @@ public class VRIFPlayerItem : MonoBehaviour
             case var tag when tag.Contains("Milk"):
                 name = "우유";
                 break;
-            case var tag when tag.Contains("StrawBerry"):
+            case var tag when tag.Contains("Strawberry"):
                 name = "딸기";
                 break;
             case var tag when tag.Contains("Song_e"):
