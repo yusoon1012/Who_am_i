@@ -12,18 +12,23 @@ public class VRIFMap_Crop : MonoBehaviour
     private Grabbable grabbable = default;
     // 잡고 있는 손 
     public GameObject hand { get; private set; }
-    // 잎의 Bone 위치 (잎이 늘어나게 되는 Armature 위치)
+
+    [Header("잎의 Bone 위치")]
+    [Tooltip("잎이 늘어나게 되는 Armature 위치")]
     [SerializeField] private Transform leafBone = default;
     // 위 Bone의 원래 위치 
     private Vector3 leafOriginPos = default;
+
     // 본체 콜라이더
     [SerializeField] private Collider radishCollider = default;
-    // 당김 정도를 나타내는 bool값
-    private bool firstPull = false;
-    private bool secondPull = false;
     // 무 본체의 Rigidbody
     private Rigidbody radishRigid = default;
-    // Item Collider
+
+    // 당김 정도를 나타내는 bool값 (1회/2회...)
+    private bool firstPull = false;
+    private bool secondPull = false;
+
+    [Header("자식: Item Collider")]
     [Tooltip("아이템 인식범위")]
     [SerializeField] private Collider itemCollider = default;
 
@@ -59,7 +64,7 @@ public class VRIFMap_Crop : MonoBehaviour
     /// </summary>
     private void WhatHand(GameObject _hand)
     {
-        if (hand == null) // 양손 모두 잡았을때, 처음 잡은 손만 입력을 받는다. 
+        if (hand == null) // 양손 모두 뿌리 작물을 잡았을때, 처음 잡은 손만 입력을 받는다. 
         {
             hand = _hand;
         }
@@ -133,11 +138,9 @@ public class VRIFMap_Crop : MonoBehaviour
             radishCollider.enabled = true;
             Invoke("ActivateGravity", 0.1f); // 땅에서 탈출할 시간 이후 중력 활성화
 
-            Invoke("NatureFall", 0.2f); // 작물이 땅에서 빠져나온 후 똑바로 서있기 때문에 자연스러운 동작을 위해
-
             itemCollider.enabled = true; // 아이템 획득 가능 
 
-            // TODO: 풀로 돌아간 후 재세팅?
+            // TODO: 풀로 돌아간 후 재세팅이 필요하다. 
         }
     }
 
@@ -146,8 +149,5 @@ public class VRIFMap_Crop : MonoBehaviour
 
     // velocity zero
     private void ResetVelocity() { radishRigid.velocity = Vector3.zero; }
-
-    // 자연스러운 쓰러짐을 위해 
-    private void NatureFall() { radishRigid.AddForce(Vector3.back * 1.5f, ForceMode.Impulse); }
 }
 

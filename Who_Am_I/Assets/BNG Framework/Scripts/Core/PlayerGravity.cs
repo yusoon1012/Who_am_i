@@ -14,7 +14,7 @@ namespace BNG {
         public bool GravityEnabled = true; // <Solbin> 기본적으로 중력이 적용 되도록 설정 되어있다. 
 
         [Tooltip("Amount of Gravity to apply to the CharacterController or Rigidbody. Default is 'Physics.gravity'.")]
-        public Vector3 Gravity = Physics.gravity; // <Solbin> 기본 중력값 y축 -9.82을 말한다.
+        public Vector3 Gravity = Physics.gravity; // <Solbin> 기본 중력값을 말한다. (음수)
 
         CharacterController characterController;
         SmoothLocomotion smoothLocomotion;
@@ -56,6 +56,7 @@ namespace BNG {
                     characterController.Move(new Vector3(0, _movementY, 0) * Time.deltaTime);
                 }
 
+                // <Solbin> 땅에 닿았을때 
                 // Reset Y movement if we are grounded
                 if (characterController.isGrounded)
                 {
@@ -66,7 +67,7 @@ namespace BNG {
                     {
                         playerRigidbody.velocity = Vector3.zero;
                     }
-                    // <Solbim> ===
+                    // <Solbin> ===
                 }
             }
         }
@@ -91,12 +92,14 @@ namespace BNG {
 
             GravityEnabled = gravityOn;
 
-            if (gravityOn)
+            if (gravityOn) // 중력 적용시 
             {
                 Gravity = _initialGravityModifier;
             }
-            else
+            else // 중력 미적용시
             {
+                _movementY = 0; // <Solbin> 등반 시 중력 초기화가 제대로 되지 않는 문제가 있어 중력 적용값 초기화 코드 추가 
+
                 Gravity = Vector3.zero;
             }
         }

@@ -9,9 +9,8 @@ public class VRIFItem_TreeFruit : MonoBehaviour
     private void Start()
     {
         fruitRigid = transform.GetComponent<Rigidbody>();
+        fruitRigid.useGravity = false; // 나무 과일은 Start 시점에 중력 비활성화
     }
 
-    // TODO: 중력이 활성화 되지 않는 문제 
     public void ActivateGravity() { fruitRigid.useGravity = true; }
-    public void DeactivateGravity() { fruitRigid.useGravity = false; }
 }

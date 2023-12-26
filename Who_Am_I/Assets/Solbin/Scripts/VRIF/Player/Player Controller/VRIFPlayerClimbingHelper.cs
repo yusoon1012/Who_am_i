@@ -20,6 +20,10 @@ public class VRIFPlayerClimbingHelper : MonoBehaviour
 
     private Transform playerController = default;
 
+    [Header("Tracking Space")]
+    [Tooltip("카메라가 실제로 비추는 것을 관할한다")]
+    [SerializeField] private Transform trackingSpace = default;
+
     private void Awake()
     {
         if (Instance == null)
@@ -42,16 +46,26 @@ public class VRIFPlayerClimbingHelper : MonoBehaviour
     /// </summary>
     public void SetAnchor(GameObject _grabbable)
     {
-        if (_grabbable.CompareTag("ClimbingAnchor"))
+        if (_grabbable.CompareTag("ClimbingAnchor")) // 각도 변경 있는 물체면
         {
             Transform anchor = _grabbable.transform.GetChild(0); // 자식 오브젝트 Anchor의 위치로 이동 
 
             climbingAnchor.position = anchor.position;
             climbingAnchor.LookAt(_grabbable.transform);
 
-            // playerController.rotation = climbingAnchor.rotation;
+            // LEGACY: playerController.rotation = climbingAnchor.rotation;
 
             StartCoroutine(Rotate());
+        }
+        else // 각도 변경 없는 물체면
+        {
+            climbingAnchor.position = playerController.position;
+
+            Vector3 originPos = climbingAnchor.position;
+            Vector3 pos = _grabbable.transform.position;
+
+            climbingAnchor.position = new Vector3(originPos.x, pos.y, originPos.z);
+            climbingAnchor.LookAt(_grabbable.transform);
         }
     }
 
@@ -78,7 +92,11 @@ public class VRIFPlayerClimbingHelper : MonoBehaviour
         //    yield return null;
         //}
 
-        playerController.rotation = climbingAnchor.rotation;
+        Vector3 dir = climbingAnchor.rotation.eulerAngles;
+        dir.x = 0;
+        dir.z = 0;
+
+        playerController.rotation = Quaternion.Euler(dir);
 
         yield return null;
     }

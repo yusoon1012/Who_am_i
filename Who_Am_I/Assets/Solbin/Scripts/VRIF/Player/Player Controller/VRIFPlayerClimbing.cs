@@ -64,11 +64,6 @@ namespace BNG
         private void Update()
         {
             if (VRIFStateSystem.Instance.gameState == VRIFStateSystem.GameState.CLIMBING) { SuperJump(); SideJump(); }
-
-            if (Input.GetKeyDown(KeyCode.K)) // TODO: 밑의 코드가 작동하는 것을 봐선 그랩과 상관이 있다.
-            {
-                playerRigid.AddForce(Vector3.up * 5f, ForceMode.Impulse); // 상승 점프 테스트
-            }
         }
         #endregion
 
@@ -77,14 +72,11 @@ namespace BNG
         {
             if (leftGrab && rightGrab) // 양손 다 그랩 상태일때
             {
-                float jump = -0.4f; // 상승 점프 조건 
+                float jump = -0.7f; // 상승 점프 조건 
 
                 if (VRIFInputSystem.Instance.lVelocity.y <= jump && VRIFInputSystem.Instance.rVelocity.y <= jump) // 아래로 휘두르기 
                 {
-                    leftGrabber.ReleaseGrab(); // 양쪽 손을 놓게 한다. 
-                    rightGrabber.ReleaseGrab();
-
-                    float jumpForce = 5f;
+                    float jumpForce = 0.7f;
                     playerRigid.AddForce(Vector3.up * jumpForce, ForceMode.Impulse); // 상승 점프
                 }
             }

@@ -129,9 +129,21 @@ public class VRIFPlayerItem : MonoBehaviour
        
         string name = default; // 아이템 이름
 
-        if (_item.name.Contains("Meat")) { name = "고기"; }
-        else if (_item.name.Contains("Milk")) { name = "우유"; }
-        else if (_item.name.Contains("StrawBerry")) { name = "딸기"; }
+        switch (_item.name)
+        {
+            case var tag when tag.Contains("Meat"):
+                name = "고기";
+                break;
+            case var tag when tag.Contains("Milk"):
+                name = "우유";
+                break;
+            case var tag when tag.Contains("StrawBerry"):
+                name = "딸기";
+                break;
+            case var tag when tag.Contains("Song_e"):
+                name = "송이버섯";
+                break;
+        }
 
         inventory.AddInventory(name, 1); // 인벤토리에 추가 
 

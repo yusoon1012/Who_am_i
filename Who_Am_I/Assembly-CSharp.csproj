@@ -175,7 +175,6 @@
     <Compile Include="Assets\Oculus\SampleFramework\Usage\Passthrough\Scripts\PassthroughController.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Extras\Explosive.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Extras\HandModelSwitcher.cs" />
-    <Compile Include="Assets\Solbin\Scripts\VRIF\Camera\VRIFSubCamera.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Usage\HandsTrainExample\Scripts\WindmillController.cs" />
     <Compile Include="Assets\_PJO\Scripts\ThisAnimalData.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Helpers\StaticBatch.cs" />
@@ -325,7 +324,6 @@
     <Compile Include="Assets\Oculus\SampleFramework\Core\Locomotion\Scripts\CharacterCameraConstraint.cs" />
     <Compile Include="Assets\Suriyun\Scripts\Camera Scripts\MouseOrbitImproved.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Usage\SceneManager\Scripts\SimpleResizer\SimpleResizable.cs" />
-    <Compile Include="Assets\Solbin\Scripts\VRIF\For Test\FruitTest.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Core\InputBridge.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Components\ReturnToSnapZone.cs" />
     <Compile Include="Assets\Meen_Project\Scripts\Items\Items003.cs" />
@@ -387,7 +385,6 @@
     <Compile Include="Assets\BNG Framework\Scripts\Extras\CalibratePlayerHeight.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Core\Button.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Core\Locomotion\Scripts\TeleportAimHandlerLaser.cs" />
-    <Compile Include="Assets\Solbin\Scripts\VRIF\For Test\ClimbingTest.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Core\JoystickControl.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Components\DestroyObjectWithDelay.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Helpers\ControllerOffsetHelper.cs" />
@@ -1488,6 +1485,12 @@
     </Reference>
     <Reference Include="Unity.SysrootPackage.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.SysrootPackage.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="com.unity.cinemachine.editor">
+      <HintPath>Library\ScriptAssemblies\com.unity.cinemachine.editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Cinemachine">
+      <HintPath>Library\ScriptAssemblies\Cinemachine.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

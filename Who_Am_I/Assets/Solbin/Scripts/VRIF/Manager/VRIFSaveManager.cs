@@ -10,7 +10,7 @@ public class VRIFSaveManager : MonoBehaviour
     [Header("Player Controller")]
     [SerializeField] private Transform playerController = default;
 
-    [Tooltip("마지막으로 있던 씬")]
+    [Tooltip("마지막으로 있던 씬 (현재 씬)")]
     public string sceneName { get; private set; }
 
     [Tooltip("플레이어의 위치")]
@@ -20,7 +20,7 @@ public class VRIFSaveManager : MonoBehaviour
     public int fullness { get; private set; } // 포만도
     public int poo { get; private set; } // 배출도
 
-    //[Tooltip("체크포인트 활성화 여부")]
+    // TODO: 체크포인트 활성화 여부 등 
 
     private void Awake()
     {
@@ -41,5 +41,4 @@ public class VRIFSaveManager : MonoBehaviour
         fullness = transform.GetComponent<VRIFStatusSystem>().m_Fullness; // 플레이어 포만도
         poo = transform.GetComponent<VRIFStatusSystem>().m_Poo; // 플레이어 배출도 
     }
-
 }

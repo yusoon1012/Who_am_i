@@ -33,6 +33,9 @@ public class VRIFStatusSystem : MonoBehaviour
     [SerializeField] private Grabber leftGrabber = default; // 왼쪽 손 
     [SerializeField] private Grabber rightGrabber = default; // 오른쪽 손 
 
+    [Header("플레이어 사망")]
+    [SerializeField] private GameObject dieCanvas = default;
+
     // 게이지 총 수는 5로 정해졌다. TODO: 후에 수정 필요 
     private int gageCount = 5;
     // 현 포만감, 배출도 수치 
@@ -290,6 +293,6 @@ public class VRIFStatusSystem : MonoBehaviour
     /// </summary>
     private void DieEvent()
     {
-        Debug.Log("플레이어 사망!");
+        dieCanvas.SetActive(true);
     }
 }

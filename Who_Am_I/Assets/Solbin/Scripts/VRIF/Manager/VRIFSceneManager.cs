@@ -1,3 +1,4 @@
+using BNG;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
@@ -11,9 +12,14 @@ public class VRIFSceneManager : MonoBehaviour
     [Header("XR Rig Advanced")]
     [SerializeField] private GameObject xrRigPlayer = default;
 
-    // 다음 씬에서의 원활한 작동을 위함 
+    // 씬 이동 시 플레이어 위치 이동을 위함
     private Transform playerController;
     private bool setting = false;
+
+    // 플레이어 이동/회전 컴포넌트
+    private LocomotionManager locomotionManager = default;
+    private SmoothLocomotion smoothLocomotion = default;
+    private PlayerRotation playerRotation = default;
 
     public class SeasonName
     {
@@ -21,6 +27,7 @@ public class VRIFSceneManager : MonoBehaviour
         public static string summer { get; private set; } = "Summer_Scene";
         public static string fall { get; private set; } = "Fall_Scene";
         public static string winter { get; private set; } = "Winter_Scene";
+        public static string passage { get; private set; } = "Loading_Scene"; // TODO: 추후 로딩씬이 된다. 
     }
 
     private void Awake()
@@ -36,6 +43,10 @@ public class VRIFSceneManager : MonoBehaviour
     private void Start()
     {
         playerController = xrRigPlayer.transform.GetChild(1);
+
+        locomotionManager = playerController.GetComponent<LocomotionManager>();
+        smoothLocomotion = playerController.GetComponent<SmoothLocomotion>();
+        playerRotation = playerController.GetComponent<PlayerRotation>();
     }
 
     void Update()
@@ -44,6 +55,7 @@ public class VRIFSceneManager : MonoBehaviour
 
         // if (Input.GetKeyDown(KeyCode.L)) { StartCoroutine(LoadHallScene("Summer")); } // 로딩통로를 이용한 이동 예시 
 
+        /// <Point> 씬 이동 전부터 실행되던 코루틴에서 플레이어를 위치시키려 하면 제대로 작동하지 않아 Update를 이용
         if (setting)
         {
             setting = false;
@@ -52,18 +64,18 @@ public class VRIFSceneManager : MonoBehaviour
 
             playerController.position = birthPoint.position;
             playerController.rotation = birthPoint.rotation;
+
+            locomotionManager.enabled = true; // 플레이어 위치시킨 후 이동 재활성화
+            smoothLocomotion.enabled = true;
+            playerRotation.enabled = true; // 회전 재활성화
         }
     }
 
     #region 로딩 통로를 통한 씬 이동
     public IEnumerator LoadHallScene(string _season)
     {
-        Debug.Log("0");
-
-        AsyncOperation loadingOperation = SceneManager.LoadSceneAsync("Loading_Scene");
+        AsyncOperation loadingOperation = SceneManager.LoadSceneAsync(SeasonName.passage);
         loadingOperation.allowSceneActivation = false;
-
-        Debug.Log("1");
 
         while (!loadingOperation.isDone) // 씬이 완전히 로드되지 않았을때
         {
@@ -80,8 +92,6 @@ public class VRIFSceneManager : MonoBehaviour
 
         StartCoroutine(OpenMainScene(_season));
     }
-
-    private void SettingClear() { setting = false; }
 
     private IEnumerator OpenMainScene(string _season)
     {
@@ -110,7 +120,7 @@ public class VRIFSceneManager : MonoBehaviour
         mainOperation.allowSceneActivation = false;
 
         // <Solbin> 삽입 예정 코드 
-        // TODO: 이후 로딩 통로에 맞춰 수정 
+        // TODO: 이후 로딩 통로에 맞춰 수정 (초를 세는 것이 아닌 다음 씬의 로딩 정도에 따르도록)
 
         //while (mainOperation.progress < 0.9f) // 메인씬이 로드되지 않았다면 대기 
         //{
@@ -127,6 +137,10 @@ public class VRIFSceneManager : MonoBehaviour
             yield return null;
         }
         // <Solbin> ===
+
+        locomotionManager.enabled = false; // 씬 활성화 직전 이동 비활성화
+        smoothLocomotion.enabled = false;
+        playerRotation.enabled = false; // 회전 비활성화
 
         mainOperation.allowSceneActivation = true; // 로드 
 
