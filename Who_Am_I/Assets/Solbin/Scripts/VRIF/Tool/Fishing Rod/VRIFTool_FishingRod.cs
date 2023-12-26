@@ -29,6 +29,9 @@ public class VRIFTool_FishingRod : MonoBehaviour
     [Header("낚시줄")]
     [SerializeField] private LineRenderer lineRenderer = default;
 
+    [Header("물고기 프리팹")]
+    [SerializeField] private GameObject fishPrefab = default;
+
     // 낚시찌 게임 오브젝트
     private GameObject bobber = default;
     // 낚시찌 Rigidbody
@@ -37,6 +40,8 @@ public class VRIFTool_FishingRod : MonoBehaviour
     private bool throwBobber = false;
     // 오브젝트 풀 
     private Vector3 poolPos = new Vector3(0, -10, 0);
+    // 물고기 오브젝트
+    private GameObject fish = default;
 
     // 낚시 중 (낚시 코루틴 실행 중)
     public bool isFishing { get; private set; } = false;
@@ -52,9 +57,13 @@ public class VRIFTool_FishingRod : MonoBehaviour
     private void Start()
     {
         bobber = Instantiate(bobberPrefab, poolPos, Quaternion.identity); // 낚시찌 프리팹으로 낚시찌 생성
+
         bobberRigid = bobber.GetComponent<Rigidbody>();
+        bobberRigid.useGravity = false;
 
         VRIFTool_FishingBobber.fishNibble += StartCheckStrike;
+
+        fish = Instantiate(fishPrefab, poolPos, Quaternion.identity); // 낚을 물고기 오브젝트
 
         //lineRenderer.positionCount = 2; // 낚시대 끝과 낚시찌를 연결 
     }
@@ -63,7 +72,7 @@ public class VRIFTool_FishingRod : MonoBehaviour
     {
         if (vrifPlayerFishing.activateFishing && other == fishingHitRange) // 물가에 접촉해있고 낚시대를 위로 들어올렸을 때 
         {
-            if (!isFishing) { StartCoroutine(CheckSwing()); } // 이미 낚시 중이 아닐 때  
+            if (!isFishing) { StartCoroutine(CheckSwing()); } // 낚시 중이 아닐 때  
         }
     }
 
@@ -98,8 +107,10 @@ public class VRIFTool_FishingRod : MonoBehaviour
         {
             throwBobber = true;
 
-            bobberRigid.AddForce(Vector3.up * 4.5f, ForceMode.Impulse);
-            bobberRigid.AddForce(bobberFinish.position * 0.7f, ForceMode.Impulse);
+            bobberRigid.AddForce(Vector3.up * 0.8f, ForceMode.Impulse);
+            bobberRigid.AddForce(bobberFinish.position * 0.4f, ForceMode.Impulse);
+
+            bobberRigid.useGravity = true; // 중력 작동 시작
 
             Invoke("ClearThrowBobber", 1);
         }
@@ -121,7 +132,7 @@ public class VRIFTool_FishingRod : MonoBehaviour
 
         int successNum = 0; // 낚시 성공 횟수
 
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < 3; i++) // 화살표는 세 번 등장한다. 
         {
             InputBridge.Instance.VibrateController(0.1f, 0.2f, 0.5f, ControllerHand.Left);
             InputBridge.Instance.VibrateController(0.1f, 0.2f, 0.5f, ControllerHand.Right);
@@ -171,21 +182,31 @@ public class VRIFTool_FishingRod : MonoBehaviour
 
     private IEnumerator GetFish(bool _gotcha)
     {
-        bobberRigid.AddForce(Vector3.up * 6f, ForceMode.Impulse);
+        Vector3 bobberPos = bobber.transform.position;
 
-        yield return new WaitForSeconds(0.3f);
+        bobberRigid.AddForce(Vector3.up * 5.5f, ForceMode.Impulse);
 
-        if (_gotcha) // TODO: 낚시에 성공했을때 낚시찌 위치에 생선 띄운다. 
+        while(Vector3.Distance(bobberPos, bobber.transform.position) < 3.5f) // 찌가 일정 거리 이상 떠오르기 전까지 조건 체크 
         {
+            if (_gotcha) // 낚시에 성공했다면 
+            {
+                fish.transform.position = bobber.transform.position;
+                Invoke("ReturnFish", 3f);
+            }
 
+            yield return null;
         }
 
+        bobberRigid.useGravity = false; // 중력 해제 
         bobberRigid.velocity = Vector3.zero; // 낚시찌 정지
         bobber.transform.position = poolPos; // 낚시찌 원상 복구 
-
-        isFishing = false; // 다시 낚시를 할 수 있도록 함. 
     }
 
+    /// <summary>
+    /// 물고기 오브젝트 복귀 
+    /// </summary>
+    private void ReturnFish() { fish.transform.position = poolPos; isFishing = false; }
+
     // TODO: 낚시줄을 구현해야 한다. 
-    // TODO: 물고기가 왼손 위로 올라와야 한다. 
+    // TODO: 왜 두 번째 던질 때는 이상한 방향으로 날아가는가? = > 물 속에 들어가는 순간 중력이 꺼지는데 그것이 다시 켜지지 않아 그렇다. 
 }

@@ -30,13 +30,15 @@ public class VRIFMap_Crop : MonoBehaviour
     private void Start()
     {
         grabbable = transform.GetComponent<Grabbable>();
+        grabbable.enabled = false; // 작물을 뽑기 전엔 그랩 불가
+
         leafOriginPos = leafBone.localPosition;
         radishRigid = GetComponent<Rigidbody>();
 
         itemCollider.enabled = false; // 뿌리 작물을 뽑은 이후부터 활성화
     }
 
-    private void OnTriggerStay(Collider other)
+    private void OnTriggerStay(Collider other) // 캡슐 콜라이더가 잎 콜라이더가 된다. 
     {
         // 잎에 닿아있고 장갑을 착용 중 
         if (other.GetComponent<Grabber>() && VRIFItemSystem.Instance.handType == VRIFItemSystem.HandType.GLOVES)
@@ -146,7 +148,6 @@ public class VRIFMap_Crop : MonoBehaviour
     private void ResetVelocity() { radishRigid.velocity = Vector3.zero; }
 
     // 자연스러운 쓰러짐을 위해 
-    private void NatureFall() { radishRigid.AddForce(Vector3.back * 0.5f,ForceMode.Impulse); }
+    private void NatureFall() { radishRigid.AddForce(Vector3.back * 1.5f, ForceMode.Impulse); }
 }
 
-// TODO: 왜 한 번 놓았다가 다시 잡아당기려 하면 작동하지 않는가

@@ -17,7 +17,7 @@ public class VRIFSceneManager : MonoBehaviour
 
     public class SeasonName
     {
-        public static string spring { get; private set; } = "VRIF_Player_Scene"; // TODO: 이후 수정 필요 
+        public static string spring { get; private set; } = "Solbin_Scene"; // TODO: 이후 수정 필요 
         public static string summer { get; private set; } = "Summer_Scene";
         public static string fall { get; private set; } = "Fall_Scene";
         public static string winter { get; private set; } = "Winter_Scene";
