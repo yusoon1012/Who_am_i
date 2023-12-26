@@ -12,8 +12,6 @@ public class MeshControllerEditor : Editor
 
     // Unity에서 기본적으로 제공하는 오브젝트의 메쉬
     private Mesh primitiveMesh;
-    // target오브젝트의 메쉬
-    private Mesh targetMesh;
 
     private void OnEnable()
     {
@@ -99,7 +97,7 @@ public class MeshControllerEditor : Editor
             GFuncE.SubmitNonFindText(targetObject, typeof(MeshFilter));
             return;
         }
-        targetMesh = targetMeshFilter.sharedMesh != null ? targetMeshFilter.sharedMesh : null;
+        Mesh targetMesh = targetMeshFilter.sharedMesh != null ? targetMeshFilter.sharedMesh : null;
         if (targetMesh == null)
         {
             GFuncE.SubmitNonFindText(targetObject, typeof(Mesh));
