@@ -4,6 +4,56 @@ using UnityEngine;
 
 public static partial class GFunc
 {
+    public static GameObject GetChildObject(this GameObject _targetObject, string _objectName)
+    {
+        GameObject searchResult_ = default;
+        GameObject searchTarget_ = default;
+
+        for (int i = 0; i < _targetObject.transform.childCount; i++)
+        {
+            searchTarget_ = _targetObject.transform.GetChild(i).gameObject;
+            if (searchTarget_.name.Equals(_objectName))
+            {
+                searchResult_ = searchTarget_;
+                return searchResult_;
+            }
+            else
+            {
+                searchResult_ = GetChildObject(searchTarget_, _objectName);
+
+                if (searchResult_ == null || searchResult_ == default) { /* Pass */}
+                else { return searchResult_; }
+            }
+        }
+
+        return searchResult_;
+    }
+
+    public static Transform GetChildObject(this Transform _targetObject, string _objectName)
+    {
+        Transform searchResult_ = default;
+        Transform searchTarget_ = default;
+
+        for (int i = 0; i < _targetObject.childCount; i++)
+        {
+            searchTarget_ = _targetObject.GetChild(i);
+            if (searchTarget_.name.Equals(_objectName))
+            {
+                searchResult_ = searchTarget_;
+                return searchResult_;
+            }
+            else
+            {
+                searchResult_ = GetChildObject(searchTarget_, _objectName);
+
+                if (searchResult_ == null || searchResult_ == default) { /* Pass */}
+                else { return searchResult_; }
+            }
+        }
+
+        return searchResult_;
+    }
+
     /*
      * GameObject 형식의 오브젝트를 받아
      * 컴포넌트를 이미 가지고 있다면 그대로 반환 없다면 생성 후 반환
