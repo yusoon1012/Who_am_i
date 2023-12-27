@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,6 +16,7 @@ namespace BNG {
         public PlayerControllerType ControllerType = PlayerControllerType.CharacterController;
 
         [Header("CharacterController Settings : ")]
+        [Tooltip("플레이어 이동 속도")]
         public float MovementSpeed = 1.25f;
 
         [Header("Rigidbody Settings : ")]
