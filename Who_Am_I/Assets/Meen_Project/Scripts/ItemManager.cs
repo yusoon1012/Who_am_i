@@ -38,7 +38,7 @@ public class ItemManager : MonoBehaviour
     Dictionary<string, ItemsMain> stuffs = new Dictionary<string, ItemsMain>();
     // 제작 아이템 데이터 베이스
     Dictionary<string, CraftingMain> crafting = new Dictionary<string, CraftingMain>();
-
+    // 도감에 추가할 아이템 그룹 정보 데이터
     Dictionary<string, int> collectionItems = new Dictionary<string, int>();
 
     #endregion 변수 설정
@@ -80,9 +80,11 @@ public class ItemManager : MonoBehaviour
         crafting.Add("송이 불고기", new Crafting002());
         //* 제작 데이터 베이스에 아이템 추가
 
+        //* 컬렉션 그룹 전용 데이터 베이스에 아이템 추가
         collectionItems.Add("고기", 0);
         collectionItems.Add("딸기", 0);
         collectionItems.Add("우유", 0);
+        //* 컬렉션 그룹 전용 데이터 베이스에 아이템 추가
     }     // Start()
 
     #region 아이템 타입 체크 기능
@@ -195,21 +197,27 @@ public class ItemManager : MonoBehaviour
             itemInfo = null;
         }
 
+        // 인벤토리에 아이템을 추가할 때 도감에 등록 가능 여부를 체크하는 함수를 실행함
         AddDictionary(itemName, itemInfo);
 
         return itemInfo;
     }     // InventoryAdd()
 
+    // 인벤토리에 아이템을 추가할 때 도감에 등록 가능 여부를 체크하는 함수
     private void AddDictionary(string itemName, ItemsMain itemInfo)
     {
+        // 도감 목록에 추가된 아이템 정보가 없을 때 실행
         if (!Encyclopedia.ContainsKey(itemName))
         {
+            // 도감 목록에 아이템 정보를 추가함
             Encyclopedia.Add(itemName, itemInfo);
 
+            // 컬렉션 목록에 아이템 정보가 존재할 때 실행
             if (collectionItems.ContainsKey(itemName))
             {
+                // 컬렉션 그룹 번호 값을 저장함
                 int collectionNum = collectionItems[itemName];
-
+                // 컬렉션 정보를 저장하는 클래스로 아이템 정보를 전달함
                 collectionInfoTf.GetComponent<SaveCollections>().CheckCollection(itemName, collectionNum);
             }
         }
