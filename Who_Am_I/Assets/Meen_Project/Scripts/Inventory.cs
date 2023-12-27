@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -881,15 +880,6 @@ public class Inventory : MonoBehaviour
         }
     }     // ExitDropItem()
 
-    // 인벤토리 UI 에서 퀵슬롯 UI 로 이동하는 함수
-    public void ConnectQuickSlot()
-    {
-        inventory.SetActive(false);
-        itemInfo.SetActive(false);
-        playerTf.GetComponent<MainMenu>().mainMenu.SetActive(false);
-        quickSlotTf.GetComponent<QuickSlot>().quickSlotObj.SetActive(true);
-    }     // ConnectQuickSlot()
-
     // 아이템 장착, 사용, 장착 해제 기능 함수
     public void UseItem(int usingType, string itemName)
     {
@@ -1024,7 +1014,7 @@ public class Inventory : MonoBehaviour
                     // 아이템 매니저에서 인벤토리에 저장된 아이템을 삭제하는 함수를 실행
                     ItemManager.instance.DeleteItem(itemName);
                 }
-                
+
                 break;
             default:
                 break;
@@ -1107,6 +1097,15 @@ public class Inventory : MonoBehaviour
     }     // ChangeItemInfo()
 
     #endregion 인벤토리 상세 정보 창 기능
+
+    // 인벤토리 UI 에서 퀵슬롯 UI 로 이동하는 함수
+    public void ConnectQuickSlot()
+    {
+        inventory.SetActive(false);
+        itemInfo.SetActive(false);
+        playerTf.GetComponent<MainMenu>().mainMenu.SetActive(false);
+        quickSlotTf.GetComponent<QuickSlot>().quickSlotObj.SetActive(true);
+    }     // ConnectQuickSlot()
 
     // 인벤토리에 있는 빈 아이콘을 클릭하면 아이템 정보창 초기화 함수
     public void EmptyInfo()

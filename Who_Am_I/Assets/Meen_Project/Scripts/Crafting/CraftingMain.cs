@@ -16,6 +16,10 @@ public class CraftingMain
     public int[] stuffStack = new int[5];
     // 제작되는 아이템의 갯수
     public int craftingStack = default;
+    // 한번만 제작 가능한 아이템인지 타입 체크
+    public bool disposableType = false;
+    // 한번만 제작 가능한 아이템 제작 여부 체크
+    public bool disposable = false;
 
     #endregion 변수 설정
 

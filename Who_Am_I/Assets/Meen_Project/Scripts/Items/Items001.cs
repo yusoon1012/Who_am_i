@@ -1,6 +1,3 @@
-using Oculus.Platform.Models;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Items001 : ItemsMain

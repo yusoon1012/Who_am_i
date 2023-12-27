@@ -15,6 +15,8 @@ public class MainMenu : MonoBehaviour
     // 선택된 메뉴 표시 오브젝트
     public GameObject[] selectMenu = new GameObject[8];
 
+    public Transform mapControllerTf;
+
     // 플레이어 트랜스폼
     private Transform playerTf = default;
 
@@ -59,19 +61,26 @@ public class MainMenu : MonoBehaviour
     // 메인 메뉴에서 다른 메뉴로 넘어가는 함수
     public void ConnectMenu()
     {
-        if (order == 1)
+        switch (order)
         {
-            playerTf.GetComponent<UIController>().uiController = 2;
-            menuImage[6].SetActive(false);
-            menuImage[7].SetActive(false);
-            playerTf.GetComponent<Inventory>().ControlInventory();
-        }
-        else if (order == 4)
-        {
-            playerTf.GetComponent<UIController>().uiController = 5;
-            menuImage[6].SetActive(false);
-            menuImage[7].SetActive(false);
-            playerTf.GetComponent<Dictionary>().OnDictionary();
+            case 1:
+                playerTf.GetComponent<UIController>().uiController = 2;
+                menuImage[6].SetActive(false);
+                menuImage[7].SetActive(false);
+                playerTf.GetComponent<Inventory>().ControlInventory();
+                break;
+            //case 3:
+            //    playerTf.GetComponent<UIController>().uiController = 10;
+            //    menuImage[6].SetActive(false);
+            //    menuImage[7].SetActive(false);
+            //    mapControllerTf.GetComponent<MapControl>().OpenMap();
+            //    break;
+            case 4:
+                playerTf.GetComponent<UIController>().uiController = 5;
+                menuImage[6].SetActive(false);
+                menuImage[7].SetActive(false);
+                playerTf.GetComponent<Dictionary>().OnDictionary();
+                break;
         }
     }     // ConnectMenu()
 

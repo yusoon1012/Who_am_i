@@ -37,6 +37,8 @@ public class ItemCrafting : MonoBehaviour
     // 제작 상세 창을 보고있는 상태인지 체크
     public bool lookCraftingInfo { get; set; } = false;
 
+    private Transform playerTf = default;
+
     // 제작 창에서 현재 리스트 선택 색
     private Color currentColor = default;
     // 제작 창에서 새로운 리스트 선택 색
@@ -103,6 +105,8 @@ public class ItemCrafting : MonoBehaviour
 
     void Start()
     {
+        playerTf = GetComponent<Transform>().transform;
+
         for (int i = 0; i < 5; i++)
         {
             craftingSlotColor[i] = craftingSlotObj[i].GetComponent<Image>();
@@ -170,9 +174,10 @@ public class ItemCrafting : MonoBehaviour
         if (page == 0)
         {
             craftingStr[0] = "딸기 우유";
+            craftingStr[1] = "송이 불고기";
 
             // Fix : 테스트 이후 5개 슬롯을 for 문을 사용하여 돌릴 예정
-            for (int i = 0; i < 1; i++)
+            for (int i = 0; i < 2; i++)
             {
                 ItemManager.instance.ItemImage(craftingStr[i], 3, out craftingSlotImageNum[i]);
                 itemImages[i].sprite = ItemManager.instance.itemImages[craftingSlotImageNum[i]].sprite;
@@ -632,7 +637,9 @@ public class ItemCrafting : MonoBehaviour
 
         Debug.LogFormat("{0} : {1} 개 제작 완료", craftingName, craftingStackNum);
 
+        playerTf.GetComponent<UIController>().uiController = 4;
         ShowOrder();
+        ExitDetailCrafting();
     }     // Crafting()
 
     #endregion 크래프팅 상세 정보 기능
