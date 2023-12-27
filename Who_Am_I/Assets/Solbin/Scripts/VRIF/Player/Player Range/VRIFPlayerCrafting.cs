@@ -12,6 +12,8 @@ public class VRIFPlayerCrafting : MonoBehaviour
 
     private void Start()
     {
+        
+
         VRIFInputSystem.Instance.interaction += ClickCrafting;
     }
 

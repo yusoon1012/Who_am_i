@@ -34,11 +34,3 @@ public enum QuestType
     INTERACTION,
     CONDITION
 }
-
-public enum QuestState
-{
-    NONE,
-    GOING,
-    DONE
-}
-
