@@ -7,7 +7,8 @@ using UnityEngine;
 public enum AnimalsType
 {
     Rabbit,
-    Chicken
+    Chicken,
+    Hog
 }       // AnimalsType
 
 //! 몬스터 데이터
@@ -71,3 +72,22 @@ public class Chicken : AnimalBase
         };
     }       // Init()
 }       // Chicken
+
+public class Hog : AnimalBase
+{
+    public override void Init()
+    {
+        base.Init();
+        animalData = new AnimalData
+        {
+            id = 4004,
+            description = "멧돼지",
+            modelinfo = "TW_Minion_wild_boar",
+            type = "1",
+            hp = 1,
+            speed = 3.0f,
+            range_Rec = 10,
+            drop_Item = 1
+        };
+    }
+}

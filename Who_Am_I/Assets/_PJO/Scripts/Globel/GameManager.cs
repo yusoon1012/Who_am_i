@@ -32,6 +32,10 @@ public class GameManager : MonoBehaviour
         Chicken chicken = new Chicken();
         chicken.Init();
         animals.Add(AnimalsType.Chicken, chicken.animalData);
+        // 멧돼지 데이터 저장
+        Hog hog = new Hog();
+        hog.Init();
+        animals.Add(AnimalsType.Hog, hog.animalData);
         #endregion
     }
 }

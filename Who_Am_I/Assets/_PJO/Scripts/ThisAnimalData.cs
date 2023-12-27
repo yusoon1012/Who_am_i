@@ -90,7 +90,6 @@ public class ThisAnimalData : MonoBehaviour
 
         collider.radius = 1;
         // } collider 설정
-
     }
 
     private IEnumerator Test()

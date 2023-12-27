@@ -14,6 +14,9 @@ public static partial class GFuncE
         return targetObject_.GetComponent<T>() == true ? targetObject_.GetComponent<T>() : null;
     }
 
+    public static GameObject SetGameObject(this SerializedProperty _object)
+    =>(GameObject)_object.objectReferenceValue;
+
     public static T AddComponent<T>(this SerializedProperty _object) where T : Component
     {
         GameObject targetObject_ = (GameObject)_object.objectReferenceValue;
