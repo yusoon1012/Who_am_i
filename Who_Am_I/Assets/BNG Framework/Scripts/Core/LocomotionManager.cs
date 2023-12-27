@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -11,9 +11,12 @@ namespace BNG {
         /// Default locomotion to use if nothing stored in playerprefs. 0 = Teleport. 1 = SmoothLocomotion
         /// </summary>
         [Tooltip("Default locomotion to use if nothing stored in playerprefs. 0 = Teleport. 1 = SmoothLocomotion")]
-        public LocomotionType DefaultLocomotion = LocomotionType.Teleport;
+        // Legacy: public LocomotionType DefaultLocomotion = LocomotionType.Teleport;
+        public LocomotionType DefaultLocomotion = LocomotionType.SmoothLocomotion;
 
-        LocomotionType selectedLocomotion = LocomotionType.Teleport;
+        // Legacy: LocomotionType selectedLocomotion = LocomotionType.Teleport;
+        LocomotionType selectedLocomotion = LocomotionType.SmoothLocomotion;
+
         public LocomotionType SelectedLocomotion {
             get { return selectedLocomotion; }
         }
@@ -90,7 +93,11 @@ namespace BNG {
 
         public void LocomotionToggle() {
             // Toggle the locomotion
-            ChangeLocomotion(SelectedLocomotion == LocomotionType.SmoothLocomotion ? LocomotionType.Teleport : LocomotionType.SmoothLocomotion, LoadLocomotionFromPrefs);
+
+            // <Solbin> 아래 코드 활성시 왼쪽 컨트롤러 조이스틱 클릭 후 이동이 정지된다. (이동 방법 변경)
+
+            // LEGACY:
+            // ChangeLocomotion(SelectedLocomotion == LocomotionType.SmoothLocomotion ? LocomotionType.Teleport : LocomotionType.SmoothLocomotion, LoadLocomotionFromPrefs);
         }
 
         public void UpdateTeleportStatus() {

@@ -205,14 +205,14 @@ namespace BNG {
                             // <Solbin> 직전 손의 위치와 현재 손의 위치를 이용해 방향 구하기
                             controllerMoveAmount = previousLeftControllerPosition - LeftControllerTransform.position;
 
-                            // <Solbin> 왼손 등반 이벤트 발생
-                            leftClimbingEvent?.Invoke(this, EventArgs.Empty);
+                            // <Solbin> 
+                            leftClimbingEvent?.Invoke(this, EventArgs.Empty); // 왼손 등반 이벤트 발생
                             // <Solbin> ===
                         }
-                        else { // <Solbin> 오른손으로 등반 중이었어도 마찬가지  
+                        else { 
                             controllerMoveAmount = previousRightControllerPosition - RightControllerTransform.position;
-                            // <Solbin> 오른손 등반 이벤트 발생
-                            rightClimbingEvent?.Invoke(this, EventArgs.Empty);
+                            // <Solbin>
+                            rightClimbingEvent?.Invoke(this, EventArgs.Empty); // 오른손 등반 이벤트 발생
                             // <Solbin> ===
                         }
 
@@ -289,8 +289,8 @@ namespace BNG {
         }
 
         // <Solbin> 등반 물체를 잡았을 때 한 번만 실행 
-        void onGrabbedClimbable() {
-
+        void onGrabbedClimbable() 
+        {
             if (VRIFStateSystem.Instance.gameState != VRIFStateSystem.GameState.LADDER) // 사다리를 타고 있는 중이 아닐 때만 CLIMBING
             {
                 VRIFStateSystem.Instance.ChangeState(VRIFStateSystem.GameState.CLIMBING);
@@ -312,8 +312,8 @@ namespace BNG {
         }
 
         // <Solbin> 등반 중이 아닐때 (public으로 교체함)
-        public void onReleasedClimbable() {
-
+        public void onReleasedClimbable() 
+        {
             VRIFStateSystem.Instance.ChangeState(VRIFStateSystem.GameState.NORMAL);
 
             // Reset back to our original values

@@ -170,7 +170,7 @@ public class VRIFTool_FishingRod : MonoBehaviour
                 else { yield return null; } // 아무것도 하지 않았다면 while문 계속 진행 
             }
 
-            if (success) { arrow.SetActive(false); successNum += 1; Debug.LogWarning("Success Number= " + successNum); } // 3초 내 물고기를 잡았다면
+            if (success) { arrow.SetActive(false); successNum += 1; } // 3초 내 물고기를 잡았다면
             else if (!success) { arrow.SetActive(false); StartCoroutine(GetFish(false)); yield break; }
 
 

@@ -50,15 +50,9 @@ public class VRIFTool_NerfGun : MonoBehaviour
         VRIFInputSystem.Instance.slowMode += ActivateSlowTime; 
     }
 
-    private void Update()
-    {
-        Aiming();
-    }
+    private void FixedUpdate() => Aiming();
 
-    private void LateUpdate()
-    {
-        trajectory.SetPositions(trajectoryPos);
-    }
+    private void LateUpdate() { trajectory.SetPositions(trajectoryPos); }
 
     // TODO: Line Renderer의 업데이트 주기가 느린가...?
 
@@ -85,12 +79,12 @@ public class VRIFTool_NerfGun : MonoBehaviour
                     Shoot(prey);
                 }
             }
-        }
-        else // 총구가 허공을 향하고
-        {
-            pointer.position = poolPos;
-            trajectoryPos[0] = poolPos;
-            trajectoryPos[1] = poolPos;
+            else // 아닐때
+            {
+                pointer.position = poolPos;
+                trajectoryPos[0] = poolPos;
+                trajectoryPos[1] = poolPos;
+            }
         }
     }
 

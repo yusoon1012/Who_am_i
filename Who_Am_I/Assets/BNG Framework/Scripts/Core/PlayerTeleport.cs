@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -206,7 +206,7 @@ namespace BNG {
         void LateUpdate() {
 
             // Are we pressing button to check for teleport?
-            aimingTeleport = KeyDownForTeleport();            
+            //aimingTeleport = KeyDownForTeleport();            
 
             if (aimingTeleport) {
                 DoCheckTeleport();                

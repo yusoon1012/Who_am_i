@@ -4,15 +4,17 @@ using UnityEngine;
 
 public class VRIFMap_ZipLine : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    /// <Point> Grabber에서 잡은 물체가 짚라인인지 구분하는 것에 쓰이고 있다. 
 
-    // Update is called once per frame
-    void Update()
-    {
+    //// Start is called before the first frame update
+    //void Start()
+    //{
         
-    }
+    //}
+
+    //// Update is called once per frame
+    //void Update()
+    //{
+        
+    //}
 }

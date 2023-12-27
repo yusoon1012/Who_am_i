@@ -40,7 +40,7 @@ public class VRIFMap_PassScene : MonoBehaviour
                     break;
             }
 
-            VRIFSceneManager.Instance.LoadHallScene(seasonName); // 로딩 복도 씬 로드
+            StartCoroutine(VRIFSceneManager.Instance.LoadHallScene(seasonName)); // 로딩 복도 씬 로드
         }
     }
 }

@@ -73,7 +73,7 @@ public class VRIFPlayerLadder : MonoBehaviour
         Ray ray = new Ray(VRIFInputSystem.Instance.rController.position, VRIFInputSystem.Instance.rController.forward);
         RaycastHit hit;
 
-        if (Physics.Raycast(ray, out hit, 3f)) // 바닥을 향하고 있을 때, 3f 이내 
+        if (Physics.Raycast(ray, out hit, 5f)) // 바닥을 향하고 있을 때, 3f 이내 
         {
             if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Floor")) // 사다리가 비활성화 중일때
             {
@@ -83,10 +83,10 @@ public class VRIFPlayerLadder : MonoBehaviour
                 Vector3 rotation = ladderPointer.transform.rotation.eulerAngles;
                 ladderPointer.transform.rotation = Quaternion.Euler(0, rotation.y, 0);
             }
-        }
-        else
-        {
-            ladderPointer.transform.position = poolPos;
+            else
+            {
+                ladderPointer.transform.position = poolPos;
+            }
         }
     }
 
