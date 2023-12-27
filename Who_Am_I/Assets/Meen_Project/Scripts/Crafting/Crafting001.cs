@@ -18,5 +18,7 @@ public class Crafting001 : CraftingMain
         stuffStack[0] = 1;
         stuffStack[1] = 1;
         craftingStack = 1;
+        disposableType = false;
+        disposable = false;
     }     // Init()
 }

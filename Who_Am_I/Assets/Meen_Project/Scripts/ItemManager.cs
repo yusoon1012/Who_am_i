@@ -1,5 +1,4 @@
 using Firebase.Auth;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,6 +11,8 @@ public class ItemManager : MonoBehaviour
     public static ItemManager instance;
     // 퀵슬롯 트랜스폼
     public Transform quickSlotTf;
+
+    public Transform collectionInfoTf;
 
     // 아이템마다 등록된 아이콘 이미지 목록
     public Image[] itemImages = new Image[30];
@@ -37,6 +38,8 @@ public class ItemManager : MonoBehaviour
     Dictionary<string, ItemsMain> stuffs = new Dictionary<string, ItemsMain>();
     // 제작 아이템 데이터 베이스
     Dictionary<string, CraftingMain> crafting = new Dictionary<string, CraftingMain>();
+    // 도감에 추가할 아이템 그룹 정보 데이터
+    Dictionary<string, int> collectionItems = new Dictionary<string, int>();
 
     #endregion 변수 설정
 
@@ -51,6 +54,13 @@ public class ItemManager : MonoBehaviour
 
     void Start()
     {
+        //List<Dictionary<string, object>> itemCsvTest = LGM_CSVReader.Read("test");
+
+        //for (int i = 0; i < itemCsvTest.Count; i++)
+        //{
+        //    Debug.LogFormat("{0}", itemCsvTest[i]["Name"].ToString());
+        //}
+
         // 게임 이어하기 클릭 시 저장된 아이템 로드 테스트
         testDic.Add("고기", 1);
         testDic.Add("딸기", 1);
@@ -61,11 +71,20 @@ public class ItemManager : MonoBehaviour
         itemDataBase.Add("딸기", new Items002());
         itemDataBase.Add("우유", new Items003());
         itemDataBase.Add("딸기 우유", new Items004());
+        itemDataBase.Add("송이 버섯", new Items005());
+        itemDataBase.Add("송이 불고기", new Items006());
         //* 아이템 데이터 베이스에 아이템 추가
 
         //* 제작 데이터 베이스에 아이템 추가
         crafting.Add("딸기 우유", new Crafting001());
+        crafting.Add("송이 불고기", new Crafting002());
         //* 제작 데이터 베이스에 아이템 추가
+
+        //* 컬렉션 그룹 전용 데이터 베이스에 아이템 추가
+        collectionItems.Add("고기", 0);
+        collectionItems.Add("딸기", 0);
+        collectionItems.Add("우유", 0);
+        //* 컬렉션 그룹 전용 데이터 베이스에 아이템 추가
     }     // Start()
 
     #region 아이템 타입 체크 기능
@@ -178,8 +197,31 @@ public class ItemManager : MonoBehaviour
             itemInfo = null;
         }
 
+        // 인벤토리에 아이템을 추가할 때 도감에 등록 가능 여부를 체크하는 함수를 실행함
+        AddDictionary(itemName, itemInfo);
+
         return itemInfo;
     }     // InventoryAdd()
+
+    // 인벤토리에 아이템을 추가할 때 도감에 등록 가능 여부를 체크하는 함수
+    private void AddDictionary(string itemName, ItemsMain itemInfo)
+    {
+        // 도감 목록에 추가된 아이템 정보가 없을 때 실행
+        if (!Encyclopedia.ContainsKey(itemName))
+        {
+            // 도감 목록에 아이템 정보를 추가함
+            Encyclopedia.Add(itemName, itemInfo);
+
+            // 컬렉션 목록에 아이템 정보가 존재할 때 실행
+            if (collectionItems.ContainsKey(itemName))
+            {
+                // 컬렉션 그룹 번호 값을 저장함
+                int collectionNum = collectionItems[itemName];
+                // 컬렉션 정보를 저장하는 클래스로 아이템 정보를 전달함
+                collectionInfoTf.GetComponent<SaveCollections>().CheckCollection(itemName, collectionNum);
+            }
+        }
+    }     // AddDictionary()
 
     // 아이템 데이터 베이스의 정보를 내보내는 함수
     public ItemsMain ReturnItemInfomation(string itemName, int itemType, out ItemsMain itemInfomation)
@@ -300,16 +342,9 @@ public class ItemManager : MonoBehaviour
     // 도감에서 현재 페이지의 아이템들의 획득, 미획득 상태 값들을 내보내는 함수
     public bool DictionaryCheck(int type, string itemName, out bool itemCheck)
     {
-        if (type == 0)
+        if (Encyclopedia.ContainsKey(itemName))
         {
-            if (foods.ContainsKey(itemName))
-            {
-                itemCheck = true;
-            }
-            else
-            {
-                itemCheck = false;
-            }
+            itemCheck = true;
         }
         else
         {
@@ -724,5 +759,64 @@ public class ItemManager : MonoBehaviour
     public void SendDataTest(string itemType, string itemName, int stack)
     {
         // 데이터 베이스 함수에 추가할 예정
+    }
+
+    public bool QuestLootItemCheck(string itemName, int itemType, int lootCount, out bool lootCheck)
+    {
+        ItemsMain itemInfo = new ItemsMain();
+
+        switch (itemType)
+        {
+            case 0:
+                if (equipments.ContainsKey(itemName))
+                {
+                    itemInfo = equipments[itemName];
+                }
+                else
+                {
+                    itemInfo = null;
+                }
+                break;
+            case 1:
+                if (foods.ContainsKey(itemName))
+                {
+                    itemInfo = foods[itemName];
+                }
+                else
+                {
+                    itemInfo = null;
+                }
+                break;
+            case 2:
+                if (stuffs.ContainsKey(itemName))
+                {
+                    itemInfo = stuffs[itemName];
+                }
+                else
+                {
+                    itemInfo = null;
+                }
+                break;
+            default:
+                break;
+        }
+
+        if (itemInfo != null)
+        {
+            if (itemInfo.itemStack >= lootCount)
+            {
+                lootCheck = true;
+            }
+            else
+            {
+                lootCheck = false;
+            }
+        }
+        else
+        {
+            lootCheck = false;
+        }
+
+        return lootCheck;
     }
 }
