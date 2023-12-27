@@ -15,15 +15,24 @@ public class VRIFTool_FishingBobber : MonoBehaviour
     // 물고기 입질 이벤트
     public static event EventHandler fishNibble;
 
+    // 오브젝트 풀
+    private Vector3 poolPos = new Vector3(0, -10, 0);
+
+    // 낚시대
+    private Transform fishingRod = default;
+
     private void Start()
     {
         bobberRigid = transform.GetComponent<Rigidbody>();
+        fishingRod = FindAnyObjectByType<VRIFTool_FishingRod>().transform;
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.name.Contains("Water")) // TODO: 추후 레이어 등으로 변경.
         {
+            StopCoroutine("CheckDistance");
+
             inWater = true;
 
             if (!VRIFTool_FishingRod.Instance.isFishing)
@@ -31,6 +40,22 @@ public class VRIFTool_FishingBobber : MonoBehaviour
                 StartCoroutine(StopBobber());
             }
         }
+        else
+        {
+            StartCoroutine("CheckDistance");
+        }
+    }
+
+    private IEnumerator CheckDistance()
+    {
+        while (Vector3.Distance(fishingRod.position, transform.position) < 30)
+        {
+            yield return null;
+        }
+
+        bobberRigid.useGravity = false; // 중력 해제 
+        bobberRigid.velocity = Vector3.zero; // 낚시찌 정지
+        transform.position = poolPos; // 낚시찌 원상 복구 
     }
 
     private void OnTriggerExit(Collider other)

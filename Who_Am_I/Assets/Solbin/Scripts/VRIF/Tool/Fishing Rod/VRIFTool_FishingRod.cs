@@ -15,8 +15,9 @@ public class VRIFTool_FishingRod : MonoBehaviour
 
     [Header("낚시찌 시작 위치")]
     [SerializeField] Transform bobberStart = default;
-    [Header("낚시찌 던져질 위치")]
-    [SerializeField] Transform bobberFinish = default;
+
+    [Header("Player Controller")]
+    [SerializeField] Transform playerController = default;
 
     [Header("낚시찌 프리팹")]
     [SerializeField] private GameObject bobberPrefab = default;
@@ -89,8 +90,6 @@ public class VRIFTool_FishingRod : MonoBehaviour
 
             if (VRIFInputSystem.Instance.rVelocity.y <= -0.7f) // 아래로 휘두르는 것이 확인되면
             {
-                bobber.transform.position = bobberStart.position; // 낚시찌 시작 지점에 위치
-
                 ThrowBobber();
             }
 
@@ -108,7 +107,9 @@ public class VRIFTool_FishingRod : MonoBehaviour
             throwBobber = true;
 
             bobberRigid.AddForce(Vector3.up * 0.8f, ForceMode.Impulse);
-            bobberRigid.AddForce(bobberFinish.position * 0.4f, ForceMode.Impulse);
+            bobberRigid.AddForce(playerController.forward * 3f, ForceMode.Impulse);
+
+            bobber.transform.position = bobberStart.position; // 낚시찌 시작 지점에 위치
 
             bobberRigid.useGravity = true; // 중력 작동 시작
 
@@ -129,6 +130,8 @@ public class VRIFTool_FishingRod : MonoBehaviour
     private IEnumerator CheckStrike()
     {
         isFishing = true;
+
+        VRIFStateSystem.Instance.ChangeState(VRIFStateSystem.GameState.FISHING); // 낚시 상태로 전환
 
         int successNum = 0; // 낚시 성공 횟수
 
@@ -196,6 +199,8 @@ public class VRIFTool_FishingRod : MonoBehaviour
 
             yield return null;
         }
+
+        VRIFStateSystem.Instance.ChangeState(VRIFStateSystem.GameState.NORMAL); // 노말 상태로 전환
 
         bobberRigid.useGravity = false; // 중력 해제 
         bobberRigid.velocity = Vector3.zero; // 낚시찌 정지
