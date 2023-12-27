@@ -1,19 +1,28 @@
 using UnityEngine;
 using UnityEditor;
+using System;
 using System.Collections.Generic;
-using System.Linq;
 
 [CustomEditor(typeof(QuadricErrorMetric))]
 public class QuadricErrorMetricEditor : Editor
 {
     // 정점을 줄일 오브젝트
     SerializedProperty targetObject;
+    SerializedProperty vertexPercent;
 
+    // 각 삼각형의 각각의 정점에 대한 Quadric 행렬을 저장할 구조체
+    public struct Triangle
+    {
+        public Matrix4x4 v0;
+        public Matrix4x4 v1;
+        public Matrix4x4 v2;
+    }
 
     private void OnEnable()
     {
         // 프로퍼티 초기화
         targetObject = serializedObject.FindProperty("targetObject");
+        vertexPercent = serializedObject.FindProperty("vertexPercent");
     }       // OnEnable()
 
     public override void OnInspectorGUI()
@@ -23,17 +32,18 @@ public class QuadricErrorMetricEditor : Editor
 
         // 인스펙터에 변수를 편집 가능한 필드로 표시
         EditorGUILayout.PropertyField(targetObject, new GUIContent("퀄리티를 낮출 오브젝트"));
+        EditorGUILayout.PropertyField(vertexPercent, new GUIContent("정점 퍼센트"));
 
         // "Apply" 버튼 클릭시 정점을 지움
         if (GUILayout.Button("Apply"))
         {
-            QEM();
+            QuadricErrorMetric();
         }
 
         serializedObject.ApplyModifiedProperties();
     }       // OnInspectorGUI()
 
-    private void QEM()
+    private void QuadricErrorMetric()
     {
         MeshFilter targetMeshFilter = GFuncE.SetComponent<MeshFilter>(targetObject);
         if (targetMeshFilter == null)
@@ -50,213 +60,457 @@ public class QuadricErrorMetricEditor : Editor
 
         Mesh copyMesh = GFuncE.CopyMesh(targetMesh);
 
-        Vector3[] vertices = copyMesh.vertices;
-        int[] triangles = copyMesh.triangles;
+        copyMesh = SimplifyMesh(copyMesh);
 
-        List<QEMVertex> qemVertices = new List<QEMVertex>();
+        copyMesh = UpdateMesh(copyMesh);
 
-        for (int i = 0; i < vertices.Length; i++)
-        {
-            qemVertices.Add(new QEMVertex(vertices[i], i));
-        }
-
-        QEMHeap qemHeap = new QEMHeap(qemVertices);
-        while (qemHeap.Count > 2)
-        {
-            QEMVertexPair minErrorPair = qemHeap.PopMinErrorPair();
-
-            if (minErrorPair.Error > 0.1f)
-                break;
-
-            // 정점을 병합하고 메시를 업데이트합니다.
-            QEMVertex mergedVertex = minErrorPair.MergeVertices();
-            qemVertices.Add(mergedVertex);
-
-            // 삼각형을 업데이트합니다.
-            triangles = QEMUtility.UpdateTriangles(triangles, minErrorPair.Vertex1.Index, minErrorPair.Vertex2.Index, mergedVertex.Index);
-
-            // 병합된 정점의 QEM을 업데이트합니다.
-            QEMUtility.UpdateQEM(qemVertices, triangles, mergedVertex);
-
-            // 힙을 재정렬합니다.
-            qemHeap.UpdateHeap();
-        }
-
-        // 간략화된 데이터로 새로운 메시를 생성합니다.
-        Mesh simplifiedMesh = QEMUtility.CreateMeshFromQEMVertices(qemVertices);
-        targetMeshFilter.sharedMesh = simplifiedMesh;
-
+        targetMeshFilter.sharedMesh = copyMesh;
     }
 
-
-    public class QEMVertex
+    private Mesh SimplifyMesh(Mesh _mesh)
     {
-        public Vector3 Position { get; private set; }
-        public int Index { get; private set; }
-        public Matrix4x4 QEMMatrix { get; set; }
+        float value = CalculateVertiesPercent(_mesh);
+        Triangle[] triangles = CalculateQuadricMatrix(_mesh);
+        _mesh = SortErrorMatric(_mesh, triangles);
 
-        public QEMVertex(Vector3 position, int index)
+        // 정점을 제거하는 작업을 수행합니다.
+        int targetVertexCount = Mathf.FloorToInt(value);
+
+        while (_mesh.vertexCount > targetVertexCount)
         {
-            Position = position;
-            Index = index;
-            QEMMatrix = new Matrix4x4();
+            // 정렬된 정점 배열을 가져옵니다.
+            int[] sortedIndices = SortIndicesByErrorMetric(CalculateVertexErrors(_mesh, triangles));
+
+            // 가장 마지막에 있는 정점을 제거합니다.
+            int lastVertexIndex = sortedIndices[sortedIndices.Length - 1];
+            RemoveVertex(_mesh, lastVertexIndex);
         }
+
+        return _mesh;
     }
 
-    public class QEMVertexPair
+    private float[] CalculateVertexErrors(Mesh _mesh, Triangle[] _triangles)
     {
-        public QEMVertex Vertex1 { get; private set; }
-        public QEMVertex Vertex2 { get; private set; }
-        public float Error { get; private set; }
+        float[] errorMatrics = new float[_mesh.vertices.Length];
 
-        public QEMVertexPair(QEMVertex vertex1, QEMVertex vertex2)
+        for (int i = 0; i < _mesh.vertices.Length; i++)
         {
-            Vertex1 = vertex1;
-            Vertex2 = vertex2;
-            Error = CalculateError();
+            errorMatrics[i] = CalculateVertexErrorMatric(_mesh, _triangles, i);
         }
 
-        private float CalculateError()
-        {
-            return Vector3.Distance(Vertex1.Position, Vertex2.Position);
-        }
-
-        public QEMVertex MergeVertices()
-        {
-            Vector3 mergedPosition = (Vertex1.Position + Vertex2.Position) / 2f;
-            QEMVertex mergedVertex = new QEMVertex(mergedPosition, Vertex1.Index);
-
-            // 직접 구현한 AddOuterProduct 메서드를 사용하여 외적을 계산하고 더합니다.
-            Matrix4x4Extensions.AddOuterProduct(mergedVertex.QEMMatrix, new Vector4(Vertex1.Position.x, Vertex1.Position.y, Vertex1.Position.z, 1.0f),
-                                               new Vector4(Vertex2.Position.x, Vertex2.Position.y, Vertex2.Position.z, 1.0f));
-
-            return mergedVertex;
-        }
+        return errorMatrics;
     }
 
-    public class QEMHeap
+    private void RemoveVertex(Mesh _mesh, int vertexIndex)
     {
-        private List<QEMVertexPair> heap;
+        List<Vector3> vertices = new List<Vector3>(_mesh.vertices);
+        List<Vector2> uv = new List<Vector2>(_mesh.uv);
+        List<Vector3> normals = new List<Vector3>(_mesh.normals);
+        List<Color> colors = new List<Color>(_mesh.colors);
+        List<Vector4> tangents = new List<Vector4>(_mesh.tangents);
+        List<BoneWeight> boneWeights = new List<BoneWeight>(_mesh.boneWeights);
 
-        public int Count
-        {
-            get { return heap.Count; }
-        }
+        // 정점 및 관련 데이터 제거
+        vertices.RemoveAt(vertexIndex);
+        uv.RemoveAt(vertexIndex);
+        normals.RemoveAt(vertexIndex);
+        colors.RemoveAt(vertexIndex);
+        tangents.RemoveAt(vertexIndex);
+        boneWeights.RemoveAt(vertexIndex);
 
-        public QEMHeap(List<QEMVertex> vertices)
-        {
-            heap = new List<QEMVertexPair>();
+        // 메시 새로 만들기
+        _mesh.Clear();
+        _mesh.vertices = vertices.ToArray();
+        _mesh.uv = uv.ToArray();
+        _mesh.normals = normals.ToArray();
+        _mesh.colors = colors.ToArray();
+        _mesh.tangents = tangents.ToArray();
+        _mesh.boneWeights = boneWeights.ToArray();
 
-            for (int i = 0; i < vertices.Count; i++)
-            {
-                for (int j = i + 1; j < vertices.Count; j++)
-                {
-                    heap.Add(new QEMVertexPair(vertices[i], vertices[j]));
-                }
-            }
+        // 삼각형 다시 계산
+        _mesh.triangles = RecalculateTriangles(_mesh.triangles, vertexIndex);
 
-            heap.Sort((pair1, pair2) => pair1.Error.CompareTo(pair2.Error));
-        }
-
-        public QEMVertexPair PopMinErrorPair()
-        {
-            QEMVertexPair minErrorPair = heap[0];
-            heap.RemoveAt(0);
-            return minErrorPair;
-        }
-
-        public void UpdateHeap()
-        {
-            heap.Sort((pair1, pair2) => pair1.Error.CompareTo(pair2.Error));
-        }
+        // 올바른 정점과 삼각형 정보로 업데이트
+        _mesh.RecalculateBounds();
+        _mesh.RecalculateNormals();
     }
 
-    public static class QEMUtility
+    private int[] RecalculateTriangles(int[] triangles, int removedVertexIndex)
     {
-        public static Matrix4x4 UpdateQEM(List<QEMVertex> vertices, int[] triangles, QEMVertex mergedVertex)
+        List<int> newTriangles = new List<int>();
+
+        for (int i = 0; i < triangles.Length; i += 3)
         {
-            Matrix4x4 qemMatrix = new Matrix4x4();
+            int index0 = triangles[i];
+            int index1 = triangles[i + 1];
+            int index2 = triangles[i + 2];
 
-            for (int i = 0; i < triangles.Length; i += 3)
+            if (index0 != removedVertexIndex && index1 != removedVertexIndex && index2 != removedVertexIndex)
             {
-                int v1 = triangles[i];
-                int v2 = triangles[i + 1];
-                int v3 = triangles[i + 2];
-
-                if (v1 == mergedVertex.Index || v2 == mergedVertex.Index || v3 == mergedVertex.Index)
-                {
-                    Vector3 normal = Vector3.Cross(vertices[v2].Position - vertices[v1].Position, vertices[v3].Position - vertices[v1].Position).normalized;
-                    Vector4 plane = new Vector4(normal.x, normal.y, normal.z, -Vector3.Dot(normal, mergedVertex.Position));
-
-                    // 직접 구현한 AddOuterProduct 메서드를 사용하여 외적을 계산하고 더합니다.
-                    Matrix4x4Extensions.AddOuterProduct(qemMatrix, plane, plane);
-                }
+                // 제거된 정점을 포함하지 않는 삼각형만 추가
+                newTriangles.Add(index0);
+                newTriangles.Add(index1);
+                newTriangles.Add(index2);
             }
-
-            return qemMatrix;
         }
 
-        public static int[] UpdateTriangles(int[] triangles, int vertexIndex1, int vertexIndex2, int mergedVertexIndex)
-        {
-            List<int> updatedTriangles = new List<int>();
-
-            for (int i = 0; i < triangles.Length; i += 3)
-            {
-                int v1 = triangles[i];
-                int v2 = triangles[i + 1];
-                int v3 = triangles[i + 2];
-
-                if (!((v1 == vertexIndex1 && v2 == vertexIndex2) || (v1 == vertexIndex2 && v2 == vertexIndex1) ||
-                      (v2 == vertexIndex1 && v3 == vertexIndex2) || (v2 == vertexIndex2 && v3 == vertexIndex1) ||
-                      (v3 == vertexIndex1 && v1 == vertexIndex2) || (v3 == vertexIndex2 && v1 == vertexIndex1)))
-                {
-                    updatedTriangles.Add(v1);
-                    updatedTriangles.Add(v2);
-                    updatedTriangles.Add(v3);
-                }
-            }
-
-            updatedTriangles.Add(vertexIndex1);
-            updatedTriangles.Add(vertexIndex2);
-            updatedTriangles.Add(mergedVertexIndex);
-
-            return updatedTriangles.ToArray();
-        }
-
-        public static Mesh CreateMeshFromQEMVertices(List<QEMVertex> vertices)
-        {
-            Mesh mesh = new Mesh();
-            List<Vector3> meshVertices = new List<Vector3>();
-
-            for (int i = 0; i < vertices.Count; i++)
-            {
-                meshVertices.Add(vertices[i].Position);
-            }
-
-            mesh.vertices = meshVertices.ToArray();
-            mesh.triangles = Enumerable.Range(0, meshVertices.Count).ToArray(); // Just a simple triangle fan
-
-            mesh.RecalculateNormals();
-            mesh.RecalculateBounds();
-
-            return mesh;
-        }
+        return newTriangles.ToArray();
     }
+
+    private Mesh UpdateMesh(Mesh _mesh)
+    {
+        _mesh.RecalculateNormals();
+        _mesh.RecalculateBounds();
+
+        return _mesh;
+    }
+
+    
+
+    // Mesh의 각 정점에 대한 Quadric 행렬 계산
+    private Triangle[] CalculateQuadricMatrix(Mesh mesh)
+    {
+        // 각 삼각형에 대한 Quadric 행렬을 저장할 배열
+        Triangle[] triangles = new Triangle[mesh.triangles.Length / 3];
+
+        for (int i = 0; i < triangles.Length; i++)
+        {
+            // 삼각형의 정점 인덱스 가져오기
+            int index0 = mesh.triangles[i * 3];
+            int index1 = mesh.triangles[i * 3 + 1];
+            int index2 = mesh.triangles[i * 3 + 2];
+
+            // 각 정점의 위치값 가져오기
+            Vector3 vertex0 = mesh.vertices[index0];
+            Vector3 vertex1 = mesh.vertices[index1];
+            Vector3 vertex2 = mesh.vertices[index2];
+
+            // 삼각형의 normal 계산
+            Vector3 normal = Vector3.Cross(vertex1 - vertex0, vertex2 - vertex0).normalized;
+
+            // 각 정점에 대한 Quadric 행렬을 계산하고 저장
+            triangles[i] = new Triangle
+            {
+                v0 = CalculateQuadricMatrixForTriangle(vertex0, normal),
+                v1 = CalculateQuadricMatrixForTriangle(vertex1, normal),
+                v2 = CalculateQuadricMatrixForTriangle(vertex2, normal)
+            };
+        }
+
+        return triangles;
+    }
+
+    // 삼각형의 정점에 대한 Quadric 행렬 계산
+    private Matrix4x4 CalculateQuadricMatrixForTriangle(Vector3 _vertex, Vector3 _normal)
+    {
+        // normal 벡터 정규화
+        Vector3 normalizedNormal = _normal.normalized;
+
+        // Quadric 행렬의 계수
+        float a = normalizedNormal.x;
+        float b = normalizedNormal.y;
+        float c = normalizedNormal.z;
+        float d = -Vector3.Dot(normalizedNormal, _vertex);
+
+        // 계수를 이용한 Quadirc 행렬 생성
+        Matrix4x4 quadricMatrix = new Matrix4x4
+            (
+            new Vector4(a * a, a * b, a * c, a * d),
+            new Vector4(b * a, b * b, b * c, b * d),
+            new Vector4(c * a, c * b, c * c, c * d),
+            new Vector4(d * a, d * b, d * c, d * d)
+            );
+
+        return quadricMatrix;
+    }
+
+    // Quadric 행렬을 이용한 ErrorMatric 계산
+    private float CalculateErrorMatric(Matrix4x4 _quadricMatrix, Vector3 _vertex)
+    {
+        // 정점을 동차 좌표계로 나타내는 벡터 생성
+        Vector4 matrixValue = new Vector4(_vertex.x, _vertex.y, _vertex.z, 1);
+
+        // 정점 벡터를 Quadirc 행렬과 곱한 후 내적을 계산하여 ErrorMatric 계산
+        return Vector4.Dot(matrixValue, _quadricMatrix * matrixValue);
+    }
+
+    private Mesh SortErrorMatric(Mesh _mesh, Triangle[] _triangles)
+    {
+        float[] errorMatrics = new float[_mesh.vertices.Length];
+        for (int i = 0; i < _mesh.vertices.Length; i++)
+        {
+            errorMatrics[i] = CalculateVertexErrorMatric(_mesh, _triangles, i);
+        }
+
+        int[] sortedIndices = SortIndicesByErrorMetric(errorMatrics);
+
+        Vector3[] sortedVertices = new Vector3[_mesh.vertices.Length];
+        for (int i = 0; i < _mesh.vertices.Length; i++)
+        {
+            sortedVertices[i] = _mesh.vertices[sortedIndices[i]];
+        }
+        _mesh.vertices = sortedVertices;
+
+        return _mesh;
+    }
+
+    private float CalculateVertexErrorMatric(Mesh _mesh, Triangle[] _triangles, int _vertexIndex)
+    {
+        float totalError = 0f;
+
+        foreach (var triangle in _triangles)
+        {
+            if (Array.IndexOf(_mesh.triangles, _vertexIndex) != -1)
+            {
+                totalError += CalculateErrorMatric(triangle.v0, _mesh.vertices[_vertexIndex]);
+                totalError += CalculateErrorMatric(triangle.v1, _mesh.vertices[_vertexIndex]);
+                totalError += CalculateErrorMatric(triangle.v2, _mesh.vertices[_vertexIndex]);
+            }
+        }
+
+        return totalError;
+    }
+
+    private int[] SortIndicesByErrorMetric(float[] _errorMetrics)
+    {
+        int[] indices = new int[_errorMetrics.Length];
+        for (int i = 0; i < indices.Length; i++)
+        {
+            indices[i] = i;
+        }
+        Array.Sort(indices, (a, b) => _errorMetrics[a].CompareTo(_errorMetrics[b]));
+
+        return indices;
+    }
+
+    private float CalculateVertiesPercent(Mesh _mesh)
+    => _mesh.vertexCount / vertexPercent.floatValue;
+
+
+    //private void QEM()
+    //{
+    //    MeshFilter targetMeshFilter = GFuncE.SetComponent<MeshFilter>(targetObject);
+    //    if (targetMeshFilter == null)
+    //    {
+    //        GFuncE.SubmitNonFindText(targetObject, typeof(MeshFilter));
+    //        return;
+    //    }
+    //    Mesh targetMesh = targetMeshFilter.sharedMesh != null ? targetMeshFilter.sharedMesh : null;
+    //    if (targetMesh == null)
+    //    {
+    //        GFuncE.SubmitNonFindText(targetObject, typeof(Mesh));
+    //        return;
+    //    }
+
+    //    Mesh copyMesh = GFuncE.CopyMesh(targetMesh);
+
+    //    Vector3[] vertices = copyMesh.vertices;
+    //    int[] triangles = copyMesh.triangles;
+
+    //    List<QEMVertex> qemVertices = new List<QEMVertex>();
+
+    //    for (int i = 0; i < vertices.Length; i++)
+    //    {
+    //        qemVertices.Add(new QEMVertex(vertices[i], i));
+    //    }
+
+    //    QEMHeap qemHeap = new QEMHeap(qemVertices);
+    //    while (qemHeap.Count > 2)
+    //    {
+    //        QEMVertexPair minErrorPair = qemHeap.PopMinErrorPair();
+
+    //        if (minErrorPair.Error > 0.1f)
+    //            break;
+
+    //        // 정점을 병합하고 메시를 업데이트합니다.
+    //        QEMVertex mergedVertex = minErrorPair.MergeVertices();
+    //        qemVertices.Add(mergedVertex);
+
+    //        // 삼각형을 업데이트합니다.
+    //        triangles = QEMUtility.UpdateTriangles(triangles, minErrorPair.Vertex1.Index, minErrorPair.Vertex2.Index, mergedVertex.Index);
+
+    //        // 병합된 정점의 QEM을 업데이트합니다.
+    //        QEMUtility.UpdateQEM(qemVertices, triangles, mergedVertex);
+
+    //        // 힙을 재정렬합니다.
+    //        qemHeap.UpdateHeap();
+    //    }
+
+    //    // 간략화된 데이터로 새로운 메시를 생성합니다.
+    //    Mesh simplifiedMesh = QEMUtility.CreateMeshFromQEMVertices(qemVertices);
+    //    targetMeshFilter.sharedMesh = simplifiedMesh;
+
+    //}
+
+
+    //public class QEMVertex
+    //{
+    //    public Vector3 Position { get; private set; }
+    //    public int Index { get; private set; }
+    //    public Matrix4x4 QEMMatrix { get; set; }
+
+    //    public QEMVertex(Vector3 position, int index)
+    //    {
+    //        Position = position;
+    //        Index = index;
+    //        QEMMatrix = new Matrix4x4();
+    //    }
+    //}
+
+    //public class QEMVertexPair
+    //{
+    //    public QEMVertex Vertex1 { get; private set; }
+    //    public QEMVertex Vertex2 { get; private set; }
+    //    public float Error { get; private set; }
+
+    //    public QEMVertexPair(QEMVertex vertex1, QEMVertex vertex2)
+    //    {
+    //        Vertex1 = vertex1;
+    //        Vertex2 = vertex2;
+    //        Error = CalculateError();
+    //    }
+
+    //    private float CalculateError()
+    //    {
+    //        return Vector3.Distance(Vertex1.Position, Vertex2.Position);
+    //    }
+
+    //    public QEMVertex MergeVertices()
+    //    {
+    //        Vector3 mergedPosition = (Vertex1.Position + Vertex2.Position) / 2f;
+    //        QEMVertex mergedVertex = new QEMVertex(mergedPosition, Vertex1.Index);
+
+    //        // 직접 구현한 AddOuterProduct 메서드를 사용하여 외적을 계산하고 더합니다.
+    //        Matrix4x4Extensions.AddOuterProduct(mergedVertex.QEMMatrix, new Vector4(Vertex1.Position.x, Vertex1.Position.y, Vertex1.Position.z, 1.0f),
+    //                                           new Vector4(Vertex2.Position.x, Vertex2.Position.y, Vertex2.Position.z, 1.0f));
+
+    //        return mergedVertex;
+    //    }
+    //}
+
+    //public class QEMHeap
+    //{
+    //    private List<QEMVertexPair> heap;
+
+    //    public int Count
+    //    {
+    //        get { return heap.Count; }
+    //    }
+
+    //    public QEMHeap(List<QEMVertex> vertices)
+    //    {
+    //        heap = new List<QEMVertexPair>();
+
+    //        for (int i = 0; i < vertices.Count; i++)
+    //        {
+    //            for (int j = i + 1; j < vertices.Count; j++)
+    //            {
+    //                heap.Add(new QEMVertexPair(vertices[i], vertices[j]));
+    //            }
+    //        }
+
+    //        heap.Sort((pair1, pair2) => pair1.Error.CompareTo(pair2.Error));
+    //    }
+
+    //    public QEMVertexPair PopMinErrorPair()
+    //    {
+    //        QEMVertexPair minErrorPair = heap[0];
+    //        heap.RemoveAt(0);
+    //        return minErrorPair;
+    //    }
+
+    //    public void UpdateHeap()
+    //    {
+    //        heap.Sort((pair1, pair2) => pair1.Error.CompareTo(pair2.Error));
+    //    }
+    //}
+
+    //public static class QEMUtility
+    //{
+    //    public static Matrix4x4 UpdateQEM(List<QEMVertex> vertices, int[] triangles, QEMVertex mergedVertex)
+    //    {
+    //        Matrix4x4 qemMatrix = new Matrix4x4();
+
+    //        for (int i = 0; i < triangles.Length; i += 3)
+    //        {
+    //            int v1 = triangles[i];
+    //            int v2 = triangles[i + 1];
+    //            int v3 = triangles[i + 2];
+
+    //            if (v1 == mergedVertex.Index || v2 == mergedVertex.Index || v3 == mergedVertex.Index)
+    //            {
+    //                Vector3 normal = Vector3.Cross(vertices[v2].Position - vertices[v1].Position, vertices[v3].Position - vertices[v1].Position).normalized;
+    //                Vector4 plane = new Vector4(normal.x, normal.y, normal.z, -Vector3.Dot(normal, mergedVertex.Position));
+
+    //                // 직접 구현한 AddOuterProduct 메서드를 사용하여 외적을 계산하고 더합니다.
+    //                Matrix4x4Extensions.AddOuterProduct(qemMatrix, plane, plane);
+    //            }
+    //        }
+
+    //        return qemMatrix;
+    //    }
+
+    //    public static int[] UpdateTriangles(int[] triangles, int vertexIndex1, int vertexIndex2, int mergedVertexIndex)
+    //    {
+    //        List<int> updatedTriangles = new List<int>();
+
+    //        for (int i = 0; i < triangles.Length; i += 3)
+    //        {
+    //            int v1 = triangles[i];
+    //            int v2 = triangles[i + 1];
+    //            int v3 = triangles[i + 2];
+
+    //            if (!((v1 == vertexIndex1 && v2 == vertexIndex2) || (v1 == vertexIndex2 && v2 == vertexIndex1) ||
+    //                  (v2 == vertexIndex1 && v3 == vertexIndex2) || (v2 == vertexIndex2 && v3 == vertexIndex1) ||
+    //                  (v3 == vertexIndex1 && v1 == vertexIndex2) || (v3 == vertexIndex2 && v1 == vertexIndex1)))
+    //            {
+    //                updatedTriangles.Add(v1);
+    //                updatedTriangles.Add(v2);
+    //                updatedTriangles.Add(v3);
+    //            }
+    //        }
+
+    //        updatedTriangles.Add(vertexIndex1);
+    //        updatedTriangles.Add(vertexIndex2);
+    //        updatedTriangles.Add(mergedVertexIndex);
+
+    //        return updatedTriangles.ToArray();
+    //    }
+
+    //    public static Mesh CreateMeshFromQEMVertices(List<QEMVertex> vertices)
+    //    {
+    //        Mesh mesh = new Mesh();
+    //        List<Vector3> meshVertices = new List<Vector3>();
+
+    //        for (int i = 0; i < vertices.Count; i++)
+    //        {
+    //            meshVertices.Add(vertices[i].Position);
+    //        }
+
+    //        mesh.vertices = meshVertices.ToArray();
+    //        mesh.triangles = Enumerable.Range(0, meshVertices.Count).ToArray(); // Just a simple triangle fan
+
+    //        mesh.RecalculateNormals();
+    //        mesh.RecalculateBounds();
+
+    //        return mesh;
+    //    }
+    //}
 }
 
-public static class Matrix4x4Extensions
-{
-    public static void AddOuterProduct(Matrix4x4 matrix, Vector4 lhs, Vector4 rhs)
-    {
-        for (int i = 0; i < 4; i++)
-        {
-            for (int j = 0; j < 4; j++)
-            {
-                matrix[i, j] += lhs[i] * rhs[j];
-            }
-        }
-    }
-}
+//public static class Matrix4x4Extensions
+//{
+//    public static void AddOuterProduct(Matrix4x4 matrix, Vector4 lhs, Vector4 rhs)
+//    {
+//        for (int i = 0; i < 4; i++)
+//        {
+//            for (int j = 0; j < 4; j++)
+//            {
+//                matrix[i, j] += lhs[i] * rhs[j];
+//            }
+//        }
+//    }
+//}
 
 //private float CalculateCurvature()
 
