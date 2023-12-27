@@ -137,7 +137,7 @@ public class VRIFPlayerItem : MonoBehaviour
             case var tag when tag.Contains("Milk"):
                 name = "우유";
                 break;
-            case var tag when tag.Contains("StrawBerry"):
+            case var tag when tag.Contains("Strawberry"):
                 name = "딸기";
                 break;
             case var tag when tag.Contains("Song_e"):
@@ -166,3 +166,5 @@ public class VRIFPlayerItem : MonoBehaviour
         itemInfoCanvas.SetActive(false); // 아이템 정보 UI 비활성화 
     }
 }
+
+// TODO: Meat의 Outline Shader가 제대로 홯성화되지 않는 문제 => Materail가 최외곽선 안쪽으로 적용된다. 

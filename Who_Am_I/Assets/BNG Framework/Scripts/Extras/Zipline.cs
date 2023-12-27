@@ -66,7 +66,10 @@ namespace BNG {
                 audioSource.Stop();
             }
 
-            ShakingController();
+            if (VRIFStateSystem.Instance.gameState == VRIFStateSystem.GameState.ZIPLINE) // 짚라인을 잡았을 때
+            {
+                ShakingController();
+            }
         }
 
         void OnDrawGizmosSelected() {
