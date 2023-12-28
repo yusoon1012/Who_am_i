@@ -120,7 +120,7 @@ namespace BNG
         /// </summary>
         private void NormalState()
         {
-            VRIFItemSystem.Instance.ReleaseItem();
+            //VRIFItemSystem.Instance.ReleaseItem();
 
             gameState = GameState.NORMAL;
 

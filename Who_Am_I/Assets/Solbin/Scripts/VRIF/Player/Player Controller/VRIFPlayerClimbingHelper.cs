@@ -46,34 +46,15 @@ public class VRIFPlayerClimbingHelper : MonoBehaviour
     /// </summary>
     public void SetAnchor(GameObject _grabbable)
     {
-        Transform anchor = _grabbable.transform.GetChild(0); // 자식 오브젝트 Anchor의 위치로 이동 
+        if (_grabbable.transform.GetChild(0) != null)
+        {
+            Transform anchor = _grabbable.transform.GetChild(0); // 자식 오브젝트 Anchor의 위치로 이동 
 
-        climbingAnchor.position = anchor.position;
-        climbingAnchor.LookAt(_grabbable.transform);
+            climbingAnchor.position = anchor.position;
+            climbingAnchor.LookAt(_grabbable.transform);
 
-        if (_grabbable.CompareTag("ClimbingAnchor")) { StartCoroutine(Rotate()); }
-
-        //if (_grabbable.CompareTag("ClimbingAnchor")) // 각도 변경 있는 물체면
-        //{
-        //    Transform anchor = _grabbable.transform.GetChild(0); // 자식 오브젝트 Anchor의 위치로 이동 
-
-        //    climbingAnchor.position = anchor.position;
-        //    climbingAnchor.LookAt(_grabbable.transform);
-
-        //    // LEGACY: playerController.rotation = climbingAnchor.rotation;
-
-        //    StartCoroutine(Rotate());
-        //}
-        //else // 각도 변경 없는 물체면
-        //{
-        //    climbingAnchor.position = playerController.position;
-
-        //    Vector3 originPos = climbingAnchor.position;
-        //    Vector3 pos = _grabbable.transform.position;
-
-        //    climbingAnchor.position = new Vector3(originPos.x, pos.y, originPos.z);
-        //    climbingAnchor.LookAt(_grabbable.transform);
-        //}
+            if (_grabbable.CompareTag("ClimbingAnchor")) { StartCoroutine(Rotate()); }
+        }
     }
 
     private IEnumerator Rotate()
