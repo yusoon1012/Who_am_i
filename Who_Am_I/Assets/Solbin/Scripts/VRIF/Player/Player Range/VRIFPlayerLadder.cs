@@ -73,8 +73,10 @@ public class VRIFPlayerLadder : MonoBehaviour
         Ray ray = new Ray(VRIFInputSystem.Instance.rController.position, VRIFInputSystem.Instance.rController.forward);
         RaycastHit hit;
 
-        if (Physics.Raycast(ray, out hit, 5f)) // 바닥을 향하고 있을 때, 3f 이내 
+        if (Physics.Raycast(ray, out hit, 5f)) // 바닥을 향하고 있을 때, 일정 거리 이내 
         {
+            Debug.LogWarning("Check Tree");
+
             if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Floor")) // 사다리가 비활성화 중일때
             {
                 ladderPointer.transform.position = hit.point;

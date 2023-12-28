@@ -58,6 +58,8 @@ public class UIController : MonoBehaviour
 
     void Update()
     {
+        if (inputDelay) { return; } // <Solbin> 입력 딜레이 중 입력 금지 
+
         UpdateFunction();
     }     // Update()
 
@@ -86,19 +88,19 @@ public class UIController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.UpArrow) || vrifAction.Player.LeftController.ReadValue<Vector2>().y >= joystickInput)
         {
             // <Solbin> GetKey 같은 느낌이라 너무 예민하다고 느껴진다. 수정 필요
-            DirectionControl(0);
+            if (!inputDelay) { DirectionControl(0); }
         }
         else if (Input.GetKeyDown(KeyCode.DownArrow) || vrifAction.Player.LeftController.ReadValue<Vector2>().y <= -joystickInput)
         {
-            DirectionControl(1);
+            if (!inputDelay) { DirectionControl(1); }
         }
         else if (Input.GetKeyDown(KeyCode.LeftArrow) || vrifAction.Player.LeftController.ReadValue<Vector2>().x <= -joystickInput)
         {
-            DirectionControl(2);
+            if (!inputDelay) { DirectionControl(2); }
         }
         else if (Input.GetKeyDown(KeyCode.RightArrow) || vrifAction.Player.LeftController.ReadValue<Vector2>().x >= joystickInput)
         {
-            DirectionControl(3);
+            if (!inputDelay) { DirectionControl(3); }
         }
         // 모든 상, 하, 좌, 우 키보드 키 입력 종료 값
         else if (Input.GetKeyUp(KeyCode.UpArrow))
@@ -149,19 +151,19 @@ public class UIController : MonoBehaviour
         // 모든 두번째 상, 하, 좌, 우 키보드 키 입력 값
         else if (Input.GetKeyDown(KeyCode.Keypad8) || vrifAction.Player.RightController.ReadValue<Vector2>().y >= joystickInput)
         {
-            RightDirectionControl(0);
+            if (!inputDelay) { RightDirectionControl(0); }
         }
         else if (Input.GetKeyDown(KeyCode.Keypad2) || vrifAction.Player.RightController.ReadValue<Vector2>().y <= -joystickInput)
         {
-            RightDirectionControl(1);
+            if (!inputDelay) { RightDirectionControl(1); }
         }
         else if (Input.GetKeyDown(KeyCode.Keypad4) || vrifAction.Player.RightController.ReadValue<Vector2>().x <= -joystickInput)
         {
-            RightDirectionControl(2);
+            if (!inputDelay) { RightDirectionControl(2); }
         }
         else if (Input.GetKeyDown(KeyCode.Keypad6) || vrifAction.Player.RightController.ReadValue<Vector2>().x >= joystickInput)
         {
-            RightDirectionControl(3);
+            if (!inputDelay) { RightDirectionControl(3); }
         }
         // 모든 두번째 상, 하, 좌, 우 키보드 키 입력 종료 값
         else if (Input.GetKeyUp(KeyCode.Keypad8))
@@ -205,7 +207,7 @@ public class UIController : MonoBehaviour
         }
 
         // <Solbin> 지나치게 예민한 입력값을 막기 위함
-        if (inputDelay) { Invoke("ClearInputDelay", 0.5f); }
+        if (inputDelay) { Invoke("ClearInputDelay", 0.55f); }
         // <Solbin> ===
     }     // UpdateFunction()
 
@@ -227,6 +229,10 @@ public class UIController : MonoBehaviour
     // 모든 UI 에서 방향키 입력을 받아 전달하는 함수
     public void DirectionControl(int arrowType)
     {
+        // <Solbin>
+        inputDelay = true;
+        // <Solbin> ===
+
         switch (uiController)
         {
             case 1:
@@ -283,6 +289,10 @@ public class UIController : MonoBehaviour
     // 모든 UI 에서 다른 방향키 입력을 받아 전달하는 함수
     public void RightDirectionControl(int arrowType)
     {
+        // <Solbin>
+        inputDelay = true;
+        // <Solbin> ===
+
         switch (uiController)
         {
             case 2:
@@ -567,8 +577,6 @@ public class UIController : MonoBehaviour
         {
             VRIFStateSystem.Instance.ChangeState(VRIFStateSystem.GameState.UI);
         }// <Solbin> UI 상태로 전환 
-
-        Debug.Log("UI 상태");
     }
 
     // <Solbin>
@@ -596,8 +604,6 @@ public class UIController : MonoBehaviour
         {
             VRIFStateSystem.Instance.ChangeState(VRIFStateSystem.GameState.NORMAL);
         }// <Solbin> NORMAL 상태로 전환 
-
-        Debug.Log("NORMAL 상태");
     }
 
     #endregion UI 상태에 따라 게임 슬로우 상태, 정지 상태 변경 기능

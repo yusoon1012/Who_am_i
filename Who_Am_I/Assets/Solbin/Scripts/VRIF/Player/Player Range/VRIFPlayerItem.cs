@@ -141,7 +141,7 @@ public class VRIFPlayerItem : MonoBehaviour
                 name = "딸기";
                 break;
             case var tag when tag.Contains("Song_e"):
-                name = "송이버섯";
+                name = "송이 버섯";
                 break;
         }
 
