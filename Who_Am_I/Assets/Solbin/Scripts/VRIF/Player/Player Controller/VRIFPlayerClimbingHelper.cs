@@ -25,9 +25,10 @@ public class VRIFPlayerClimbingHelper : MonoBehaviour
     [Tooltip("카메라가 실제로 비추는 것을 관할한다")]
     [SerializeField] private Transform trackingSpace = default;
 
-    [Header("Climbing Camera")]
-    [SerializeField] private Transform ClimbingCamera = default;
-    private CinemachineDollyCart dollyCart = default;
+    [Header("Player Sub Camera")]
+    [Tooltip("컷신용 카메라")]
+    [SerializeField] Transform playerSubCamera = default;
+    private CinemachineVirtualCamera virtualCamera = default;
 
     private void Awake()
     {
@@ -44,7 +45,7 @@ public class VRIFPlayerClimbingHelper : MonoBehaviour
     private void Start()
     {
         playerController = transform;
-        dollyCart = ClimbingCamera.GetComponent<CinemachineDollyCart>();
+        virtualCamera = playerSubCamera.GetComponent<CinemachineVirtualCamera>();
     }
 
     /// <summary>
@@ -52,37 +53,48 @@ public class VRIFPlayerClimbingHelper : MonoBehaviour
     /// </summary>
     public void SetAnchor(GameObject grabbable_)
     {
-        //if (grabbable_.transform.GetChild(0) != null)
-        //{
-        //    Transform anchor = grabbable_.transform.GetChild(0); // 자식 오브젝트 Anchor의 위치로 이동 
-
-        //    climbingAnchor.position = anchor.position;
-        //    climbingAnchor.LookAt(grabbable_.transform);
-
         if (grabbable_.CompareTag("ClimbingAnchor")) { StartCoroutine(Rotate()); } // 자동 회전
 
-        // TODO: 왼손인가 오른손인가... 
-
-        //Vector3 leftPos = (leftGrabber.transform.position + transform.position) / 2;
-        //leftPos.y = grabbable_.transform.position.y;
-
-        //Vector3 rightPos = (rightGrabber.transform.position + transform.position) / 2;
-        //rightPos.y = grabbable_.transform.position.y;
-
-        //// TODO: 임시 게임오브젝트가 등반물체를 바라보고, 그 축이 점프 축이 된다.
-
-        //GameObject leftAnchor = new GameObject();
-        //leftAnchor.transform.position = leftPos;
-
-        //GameObject rightAnchor = new GameObject();
-        //rightAnchor.transform.position = rightPos;
-
-        if (grabbable_.GetComponentInChildren<CinemachineSmoothPath>()) // 마지막 등반 물체가 트랙을 가지고 있으면
+        if (grabbable_.GetComponentInChildren<CinemachineDollyCart>())
         {
-            ClimbingCamera.gameObject.SetActive(true);
-            dollyCart.m_Path = grabbable_.GetComponentInChildren<CinemachineSmoothPath>(); // Path 할당
-            dollyCart.m_Speed = 1;
+            Transform cart = grabbable_.GetComponentInChildren<CinemachineDollyCart>().transform; // 카트 트랜스폼
+            CinemachineDollyCart dollyCart = cart.GetComponent<CinemachineDollyCart>();
+
+            playerSubCamera.gameObject.SetActive(true);
+            virtualCamera.Follow = cart;
+            virtualCamera.LookAt = cart;
+
+            dollyCart.m_Speed = 1f;
+
+            StartCoroutine(CheckArrival(dollyCart));
         }
+    }
+
+    /// <summary>
+    /// 서브 카메라를 트랙을 따라 이동시킨다. 
+    /// </summary>
+    private IEnumerator CheckArrival(CinemachineDollyCart dollyCart_)
+    {
+        while(dollyCart_.m_Position <= 1.9) // 도착 직전까지
+        {
+            yield return null;
+        }
+
+        leftGrabber.ReleaseGrab(); // 손을 놓는다
+        rightGrabber.ReleaseGrab();
+
+        playerController.position = dollyCart_.transform.position; // PC 재위치
+
+        playerSubCamera.gameObject.SetActive(false); // 카메라 재세팅
+        virtualCamera.Follow = null;
+        virtualCamera.LookAt = null;
+
+        dollyCart_.m_Speed = 0f;
+        dollyCart_.m_Position = 0f; // 카트 복귀
+
+        // TODO: VR 기기를 쓴 채로 오른쪽으로 머리를 기울이면 화면 또한 오른쪽으로, 좌측으로 머리를 기울이면 화면 또한 좌측으로 기울어지는
+        // 문제가 있다. centereyeanchor는 카메라를 어떻게 보정하는가?
+        // 그럼 왜 UI 카메라는 멀쩡히 작동하는 것인가?
     }
 
     private IEnumerator Rotate()
