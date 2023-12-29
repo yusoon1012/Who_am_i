@@ -4,7 +4,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using static UnityEngine.ProBuilder.AutoUnwrapSettings;
-
+using System.Linq;
+using Cinemachine;
 
 public class VRIFPlayerClimbingHelper : MonoBehaviour
 {
@@ -24,6 +25,10 @@ public class VRIFPlayerClimbingHelper : MonoBehaviour
     [Tooltip("카메라가 실제로 비추는 것을 관할한다")]
     [SerializeField] private Transform trackingSpace = default;
 
+    [Header("Climbing Camera")]
+    [SerializeField] private Transform ClimbingCamera = default;
+    private CinemachineDollyCart dollyCart = default;
+
     private void Awake()
     {
         if (Instance == null)
@@ -39,21 +44,44 @@ public class VRIFPlayerClimbingHelper : MonoBehaviour
     private void Start()
     {
         playerController = transform;
+        dollyCart = ClimbingCamera.GetComponent<CinemachineDollyCart>();
     }
 
     /// <summary>
     /// 등반 물체의 방향을 판단해 플레이어 앵커 설정 (암벽이 기준)
     /// </summary>
-    public void SetAnchor(GameObject _grabbable)
+    public void SetAnchor(GameObject grabbable_)
     {
-        if (_grabbable.transform.GetChild(0) != null)
+        //if (grabbable_.transform.GetChild(0) != null)
+        //{
+        //    Transform anchor = grabbable_.transform.GetChild(0); // 자식 오브젝트 Anchor의 위치로 이동 
+
+        //    climbingAnchor.position = anchor.position;
+        //    climbingAnchor.LookAt(grabbable_.transform);
+
+        if (grabbable_.CompareTag("ClimbingAnchor")) { StartCoroutine(Rotate()); } // 자동 회전
+
+        // TODO: 왼손인가 오른손인가... 
+
+        //Vector3 leftPos = (leftGrabber.transform.position + transform.position) / 2;
+        //leftPos.y = grabbable_.transform.position.y;
+
+        //Vector3 rightPos = (rightGrabber.transform.position + transform.position) / 2;
+        //rightPos.y = grabbable_.transform.position.y;
+
+        //// TODO: 임시 게임오브젝트가 등반물체를 바라보고, 그 축이 점프 축이 된다.
+
+        //GameObject leftAnchor = new GameObject();
+        //leftAnchor.transform.position = leftPos;
+
+        //GameObject rightAnchor = new GameObject();
+        //rightAnchor.transform.position = rightPos;
+
+        if (grabbable_.GetComponentInChildren<CinemachineSmoothPath>()) // 마지막 등반 물체가 트랙을 가지고 있으면
         {
-            Transform anchor = _grabbable.transform.GetChild(0); // 자식 오브젝트 Anchor의 위치로 이동 
-
-            climbingAnchor.position = anchor.position;
-            climbingAnchor.LookAt(_grabbable.transform);
-
-            if (_grabbable.CompareTag("ClimbingAnchor")) { StartCoroutine(Rotate()); }
+            ClimbingCamera.gameObject.SetActive(true);
+            dollyCart.m_Path = grabbable_.GetComponentInChildren<CinemachineSmoothPath>(); // Path 할당
+            dollyCart.m_Speed = 1;
         }
     }
 

@@ -9,20 +9,8 @@ namespace BNG
 {
     public class VRIFPlayerClimbing : MonoBehaviour
     {
-        // (Asset) PlayerClimbing
-        private PlayerClimbing asset_playerClimbing;
         // Player Rigidbody 
         private Rigidbody playerRigid;
-
-        // 왼손 그랩 여부
-        private bool leftGrab = false;
-        // 오른손 그랩 여부
-        private bool rightGrab = false;
-
-        // 왼쪽 점프 시도
-        private bool leftJump = false;
-        // 오른쪽 점프 시도
-        private bool rightJump = false;
 
         // 호출에 대한 AddForce 실행 수 제한 
         private bool addForce = false;
@@ -37,100 +25,57 @@ namespace BNG
         [SerializeField] private Grabber leftGrabber = default;
         [SerializeField] private Grabber rightGrabber = default;
 
-        [Header("점프값")]
+        [Header("측면 점프값")]
         public float upJumpForce = 3.5f; // 위로 점프하는 힘
         public float sideJumpForce = 1.5f; // 측면으로 점프하는 힘
+
+        [Header("상승 점프값")]
+        public float superupJumpForce = 4f;
 
         [Header("Climbing Anchor")]
         [SerializeField] private Transform climbingAnchor = default;
 
         private void Start()
         {
-            asset_playerClimbing = GetComponent<PlayerClimbing>();
             playerRigid = GetComponent<Rigidbody>(); // 점프에 사용할 Rigidbody
-
-            asset_playerClimbing.leftClimbingEvent += LeftGrabCheck; // 왼손 그랩 확인
-            asset_playerClimbing.rightClimbingEvent += RightGrabCheck; // 오른손 그랩 확인
-
-            VRIFInputSystem.Instance.lClimbingJump += ClickLeftJump; // 왼손 점프 클릭 확인
-            VRIFInputSystem.Instance.rClimbingJump += ClickRightJump; // 오른손 점프 클릭 확인
         }
-
-        #region 그랩 체크
-        private void LeftGrabCheck(object sender, EventArgs e) { leftGrab = true; }
-
-        private void RightGrabCheck(object sender, EventArgs e) { rightGrab = true; }
-
-        private void Update()
-        {
-            if (VRIFStateSystem.Instance.gameState == VRIFStateSystem.GameState.CLIMBING) { SuperJump(); SideJump(); }
-        }
-        #endregion
-
-        #region 상승 점프
-        private void SuperJump()
-        {
-            if (leftGrab && rightGrab) // 양손 다 그랩 상태일때
-            {
-                float jump = -0.7f; // 상승 점프 조건 
-
-                if (VRIFInputSystem.Instance.lVelocity.y <= jump && VRIFInputSystem.Instance.rVelocity.y <= jump) // 아래로 휘두르기 
-                {
-                    float jumpForce = 0.7f;
-                    playerRigid.AddForce(Vector3.up * jumpForce, ForceMode.Impulse); // 상승 점프
-                }
-            }
-
-            leftGrab = false;
-            rightGrab = false;
-        }
-        #endregion
-
-        #region 측면 점프
-
-        // 왼쪽 점프 버튼 클릭 이벤트를 받아온다
-        private void ClickLeftJump(object sender, EventArgs e) { leftJump = true; }
-        // 오른쪽 점프 버튼 클릭 이벤트를 받아온다. 
-        private void ClickRightJump(object sender, EventArgs e) { rightJump = true; }
 
         /// <summary>
-        /// 측면 점프
+        /// 등반 점프
         /// </summary>
-        private void SideJump()
+        public void DoJump(VRIFMap_ClimberJump.Direction dir_, Transform anchor_)
         {
-            if (leftJump || rightJump)
+            leftGrabber.ReleaseGrab(); // 양쪽 손을 놓게 한다. 
+            rightGrabber.ReleaseGrab();
+
+            if ((VRIFStateSystem.Instance.gameState == VRIFStateSystem.GameState.CLIMBING) && !addForce)
             {
-                leftGrabber.ReleaseGrab(); // 양쪽 손을 놓게 한다. 
-                rightGrabber.ReleaseGrab();
+                addForce = true;
 
-                if (leftJump && !addForce)
+                switch(dir_)
                 {
-                    addForce = true;
+                    case VRIFMap_ClimberJump.Direction.Left:
+                        playerRigid.AddForce(Vector3.up * upJumpForce, ForceMode.Impulse); // 위쪽으로 점프
+                        playerRigid.AddForce(-anchor_.right * sideJumpForce, ForceMode.Impulse); // 왼쪽으로 점프 
+                        break;
 
-                    playerRigid.AddForce(Vector3.up * upJumpForce, ForceMode.Impulse); // 위쪽으로 점프
-                    playerRigid.AddForce(-climbingAnchor.right * sideJumpForce, ForceMode.Impulse); // 왼쪽으로 점프 
+                    case VRIFMap_ClimberJump.Direction.Right:
+                        playerRigid.AddForce(Vector3.up * upJumpForce, ForceMode.Impulse); // 위쪽으로 점프
+                        playerRigid.AddForce(anchor_.right * sideJumpForce, ForceMode.Impulse); // 왼쪽으로 점프 
+                        break;
 
-                    Invoke("ClearAddForce", 0.5f);
+                    case VRIFMap_ClimberJump.Direction.Up:
+                        playerRigid.AddForce(Vector3.up * superupJumpForce, ForceMode.Impulse); // 상승 점프
+                        break;
                 }
-                else if (rightJump && !addForce) // 호출이 수백번 되기 때문에 실행 수 제한
-                {
-                    addForce = true;
 
-                    playerRigid.AddForce(Vector3.up * upJumpForce, ForceMode.Impulse); // 위쪽으로 점프
-                    playerRigid.AddForce(climbingAnchor.right * sideJumpForce, ForceMode.Impulse); // 왼쪽으로 점프 
-
-                    Invoke("ClearAddForce", 0.5f);
-                }
+                Invoke("ClearAddForce", 0.5f); // 호출 정도 제한
             }
-
-            leftJump = false;
-            rightJump = false;
         }
 
         /// <summary>
         /// 재작동을 위해 bool 값 초기화 
         /// </summary>
         private void ClearAddForce() { addForce = false; }
-        #endregion
     }
 }

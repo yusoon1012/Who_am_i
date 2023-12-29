@@ -23,8 +23,8 @@ namespace BNG
         // 현재 게임 상태 
         public GameState gameState { get; private set; }
 
-        [Header("플레이어 트랜스폼")]
-        [SerializeField] private Transform player = default;
+        [Header("Player Controller")]
+        public Transform playerController = default;
 
         // 플레이어 움직임 컴포넌트 (아래 둘 스크립트가 쌍으로 작동)
         private LocomotionManager locomotionManager = default;
@@ -67,10 +67,10 @@ namespace BNG
         {
             gameState = GameState.NORMAL; // 기본 상태로 초기화 
 
-            locomotionManager = player.GetComponent<LocomotionManager>();
-            smoothLocomotion = player.GetComponent<SmoothLocomotion>();
+            locomotionManager = playerController.GetComponent<LocomotionManager>();
+            smoothLocomotion = playerController.GetComponent<SmoothLocomotion>();
 
-            playerRotation = player.GetComponent<PlayerRotation>();
+            playerRotation = playerController.GetComponent<PlayerRotation>();
 
             vrifStatusSystem = transform.GetComponent<VRIFStatusSystem>();
         }
