@@ -1798,7 +1798,7 @@ namespace BNG {
                         rigid.isKinematic = wasKinematic;
 
                         // <Solbin> 과일이 아닐 때만 중력 재세팅하도록 수정 
-                        if (!rigid.gameObject.GetComponent<VRIFItem_TreeFruit>())
+                        if (!rigid.gameObject.GetComponent<VRIFItem_CropGravity>())
                         {
                             rigid.useGravity = usedGravity;
                         }
