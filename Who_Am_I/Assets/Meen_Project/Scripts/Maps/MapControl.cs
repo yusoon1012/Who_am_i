@@ -19,9 +19,9 @@ public class MapControl : MonoBehaviour
     public Transform[] onMapWarpTf = new Transform[3];
     // 체크 포인트들의 워프 지점을 배열로 가져오는 트랜스폼
     public Transform[] checkPointPositions = new Transform[3];
-    // 0 : 실제 지형 트랜스폼
-    // 1 : 지도 지형 트랜스폼
-    public Transform[] mapSizeCheck = new Transform[2];
+    //// 0 : 실제 지형 트랜스폼
+    //// 1 : 지도 지형 트랜스폼
+    //public Transform[] mapSizeCheck = new Transform[2];
     // 스크린 컨트롤러 트랜스폼
     public Transform screenControllerTf;
 

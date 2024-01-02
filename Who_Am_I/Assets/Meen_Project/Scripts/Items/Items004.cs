@@ -15,7 +15,7 @@ public class Items004 : ItemsMain
         itemID = 2002;
         itemName = "딸기 우유";
         itemEnglishName = "Strawberry Milk";
-        itemInfo = "딸기 맛이 나는 달콤한 우유";
+        itemInfo = "딸기 맛이 나는 달콤한 우유 [사용 효과 : 포만감 + 55, 응가 게이지 + 5]";
         rarity = 3;
         itemStack = 0;
         itemType = ItemType.FOOD;

@@ -17,8 +17,8 @@ public class MainMenu : MonoBehaviour
 
     public Transform mapControllerTf;
 
-    // 플레이어 트랜스폼
-    private Transform playerTf = default;
+    // 아이템 데이터 그룹 메인 오브젝트 트랜스폼
+    private Transform mainObjTf = default;
 
     // 각 메뉴 선택 확인값
     private int order = default;
@@ -27,7 +27,7 @@ public class MainMenu : MonoBehaviour
 
     void Awake()
     {
-        playerTf = GetComponent<Transform>().transform;
+        mainObjTf = GetComponent<Transform>().transform;
 
         order = 0;
     }     // Awake()
@@ -64,10 +64,10 @@ public class MainMenu : MonoBehaviour
         switch (order)
         {
             case 1:
-                playerTf.GetComponent<UIController>().uiController = 2;
+                mainObjTf.GetComponent<UIController>().uiController = 2;
                 menuImage[6].SetActive(false);
                 menuImage[7].SetActive(false);
-                playerTf.GetComponent<Inventory>().ControlInventory();
+                mainObjTf.GetComponent<Inventory>().ControlInventory();
                 break;
             //case 3:
             //    playerTf.GetComponent<UIController>().uiController = 10;
@@ -76,10 +76,10 @@ public class MainMenu : MonoBehaviour
             //    mapControllerTf.GetComponent<MapControl>().OpenMap();
             //    break;
             case 4:
-                playerTf.GetComponent<UIController>().uiController = 5;
+                mainObjTf.GetComponent<UIController>().uiController = 5;
                 menuImage[6].SetActive(false);
                 menuImage[7].SetActive(false);
-                playerTf.GetComponent<Dictionary>().OnDictionary();
+                mainObjTf.GetComponent<Dictionary>().OnDictionary();
                 break;
         }
     }     // ConnectMenu()

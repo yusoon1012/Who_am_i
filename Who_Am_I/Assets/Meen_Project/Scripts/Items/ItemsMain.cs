@@ -22,6 +22,7 @@ public class ItemsMain
     public int itemStack = default;
     // 아이템 타입
     public ItemType itemType;
+
     // 아이템 아이콘 이미지 고유 번호
     public int itemImageNum = default;
 
@@ -69,3 +70,20 @@ public enum ItemType
     // 재료
     STUFF
 }     // enum ItemType
+
+////////// 아이템 목록 //////////
+
+///// 도구 목록 /////
+
+
+///// 음식 목록 /////
+// 002 : 딸기
+// 003 : 우유
+// 004 : 딸기 우유
+// 006 : 송이 불고기
+
+///// 재료 목록 /////
+// 001 : 고기
+// 005 : 송이 버섯
+
+

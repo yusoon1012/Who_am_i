@@ -57,12 +57,14 @@ public class Inventory : MonoBehaviour
     // 인벤토리 창에서 새로운 아이템 선택 색
     private Color newColor = default;
 
+    private VRIFItemSystem vrifItemSystemClass = default;
+
     // 인벤토리에서 아이템 아이콘 선택 색 변경 이미지
     private Image[] itemSlotColor = new Image[30];
     // 아이템 상세 정보에서의 버튼 색 변경 이미지
     private Image[] detailSlotColor = new Image[4];
-    // 플레이어 트랜스폼
-    private Transform playerTf = default;
+    // 아이템 데이터 그룹 메인 오브젝트 트랜스폼
+    private Transform mainObjTf = default;
 
     // 인벤토리에 등록된 아이템들의 이름 목록
     private string[] itemNames = new string[240];
@@ -138,7 +140,8 @@ public class Inventory : MonoBehaviour
 
     void Start()
     {
-        playerTf = GetComponent<Transform>().transform;
+        mainObjTf = GetComponent<Transform>().transform;
+        vrifItemSystemClass = GetComponent<VRIFItemSystem>();
 
         // 인벤토리에서 아이템 아이콘 선택 색 변경 이미지 참조
         for (int i = 0; i < 24; i++)
@@ -639,7 +642,7 @@ public class Inventory : MonoBehaviour
         if (lookItemInfo == false) { return; }
 
         lookItemDetailInfo = true;
-        playerTf.GetComponent<UIController>().uiController = 3;
+        mainObjTf.GetComponent<UIController>().uiController = 3;
 
         // 새롭게 선택되는 버튼 창 색을 밝게 변경
         newColor = new Color32(255, 255, 255, 255);
@@ -657,7 +660,7 @@ public class Inventory : MonoBehaviour
         }
 
         lookItemDetailInfo = false;
-        playerTf.GetComponent<UIController>().uiController = 2;
+        mainObjTf.GetComponent<UIController>().uiController = 2;
 
         // 이전에 선택한 버튼 창 색을 짙은 색으로 변경
         currentColor = new Color32(155, 155, 155, 255);
@@ -829,13 +832,13 @@ public class Inventory : MonoBehaviour
         else if (detailOrder == 2)
         {
             quickSlotTf.GetComponent<QuickSlot>().TakeItemName(itemNames[order + checkCount], inventoryPage);
-            playerTf.GetComponent<UIController>().uiController = 6;
+            mainObjTf.GetComponent<UIController>().uiController = 6;
             ConnectQuickSlot();
         }
         // 아이템 버리기 버튼을 누르면 실행
         else if (detailOrder == 3)
         {
-            playerTf.GetComponent<UIController>().uiController = 7;
+            mainObjTf.GetComponent<UIController>().uiController = 7;
             dropItemInfo.SetActive(true);
             dropItemOrder = 1;
             newColor = new Color32(255, 255, 255, 255);
@@ -851,7 +854,7 @@ public class Inventory : MonoBehaviour
         {
             // 아이템 매니저의 아이템 삭제 함수를 실행
             ItemManager.instance.RemoveItem(itemNames[order + checkCount], inventoryPage, out string dropItemName);
-            playerTf.GetComponent<UIController>().uiController = 2;
+            mainObjTf.GetComponent<UIController>().uiController = 2;
             Debug.LogFormat("{0} 아이템을 버렸습니다.", dropItemName);
 
             // 인벤토리 UI 를 초기화 하고 다시 아이템 정렬
@@ -879,7 +882,7 @@ public class Inventory : MonoBehaviour
         // 아이템을 버리고 난 뒤에는 아이템 상세 창이 비활성화 됨
         if (exitType == 1)
         {
-            playerTf.GetComponent<UIController>().uiController = 3;
+            mainObjTf.GetComponent<UIController>().uiController = 3;
         }
     }     // ExitDropItem()
 
@@ -1058,16 +1061,19 @@ public class Inventory : MonoBehaviour
         // 아이템 매니저에서 해당 아이템의 정보를 가져옴
         ItemManager.instance.ReturnItemInfomation(itemName, 0, out itemInfomation);
 
+        string englishItemName = itemInfomation.itemEnglishName;
+
         // 아이템 타입이 도구 타입이면
         if (itemType == 0)
         {
             // 도구 장착 기능의 스크립트로 영문 아이템 이름으로 정보를 보냄
-            //equipmentScript.MountingItem(itemInfomation.itemEnglishName);
+            VRIFItemSystem.Instance.InputItem(englishItemName);
         }
         // 아이템 타입이 도구이고 도구를 해제하는 상태면
         else if (itemType == 1)
         {
-            //equipmentScript.ReleaseItem(itemInfomation.itemEnglishName);
+            // 장착된 도구를 해제하는 기능의 스크립트로 영문 아이템 이름으로 정보를 보냄
+            VRIFItemSystem.Instance.InputItem(englishItemName);
         }
     }     // ConversionEquipmentName()
 
@@ -1106,7 +1112,7 @@ public class Inventory : MonoBehaviour
     {
         inventory.SetActive(false);
         itemInfo.SetActive(false);
-        playerTf.GetComponent<MainMenu>().mainMenu.SetActive(false);
+        mainObjTf.GetComponent<MainMenu>().mainMenu.SetActive(false);
         quickSlotTf.GetComponent<QuickSlot>().quickSlotObj.SetActive(true);
     }     // ConnectQuickSlot()
 
