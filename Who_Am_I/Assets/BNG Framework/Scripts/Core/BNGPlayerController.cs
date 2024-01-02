@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -29,6 +29,7 @@ namespace BNG {
 
         [Header("Transform Setup ")]
 
+        // <Solbin> 카메라 보정 값이 들어가는 것은 TrackingSpace를 이용한다. 
         [Tooltip("The TrackingSpace represents your tracking space origin.")]
         public Transform TrackingSpace;
 
@@ -280,14 +281,16 @@ namespace BNG {
             Quaternion initialRotation = TrackingSpace.rotation;
 
             // Move the character controller to the proper rotation / alignment
-            if(characterController) {
+            if (characterController)
+            {
                 characterController.transform.rotation = Quaternion.Euler(0.0f, CenterEyeAnchor.rotation.eulerAngles.y, 0.0f);
 
                 // Now we can rotate our tracking space back to initial position / rotation
                 TrackingSpace.position = initialPosition;
                 TrackingSpace.rotation = initialRotation;
             }
-            else if(playerRigid) {
+            else if (playerRigid)
+            {
                 playerRigid.transform.rotation = Quaternion.Euler(0.0f, CenterEyeAnchor.rotation.eulerAngles.y, 0.0f);
 
                 // Now we can rotate our tracking space back to initial position / rotation

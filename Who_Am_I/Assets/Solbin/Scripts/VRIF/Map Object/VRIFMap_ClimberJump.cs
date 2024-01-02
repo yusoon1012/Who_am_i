@@ -12,7 +12,15 @@ public class VRIFMap_ClimberJump : MonoBehaviour
         Up
     }
 
+    [Header("점프 방향")]
     public Direction direction = default;
+
+    [Header("측면점프_위")]
+    public float sideUpForce = 3.5f;
+    [Header("측면점프_옆")]
+    public float sideForce = 1.5f;
+    [Header("상승점프_위")]
+    public float upForce = 4f;
 
     private void OnTriggerStay(Collider other)
     {
@@ -27,6 +35,6 @@ public class VRIFMap_ClimberJump : MonoBehaviour
     private void OrderJump()
     {
         VRIFPlayerClimbing playerClimbing = VRIFStateSystem.Instance.playerController.GetComponent<VRIFPlayerClimbing>();
-        if (playerClimbing != null) { playerClimbing.DoJump(direction, transform.parent); }
+        if (playerClimbing != null) { playerClimbing.DoJump(direction, transform.parent, sideUpForce, sideForce, upForce); }
     }
 }

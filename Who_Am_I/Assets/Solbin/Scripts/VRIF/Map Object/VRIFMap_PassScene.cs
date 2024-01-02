@@ -26,8 +26,6 @@ public class VRIFMap_PassScene : MonoBehaviour
 
             if (angle >= 45)
             {
-                Debug.Log("통과함");
-
                 string seasonName = default;
 
                 switch (season)

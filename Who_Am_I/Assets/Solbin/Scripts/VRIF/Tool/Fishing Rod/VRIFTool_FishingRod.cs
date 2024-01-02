@@ -27,7 +27,7 @@ public class VRIFTool_FishingRod : MonoBehaviour
     [SerializeField] private GameObject upArrow = default; // 위쪽
     [SerializeField] private GameObject rightArrow = default; // 오른쪽 
 
-    [Header("낚시줄")]
+    [Header("낚시줄 (Line Renderer)")]
     [SerializeField] private LineRenderer lineRenderer = default;
 
     [Header("물고기 프리팹")]
@@ -46,6 +46,8 @@ public class VRIFTool_FishingRod : MonoBehaviour
 
     // 낚시 중 (낚시 코루틴 실행 중)
     public bool isFishing { get; private set; } = false;
+    // 낚시줄 그리기 
+    private bool drawing = false;
 
     private void Awake()
     {
@@ -66,7 +68,7 @@ public class VRIFTool_FishingRod : MonoBehaviour
 
         fish = Instantiate(fishPrefab, poolPos, Quaternion.identity); // 낚을 물고기 오브젝트
 
-        //lineRenderer.positionCount = 2; // 낚시대 끝과 낚시찌를 연결 
+        lineRenderer.positionCount = 2; // 낚시대 끝과 낚시찌
     }
 
     private void OnTriggerExit(Collider other)
@@ -130,6 +132,9 @@ public class VRIFTool_FishingRod : MonoBehaviour
     private IEnumerator CheckStrike()
     {
         isFishing = true;
+        drawing = true;
+
+        StartCoroutine(DrawLine()); // 낚시줄 그리기 시작
 
         VRIFStateSystem.Instance.ChangeState(VRIFStateSystem.GameState.FISHING); // 낚시 상태로 전환
 
@@ -183,6 +188,24 @@ public class VRIFTool_FishingRod : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 낚시줄 그리기 시작
+    /// </summary>
+    private IEnumerator DrawLine()
+    {
+        while (drawing) // 낚시 중이라면 
+        {
+            lineRenderer.SetPosition(0, bobberStart.position); // 0: 낚시대 시작 지점
+            lineRenderer.SetPosition(1, bobber.transform.position); // 1: 낚시찌 지점
+
+            yield return new WaitForEndOfFrame(); // 프레임 대기 
+        }
+    }
+
+    /// <summary>
+    /// 낚시 종료
+    /// </summary>
+    /// <param name="_gotcha">물고기를 잡았는가</param>
     private IEnumerator GetFish(bool _gotcha)
     {
         Vector3 bobberPos = bobber.transform.position;
@@ -199,6 +222,12 @@ public class VRIFTool_FishingRod : MonoBehaviour
 
             yield return null;
         }
+
+        drawing = false;
+        StopCoroutine(DrawLine());
+
+        lineRenderer.SetPosition(0, poolPos); // 낚시줄 초기화
+        lineRenderer.SetPosition(1, poolPos);
 
         VRIFStateSystem.Instance.ChangeState(VRIFStateSystem.GameState.NORMAL); // 노말 상태로 전환
 

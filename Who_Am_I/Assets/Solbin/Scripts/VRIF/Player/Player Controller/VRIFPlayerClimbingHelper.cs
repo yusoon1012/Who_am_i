@@ -57,6 +57,9 @@ public class VRIFPlayerClimbingHelper : MonoBehaviour
 
         if (grabbable_.GetComponentInChildren<CinemachineDollyCart>())
         {
+            Vector3 dir = grabbable_.transform.rotation.eulerAngles;
+            playerController.rotation = Quaternion.Euler(dir);
+
             Transform cart = grabbable_.GetComponentInChildren<CinemachineDollyCart>().transform; // 카트 트랜스폼
             CinemachineDollyCart dollyCart = cart.GetComponent<CinemachineDollyCart>();
 

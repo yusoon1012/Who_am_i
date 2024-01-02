@@ -25,10 +25,6 @@ namespace BNG
         [SerializeField] private Grabber leftGrabber = default;
         [SerializeField] private Grabber rightGrabber = default;
 
-        [Header("측면 점프값")]
-        public float upJumpForce = 3.5f; // 위로 점프하는 힘
-        public float sideJumpForce = 1.5f; // 측면으로 점프하는 힘
-
         [Header("상승 점프값")]
         public float superupJumpForce = 4f;
 
@@ -43,7 +39,12 @@ namespace BNG
         /// <summary>
         /// 등반 점프
         /// </summary>
-        public void DoJump(VRIFMap_ClimberJump.Direction dir_, Transform anchor_)
+        /// <param name="dir_">점프할 방향</param>
+        /// <param name="anchor_">잡은 앵커 Transform</param>
+        /// <param name="sideUpForce_">측면 점프 시 위로 가해지는 힘</param>
+        /// <param name="sideForce_">측면 점프 시 옆으로 가해지는 힘</param>
+        /// <param name="upForce_">상승 점프 시 위로 가해지는 힘</param>
+        public void DoJump(VRIFMap_ClimberJump.Direction dir_, Transform anchor_, float sideUpForce_, float sideForce_, float upForce_)
         {
             leftGrabber.ReleaseGrab(); // 양쪽 손을 놓게 한다. 
             rightGrabber.ReleaseGrab();
@@ -55,17 +56,17 @@ namespace BNG
                 switch(dir_)
                 {
                     case VRIFMap_ClimberJump.Direction.Left:
-                        playerRigid.AddForce(Vector3.up * upJumpForce, ForceMode.Impulse); // 위쪽으로 점프
-                        playerRigid.AddForce(-anchor_.right * sideJumpForce, ForceMode.Impulse); // 왼쪽으로 점프 
+                        playerRigid.AddForce(Vector3.up * sideUpForce_, ForceMode.Impulse); // 위쪽으로 점프
+                        playerRigid.AddForce(-anchor_.right * sideForce_, ForceMode.Impulse); // 왼쪽으로 점프 
                         break;
 
                     case VRIFMap_ClimberJump.Direction.Right:
-                        playerRigid.AddForce(Vector3.up * upJumpForce, ForceMode.Impulse); // 위쪽으로 점프
-                        playerRigid.AddForce(anchor_.right * sideJumpForce, ForceMode.Impulse); // 왼쪽으로 점프 
+                        playerRigid.AddForce(Vector3.up * sideUpForce_, ForceMode.Impulse); // 위쪽으로 점프
+                        playerRigid.AddForce(anchor_.right * sideForce_, ForceMode.Impulse); // 왼쪽으로 점프 
                         break;
 
                     case VRIFMap_ClimberJump.Direction.Up:
-                        playerRigid.AddForce(Vector3.up * superupJumpForce, ForceMode.Impulse); // 상승 점프
+                        playerRigid.AddForce(Vector3.up * upForce_, ForceMode.Impulse); // 상승 점프
                         break;
                 }
 
