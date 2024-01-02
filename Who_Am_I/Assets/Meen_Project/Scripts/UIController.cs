@@ -55,6 +55,8 @@ public class UIController : MonoBehaviour
     void Start()
     {
         mainObjTf = GetComponent<Transform>().transform;
+
+        mainObjTf.GetComponent<Inventory>().AddInventory("너프건", 1);
     }     // Start()
 
     void Update()
@@ -205,10 +207,6 @@ public class UIController : MonoBehaviour
         else if (Input.GetKeyDown(KeyCode.Alpha4))
         {
             mainObjTf.GetComponent<Inventory>().AddInventory("송이 버섯", 1);
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha5))
-        {
-            mainObjTf.GetComponent<Inventory>().AddInventory("너프건", 1);
         }
 
         // <Solbin> 지나치게 예민한 입력값을 막기 위함
