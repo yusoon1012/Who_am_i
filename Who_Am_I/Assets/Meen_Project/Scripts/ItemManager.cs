@@ -11,7 +11,7 @@ public class ItemManager : MonoBehaviour
     public static ItemManager instance;
     // 퀵슬롯 트랜스폼
     public Transform quickSlotTf;
-
+    // 컬렉션 정보 트랜스폼
     public Transform collectionInfoTf;
 
     // 아이템마다 등록된 아이콘 이미지 목록
@@ -73,6 +73,7 @@ public class ItemManager : MonoBehaviour
         itemDataBase.Add("딸기 우유", new Items004());
         itemDataBase.Add("송이 버섯", new Items005());
         itemDataBase.Add("송이 불고기", new Items006());
+        itemDataBase.Add("너프건", new Items007());
         //* 아이템 데이터 베이스에 아이템 추가
 
         //* 제작 데이터 베이스에 아이템 추가
@@ -519,6 +520,72 @@ public class ItemManager : MonoBehaviour
         return imageNum;
     }     // ItemImage()
 
+    // 일회성 제작 레시피인지 체크하고, 일회성 제작을 완료한 상태인지 체크하는 함수를 실행함
+    public bool LoadCheckDisposableCrafting(string itemName, out bool checkImpossible)
+    {
+        CraftingMain craftingInfo = new CraftingMain();
+
+        // 제작 레시피에서 해당 레시피를 찾음
+        if (crafting.ContainsKey(itemName))
+        {
+            craftingInfo = crafting[itemName];
+
+            // 일회성 제작 레시피인지 체크
+            bool checkImpossibleCraft = craftingInfo.disposableType;
+
+            // 일회성 제작 레시피면
+            if (checkImpossibleCraft == true)
+            {
+                // 일회성 제작을 완료한 상태인지 체크
+                checkImpossible = craftingInfo.disposable;
+            }
+            else
+            {
+                checkImpossible = false;
+            }
+        }
+        else
+        {
+            checkImpossible = false;
+        }
+
+        return checkImpossible;
+    }     // LoadCheckDisposableCrafting()
+
+    // 일회성 제작 레시피인지 체크하는 함수
+    public bool LoadCheckDisposableType(string itemName, out bool checkItem)
+    {
+        CraftingMain craftingInfo = new CraftingMain();
+
+        // 제작 레시피에서 해당 레시피를 찾음
+        if (crafting.ContainsKey(itemName))
+        {
+            craftingInfo = crafting[itemName];
+            // 일회성 제작 레시피인지 체크
+            checkItem = craftingInfo.disposableType;
+        }
+        else
+        {
+            checkItem = false;
+        }
+
+        return checkItem;
+    }     // LoadCheckDisposableItem()
+
+    // 일회성 제작 레시피를 통해 제작을 완료한 후 일회성 제작 완료 상태로 변경하는 함수
+    public void ChangeDiaposableCrafting(string itemName)
+    {
+        CraftingMain craftingInfo = new CraftingMain();
+
+        // 제작 레시피에서 해당 레시피를 찾음
+        if (crafting.ContainsKey(itemName))
+        {
+            craftingInfo = crafting[itemName];
+            // 일회성 제작 완료 상태로 변경
+            craftingInfo.disposable = true;
+        }
+    }     // ChangeDiaposableCrafting()
+
     // 인벤토리에서 아이템 아이콘 클릭 시 인벤토리에서 해당 아이템의 설명 정보를 return 시키는 함수
     public string LoadItemInfoText(string itemName, int page, out string itemInfoText)
     {
@@ -752,6 +819,85 @@ public class ItemManager : MonoBehaviour
 
         return craftingStack;
     }     // CraftingStack()
+
+    // 아이템 제작 시 효과 타입 값을 내보내는 함수
+    public int CraftingEffectType(string craftingName, out int effectType)
+    {
+        CraftingMain craftingInfo = new CraftingMain();
+
+        if (crafting.ContainsKey(craftingName))
+        {
+            effectType = crafting[craftingName].utile;
+        }
+        else
+        {
+            effectType = 0;
+        }
+
+        return effectType;
+    }     // CraftingEffectType()
+
+    // 아이템 제작 시 일반 효과 수치들의 값을 내보내는 함수
+    public int CraftingEffectCount(string craftingName, int count, out int effectCount)
+    {
+        ItemsMain itemInfo = new ItemsMain();
+
+        if (itemDataBase.ContainsKey(craftingName))
+        {
+            switch (count)
+            {
+                case 0:
+                    effectCount = itemDataBase[craftingName].satietyGauge;
+                    break;
+                case 1:
+                    effectCount = itemDataBase[craftingName].pooGauge;
+                    break;
+                default:
+                    effectCount = 0;
+                    break;
+            }
+        }
+        else
+        {
+            effectCount = 0;
+        }
+
+        return effectCount;
+    }     // CraftingEffectCount()
+
+    // 아이템 제작 시 특수 효과 값을 내보내는 함수
+    public string CraftingEffectInfo(string craftingName, out string effectInfo)
+    {
+        CraftingMain craftingInfo = new CraftingMain();
+
+        if (crafting.ContainsKey(craftingName))
+        {
+            effectInfo = crafting[craftingName].effectInfo;
+        }
+        else
+        {
+            effectInfo = null;
+        }
+
+        return effectInfo;
+    }     // CraftingEffectInfo()
+
+    // 아이템 제작 시 재료들의 정보를 내보내는 함수
+    public string CraftingStuffInfo(string stuffName, int count, out string stuffInfo)
+    {
+        ItemsMain itemInfo = new ItemsMain();
+
+        if (itemDataBase.ContainsKey(stuffName))
+        {
+            stuffInfo = itemDataBase[stuffName].itemInfo;
+        }
+        else
+        {
+            stuffInfo = null;
+        }
+
+        return stuffInfo;
+    }     // CraftingStuffInfo()
 
     #endregion 크래프팅 기능
 

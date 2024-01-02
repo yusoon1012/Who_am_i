@@ -221,6 +221,8 @@ public class VRIFItemSystem : MonoBehaviour
         modelsRight.SetActive(false); // 기존 손 모델 OFF (임시방편)
 
         item.SetActive(true); // 지정 아이템만 활성화
+
+        Debug.LogFormat("{0} 아이템 장착 완료", name);
     }
 
     /// <summary>

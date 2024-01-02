@@ -28,10 +28,11 @@ public class UIController : MonoBehaviour
     // 10 : 지도 창
     // 11 : 지도 선택 창
     // 12 : NPC 대화 상태
+    // 13 : 제작 완료 안내 창
     public int uiController { get; set; } = default;
 
-    // 플레이어 트랜스폼
-    private Transform playerTf = default;
+    // 아이템 데이터 그룹 메인 오브젝트 트랜스폼
+    private Transform mainObjTf = default;
 
     #endregion 변수 설정
 
@@ -53,7 +54,7 @@ public class UIController : MonoBehaviour
 
     void Start()
     {
-        playerTf = GetComponent<Transform>().transform;
+        mainObjTf = GetComponent<Transform>().transform;
     }     // Start()
 
     void Update()
@@ -65,17 +66,17 @@ public class UIController : MonoBehaviour
 
     #region UpdateFunction()
 
-    private void StopMovePlayer()
-    {
-        playerTf.GetComponent<Rigidbody>().velocity = Vector3.zero;
-    }     // StopMovePlayer()
+    //private void StopMovePlayer()
+    //{
+    //    mainObjTf.GetComponent<Rigidbody>().velocity = Vector3.zero;
+    //}     // StopMovePlayer()
 
     // Update 마다 조건에 맞으면 실행되는 함수
     private void UpdateFunction()
     {
         if (uiController == 0)
         {
-            playerTf.GetComponent<Meen_MovePlayer>().UpdateFunction();
+            mainObjTf.GetComponent<Meen_MovePlayer>().UpdateFunction();
 
             if (npcControllerTf.GetComponent<NPCController>().onNavigationCheck > 0)
             {
@@ -185,25 +186,29 @@ public class UIController : MonoBehaviour
         else if (Input.GetKeyDown(KeyCode.P) && uiController == 0)
         {
             uiController = 4;
-            playerTf.GetComponent<ItemCrafting>().OnCrafting();
+            mainObjTf.GetComponent<ItemCrafting>().OnCrafting();
             OpenMenuCheck();
         }
         //* Test : 아래의 해당 키를 누르면 인벤토리에 아이템 추가 기능
         else if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            playerTf.GetComponent<Inventory>().AddInventory("딸기", 1);
+            mainObjTf.GetComponent<Inventory>().AddInventory("딸기", 1);
         }
         else if (Input.GetKeyDown(KeyCode.Alpha2))
         {
-            playerTf.GetComponent<Inventory>().AddInventory("우유", 1);
+            mainObjTf.GetComponent<Inventory>().AddInventory("우유", 1);
         }
         else if (Input.GetKeyDown(KeyCode.Alpha3))
         {
-            playerTf.GetComponent<Inventory>().AddInventory("고기", 1);
+            mainObjTf.GetComponent<Inventory>().AddInventory("고기", 1);
         }
         else if (Input.GetKeyDown(KeyCode.Alpha4))
         {
-            playerTf.GetComponent<Inventory>().AddInventory("송이 버섯", 1);
+            mainObjTf.GetComponent<Inventory>().AddInventory("송이 버섯", 1);
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha5))
+        {
+            mainObjTf.GetComponent<Inventory>().AddInventory("너프건", 1);
         }
 
         // <Solbin> 지나치게 예민한 입력값을 막기 위함
@@ -236,28 +241,28 @@ public class UIController : MonoBehaviour
         switch (uiController)
         {
             case 1:
-                playerTf.GetComponent<MainMenu>().ChangeOrder(arrowType);
+                mainObjTf.GetComponent<MainMenu>().ChangeOrder(arrowType);
                 break;
             case 2:
-                playerTf.GetComponent<Inventory>().OrderCheck(arrowType);
+                mainObjTf.GetComponent<Inventory>().OrderCheck(arrowType);
                 break;
             case 3:
-                playerTf.GetComponent<Inventory>().DetailOrderCheck(arrowType);
+                mainObjTf.GetComponent<Inventory>().DetailOrderCheck(arrowType);
                 break;
             case 4:
-                playerTf.GetComponent<ItemCrafting>().OrderCheck(arrowType);
+                mainObjTf.GetComponent<ItemCrafting>().OrderCheck(arrowType);
                 break;
             case 5:
-                playerTf.GetComponent<Dictionary>().ChangeOrder(arrowType);
+                mainObjTf.GetComponent<Dictionary>().ChangeOrder(arrowType);
                 break;
             case 6:
                 quickSlotTf.GetComponent<QuickSlot>().DirectionControl(arrowType);
                 break;
             case 7:
-                playerTf.GetComponent<Inventory>().DropItemOrderCheck(arrowType);
+                mainObjTf.GetComponent<Inventory>().DropItemOrderCheck(arrowType);
                 break;
             case 8:
-                playerTf.GetComponent<ItemCrafting>().DetailOrderCheck(arrowType);
+                mainObjTf.GetComponent<ItemCrafting>().DetailOrderCheck(arrowType);
                 break;
             case 9:
                 quickSlotTf.GetComponent<QuickSlot>().DirectionControl(arrowType);
@@ -298,18 +303,18 @@ public class UIController : MonoBehaviour
             case 2:
                 if (arrowType == 2 || arrowType == 3)
                 {
-                    playerTf.GetComponent<Inventory>().ChangePage(arrowType);
+                    mainObjTf.GetComponent<Inventory>().ChangePage(arrowType);
                 }
                 else if (arrowType == 0 || arrowType == 1)
                 {
-                    playerTf.GetComponent<Inventory>().ChangeItemGroupPage(arrowType);
+                    mainObjTf.GetComponent<Inventory>().ChangeItemGroupPage(arrowType);
                 }
                 break;
             case 4:
-                playerTf.GetComponent<ItemCrafting>().ControlDetailOrder(arrowType);
+                mainObjTf.GetComponent<ItemCrafting>().ControlDetailOrder(arrowType);
                 break;
             case 5:
-                playerTf.GetComponent<Dictionary>().OtherChangeOrder(arrowType);
+                mainObjTf.GetComponent<Dictionary>().OtherChangeOrder(arrowType);
                 break;
             case 10:
                 if (arrowType == 0 || arrowType == 1) { mapCameraTf.GetComponent<CameraControl>().CheckInCamera(arrowType); }
@@ -346,32 +351,32 @@ public class UIController : MonoBehaviour
             {
                 // 아무 UI 도 안켜져 있을 때 A 버튼을 누르면 퀵슬롯이 켜짐
                 case 0:
-                    StopMovePlayer();
+                    //StopMovePlayer();
                     uiController = 9;
                     quickSlotTf.GetComponent<QuickSlot>().SingleOpenQuickSlot();
                     OpenQuickSlot();
                     break;
                 case 1:
-                    playerTf.GetComponent<MainMenu>().ConnectMenu();
+                    mainObjTf.GetComponent<MainMenu>().ConnectMenu();
                     break;
                 case 2:
-                    playerTf.GetComponent<Inventory>().OnItemDetailInfo();
+                    mainObjTf.GetComponent<Inventory>().OnItemDetailInfo();
                     break;
                 case 3:
-                    playerTf.GetComponent<Inventory>().SelectInfo();
+                    mainObjTf.GetComponent<Inventory>().SelectInfo();
                     break;
                 case 4:
                     uiController = 8;
-                    playerTf.GetComponent<ItemCrafting>().OnDetailCrafting();
+                    mainObjTf.GetComponent<ItemCrafting>().OnDetailCrafting();
                     break;
                 case 6:
                     quickSlotTf.GetComponent<QuickSlot>().SelectSlot();
                     break;
                 case 7:
-                    playerTf.GetComponent<Inventory>().FunctionDropItem();
+                    mainObjTf.GetComponent<Inventory>().FunctionDropItem();
                     break;
                 case 8:
-                    playerTf.GetComponent<ItemCrafting>().ConnectCrafting();
+                    mainObjTf.GetComponent<ItemCrafting>().ConnectCrafting();
                     break;
                 case 9:
                     quickSlotTf.GetComponent<QuickSlot>().SelectSlot();
@@ -381,6 +386,10 @@ public class UIController : MonoBehaviour
                     break;
                 case 11:
                     mapCameraTf.GetComponent<CameraControl>().SelectCheckPointButton();
+                    break;
+                case 13:
+                    uiController = 4;
+                    mainObjTf.GetComponent<ItemCrafting>().ExitCompleteCrafting();
                     break;
                 default:
                     break;
@@ -393,27 +402,27 @@ public class UIController : MonoBehaviour
             {
                 case 1:
                     uiController = 0;
-                    playerTf.GetComponent<MainMenu>().OffMainMenu();
+                    mainObjTf.GetComponent<MainMenu>().OffMainMenu();
                     ExitMenuCheck();
                     break;
                 case 2:
                     uiController = 1;
-                    playerTf.GetComponent<Inventory>().ExitInventory();
-                    playerTf.GetComponent<MainMenu>().DisconnectMenu();
+                    mainObjTf.GetComponent<Inventory>().ExitInventory();
+                    mainObjTf.GetComponent<MainMenu>().DisconnectMenu();
                     break;
                 case 3:
                     uiController = 2;
-                    playerTf.GetComponent<Inventory>().OffItemDetailInfo();
+                    mainObjTf.GetComponent<Inventory>().OffItemDetailInfo();
                     break;
                 case 4:
                     uiController = 0;
-                    playerTf.GetComponent<ItemCrafting>().ExitCrafting();
+                    mainObjTf.GetComponent<ItemCrafting>().ExitCrafting();
                     ExitMenuCheck();
                     break;
                 case 5:
                     uiController = 1;
-                    playerTf.GetComponent<Dictionary>().OffDictionary();
-                    playerTf.GetComponent<MainMenu>().DisconnectMenu();
+                    mainObjTf.GetComponent<Dictionary>().OffDictionary();
+                    mainObjTf.GetComponent<MainMenu>().DisconnectMenu();
                     break;
                 case 6:
                     uiController = 3;
@@ -421,11 +430,11 @@ public class UIController : MonoBehaviour
                     break;
                 case 7:
                     uiController = 3;
-                    playerTf.GetComponent<Inventory>().ExitDropItem(1);
+                    mainObjTf.GetComponent<Inventory>().ExitDropItem(1);
                     break;
                 case 8:
                     uiController = 4;
-                    playerTf.GetComponent<ItemCrafting>().ExitDetailCrafting();
+                    mainObjTf.GetComponent<ItemCrafting>().ExitDetailCrafting();
                     break;
                 case 9:
                     uiController = 0;
@@ -435,10 +444,14 @@ public class UIController : MonoBehaviour
                 case 10:
                     uiController = 1;
                     mapControllerTf.GetComponent<MapControl>().ExitMap();
-                    playerTf.GetComponent<MainMenu>().DisconnectMenu();
+                    mainObjTf.GetComponent<MainMenu>().DisconnectMenu();
                     break;
                 case 11:
                     mapCameraTf.GetComponent<CameraControl>().ExitCheckPointInfo();
+                    break;
+                case 13:
+                    uiController = 4;
+                    mainObjTf.GetComponent<ItemCrafting>().ExitCompleteCrafting();
                     break;
                 default:
                     break;
@@ -453,65 +466,65 @@ public class UIController : MonoBehaviour
         {
             // 메뉴가 아무것도 안열려 있으면 메뉴 UI 를 연다
             case 0:
-                StopMovePlayer();
+                //StopMovePlayer();
                 uiController = 1;
-                playerTf.GetComponent<MainMenu>().OnMainMenu();
+                mainObjTf.GetComponent<MainMenu>().OnMainMenu();
                 OpenMenuCheck(); // <Solbin> 메인메뉴 열릴 때 => UI 상태로 전환 
                 break;
             // 메뉴가 하나라도 켜져있으면 해당 메뉴를 모두 닫고 초기화 화면으로 돌아감
             case 1:
-                playerTf.GetComponent<MainMenu>().OffMainMenu();
+                mainObjTf.GetComponent<MainMenu>().OffMainMenu();
                 ExitMenuCheck();
                 uiController = 0;
                 break;
             case 2:
-                playerTf.GetComponent<Inventory>().ExitInventory();
-                playerTf.GetComponent<MainMenu>().DisconnectMenu();
-                playerTf.GetComponent<MainMenu>().OffMainMenu();
+                mainObjTf.GetComponent<Inventory>().ExitInventory();
+                mainObjTf.GetComponent<MainMenu>().DisconnectMenu();
+                mainObjTf.GetComponent<MainMenu>().OffMainMenu();
                 ExitMenuCheck();
                 uiController = 0;
                 break;
             case 3:
-                playerTf.GetComponent<Inventory>().OffItemDetailInfo();
-                playerTf.GetComponent<Inventory>().ExitInventory();
-                playerTf.GetComponent<MainMenu>().DisconnectMenu();
-                playerTf.GetComponent<MainMenu>().OffMainMenu();
+                mainObjTf.GetComponent<Inventory>().OffItemDetailInfo();
+                mainObjTf.GetComponent<Inventory>().ExitInventory();
+                mainObjTf.GetComponent<MainMenu>().DisconnectMenu();
+                mainObjTf.GetComponent<MainMenu>().OffMainMenu();
                 ExitMenuCheck();
                 uiController = 0;
                 break;
             case 4:
-                playerTf.GetComponent<ItemCrafting>().ExitCrafting();
+                mainObjTf.GetComponent<ItemCrafting>().ExitCrafting();
                 ExitMenuCheck();
                 uiController = 0;
                 break;
             case 5:
-                playerTf.GetComponent<Dictionary>().OffDictionary();
-                playerTf.GetComponent<MainMenu>().DisconnectMenu();
-                playerTf.GetComponent<MainMenu>().OffMainMenu();
+                mainObjTf.GetComponent<Dictionary>().OffDictionary();
+                mainObjTf.GetComponent<MainMenu>().DisconnectMenu();
+                mainObjTf.GetComponent<MainMenu>().OffMainMenu();
                 ExitMenuCheck();
                 uiController = 0;
                 break;
             case 6:
                 quickSlotTf.GetComponent<QuickSlot>().ConnectInventory();
-                playerTf.GetComponent<Inventory>().OffItemDetailInfo();
-                playerTf.GetComponent<Inventory>().ExitInventory();
-                playerTf.GetComponent<MainMenu>().DisconnectMenu();
-                playerTf.GetComponent<MainMenu>().OffMainMenu();
+                mainObjTf.GetComponent<Inventory>().OffItemDetailInfo();
+                mainObjTf.GetComponent<Inventory>().ExitInventory();
+                mainObjTf.GetComponent<MainMenu>().DisconnectMenu();
+                mainObjTf.GetComponent<MainMenu>().OffMainMenu();
                 ExitMenuCheck();
                 uiController = 0;
                 break;
             case 7:
-                playerTf.GetComponent<Inventory>().ExitDropItem(1);
-                playerTf.GetComponent<Inventory>().OffItemDetailInfo();
-                playerTf.GetComponent<Inventory>().ExitInventory();
-                playerTf.GetComponent<MainMenu>().DisconnectMenu();
-                playerTf.GetComponent<MainMenu>().OffMainMenu();
+                mainObjTf.GetComponent<Inventory>().ExitDropItem(1);
+                mainObjTf.GetComponent<Inventory>().OffItemDetailInfo();
+                mainObjTf.GetComponent<Inventory>().ExitInventory();
+                mainObjTf.GetComponent<MainMenu>().DisconnectMenu();
+                mainObjTf.GetComponent<MainMenu>().OffMainMenu();
                 ExitMenuCheck();
                 uiController = 0;
                 break;
             case 8:
-                playerTf.GetComponent<ItemCrafting>().ExitDetailCrafting();
-                playerTf.GetComponent<ItemCrafting>().ExitCrafting();
+                mainObjTf.GetComponent<ItemCrafting>().ExitDetailCrafting();
+                mainObjTf.GetComponent<ItemCrafting>().ExitCrafting();
                 ExitMenuCheck();
                 uiController = 0;
                 break;
@@ -522,16 +535,23 @@ public class UIController : MonoBehaviour
                 break;
             case 10:
                 mapControllerTf.GetComponent<MapControl>().ExitMap();
-                playerTf.GetComponent<MainMenu>().DisconnectMenu();
-                playerTf.GetComponent<MainMenu>().OffMainMenu();
+                mainObjTf.GetComponent<MainMenu>().DisconnectMenu();
+                mainObjTf.GetComponent<MainMenu>().OffMainMenu();
                 ExitMenuCheck();
                 uiController = 0;
                 break;
             case 11:
                 mapCameraTf.GetComponent<CameraControl>().ExitCheckPointInfo();
                 mapControllerTf.GetComponent<MapControl>().ExitMap();
-                playerTf.GetComponent<MainMenu>().DisconnectMenu();
-                playerTf.GetComponent<MainMenu>().OffMainMenu();
+                mainObjTf.GetComponent<MainMenu>().DisconnectMenu();
+                mainObjTf.GetComponent<MainMenu>().OffMainMenu();
+                ExitMenuCheck();
+                uiController = 0;
+                break;
+            case 13:
+                mainObjTf.GetComponent<ItemCrafting>().ExitCompleteCrafting();
+                mainObjTf.GetComponent<ItemCrafting>().ExitDetailCrafting();
+                mainObjTf.GetComponent<ItemCrafting>().ExitCrafting();
                 ExitMenuCheck();
                 uiController = 0;
                 break;
@@ -545,8 +565,8 @@ public class UIController : MonoBehaviour
     {
         mapCameraTf.GetComponent<CameraControl>().ExitCheckPointInfo();
         mapControllerTf.GetComponent<MapControl>().ExitMap();
-        playerTf.GetComponent<MainMenu>().DisconnectMenu();
-        playerTf.GetComponent<MainMenu>().OffMainMenu();
+        mainObjTf.GetComponent<MainMenu>().DisconnectMenu();
+        mainObjTf.GetComponent<MainMenu>().OffMainMenu();
         ExitMenuCheck();
         uiController = 0;
     }     // AfterWarpExitMap()
@@ -570,8 +590,6 @@ public class UIController : MonoBehaviour
     // 어떤 메뉴든 열릴 때 게임 시간 정지
     private void OpenMenuCheck()
     {
-        // TODO: 시간 정지 필요 
-
         // <Solbin> 메뉴를 열 때 NORMAL 상태라면 UI 상태로 전환
         if (VRIFStateSystem.Instance.gameState == VRIFStateSystem.GameState.NORMAL)
         {
@@ -588,7 +606,7 @@ public class UIController : MonoBehaviour
         if (uiController == 0)
         {
             uiController = 4;
-            playerTf.GetComponent<ItemCrafting>().OnCrafting();
+            mainObjTf.GetComponent<ItemCrafting>().OnCrafting();
             OpenMenuCheck();
         }
     }
@@ -597,8 +615,6 @@ public class UIController : MonoBehaviour
     // 어떤 메뉴든 닫았을 때 게임 시간 재개
     public void ExitMenuCheck()
     {
-        // TODO: 시간 원상 복귀 필요
-
         // <Solbin> 메뉴를 닫을 때 UI 상태라면 NORMAL 상태로 전환
         if (VRIFStateSystem.Instance.gameState == VRIFStateSystem.GameState.UI)
         {
@@ -611,57 +627,57 @@ public class UIController : MonoBehaviour
     #region LAGACY
     //* LEGACY CODE
     //// 인벤토리 창을 열고있는 상태에서만 실행
-    //if (playerTf.GetComponent<Inventory>().lookInventory == true)
+    //if (mainObjTf.GetComponent<Inventory>().lookInventory == true)
     //{
     //    // 아이템 상세 정보창을 보고있지 않을때 실행
-    //    if (playerTf.GetComponent<Inventory>().lookItemDetailInfo == false)
+    //    if (mainObjTf.GetComponent<Inventory>().lookItemDetailInfo == false)
     //    {
     //        // 상, 하, 좌, 우 키를 눌렀을 때
     //        if (Input.GetKeyDown(KeyCode.LeftArrow))
     //        {
-    //            playerTf.GetComponent<Inventory>().OrderCheck(0);
+    //            mainObjTf.GetComponent<Inventory>().OrderCheck(0);
     //        }
     //        else if (Input.GetKeyDown(KeyCode.RightArrow))
     //        {
-    //            playerTf.GetComponent<Inventory>().OrderCheck(1);
+    //            mainObjTf.GetComponent<Inventory>().OrderCheck(1);
     //        }
     //        else if (Input.GetKeyDown(KeyCode.UpArrow))
     //        {
-    //            playerTf.GetComponent<Inventory>().OrderCheck(2);
+    //            mainObjTf.GetComponent<Inventory>().OrderCheck(2);
     //        }
     //        else if (Input.GetKeyDown(KeyCode.DownArrow))
     //        {
-    //            playerTf.GetComponent<Inventory>().OrderCheck(3);
+    //            mainObjTf.GetComponent<Inventory>().OrderCheck(3);
     //        }
     //        // 확인 키를 눌렀을 때
     //        else if (Input.GetKeyDown(KeyCode.Z))
     //        {
-    //            playerTf.GetComponent<Inventory>().OnItemDetailInfo();
+    //            mainObjTf.GetComponent<Inventory>().OnItemDetailInfo();
     //        }
     //        // 뒤로 키를 눌렀을 때
     //        else if (Input.GetKeyDown(KeyCode.X))
     //        {
-    //            playerTf.GetComponent<Inventory>().ExitInventory();
+    //            mainObjTf.GetComponent<Inventory>().ExitInventory();
     //        }
     //        // 아이템 타입 페이지 업 키를 눌렀을 때
     //        else if (Input.GetKeyDown(KeyCode.Keypad4))
     //        {
-    //            playerTf.GetComponent<Inventory>().PageUp();
+    //            mainObjTf.GetComponent<Inventory>().PageUp();
     //        }
     //        // 아이템 타입 페이지 다운 키를 눌렀을 때
     //        else if (Input.GetKeyDown(KeyCode.Keypad6))
     //        {
-    //            playerTf.GetComponent<Inventory>().PageDown();
+    //            mainObjTf.GetComponent<Inventory>().PageDown();
     //        }
     //        // 아이템 수량 페이지 업 키를 눌렀을 때
     //        else if (Input.GetKeyDown(KeyCode.Keypad8))
     //        {
-    //            playerTf.GetComponent<Inventory>().ChangeItemGroupPage(0);
+    //            mainObjTf.GetComponent<Inventory>().ChangeItemGroupPage(0);
     //        }
     //        // 아이템 수량 페이지 다운 키를 눌렀을 때
     //        else if (Input.GetKeyDown(KeyCode.Keypad2))
     //        {
-    //            playerTf.GetComponent<Inventory>().ChangeItemGroupPage(1);
+    //            mainObjTf.GetComponent<Inventory>().ChangeItemGroupPage(1);
     //        }
     //    }
     //    // 아이템 상세 정보창을 보고있을 때 실행
@@ -670,63 +686,63 @@ public class UIController : MonoBehaviour
     //        // 상, 하, 좌, 우 키를 눌렀을 때
     //        if (Input.GetKeyDown(KeyCode.LeftArrow))
     //        {
-    //            playerTf.GetComponent<Inventory>().DetailOrderCheck(0);
+    //            mainObjTf.GetComponent<Inventory>().DetailOrderCheck(0);
     //        }
     //        else if (Input.GetKeyDown(KeyCode.RightArrow))
     //        {
-    //            playerTf.GetComponent<Inventory>().DetailOrderCheck(1);
+    //            mainObjTf.GetComponent<Inventory>().DetailOrderCheck(1);
     //        }
     //        else if (Input.GetKeyDown(KeyCode.UpArrow))
     //        {
-    //            playerTf.GetComponent<Inventory>().DetailOrderCheck(2);
+    //            mainObjTf.GetComponent<Inventory>().DetailOrderCheck(2);
     //        }
     //        else if (Input.GetKeyDown(KeyCode.DownArrow))
     //        {
-    //            playerTf.GetComponent<Inventory>().DetailOrderCheck(3);
+    //            mainObjTf.GetComponent<Inventory>().DetailOrderCheck(3);
     //        }
     //        // 뒤로 키를 눌렀을 때
     //        else if (Input.GetKeyDown(KeyCode.X))
     //        {
-    //            playerTf.GetComponent<Inventory>().OffItemDetailInfo();
+    //            mainObjTf.GetComponent<Inventory>().OffItemDetailInfo();
     //        }
     //    }
     //}
-    //else if (playerTf.GetComponent<ItemCrafting>().lookCrafting == true)
+    //else if (mainObjTf.GetComponent<ItemCrafting>().lookCrafting == true)
     //{
     //    // 제작 상세 정보창을 보고있지 않을때 실행
-    //    if (playerTf.GetComponent<ItemCrafting>().lookCraftingInfo == false)
+    //    if (mainObjTf.GetComponent<ItemCrafting>().lookCraftingInfo == false)
     //    {
     //        // 상, 하, 좌, 우 키를 눌렀을 때
     //        if (Input.GetKeyDown(KeyCode.LeftArrow))
     //        {
-    //            playerTf.GetComponent<ItemCrafting>().OrderCheck(0);
+    //            mainObjTf.GetComponent<ItemCrafting>().OrderCheck(0);
     //        }
     //        else if (Input.GetKeyDown(KeyCode.RightArrow))
     //        {
-    //            playerTf.GetComponent<ItemCrafting>().OrderCheck(1);
+    //            mainObjTf.GetComponent<ItemCrafting>().OrderCheck(1);
     //        }
     //        else if (Input.GetKeyDown(KeyCode.UpArrow))
     //        {
-    //            playerTf.GetComponent<ItemCrafting>().OrderCheck(2);
+    //            mainObjTf.GetComponent<ItemCrafting>().OrderCheck(2);
     //        }
     //        else if (Input.GetKeyDown(KeyCode.DownArrow))
     //        {
-    //            playerTf.GetComponent<ItemCrafting>().OrderCheck(3);
+    //            mainObjTf.GetComponent<ItemCrafting>().OrderCheck(3);
     //        }
     //        // 확인 키를 눌렀을 때
     //        else if (Input.GetKeyDown(KeyCode.Z))
     //        {
-    //            playerTf.GetComponent<ItemCrafting>().OnDetailCrafting();
+    //            mainObjTf.GetComponent<ItemCrafting>().OnDetailCrafting();
     //        }
     //        // 뒤로 키를 눌렀을 때
     //        else if (Input.GetKeyDown(KeyCode.X))
     //        {
-    //            playerTf.GetComponent<ItemCrafting>().ExitCrafting();
+    //            mainObjTf.GetComponent<ItemCrafting>().ExitCrafting();
     //        }
     //        // 제작 아이템 타입 페이지 변경 키를 눌렀을 때
     //        else if (Input.GetKeyDown(KeyCode.Alpha1) || Input.GetKeyDown(KeyCode.Alpha2))
     //        {
-    //            playerTf.GetComponent<ItemCrafting>().PageChange();
+    //            mainObjTf.GetComponent<ItemCrafting>().PageChange();
     //        }
     //    }
     //    // 제작 상세 정보창을 보고있을 때 실행
@@ -735,24 +751,24 @@ public class UIController : MonoBehaviour
     //        // 상, 하, 좌, 우 키를 눌렀을 때
     //        if (Input.GetKeyDown(KeyCode.LeftArrow))
     //        {
-    //            playerTf.GetComponent<ItemCrafting>().DetailOrderCheck(0);
+    //            mainObjTf.GetComponent<ItemCrafting>().DetailOrderCheck(0);
     //        }
     //        else if (Input.GetKeyDown(KeyCode.RightArrow))
     //        {
-    //            playerTf.GetComponent<ItemCrafting>().DetailOrderCheck(1);
+    //            mainObjTf.GetComponent<ItemCrafting>().DetailOrderCheck(1);
     //        }
     //        else if (Input.GetKeyDown(KeyCode.UpArrow))
     //        {
-    //            playerTf.GetComponent<ItemCrafting>().DetailOrderCheck(2);
+    //            mainObjTf.GetComponent<ItemCrafting>().DetailOrderCheck(2);
     //        }
     //        else if (Input.GetKeyDown(KeyCode.DownArrow))
     //        {
-    //            playerTf.GetComponent<ItemCrafting>().DetailOrderCheck(3);
+    //            mainObjTf.GetComponent<ItemCrafting>().DetailOrderCheck(3);
     //        }
     //        // 뒤로 키를 눌렀을 때
     //        else if (Input.GetKeyDown(KeyCode.X))
     //        {
-    //            playerTf.GetComponent<ItemCrafting>().ExitDetailCrafting();
+    //            mainObjTf.GetComponent<ItemCrafting>().ExitDetailCrafting();
     //        }
     //    }
     //}
@@ -762,12 +778,12 @@ public class UIController : MonoBehaviour
     //    // 인벤토리 열기 키를 눌렀을 때
     //    if (Input.GetKeyDown(KeyCode.N))
     //    {
-    //        playerTf.GetComponent<Inventory>().ControlInventory();
+    //        mainObjTf.GetComponent<Inventory>().ControlInventory();
     //    }
     //    // 크래프팅 열기 키를 눌렀을 때
     //    else if (Input.GetKeyDown(KeyCode.M))
     //    {
-    //        playerTf.GetComponent<ItemCrafting>().OnCrafting();
+    //        mainObjTf.GetComponent<ItemCrafting>().OnCrafting();
     //    }
     //}
 
@@ -787,12 +803,12 @@ public class UIController : MonoBehaviour
     //            if (hitItemSlot.GetComponent<SaveItemInfo>().activeSlotCheck == true)
     //            {
     //                hitItemSlot.GetComponent<SaveItemInfo>().LoadNameInfo(out string itemName);
-    //                playerTf.GetComponent<Inventory>().OnItemInfo(itemName);
+    //                mainObjTf.GetComponent<Inventory>().OnItemInfo(itemName);
     //            }
     //            // 클릭한 인벤토리 아이콘의 활성화 값이 false 면 실행
     //            else
     //            {
-    //                playerTf.GetComponent<Inventory>().EmptyInfo();
+    //                mainObjTf.GetComponent<Inventory>().EmptyInfo();
     //            }
     //        }
     //        // "CraftingImg" 태그로 아이콘을 구분함
@@ -801,7 +817,7 @@ public class UIController : MonoBehaviour
     //            hitItemSlot = hitInfo.transform.gameObject;
 
     //            hitItemSlot.GetComponent<SaveCraftingInfo>().LoadInfo(out string slotName);
-    //            playerTf.GetComponent<ItemCrafting>().CraftingCheck(slotName);
+    //            mainObjTf.GetComponent<ItemCrafting>().CraftingCheck(slotName);
     //        }
     //    }
     //}
@@ -814,7 +830,9 @@ public class UIController : MonoBehaviour
 }     // Update()
 
 
-// -------------------------- Super Real Lagcy --------------------------------//
+#region Lagacy Function
+
+// -------------------------- Super Real Lagacy --------------------------------//
 
 //using System.Collections;
 //using System.Collections.Generic;
@@ -845,7 +863,7 @@ public class UIController : MonoBehaviour
 //    public Transform 
 
 //    // 플레이어 트랜스폼
-//    private Transform playerTf = default;
+//    private Transform mainObjTf = default;
 
 //    #endregion 변수 설정
 
@@ -868,7 +886,7 @@ public class UIController : MonoBehaviour
 
 //    void Start()
 //    {
-//        playerTf = GetComponent<Transform>().transform;
+//        mainObjTf = GetComponent<Transform>().transform;
 //    }     // Start()
 
 //    void Update()
@@ -927,21 +945,21 @@ public class UIController : MonoBehaviour
 //        else if (Input.GetKeyDown(KeyCode.P) && uiController == 0)
 //        {
 //            uiController = 4;
-//            playerTf.GetComponent<ItemCrafting>().OnCrafting();
+//            mainObjTf.GetComponent<ItemCrafting>().OnCrafting();
 //            OpenMenuCheck();
 //        }
 //        //* Test : 아래의 해당 키를 누르면 인벤토리에 아이템 추가 기능
 //        else if (Input.GetKeyDown(KeyCode.Alpha1))
 //        {
-//            playerTf.GetComponent<Inventory>().AddInventory("딸기", 1);
+//            mainObjTf.GetComponent<Inventory>().AddInventory("딸기", 1);
 //        }
 //        else if (Input.GetKeyDown(KeyCode.Alpha2))
 //        {
-//            playerTf.GetComponent<Inventory>().AddInventory("우유", 1);
+//            mainObjTf.GetComponent<Inventory>().AddInventory("우유", 1);
 //        }
 //        else if (Input.GetKeyDown(KeyCode.Alpha3))
 //        {
-//            playerTf.GetComponent<Inventory>().AddInventory("고기", 1);
+//            mainObjTf.GetComponent<Inventory>().AddInventory("고기", 1);
 //        }
 //    }
 
@@ -969,23 +987,23 @@ public class UIController : MonoBehaviour
 //        {
 //            if (uiController == 1)
 //            {
-//                playerTf.GetComponent<MainMenu>().ChangeOrder(arrowType);
+//                mainObjTf.GetComponent<MainMenu>().ChangeOrder(arrowType);
 //            }
 //            else if (uiController == 2)
 //            {
-//                playerTf.GetComponent<Inventory>().OrderCheck(arrowType);
+//                mainObjTf.GetComponent<Inventory>().OrderCheck(arrowType);
 //            }
 //            else if (uiController == 3)
 //            {
-//                playerTf.GetComponent<Inventory>().DetailOrderCheck(arrowType);
+//                mainObjTf.GetComponent<Inventory>().DetailOrderCheck(arrowType);
 //            }
 //            else if (uiController == 4)
 //            {
-//                playerTf.GetComponent<ItemCrafting>().OrderCheck(arrowType);
+//                mainObjTf.GetComponent<ItemCrafting>().OrderCheck(arrowType);
 //            }
 //            else if (uiController == 5)
 //            {
-//                playerTf.GetComponent<Dictionary>().ChangeOrder(arrowType);
+//                mainObjTf.GetComponent<Dictionary>().ChangeOrder(arrowType);
 //            }
 //            else if (uiController == 6 || uiController == 9)
 //            {
@@ -993,11 +1011,11 @@ public class UIController : MonoBehaviour
 //            }
 //            else if (uiController == 7)
 //            {
-//                playerTf.GetComponent<Inventory>().DropItemOrderCheck(arrowType);
+//                mainObjTf.GetComponent<Inventory>().DropItemOrderCheck(arrowType);
 //            }
 //            else if (uiController == 8)
 //            {
-//                playerTf.GetComponent<ItemCrafting>().DetailOrderCheck(arrowType);
+//                mainObjTf.GetComponent<ItemCrafting>().DetailOrderCheck(arrowType);
 //            }
 
 //            // <Solbin>
@@ -1019,20 +1037,20 @@ public class UIController : MonoBehaviour
 //            {
 //                if (arrowType == 2 || arrowType == 3)
 //                {
-//                    playerTf.GetComponent<Inventory>().ChangePage(arrowType);
+//                    mainObjTf.GetComponent<Inventory>().ChangePage(arrowType);
 //                }
 //                else if (arrowType == 0 || arrowType == 1)
 //                {
-//                    playerTf.GetComponent<Inventory>().ChangeItemGroupPage(arrowType);
+//                    mainObjTf.GetComponent<Inventory>().ChangeItemGroupPage(arrowType);
 //                }
 //            }
 //            else if (uiController == 4)
 //            {
-//                playerTf.GetComponent<ItemCrafting>().ControlDetailOrder(arrowType);
+//                mainObjTf.GetComponent<ItemCrafting>().ControlDetailOrder(arrowType);
 //            }
 //            else if (uiController == 5)
 //            {
-//                playerTf.GetComponent<Dictionary>().OtherChangeOrder(arrowType);
+//                mainObjTf.GetComponent<Dictionary>().OtherChangeOrder(arrowType);
 //            }
 
 //            // <Solbin>
@@ -1059,26 +1077,26 @@ public class UIController : MonoBehaviour
 //                    }
 //                    break;
 //                case 1:
-//                    playerTf.GetComponent<MainMenu>().ConnectMenu();
+//                    mainObjTf.GetComponent<MainMenu>().ConnectMenu();
 //                    break;
 //                case 2:
-//                    playerTf.GetComponent<Inventory>().OnItemDetailInfo();
+//                    mainObjTf.GetComponent<Inventory>().OnItemDetailInfo();
 //                    break;
 //                case 3:
-//                    playerTf.GetComponent<Inventory>().SelectInfo();
+//                    mainObjTf.GetComponent<Inventory>().SelectInfo();
 //                    break;
 //                case 4:
 //                    uiController = 8;
-//                    playerTf.GetComponent<ItemCrafting>().OnDetailCrafting();
+//                    mainObjTf.GetComponent<ItemCrafting>().OnDetailCrafting();
 //                    break;
 //                case 6:
 //                    quickSlotTf.GetComponent<QuickSlot>().SelectSlot();
 //                    break;
 //                case 7:
-//                    playerTf.GetComponent<Inventory>().FunctionDropItem();
+//                    mainObjTf.GetComponent<Inventory>().FunctionDropItem();
 //                    break;
 //                case 8:
-//                    playerTf.GetComponent<ItemCrafting>().ConnectCrafting();
+//                    mainObjTf.GetComponent<ItemCrafting>().ConnectCrafting();
 //                    break;
 //                case 9:
 //                    quickSlotTf.GetComponent<QuickSlot>().SelectSlot();
@@ -1094,27 +1112,27 @@ public class UIController : MonoBehaviour
 //            {
 //                case 1:
 //                    uiController = 0;
-//                    playerTf.GetComponent<MainMenu>().OffMainMenu();
+//                    mainObjTf.GetComponent<MainMenu>().OffMainMenu();
 //                    ExitMenuCheck();
 //                    break;
 //                case 2:
 //                    uiController = 1;
-//                    playerTf.GetComponent<Inventory>().ExitInventory();
-//                    playerTf.GetComponent<MainMenu>().DisconnectMenu();
+//                    mainObjTf.GetComponent<Inventory>().ExitInventory();
+//                    mainObjTf.GetComponent<MainMenu>().DisconnectMenu();
 //                    break;
 //                case 3:
 //                    uiController = 2;
-//                    playerTf.GetComponent<Inventory>().OffItemDetailInfo();
+//                    mainObjTf.GetComponent<Inventory>().OffItemDetailInfo();
 //                    break;
 //                case 4:
 //                    uiController = 0;
-//                    playerTf.GetComponent<ItemCrafting>().ExitCrafting();
+//                    mainObjTf.GetComponent<ItemCrafting>().ExitCrafting();
 //                    ExitMenuCheck();
 //                    break;
 //                case 5:
 //                    uiController = 1;
-//                    playerTf.GetComponent<Dictionary>().OffDictionary();
-//                    playerTf.GetComponent<MainMenu>().DisconnectMenu();
+//                    mainObjTf.GetComponent<Dictionary>().OffDictionary();
+//                    mainObjTf.GetComponent<MainMenu>().DisconnectMenu();
 //                    break;
 //                case 6:
 //                    uiController = 3;
@@ -1122,11 +1140,11 @@ public class UIController : MonoBehaviour
 //                    break;
 //                case 7:
 //                    uiController = 3;
-//                    playerTf.GetComponent<Inventory>().ExitDropItem(1);
+//                    mainObjTf.GetComponent<Inventory>().ExitDropItem(1);
 //                    break;
 //                case 8:
 //                    uiController = 4;
-//                    playerTf.GetComponent<ItemCrafting>().ExitDetailCrafting();
+//                    mainObjTf.GetComponent<ItemCrafting>().ExitDetailCrafting();
 //                    break;
 //                case 9:
 //                    uiController = 0;
@@ -1146,65 +1164,65 @@ public class UIController : MonoBehaviour
 //        {
 //            // 메뉴가 아무것도 안열려 있으면 메뉴 UI 를 연다
 //            case 0:
-//                playerTf.GetComponent<MainMenu>().OnMainMenu();
+//                mainObjTf.GetComponent<MainMenu>().OnMainMenu();
 //                OpenMenuCheck();
 //                uiController = 1;
 //                OpenMenuCheck(); // <Solbin> 메인메뉴 열릴 때 => UI 상태로 전환 
 //                break;
 //            // 메뉴가 하나라도 켜져있으면 해당 메뉴를 모두 닫고 초기화 화면으로 돌아감
 //            case 1:
-//                playerTf.GetComponent<MainMenu>().OffMainMenu();
+//                mainObjTf.GetComponent<MainMenu>().OffMainMenu();
 //                ExitMenuCheck();
 //                uiController = 0;
 //                break;
 //            case 2:
-//                playerTf.GetComponent<Inventory>().ExitInventory();
-//                playerTf.GetComponent<MainMenu>().DisconnectMenu();
-//                playerTf.GetComponent<MainMenu>().OffMainMenu();
+//                mainObjTf.GetComponent<Inventory>().ExitInventory();
+//                mainObjTf.GetComponent<MainMenu>().DisconnectMenu();
+//                mainObjTf.GetComponent<MainMenu>().OffMainMenu();
 //                ExitMenuCheck();
 //                uiController = 0;
 //                break;
 //            case 3:
-//                playerTf.GetComponent<Inventory>().OffItemDetailInfo();
-//                playerTf.GetComponent<Inventory>().ExitInventory();
-//                playerTf.GetComponent<MainMenu>().DisconnectMenu();
-//                playerTf.GetComponent<MainMenu>().OffMainMenu();
+//                mainObjTf.GetComponent<Inventory>().OffItemDetailInfo();
+//                mainObjTf.GetComponent<Inventory>().ExitInventory();
+//                mainObjTf.GetComponent<MainMenu>().DisconnectMenu();
+//                mainObjTf.GetComponent<MainMenu>().OffMainMenu();
 //                ExitMenuCheck();
 //                uiController = 0;
 //                break;
 //            case 4:
-//                playerTf.GetComponent<ItemCrafting>().ExitCrafting();
+//                mainObjTf.GetComponent<ItemCrafting>().ExitCrafting();
 //                ExitMenuCheck();
 //                uiController = 0;
 //                break;
 //            case 5:
-//                playerTf.GetComponent<Dictionary>().OffDictionary();
-//                playerTf.GetComponent<MainMenu>().DisconnectMenu();
-//                playerTf.GetComponent<MainMenu>().OffMainMenu();
+//                mainObjTf.GetComponent<Dictionary>().OffDictionary();
+//                mainObjTf.GetComponent<MainMenu>().DisconnectMenu();
+//                mainObjTf.GetComponent<MainMenu>().OffMainMenu();
 //                ExitMenuCheck();
 //                uiController = 0;
 //                break;
 //            case 6:
 //                quickSlotTf.GetComponent<QuickSlot>().ConnectInventory();
-//                playerTf.GetComponent<Inventory>().OffItemDetailInfo();
-//                playerTf.GetComponent<Inventory>().ExitInventory();
-//                playerTf.GetComponent<MainMenu>().DisconnectMenu();
-//                playerTf.GetComponent<MainMenu>().OffMainMenu();
+//                mainObjTf.GetComponent<Inventory>().OffItemDetailInfo();
+//                mainObjTf.GetComponent<Inventory>().ExitInventory();
+//                mainObjTf.GetComponent<MainMenu>().DisconnectMenu();
+//                mainObjTf.GetComponent<MainMenu>().OffMainMenu();
 //                ExitMenuCheck();
 //                uiController = 0;
 //                break;
 //            case 7:
-//                playerTf.GetComponent<Inventory>().ExitDropItem(1);
-//                playerTf.GetComponent<Inventory>().OffItemDetailInfo();
-//                playerTf.GetComponent<Inventory>().ExitInventory();
-//                playerTf.GetComponent<MainMenu>().DisconnectMenu();
-//                playerTf.GetComponent<MainMenu>().OffMainMenu();
+//                mainObjTf.GetComponent<Inventory>().ExitDropItem(1);
+//                mainObjTf.GetComponent<Inventory>().OffItemDetailInfo();
+//                mainObjTf.GetComponent<Inventory>().ExitInventory();
+//                mainObjTf.GetComponent<MainMenu>().DisconnectMenu();
+//                mainObjTf.GetComponent<MainMenu>().OffMainMenu();
 //                ExitMenuCheck();
 //                uiController = 0;
 //                break;
 //            case 8:
-//                playerTf.GetComponent<ItemCrafting>().ExitDetailCrafting();
-//                playerTf.GetComponent<ItemCrafting>().ExitCrafting();
+//                mainObjTf.GetComponent<ItemCrafting>().ExitDetailCrafting();
+//                mainObjTf.GetComponent<ItemCrafting>().ExitCrafting();
 //                ExitMenuCheck();
 //                uiController = 0;
 //                break;
@@ -1224,8 +1242,8 @@ public class UIController : MonoBehaviour
 //    {
 //        mapCameraTf.GetComponent<CameraControl>().ExitCheckPointInfo();
 //        mapControllerTf.GetComponent<MapControl>().ExitMap();
-//        playerTf.GetComponent<MainMenu>().DisconnectMenu();
-//        playerTf.GetComponent<MainMenu>().OffMainMenu();
+//        mainObjTf.GetComponent<MainMenu>().DisconnectMenu();
+//        mainObjTf.GetComponent<MainMenu>().OffMainMenu();
 //        ExitMenuCheck();
 //        uiController = 0;
 //    }     // AfterWarpExitMap()
@@ -1283,57 +1301,57 @@ public class UIController : MonoBehaviour
 //    #region LAGACY
 //    //* LEGACY CODE
 //    //// 인벤토리 창을 열고있는 상태에서만 실행
-//    //if (playerTf.GetComponent<Inventory>().lookInventory == true)
+//    //if (mainObjTf.GetComponent<Inventory>().lookInventory == true)
 //    //{
 //    //    // 아이템 상세 정보창을 보고있지 않을때 실행
-//    //    if (playerTf.GetComponent<Inventory>().lookItemDetailInfo == false)
+//    //    if (mainObjTf.GetComponent<Inventory>().lookItemDetailInfo == false)
 //    //    {
 //    //        // 상, 하, 좌, 우 키를 눌렀을 때
 //    //        if (Input.GetKeyDown(KeyCode.LeftArrow))
 //    //        {
-//    //            playerTf.GetComponent<Inventory>().OrderCheck(0);
+//    //            mainObjTf.GetComponent<Inventory>().OrderCheck(0);
 //    //        }
 //    //        else if (Input.GetKeyDown(KeyCode.RightArrow))
 //    //        {
-//    //            playerTf.GetComponent<Inventory>().OrderCheck(1);
+//    //            mainObjTf.GetComponent<Inventory>().OrderCheck(1);
 //    //        }
 //    //        else if (Input.GetKeyDown(KeyCode.UpArrow))
 //    //        {
-//    //            playerTf.GetComponent<Inventory>().OrderCheck(2);
+//    //            mainObjTf.GetComponent<Inventory>().OrderCheck(2);
 //    //        }
 //    //        else if (Input.GetKeyDown(KeyCode.DownArrow))
 //    //        {
-//    //            playerTf.GetComponent<Inventory>().OrderCheck(3);
+//    //            mainObjTf.GetComponent<Inventory>().OrderCheck(3);
 //    //        }
 //    //        // 확인 키를 눌렀을 때
 //    //        else if (Input.GetKeyDown(KeyCode.Z))
 //    //        {
-//    //            playerTf.GetComponent<Inventory>().OnItemDetailInfo();
+//    //            mainObjTf.GetComponent<Inventory>().OnItemDetailInfo();
 //    //        }
 //    //        // 뒤로 키를 눌렀을 때
 //    //        else if (Input.GetKeyDown(KeyCode.X))
 //    //        {
-//    //            playerTf.GetComponent<Inventory>().ExitInventory();
+//    //            mainObjTf.GetComponent<Inventory>().ExitInventory();
 //    //        }
 //    //        // 아이템 타입 페이지 업 키를 눌렀을 때
 //    //        else if (Input.GetKeyDown(KeyCode.Keypad4))
 //    //        {
-//    //            playerTf.GetComponent<Inventory>().PageUp();
+//    //            mainObjTf.GetComponent<Inventory>().PageUp();
 //    //        }
 //    //        // 아이템 타입 페이지 다운 키를 눌렀을 때
 //    //        else if (Input.GetKeyDown(KeyCode.Keypad6))
 //    //        {
-//    //            playerTf.GetComponent<Inventory>().PageDown();
+//    //            mainObjTf.GetComponent<Inventory>().PageDown();
 //    //        }
 //    //        // 아이템 수량 페이지 업 키를 눌렀을 때
 //    //        else if (Input.GetKeyDown(KeyCode.Keypad8))
 //    //        {
-//    //            playerTf.GetComponent<Inventory>().ChangeItemGroupPage(0);
+//    //            mainObjTf.GetComponent<Inventory>().ChangeItemGroupPage(0);
 //    //        }
 //    //        // 아이템 수량 페이지 다운 키를 눌렀을 때
 //    //        else if (Input.GetKeyDown(KeyCode.Keypad2))
 //    //        {
-//    //            playerTf.GetComponent<Inventory>().ChangeItemGroupPage(1);
+//    //            mainObjTf.GetComponent<Inventory>().ChangeItemGroupPage(1);
 //    //        }
 //    //    }
 //    //    // 아이템 상세 정보창을 보고있을 때 실행
@@ -1342,63 +1360,63 @@ public class UIController : MonoBehaviour
 //    //        // 상, 하, 좌, 우 키를 눌렀을 때
 //    //        if (Input.GetKeyDown(KeyCode.LeftArrow))
 //    //        {
-//    //            playerTf.GetComponent<Inventory>().DetailOrderCheck(0);
+//    //            mainObjTf.GetComponent<Inventory>().DetailOrderCheck(0);
 //    //        }
 //    //        else if (Input.GetKeyDown(KeyCode.RightArrow))
 //    //        {
-//    //            playerTf.GetComponent<Inventory>().DetailOrderCheck(1);
+//    //            mainObjTf.GetComponent<Inventory>().DetailOrderCheck(1);
 //    //        }
 //    //        else if (Input.GetKeyDown(KeyCode.UpArrow))
 //    //        {
-//    //            playerTf.GetComponent<Inventory>().DetailOrderCheck(2);
+//    //            mainObjTf.GetComponent<Inventory>().DetailOrderCheck(2);
 //    //        }
 //    //        else if (Input.GetKeyDown(KeyCode.DownArrow))
 //    //        {
-//    //            playerTf.GetComponent<Inventory>().DetailOrderCheck(3);
+//    //            mainObjTf.GetComponent<Inventory>().DetailOrderCheck(3);
 //    //        }
 //    //        // 뒤로 키를 눌렀을 때
 //    //        else if (Input.GetKeyDown(KeyCode.X))
 //    //        {
-//    //            playerTf.GetComponent<Inventory>().OffItemDetailInfo();
+//    //            mainObjTf.GetComponent<Inventory>().OffItemDetailInfo();
 //    //        }
 //    //    }
 //    //}
-//    //else if (playerTf.GetComponent<ItemCrafting>().lookCrafting == true)
+//    //else if (mainObjTf.GetComponent<ItemCrafting>().lookCrafting == true)
 //    //{
 //    //    // 제작 상세 정보창을 보고있지 않을때 실행
-//    //    if (playerTf.GetComponent<ItemCrafting>().lookCraftingInfo == false)
+//    //    if (mainObjTf.GetComponent<ItemCrafting>().lookCraftingInfo == false)
 //    //    {
 //    //        // 상, 하, 좌, 우 키를 눌렀을 때
 //    //        if (Input.GetKeyDown(KeyCode.LeftArrow))
 //    //        {
-//    //            playerTf.GetComponent<ItemCrafting>().OrderCheck(0);
+//    //            mainObjTf.GetComponent<ItemCrafting>().OrderCheck(0);
 //    //        }
 //    //        else if (Input.GetKeyDown(KeyCode.RightArrow))
 //    //        {
-//    //            playerTf.GetComponent<ItemCrafting>().OrderCheck(1);
+//    //            mainObjTf.GetComponent<ItemCrafting>().OrderCheck(1);
 //    //        }
 //    //        else if (Input.GetKeyDown(KeyCode.UpArrow))
 //    //        {
-//    //            playerTf.GetComponent<ItemCrafting>().OrderCheck(2);
+//    //            mainObjTf.GetComponent<ItemCrafting>().OrderCheck(2);
 //    //        }
 //    //        else if (Input.GetKeyDown(KeyCode.DownArrow))
 //    //        {
-//    //            playerTf.GetComponent<ItemCrafting>().OrderCheck(3);
+//    //            mainObjTf.GetComponent<ItemCrafting>().OrderCheck(3);
 //    //        }
 //    //        // 확인 키를 눌렀을 때
 //    //        else if (Input.GetKeyDown(KeyCode.Z))
 //    //        {
-//    //            playerTf.GetComponent<ItemCrafting>().OnDetailCrafting();
+//    //            mainObjTf.GetComponent<ItemCrafting>().OnDetailCrafting();
 //    //        }
 //    //        // 뒤로 키를 눌렀을 때
 //    //        else if (Input.GetKeyDown(KeyCode.X))
 //    //        {
-//    //            playerTf.GetComponent<ItemCrafting>().ExitCrafting();
+//    //            mainObjTf.GetComponent<ItemCrafting>().ExitCrafting();
 //    //        }
 //    //        // 제작 아이템 타입 페이지 변경 키를 눌렀을 때
 //    //        else if (Input.GetKeyDown(KeyCode.Alpha1) || Input.GetKeyDown(KeyCode.Alpha2))
 //    //        {
-//    //            playerTf.GetComponent<ItemCrafting>().PageChange();
+//    //            mainObjTf.GetComponent<ItemCrafting>().PageChange();
 //    //        }
 //    //    }
 //    //    // 제작 상세 정보창을 보고있을 때 실행
@@ -1407,24 +1425,24 @@ public class UIController : MonoBehaviour
 //    //        // 상, 하, 좌, 우 키를 눌렀을 때
 //    //        if (Input.GetKeyDown(KeyCode.LeftArrow))
 //    //        {
-//    //            playerTf.GetComponent<ItemCrafting>().DetailOrderCheck(0);
+//    //            mainObjTf.GetComponent<ItemCrafting>().DetailOrderCheck(0);
 //    //        }
 //    //        else if (Input.GetKeyDown(KeyCode.RightArrow))
 //    //        {
-//    //            playerTf.GetComponent<ItemCrafting>().DetailOrderCheck(1);
+//    //            mainObjTf.GetComponent<ItemCrafting>().DetailOrderCheck(1);
 //    //        }
 //    //        else if (Input.GetKeyDown(KeyCode.UpArrow))
 //    //        {
-//    //            playerTf.GetComponent<ItemCrafting>().DetailOrderCheck(2);
+//    //            mainObjTf.GetComponent<ItemCrafting>().DetailOrderCheck(2);
 //    //        }
 //    //        else if (Input.GetKeyDown(KeyCode.DownArrow))
 //    //        {
-//    //            playerTf.GetComponent<ItemCrafting>().DetailOrderCheck(3);
+//    //            mainObjTf.GetComponent<ItemCrafting>().DetailOrderCheck(3);
 //    //        }
 //    //        // 뒤로 키를 눌렀을 때
 //    //        else if (Input.GetKeyDown(KeyCode.X))
 //    //        {
-//    //            playerTf.GetComponent<ItemCrafting>().ExitDetailCrafting();
+//    //            mainObjTf.GetComponent<ItemCrafting>().ExitDetailCrafting();
 //    //        }
 //    //    }
 //    //}
@@ -1434,12 +1452,12 @@ public class UIController : MonoBehaviour
 //    //    // 인벤토리 열기 키를 눌렀을 때
 //    //    if (Input.GetKeyDown(KeyCode.N))
 //    //    {
-//    //        playerTf.GetComponent<Inventory>().ControlInventory();
+//    //        mainObjTf.GetComponent<Inventory>().ControlInventory();
 //    //    }
 //    //    // 크래프팅 열기 키를 눌렀을 때
 //    //    else if (Input.GetKeyDown(KeyCode.M))
 //    //    {
-//    //        playerTf.GetComponent<ItemCrafting>().OnCrafting();
+//    //        mainObjTf.GetComponent<ItemCrafting>().OnCrafting();
 //    //    }
 //    //}
 
@@ -1459,12 +1477,12 @@ public class UIController : MonoBehaviour
 //    //            if (hitItemSlot.GetComponent<SaveItemInfo>().activeSlotCheck == true)
 //    //            {
 //    //                hitItemSlot.GetComponent<SaveItemInfo>().LoadNameInfo(out string itemName);
-//    //                playerTf.GetComponent<Inventory>().OnItemInfo(itemName);
+//    //                mainObjTf.GetComponent<Inventory>().OnItemInfo(itemName);
 //    //            }
 //    //            // 클릭한 인벤토리 아이콘의 활성화 값이 false 면 실행
 //    //            else
 //    //            {
-//    //                playerTf.GetComponent<Inventory>().EmptyInfo();
+//    //                mainObjTf.GetComponent<Inventory>().EmptyInfo();
 //    //            }
 //    //        }
 //    //        // "CraftingImg" 태그로 아이콘을 구분함
@@ -1473,7 +1491,7 @@ public class UIController : MonoBehaviour
 //    //            hitItemSlot = hitInfo.transform.gameObject;
 
 //    //            hitItemSlot.GetComponent<SaveCraftingInfo>().LoadInfo(out string slotName);
-//    //            playerTf.GetComponent<ItemCrafting>().CraftingCheck(slotName);
+//    //            mainObjTf.GetComponent<ItemCrafting>().CraftingCheck(slotName);
 //    //        }
 //    //    }
 //    //}
@@ -1526,7 +1544,7 @@ public class UIController : MonoBehaviour
 ////    public int uiController { get; set; } = default;
 
 ////    // 플레이어 트랜스폼
-////    private Transform playerTf = default;
+////    private Transform mainObjTf = default;
 
 ////    #endregion 변수 설정
 
@@ -1548,7 +1566,7 @@ public class UIController : MonoBehaviour
 
 ////    void Start()
 ////    {
-////        playerTf = GetComponent<Transform>().transform;
+////        mainObjTf = GetComponent<Transform>().transform;
 ////    }     // Start()
 
 ////    void Update()
@@ -1560,7 +1578,7 @@ public class UIController : MonoBehaviour
 
 ////    private void StopMovePlayer()
 ////    {
-////        playerTf.GetComponent<Rigidbody>().velocity = Vector3.zero;
+////        mainObjTf.GetComponent<Rigidbody>().velocity = Vector3.zero;
 ////    }     // StopMovePlayer()
 
 ////    // Update 마다 조건에 맞으면 실행되는 함수
@@ -1568,7 +1586,7 @@ public class UIController : MonoBehaviour
 ////    {
 ////        if (uiController == 0)
 ////        {
-////            playerTf.GetComponent<Meen_MovePlayer>().UpdateFunction();
+////            mainObjTf.GetComponent<Meen_MovePlayer>().UpdateFunction();
 
 ////            if (npcControllerTf.GetComponent<NPCController>().onNavigationCheck > 0)
 ////            {
@@ -1678,25 +1696,25 @@ public class UIController : MonoBehaviour
 ////        else if (Input.GetKeyDown(KeyCode.P) && uiController == 0)
 ////        {
 ////            uiController = 4;
-////            playerTf.GetComponent<ItemCrafting>().OnCrafting();
+////            mainObjTf.GetComponent<ItemCrafting>().OnCrafting();
 ////            OpenMenuCheck();
 ////        }
 ////        //* Test : 아래의 해당 키를 누르면 인벤토리에 아이템 추가 기능
 ////        else if (Input.GetKeyDown(KeyCode.Alpha1))
 ////        {
-////            playerTf.GetComponent<Inventory>().AddInventory("딸기", 1);
+////            mainObjTf.GetComponent<Inventory>().AddInventory("딸기", 1);
 ////        }
 ////        else if (Input.GetKeyDown(KeyCode.Alpha2))
 ////        {
-////            playerTf.GetComponent<Inventory>().AddInventory("우유", 1);
+////            mainObjTf.GetComponent<Inventory>().AddInventory("우유", 1);
 ////        }
 ////        else if (Input.GetKeyDown(KeyCode.Alpha3))
 ////        {
-////            playerTf.GetComponent<Inventory>().AddInventory("고기", 1);
+////            mainObjTf.GetComponent<Inventory>().AddInventory("고기", 1);
 ////        }
 ////        else if (Input.GetKeyDown(KeyCode.Alpha4))
 ////        {
-////            playerTf.GetComponent<Inventory>().AddInventory("송이 버섯", 1);
+////            mainObjTf.GetComponent<Inventory>().AddInventory("송이 버섯", 1);
 ////        }
 
 ////        // <Solbin> 지나치게 예민한 입력값을 막기 위함
@@ -1725,28 +1743,28 @@ public class UIController : MonoBehaviour
 ////        switch (uiController)
 ////        {
 ////            case 1:
-////                playerTf.GetComponent<MainMenu>().ChangeOrder(arrowType);
+////                mainObjTf.GetComponent<MainMenu>().ChangeOrder(arrowType);
 ////                break;
 ////            case 2:
-////                playerTf.GetComponent<Inventory>().OrderCheck(arrowType);
+////                mainObjTf.GetComponent<Inventory>().OrderCheck(arrowType);
 ////                break;
 ////            case 3:
-////                playerTf.GetComponent<Inventory>().DetailOrderCheck(arrowType);
+////                mainObjTf.GetComponent<Inventory>().DetailOrderCheck(arrowType);
 ////                break;
 ////            case 4:
-////                playerTf.GetComponent<ItemCrafting>().OrderCheck(arrowType);
+////                mainObjTf.GetComponent<ItemCrafting>().OrderCheck(arrowType);
 ////                break;
 ////            case 5:
-////                playerTf.GetComponent<Dictionary>().ChangeOrder(arrowType);
+////                mainObjTf.GetComponent<Dictionary>().ChangeOrder(arrowType);
 ////                break;
 ////            case 6:
 ////                quickSlotTf.GetComponent<QuickSlot>().DirectionControl(arrowType);
 ////                break;
 ////            case 7:
-////                playerTf.GetComponent<Inventory>().DropItemOrderCheck(arrowType);
+////                mainObjTf.GetComponent<Inventory>().DropItemOrderCheck(arrowType);
 ////                break;
 ////            case 8:
-////                playerTf.GetComponent<ItemCrafting>().DetailOrderCheck(arrowType);
+////                mainObjTf.GetComponent<ItemCrafting>().DetailOrderCheck(arrowType);
 ////                break;
 ////            case 9:
 ////                quickSlotTf.GetComponent<QuickSlot>().DirectionControl(arrowType);
@@ -1783,18 +1801,18 @@ public class UIController : MonoBehaviour
 ////            case 2:
 ////                if (arrowType == 2 || arrowType == 3)
 ////                {
-////                    playerTf.GetComponent<Inventory>().ChangePage(arrowType);
+////                    mainObjTf.GetComponent<Inventory>().ChangePage(arrowType);
 ////                }
 ////                else if (arrowType == 0 || arrowType == 1)
 ////                {
-////                    playerTf.GetComponent<Inventory>().ChangeItemGroupPage(arrowType);
+////                    mainObjTf.GetComponent<Inventory>().ChangeItemGroupPage(arrowType);
 ////                }
 ////                break;
 ////            case 4:
-////                playerTf.GetComponent<ItemCrafting>().ControlDetailOrder(arrowType);
+////                mainObjTf.GetComponent<ItemCrafting>().ControlDetailOrder(arrowType);
 ////                break;
 ////            case 5:
-////                playerTf.GetComponent<Dictionary>().OtherChangeOrder(arrowType);
+////                mainObjTf.GetComponent<Dictionary>().OtherChangeOrder(arrowType);
 ////                break;
 ////            case 10:
 ////                if (arrowType == 0 || arrowType == 1) { mapCameraTf.GetComponent<CameraControl>().CheckInCamera(arrowType); }
@@ -1837,26 +1855,26 @@ public class UIController : MonoBehaviour
 ////                    OpenQuickSlot();
 ////                    break;
 ////                case 1:
-////                    playerTf.GetComponent<MainMenu>().ConnectMenu();
+////                    mainObjTf.GetComponent<MainMenu>().ConnectMenu();
 ////                    break;
 ////                case 2:
-////                    playerTf.GetComponent<Inventory>().OnItemDetailInfo();
+////                    mainObjTf.GetComponent<Inventory>().OnItemDetailInfo();
 ////                    break;
 ////                case 3:
-////                    playerTf.GetComponent<Inventory>().SelectInfo();
+////                    mainObjTf.GetComponent<Inventory>().SelectInfo();
 ////                    break;
 ////                case 4:
 ////                    uiController = 8;
-////                    playerTf.GetComponent<ItemCrafting>().OnDetailCrafting();
+////                    mainObjTf.GetComponent<ItemCrafting>().OnDetailCrafting();
 ////                    break;
 ////                case 6:
 ////                    quickSlotTf.GetComponent<QuickSlot>().SelectSlot();
 ////                    break;
 ////                case 7:
-////                    playerTf.GetComponent<Inventory>().FunctionDropItem();
+////                    mainObjTf.GetComponent<Inventory>().FunctionDropItem();
 ////                    break;
 ////                case 8:
-////                    playerTf.GetComponent<ItemCrafting>().ConnectCrafting();
+////                    mainObjTf.GetComponent<ItemCrafting>().ConnectCrafting();
 ////                    break;
 ////                case 9:
 ////                    quickSlotTf.GetComponent<QuickSlot>().SelectSlot();
@@ -1878,27 +1896,27 @@ public class UIController : MonoBehaviour
 ////            {
 ////                case 1:
 ////                    uiController = 0;
-////                    playerTf.GetComponent<MainMenu>().OffMainMenu();
+////                    mainObjTf.GetComponent<MainMenu>().OffMainMenu();
 ////                    ExitMenuCheck();
 ////                    break;
 ////                case 2:
 ////                    uiController = 1;
-////                    playerTf.GetComponent<Inventory>().ExitInventory();
-////                    playerTf.GetComponent<MainMenu>().DisconnectMenu();
+////                    mainObjTf.GetComponent<Inventory>().ExitInventory();
+////                    mainObjTf.GetComponent<MainMenu>().DisconnectMenu();
 ////                    break;
 ////                case 3:
 ////                    uiController = 2;
-////                    playerTf.GetComponent<Inventory>().OffItemDetailInfo();
+////                    mainObjTf.GetComponent<Inventory>().OffItemDetailInfo();
 ////                    break;
 ////                case 4:
 ////                    uiController = 0;
-////                    playerTf.GetComponent<ItemCrafting>().ExitCrafting();
+////                    mainObjTf.GetComponent<ItemCrafting>().ExitCrafting();
 ////                    ExitMenuCheck();
 ////                    break;
 ////                case 5:
 ////                    uiController = 1;
-////                    playerTf.GetComponent<Dictionary>().OffDictionary();
-////                    playerTf.GetComponent<MainMenu>().DisconnectMenu();
+////                    mainObjTf.GetComponent<Dictionary>().OffDictionary();
+////                    mainObjTf.GetComponent<MainMenu>().DisconnectMenu();
 ////                    break;
 ////                case 6:
 ////                    uiController = 3;
@@ -1906,11 +1924,11 @@ public class UIController : MonoBehaviour
 ////                    break;
 ////                case 7:
 ////                    uiController = 3;
-////                    playerTf.GetComponent<Inventory>().ExitDropItem(1);
+////                    mainObjTf.GetComponent<Inventory>().ExitDropItem(1);
 ////                    break;
 ////                case 8:
 ////                    uiController = 4;
-////                    playerTf.GetComponent<ItemCrafting>().ExitDetailCrafting();
+////                    mainObjTf.GetComponent<ItemCrafting>().ExitDetailCrafting();
 ////                    break;
 ////                case 9:
 ////                    uiController = 0;
@@ -1920,7 +1938,7 @@ public class UIController : MonoBehaviour
 ////                case 10:
 ////                    uiController = 1;
 ////                    mapControllerTf.GetComponent<MapControl>().ExitMap();
-////                    playerTf.GetComponent<MainMenu>().DisconnectMenu();
+////                    mainObjTf.GetComponent<MainMenu>().DisconnectMenu();
 ////                    break;
 ////                case 11:
 ////                    mapCameraTf.GetComponent<CameraControl>().ExitCheckPointInfo();
@@ -1940,63 +1958,63 @@ public class UIController : MonoBehaviour
 ////            case 0:
 ////                StopMovePlayer();
 ////                uiController = 1;
-////                playerTf.GetComponent<MainMenu>().OnMainMenu();
+////                mainObjTf.GetComponent<MainMenu>().OnMainMenu();
 ////                OpenMenuCheck(); // <Solbin> 메인메뉴 열릴 때 => UI 상태로 전환 
 ////                break;
 ////            // 메뉴가 하나라도 켜져있으면 해당 메뉴를 모두 닫고 초기화 화면으로 돌아감
 ////            case 1:
-////                playerTf.GetComponent<MainMenu>().OffMainMenu();
+////                mainObjTf.GetComponent<MainMenu>().OffMainMenu();
 ////                ExitMenuCheck();
 ////                uiController = 0;
 ////                break;
 ////            case 2:
-////                playerTf.GetComponent<Inventory>().ExitInventory();
-////                playerTf.GetComponent<MainMenu>().DisconnectMenu();
-////                playerTf.GetComponent<MainMenu>().OffMainMenu();
+////                mainObjTf.GetComponent<Inventory>().ExitInventory();
+////                mainObjTf.GetComponent<MainMenu>().DisconnectMenu();
+////                mainObjTf.GetComponent<MainMenu>().OffMainMenu();
 ////                ExitMenuCheck();
 ////                uiController = 0;
 ////                break;
 ////            case 3:
-////                playerTf.GetComponent<Inventory>().OffItemDetailInfo();
-////                playerTf.GetComponent<Inventory>().ExitInventory();
-////                playerTf.GetComponent<MainMenu>().DisconnectMenu();
-////                playerTf.GetComponent<MainMenu>().OffMainMenu();
+////                mainObjTf.GetComponent<Inventory>().OffItemDetailInfo();
+////                mainObjTf.GetComponent<Inventory>().ExitInventory();
+////                mainObjTf.GetComponent<MainMenu>().DisconnectMenu();
+////                mainObjTf.GetComponent<MainMenu>().OffMainMenu();
 ////                ExitMenuCheck();
 ////                uiController = 0;
 ////                break;
 ////            case 4:
-////                playerTf.GetComponent<ItemCrafting>().ExitCrafting();
+////                mainObjTf.GetComponent<ItemCrafting>().ExitCrafting();
 ////                ExitMenuCheck();
 ////                uiController = 0;
 ////                break;
 ////            case 5:
-////                playerTf.GetComponent<Dictionary>().OffDictionary();
-////                playerTf.GetComponent<MainMenu>().DisconnectMenu();
-////                playerTf.GetComponent<MainMenu>().OffMainMenu();
+////                mainObjTf.GetComponent<Dictionary>().OffDictionary();
+////                mainObjTf.GetComponent<MainMenu>().DisconnectMenu();
+////                mainObjTf.GetComponent<MainMenu>().OffMainMenu();
 ////                ExitMenuCheck();
 ////                uiController = 0;
 ////                break;
 ////            case 6:
 ////                quickSlotTf.GetComponent<QuickSlot>().ConnectInventory();
-////                playerTf.GetComponent<Inventory>().OffItemDetailInfo();
-////                playerTf.GetComponent<Inventory>().ExitInventory();
-////                playerTf.GetComponent<MainMenu>().DisconnectMenu();
-////                playerTf.GetComponent<MainMenu>().OffMainMenu();
+////                mainObjTf.GetComponent<Inventory>().OffItemDetailInfo();
+////                mainObjTf.GetComponent<Inventory>().ExitInventory();
+////                mainObjTf.GetComponent<MainMenu>().DisconnectMenu();
+////                mainObjTf.GetComponent<MainMenu>().OffMainMenu();
 ////                ExitMenuCheck();
 ////                uiController = 0;
 ////                break;
 ////            case 7:
-////                playerTf.GetComponent<Inventory>().ExitDropItem(1);
-////                playerTf.GetComponent<Inventory>().OffItemDetailInfo();
-////                playerTf.GetComponent<Inventory>().ExitInventory();
-////                playerTf.GetComponent<MainMenu>().DisconnectMenu();
-////                playerTf.GetComponent<MainMenu>().OffMainMenu();
+////                mainObjTf.GetComponent<Inventory>().ExitDropItem(1);
+////                mainObjTf.GetComponent<Inventory>().OffItemDetailInfo();
+////                mainObjTf.GetComponent<Inventory>().ExitInventory();
+////                mainObjTf.GetComponent<MainMenu>().DisconnectMenu();
+////                mainObjTf.GetComponent<MainMenu>().OffMainMenu();
 ////                ExitMenuCheck();
 ////                uiController = 0;
 ////                break;
 ////            case 8:
-////                playerTf.GetComponent<ItemCrafting>().ExitDetailCrafting();
-////                playerTf.GetComponent<ItemCrafting>().ExitCrafting();
+////                mainObjTf.GetComponent<ItemCrafting>().ExitDetailCrafting();
+////                mainObjTf.GetComponent<ItemCrafting>().ExitCrafting();
 ////                ExitMenuCheck();
 ////                uiController = 0;
 ////                break;
@@ -2007,16 +2025,16 @@ public class UIController : MonoBehaviour
 ////                break;
 ////            case 10:
 ////                mapControllerTf.GetComponent<MapControl>().ExitMap();
-////                playerTf.GetComponent<MainMenu>().DisconnectMenu();
-////                playerTf.GetComponent<MainMenu>().OffMainMenu();
+////                mainObjTf.GetComponent<MainMenu>().DisconnectMenu();
+////                mainObjTf.GetComponent<MainMenu>().OffMainMenu();
 ////                ExitMenuCheck();
 ////                uiController = 0;
 ////                break;
 ////            case 11:
 ////                mapCameraTf.GetComponent<CameraControl>().ExitCheckPointInfo();
 ////                mapControllerTf.GetComponent<MapControl>().ExitMap();
-////                playerTf.GetComponent<MainMenu>().DisconnectMenu();
-////                playerTf.GetComponent<MainMenu>().OffMainMenu();
+////                mainObjTf.GetComponent<MainMenu>().DisconnectMenu();
+////                mainObjTf.GetComponent<MainMenu>().OffMainMenu();
 ////                ExitMenuCheck();
 ////                uiController = 0;
 ////                break;
@@ -2077,57 +2095,57 @@ public class UIController : MonoBehaviour
 ////    #region LAGACY
 ////    //* LEGACY CODE
 ////    //// 인벤토리 창을 열고있는 상태에서만 실행
-////    //if (playerTf.GetComponent<Inventory>().lookInventory == true)
+////    //if (mainObjTf.GetComponent<Inventory>().lookInventory == true)
 ////    //{
 ////    //    // 아이템 상세 정보창을 보고있지 않을때 실행
-////    //    if (playerTf.GetComponent<Inventory>().lookItemDetailInfo == false)
+////    //    if (mainObjTf.GetComponent<Inventory>().lookItemDetailInfo == false)
 ////    //    {
 ////    //        // 상, 하, 좌, 우 키를 눌렀을 때
 ////    //        if (Input.GetKeyDown(KeyCode.LeftArrow))
 ////    //        {
-////    //            playerTf.GetComponent<Inventory>().OrderCheck(0);
+////    //            mainObjTf.GetComponent<Inventory>().OrderCheck(0);
 ////    //        }
 ////    //        else if (Input.GetKeyDown(KeyCode.RightArrow))
 ////    //        {
-////    //            playerTf.GetComponent<Inventory>().OrderCheck(1);
+////    //            mainObjTf.GetComponent<Inventory>().OrderCheck(1);
 ////    //        }
 ////    //        else if (Input.GetKeyDown(KeyCode.UpArrow))
 ////    //        {
-////    //            playerTf.GetComponent<Inventory>().OrderCheck(2);
+////    //            mainObjTf.GetComponent<Inventory>().OrderCheck(2);
 ////    //        }
 ////    //        else if (Input.GetKeyDown(KeyCode.DownArrow))
 ////    //        {
-////    //            playerTf.GetComponent<Inventory>().OrderCheck(3);
+////    //            mainObjTf.GetComponent<Inventory>().OrderCheck(3);
 ////    //        }
 ////    //        // 확인 키를 눌렀을 때
 ////    //        else if (Input.GetKeyDown(KeyCode.Z))
 ////    //        {
-////    //            playerTf.GetComponent<Inventory>().OnItemDetailInfo();
+////    //            mainObjTf.GetComponent<Inventory>().OnItemDetailInfo();
 ////    //        }
 ////    //        // 뒤로 키를 눌렀을 때
 ////    //        else if (Input.GetKeyDown(KeyCode.X))
 ////    //        {
-////    //            playerTf.GetComponent<Inventory>().ExitInventory();
+////    //            mainObjTf.GetComponent<Inventory>().ExitInventory();
 ////    //        }
 ////    //        // 아이템 타입 페이지 업 키를 눌렀을 때
 ////    //        else if (Input.GetKeyDown(KeyCode.Keypad4))
 ////    //        {
-////    //            playerTf.GetComponent<Inventory>().PageUp();
+////    //            mainObjTf.GetComponent<Inventory>().PageUp();
 ////    //        }
 ////    //        // 아이템 타입 페이지 다운 키를 눌렀을 때
 ////    //        else if (Input.GetKeyDown(KeyCode.Keypad6))
 ////    //        {
-////    //            playerTf.GetComponent<Inventory>().PageDown();
+////    //            mainObjTf.GetComponent<Inventory>().PageDown();
 ////    //        }
 ////    //        // 아이템 수량 페이지 업 키를 눌렀을 때
 ////    //        else if (Input.GetKeyDown(KeyCode.Keypad8))
 ////    //        {
-////    //            playerTf.GetComponent<Inventory>().ChangeItemGroupPage(0);
+////    //            mainObjTf.GetComponent<Inventory>().ChangeItemGroupPage(0);
 ////    //        }
 ////    //        // 아이템 수량 페이지 다운 키를 눌렀을 때
 ////    //        else if (Input.GetKeyDown(KeyCode.Keypad2))
 ////    //        {
-////    //            playerTf.GetComponent<Inventory>().ChangeItemGroupPage(1);
+////    //            mainObjTf.GetComponent<Inventory>().ChangeItemGroupPage(1);
 ////    //        }
 ////    //    }
 ////    //    // 아이템 상세 정보창을 보고있을 때 실행
@@ -2136,63 +2154,63 @@ public class UIController : MonoBehaviour
 ////    //        // 상, 하, 좌, 우 키를 눌렀을 때
 ////    //        if (Input.GetKeyDown(KeyCode.LeftArrow))
 ////    //        {
-////    //            playerTf.GetComponent<Inventory>().DetailOrderCheck(0);
+////    //            mainObjTf.GetComponent<Inventory>().DetailOrderCheck(0);
 ////    //        }
 ////    //        else if (Input.GetKeyDown(KeyCode.RightArrow))
 ////    //        {
-////    //            playerTf.GetComponent<Inventory>().DetailOrderCheck(1);
+////    //            mainObjTf.GetComponent<Inventory>().DetailOrderCheck(1);
 ////    //        }
 ////    //        else if (Input.GetKeyDown(KeyCode.UpArrow))
 ////    //        {
-////    //            playerTf.GetComponent<Inventory>().DetailOrderCheck(2);
+////    //            mainObjTf.GetComponent<Inventory>().DetailOrderCheck(2);
 ////    //        }
 ////    //        else if (Input.GetKeyDown(KeyCode.DownArrow))
 ////    //        {
-////    //            playerTf.GetComponent<Inventory>().DetailOrderCheck(3);
+////    //            mainObjTf.GetComponent<Inventory>().DetailOrderCheck(3);
 ////    //        }
 ////    //        // 뒤로 키를 눌렀을 때
 ////    //        else if (Input.GetKeyDown(KeyCode.X))
 ////    //        {
-////    //            playerTf.GetComponent<Inventory>().OffItemDetailInfo();
+////    //            mainObjTf.GetComponent<Inventory>().OffItemDetailInfo();
 ////    //        }
 ////    //    }
 ////    //}
-////    //else if (playerTf.GetComponent<ItemCrafting>().lookCrafting == true)
+////    //else if (mainObjTf.GetComponent<ItemCrafting>().lookCrafting == true)
 ////    //{
 ////    //    // 제작 상세 정보창을 보고있지 않을때 실행
-////    //    if (playerTf.GetComponent<ItemCrafting>().lookCraftingInfo == false)
+////    //    if (mainObjTf.GetComponent<ItemCrafting>().lookCraftingInfo == false)
 ////    //    {
 ////    //        // 상, 하, 좌, 우 키를 눌렀을 때
 ////    //        if (Input.GetKeyDown(KeyCode.LeftArrow))
 ////    //        {
-////    //            playerTf.GetComponent<ItemCrafting>().OrderCheck(0);
+////    //            mainObjTf.GetComponent<ItemCrafting>().OrderCheck(0);
 ////    //        }
 ////    //        else if (Input.GetKeyDown(KeyCode.RightArrow))
 ////    //        {
-////    //            playerTf.GetComponent<ItemCrafting>().OrderCheck(1);
+////    //            mainObjTf.GetComponent<ItemCrafting>().OrderCheck(1);
 ////    //        }
 ////    //        else if (Input.GetKeyDown(KeyCode.UpArrow))
 ////    //        {
-////    //            playerTf.GetComponent<ItemCrafting>().OrderCheck(2);
+////    //            mainObjTf.GetComponent<ItemCrafting>().OrderCheck(2);
 ////    //        }
 ////    //        else if (Input.GetKeyDown(KeyCode.DownArrow))
 ////    //        {
-////    //            playerTf.GetComponent<ItemCrafting>().OrderCheck(3);
+////    //            mainObjTf.GetComponent<ItemCrafting>().OrderCheck(3);
 ////    //        }
 ////    //        // 확인 키를 눌렀을 때
 ////    //        else if (Input.GetKeyDown(KeyCode.Z))
 ////    //        {
-////    //            playerTf.GetComponent<ItemCrafting>().OnDetailCrafting();
+////    //            mainObjTf.GetComponent<ItemCrafting>().OnDetailCrafting();
 ////    //        }
 ////    //        // 뒤로 키를 눌렀을 때
 ////    //        else if (Input.GetKeyDown(KeyCode.X))
 ////    //        {
-////    //            playerTf.GetComponent<ItemCrafting>().ExitCrafting();
+////    //            mainObjTf.GetComponent<ItemCrafting>().ExitCrafting();
 ////    //        }
 ////    //        // 제작 아이템 타입 페이지 변경 키를 눌렀을 때
 ////    //        else if (Input.GetKeyDown(KeyCode.Alpha1) || Input.GetKeyDown(KeyCode.Alpha2))
 ////    //        {
-////    //            playerTf.GetComponent<ItemCrafting>().PageChange();
+////    //            mainObjTf.GetComponent<ItemCrafting>().PageChange();
 ////    //        }
 ////    //    }
 ////    //    // 제작 상세 정보창을 보고있을 때 실행
@@ -2201,24 +2219,24 @@ public class UIController : MonoBehaviour
 ////    //        // 상, 하, 좌, 우 키를 눌렀을 때
 ////    //        if (Input.GetKeyDown(KeyCode.LeftArrow))
 ////    //        {
-////    //            playerTf.GetComponent<ItemCrafting>().DetailOrderCheck(0);
+////    //            mainObjTf.GetComponent<ItemCrafting>().DetailOrderCheck(0);
 ////    //        }
 ////    //        else if (Input.GetKeyDown(KeyCode.RightArrow))
 ////    //        {
-////    //            playerTf.GetComponent<ItemCrafting>().DetailOrderCheck(1);
+////    //            mainObjTf.GetComponent<ItemCrafting>().DetailOrderCheck(1);
 ////    //        }
 ////    //        else if (Input.GetKeyDown(KeyCode.UpArrow))
 ////    //        {
-////    //            playerTf.GetComponent<ItemCrafting>().DetailOrderCheck(2);
+////    //            mainObjTf.GetComponent<ItemCrafting>().DetailOrderCheck(2);
 ////    //        }
 ////    //        else if (Input.GetKeyDown(KeyCode.DownArrow))
 ////    //        {
-////    //            playerTf.GetComponent<ItemCrafting>().DetailOrderCheck(3);
+////    //            mainObjTf.GetComponent<ItemCrafting>().DetailOrderCheck(3);
 ////    //        }
 ////    //        // 뒤로 키를 눌렀을 때
 ////    //        else if (Input.GetKeyDown(KeyCode.X))
 ////    //        {
-////    //            playerTf.GetComponent<ItemCrafting>().ExitDetailCrafting();
+////    //            mainObjTf.GetComponent<ItemCrafting>().ExitDetailCrafting();
 ////    //        }
 ////    //    }
 ////    //}
@@ -2228,12 +2246,12 @@ public class UIController : MonoBehaviour
 ////    //    // 인벤토리 열기 키를 눌렀을 때
 ////    //    if (Input.GetKeyDown(KeyCode.N))
 ////    //    {
-////    //        playerTf.GetComponent<Inventory>().ControlInventory();
+////    //        mainObjTf.GetComponent<Inventory>().ControlInventory();
 ////    //    }
 ////    //    // 크래프팅 열기 키를 눌렀을 때
 ////    //    else if (Input.GetKeyDown(KeyCode.M))
 ////    //    {
-////    //        playerTf.GetComponent<ItemCrafting>().OnCrafting();
+////    //        mainObjTf.GetComponent<ItemCrafting>().OnCrafting();
 ////    //    }
 ////    //}
 
@@ -2253,12 +2271,12 @@ public class UIController : MonoBehaviour
 ////    //            if (hitItemSlot.GetComponent<SaveItemInfo>().activeSlotCheck == true)
 ////    //            {
 ////    //                hitItemSlot.GetComponent<SaveItemInfo>().LoadNameInfo(out string itemName);
-////    //                playerTf.GetComponent<Inventory>().OnItemInfo(itemName);
+////    //                mainObjTf.GetComponent<Inventory>().OnItemInfo(itemName);
 ////    //            }
 ////    //            // 클릭한 인벤토리 아이콘의 활성화 값이 false 면 실행
 ////    //            else
 ////    //            {
-////    //                playerTf.GetComponent<Inventory>().EmptyInfo();
+////    //                mainObjTf.GetComponent<Inventory>().EmptyInfo();
 ////    //            }
 ////    //        }
 ////    //        // "CraftingImg" 태그로 아이콘을 구분함
@@ -2267,7 +2285,7 @@ public class UIController : MonoBehaviour
 ////    //            hitItemSlot = hitInfo.transform.gameObject;
 
 ////    //            hitItemSlot.GetComponent<SaveCraftingInfo>().LoadInfo(out string slotName);
-////    //            playerTf.GetComponent<ItemCrafting>().CraftingCheck(slotName);
+////    //            mainObjTf.GetComponent<ItemCrafting>().CraftingCheck(slotName);
 ////    //        }
 ////    //    }
 ////    //}
@@ -2279,4 +2297,4 @@ public class UIController : MonoBehaviour
 
 ////}     // Update()
 
-
+#endregion Lagacy Function
