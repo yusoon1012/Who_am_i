@@ -25,6 +25,9 @@ public class VRIFPlayerClimbingHelper : MonoBehaviour
     [Tooltip("카메라가 실제로 비추는 것을 관할한다")]
     [SerializeField] private Transform trackingSpace = default;
 
+    [Header("Sub Tracking Space")]
+    [SerializeField] private Transform subTrackingSpace = default;
+
     [Header("Player Sub Camera")]
     [Tooltip("컷신용 카메라")]
     [SerializeField] Transform playerSubCamera = default;
@@ -57,8 +60,14 @@ public class VRIFPlayerClimbingHelper : MonoBehaviour
 
         if (grabbable_.GetComponentInChildren<CinemachineDollyCart>())
         {
-            Vector3 dir = grabbable_.transform.rotation.eulerAngles;
-            playerController.rotation = Quaternion.Euler(dir);
+            if (grabbable_.GetComponentInChildren<CinemachineSmoothPath>())
+            {
+                GameObject dollyTrack = grabbable_.GetComponentInChildren<CinemachineSmoothPath>().gameObject;
+                Vector3 dir = dollyTrack.transform.rotation.eulerAngles;
+
+                playerController.rotation = Quaternion.Euler(dir); // 플레이어 회전
+                subTrackingSpace.rotation = Quaternion.Euler(dir);
+            }
 
             Transform cart = grabbable_.GetComponentInChildren<CinemachineDollyCart>().transform; // 카트 트랜스폼
             CinemachineDollyCart dollyCart = cart.GetComponent<CinemachineDollyCart>();
@@ -88,16 +97,14 @@ public class VRIFPlayerClimbingHelper : MonoBehaviour
 
         playerController.position = dollyCart_.transform.position; // PC 재위치
 
+        playerController.rotation = subTrackingSpace.rotation;
+
         playerSubCamera.gameObject.SetActive(false); // 카메라 재세팅
         virtualCamera.Follow = null;
         virtualCamera.LookAt = null;
 
         dollyCart_.m_Speed = 0f;
         dollyCart_.m_Position = 0f; // 카트 복귀
-
-        // TODO: VR 기기를 쓴 채로 오른쪽으로 머리를 기울이면 화면 또한 오른쪽으로, 좌측으로 머리를 기울이면 화면 또한 좌측으로 기울어지는
-        // 문제가 있다. centereyeanchor는 카메라를 어떻게 보정하는가?
-        // 그럼 왜 UI 카메라는 멀쩡히 작동하는 것인가?
     }
 
     private IEnumerator Rotate()
@@ -130,6 +137,14 @@ public class VRIFPlayerClimbingHelper : MonoBehaviour
         playerController.rotation = Quaternion.Euler(dir);
 
         yield return null;
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.V))
+        {
+            playerSubCamera.gameObject.SetActive(true); // 테스트 코드 
+        }
     }
 }
 
