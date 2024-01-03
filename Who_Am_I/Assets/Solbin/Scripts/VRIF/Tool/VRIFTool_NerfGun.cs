@@ -91,12 +91,9 @@ public class VRIFTool_NerfGun : MonoBehaviour
     {
         if (_prey.layer == LayerMask.NameToLayer("Animal"))
         {
-            if (_prey.GetComponentInChildren<SendDamage>()) // 데이터 스크립트가 있는 동물이면
+            if (_prey.GetComponent<ThisAnimalData>())
             {
-                Debug.Log(_prey.name);
-
-                SendDamage sendDamage = _prey.GetComponentInChildren<SendDamage>();
-                sendDamage.Hit(1); // 1만큼 데미지 
+                _prey.GetComponent<ThisAnimalData>().Hit(1); // 1만큼 데미지
             }
         }
 

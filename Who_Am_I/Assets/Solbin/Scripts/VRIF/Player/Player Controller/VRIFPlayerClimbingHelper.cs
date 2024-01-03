@@ -6,6 +6,8 @@ using UnityEngine;
 using static UnityEngine.ProBuilder.AutoUnwrapSettings;
 using System.Linq;
 using Cinemachine;
+using Yarn.Unity.Editor;
+using Oculus.Interaction;
 
 public class VRIFPlayerClimbingHelper : MonoBehaviour
 {
@@ -19,7 +21,10 @@ public class VRIFPlayerClimbingHelper : MonoBehaviour
     [SerializeField] private Grabber leftGrabber = default;
     [SerializeField] private Grabber rightGrabber = default;
 
+    // Transform: playerController
     private Transform playerController = default;
+    // PlayerGravity
+    private PlayerGravity playerGravity = default;
 
     [Header("Tracking Space")]
     [Tooltip("카메라가 실제로 비추는 것을 관할한다")]
@@ -32,6 +37,10 @@ public class VRIFPlayerClimbingHelper : MonoBehaviour
     [Tooltip("컷신용 카메라")]
     [SerializeField] Transform playerSubCamera = default;
     private CinemachineVirtualCamera virtualCamera = default;
+
+    [Header("테스트")]
+    [SerializeField] private Transform testCart = default;
+    [SerializeField] private Transform testSphere = default;
 
     private void Awake()
     {
@@ -48,6 +57,8 @@ public class VRIFPlayerClimbingHelper : MonoBehaviour
     private void Start()
     {
         playerController = transform;
+        playerGravity = playerController.GetComponent<PlayerGravity>();
+
         virtualCamera = playerSubCamera.GetComponent<CinemachineVirtualCamera>();
     }
 
@@ -58,48 +69,46 @@ public class VRIFPlayerClimbingHelper : MonoBehaviour
     {
         if (grabbable_.CompareTag("ClimbingAnchor")) { StartCoroutine(Rotate()); } // 자동 회전
 
-        if (grabbable_.GetComponentInChildren<CinemachineDollyCart>())
+        if (grabbable_.GetComponentInChildren<CinemachineDollyCart>() && grabbable_.GetComponentInChildren<CinemachineSmoothPath>())
         {
-            if (grabbable_.GetComponentInChildren<CinemachineSmoothPath>())
-            {
-                GameObject dollyTrack = grabbable_.GetComponentInChildren<CinemachineSmoothPath>().gameObject;
-                Vector3 dir = dollyTrack.transform.rotation.eulerAngles;
+            CinemachineSmoothPath path = grabbable_.GetComponentInChildren<CinemachineSmoothPath>(); // Dolly Track
+            Transform dollyTrack = path.transform;
+            Vector3 dir = dollyTrack.rotation.eulerAngles; // 트랙의 방향
 
-                playerController.rotation = Quaternion.Euler(dir); // 플레이어 회전
-                subTrackingSpace.rotation = Quaternion.Euler(dir);
-            }
+            CinemachineDollyCart dollyCart = grabbable_.GetComponentInChildren<CinemachineDollyCart>(); // Dolly Cart
+            Transform cart = dollyCart.transform; // 카트 트랜스폼
 
-            Transform cart = grabbable_.GetComponentInChildren<CinemachineDollyCart>().transform; // 카트 트랜스폼
-            CinemachineDollyCart dollyCart = cart.GetComponent<CinemachineDollyCart>();
+            subTrackingSpace.rotation = Quaternion.Euler(dir); // 서브 카메라는 트랙의 방향을 바라본다.  
 
             playerSubCamera.gameObject.SetActive(true);
             virtualCamera.Follow = cart;
             virtualCamera.LookAt = cart;
 
-            dollyCart.m_Speed = 1f;
+            dollyCart.m_Speed = 1f; // 카트 세팅 후 이동 시작
 
-            StartCoroutine(CheckArrival(dollyCart));
+            StartCoroutine(CheckArrival(dollyCart, cart));
         }
     }
 
     /// <summary>
     /// 서브 카메라를 트랙을 따라 이동시킨다. 
     /// </summary>
-    private IEnumerator CheckArrival(CinemachineDollyCart dollyCart_)
+    private IEnumerator CheckArrival(CinemachineDollyCart dollyCart_, Transform cart_)
     {
-        while(dollyCart_.m_Position <= 1.9) // 도착 직전까지
-        {
-            yield return null;
-        }
+        yield return new WaitForSeconds(2.5f);
 
-        leftGrabber.ReleaseGrab(); // 손을 놓는다
+        playerGravity.enabled = false; // 중력 비활성화
+
+        leftGrabber.ReleaseGrab(); // PC는 손을 놓는다
         rightGrabber.ReleaseGrab();
 
-        playerController.position = dollyCart_.transform.position; // PC 재위치
-
+        playerController.position = playerSubCamera.position; // PC 재위치
         playerController.rotation = subTrackingSpace.rotation;
 
+        playerGravity.enabled = true; // 중력 재활성화
+
         playerSubCamera.gameObject.SetActive(false); // 카메라 재세팅
+
         virtualCamera.Follow = null;
         virtualCamera.LookAt = null;
 
@@ -109,27 +118,6 @@ public class VRIFPlayerClimbingHelper : MonoBehaviour
 
     private IEnumerator Rotate()
     {
-        //float time = 0f;
-
-        //while (time < 1f)
-        //{
-        //    time += Time.deltaTime;
-
-        //    playerController.rotation = 
-        //        Quaternion.RotateTowards(playerController.rotation, climbingAnchor.rotation, 100f * Time.deltaTime);
-
-        //    playerController.rotation = Quaternion.Euler(0, playerController.rotation.y, 0);
-
-        //    yield return null;
-        //}
-
-        //while (Vector3.Distance(playerController.position, climbingAnchor.position) > 0.1f)
-        //{
-        //    playerController.position = Vector3.MoveTowards(playerController.position, climbingAnchor.position, 10f * Time.deltaTime);
-
-        //    yield return null;
-        //}
-
         Vector3 dir = climbingAnchor.rotation.eulerAngles;
         dir.x = 0;
         dir.z = 0;
@@ -143,10 +131,24 @@ public class VRIFPlayerClimbingHelper : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.V))
         {
-            playerSubCamera.gameObject.SetActive(true); // 테스트 코드 
+            playerController.position = testCart.position;
+            //StartCoroutine(TestCode());
+        } // TODO: 돌리카트가 초기화되고 나서 플레이어가 이동을 시도한다. 고치기
+    }
+
+    private IEnumerator TestCode()
+    {
+        yield return new WaitForSeconds(2);
+
+        bool test = true;
+        
+        while (test)
+        {
+            Debug.Log("이동 시도");
+
+            playerController.position = testCart.position;
+
+            yield return null;
         }
     }
 }
-
-// TODO: 어떻게 하면 자연스럽게 회전하도록 할 수 있는가? (y축만 회전하도록)
-
