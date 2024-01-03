@@ -14,18 +14,18 @@ public class DecimationEditor : Editor
 {
     #region Property members
     SerializedProperty targetObject;        // 타겟 오브젝트
-    SerializedProperty trianglePercent;     // 폴리곤 퍼센트
+    SerializedProperty trianglePercent;     // 폴리곤 비율
     #endregion
 
     #region private members
+    private MeshFilter targetMeshFilter;            // 타겟 오브젝트의 메쉬 필터
     private Mesh targetMesh;                        // 타겟 오브젝트의 메쉬
     private Mesh copyMesh;                          // 타겟 오브젝트의 복사본
-    private int maxTriangle;                        // 폴리곤 퍼센트로 계산한 최대 폴리곤 갯수
-    private MeshFilter targetMeshFilter;            // 타겟 오브젝트의 메쉬필터
+    private int maxTriangleLength;                  // 비율에 기반한 최대 폴리곤 개수
     private List<Vector3> newVerties;               // 새로운 정점을 저장
-    private List<int> newTriangle;                  // 새로운 폴리곤을 저장
-    private Dictionary<int, float> triangleValue;   // 폴리곤의 면적을 저장
-    private List<Triangle> triangles;               // 폴리곤 구조체 저장
+    private List<int> newTriangles;                 // 새로운 폴리곤을 저장
+    private Dictionary<int, float> trianglesValue;  // 폴리곤의 면적을 저장
+    private List<Triangle> trianglesData;           // 폴리곤 데이터를 저장
     #endregion
 
     #region struct members
@@ -70,41 +70,46 @@ public class DecimationEditor : Editor
     {
         InitializationComponents();
         ErrorCheck();
+        InitializationNew();
         InitializationSetup();
-        StartFunction();
-    }
+        Decimation();
+    }       // EditorStart()
 
     private void InitializationComponents()
     {
         targetMeshFilter = GFuncE.SetComponent<MeshFilter>(targetObject);
         targetMesh = targetMeshFilter.sharedMesh != null ? targetMeshFilter.sharedMesh : null;
-    }
+    }       // InitializationComponents()
+
+    private void InitializationNew()
+    {
+        newTriangles = new List<int>();
+        newVerties = new List<Vector3>();
+    }       // InitializationNew()
 
     private void ErrorCheck()
     {
         if (targetMeshFilter == null) { GFuncE.SubmitNonFindText(targetObject, typeof(MeshFilter)); return; }
         if (targetMesh == null) { GFuncE.SubmitNonFindText(targetObject, typeof(Mesh)); return; }
-    }
+    }       // ErrorCheck()
 
     private void InitializationSetup()
     {
         copyMesh = GFuncE.CopyMesh(targetMesh);
-        maxTriangle = Mathf.FloorToInt(CalculateVertiesPercent());
-        newVerties = new List<Vector3>();
         newVerties.AddRange(copyMesh.vertices);
-        newTriangle = new List<int>();
-        newTriangle.AddRange(copyMesh.triangles);
-        UpdateEdges(copyMesh, out triangles, out triangleValue);
-    }
+        newTriangles.AddRange(copyMesh.triangles);
+        maxTriangleLength = Mathf.FloorToInt(CalculateVertiesPercent());
+        SetTriangleData(copyMesh, out trianglesData, out trianglesValue);
+    }       // InitializationSetup()
 
     private float CalculateVertiesPercent()
     => copyMesh.triangles.Length * (trianglePercent.floatValue * 0.01f);
 
-    // 에지 정보를 담은 List, Dictionary 초기화 메서드
-    private void UpdateEdges(Mesh _mesh, out List<Triangle> _triangles, out Dictionary<int, float> _triangleValue)
+    // 트라이앵글 정보를 담은 List, Dictionary 초기화 메서드
+    private void SetTriangleData(Mesh _mesh, out List<Triangle> _trianglesData, out Dictionary<int, float> _trianglesValue)
     {
-        _triangles = new List<Triangle>();
-        _triangleValue = new Dictionary<int, float>();
+        _trianglesData = new List<Triangle>();
+        _trianglesValue = new Dictionary<int, float>();
 
         int[] triangles = _mesh.triangles;
         Vector3[] vertices = _mesh.vertices;
@@ -119,16 +124,15 @@ public class DecimationEditor : Editor
             Vector3 v1 = vertices[i1];
             Vector3 v2 = vertices[i2];
 
-            _triangles.Add(new Triangle { v0 = v0, v1 = v1, v2 = v2, index = j });
+            _trianglesData.Add(new Triangle { v0 = v0, v1 = v1, v2 = v2, index = j });
         }
 
-        foreach (var triangle in _triangles)
+        foreach (Triangle triangle in _trianglesData)
         {
-            _triangleValue[triangle.index] = CalculateTriangleArea(triangle.v0, triangle.v1, triangle.v2);
+            _trianglesValue[triangle.index] = CalculateTriangleArea(triangle.v0, triangle.v1, triangle.v2);
         }
     }
 
-    // 삼각형의 면적을 구하는 메서드
     private float CalculateTriangleArea(Vector3 _v0, Vector3 _v1, Vector3 _v2)
     {
         // 삼각형의 세 변의 길이
@@ -141,51 +145,56 @@ public class DecimationEditor : Editor
 
         // 헤론의 공식을 사용하여 삼각형의 면적 계산
         float area = Mathf.Sqrt(s * (s - a) * (s - b) * (s - c));
+
         return area;
     }
     #endregion
 
     #region Editor function start
-    private void StartFunction()
+    private void Decimation()
     {
-        Debug.LogFormat($"트라이앵글 초기 갯수 {copyMesh.triangles.Length}");
-        Debug.LogFormat($"버텍스 초기 갯수 {copyMesh.vertexCount}");
-
-        int index = 0;
-        int minIndex;
-        Vector3 newPos;
-
-
-
-        while (maxTriangle <= copyMesh.triangles.Length)
+        for (int i = 0; maxTriangleLength <= copyMesh.triangles.Length; i++)
         {
-            Debug.Log(index);
-            Debug.Log(copyMesh.triangles.Length);
-            // 딕셔너리에서 가장 작은 인덱스 찾기
-            minIndex = triangleValue.OrderBy(kv => kv.Value).Skip(index).First().Key;
-            // 가장 작은 인덱스에 해당하는 두 정점의 가운데 좌표
-            newPos = CalculateTriangleCenter(triangles[minIndex].v0, triangles[minIndex].v1, triangles[minIndex].v2);
+            int minIndex = FindMinIndex(i);
+            Vector3 newPos = CalculateTriangleCenter(trianglesData[minIndex].v0, trianglesData[minIndex].v1, trianglesData[minIndex].v2);
 
             MoveVertex(minIndex, newPos);
 
-            List<Vector3> newVerticesList = new List<Vector3>(copyMesh.vertices);
-            List<int> newTrianglesList = new List<int>(copyMesh.triangles);
-
-            RemoveZeroAreaTriangles();
-
-            index++;
+            copyMesh.triangles = RemoveTriangles();
         }
 
         // 갱신된 메시 정보 적용
-        copyMesh.vertices = newVerties.ToArray();
-
-        targetMeshFilter.sharedMesh = copyMesh;
-
-        Debug.LogFormat($"트라이앵글 초기 갯수 {targetMeshFilter.sharedMesh.triangles.Length}");
-        Debug.LogFormat($"버텍스 초기 갯수 {targetMeshFilter.sharedMesh.vertices.Length}");
+        SetMesh();
     }
 
-    private void RemoveZeroAreaTriangles()
+    private void SetMesh()
+    {
+        copyMesh.vertices = newVerties.ToArray();
+        targetMeshFilter.sharedMesh = copyMesh;
+    }
+
+    private int FindMinIndex(int _nextCount)
+        => trianglesValue.OrderBy(kv => kv.Value).Skip(_nextCount).First().Key;
+
+    private void MoveVertex(int minIndex, Vector3 newPosition)
+    {
+        for (int i = 0; i < newTriangles.Count; i += 3)
+        {
+            int[] vertexIndices = { newTriangles[i], newTriangles[i + 1], newTriangles[i + 2] };
+
+            foreach (int vertexIndex in vertexIndices)
+            {
+                Vector3 vertex = newVerties[vertexIndex];
+
+                if (IsPointInsideTriangle(vertex, trianglesData[minIndex]))
+                {
+                    newVerties[vertexIndex] = newPosition;
+                }
+            }
+        }
+    }
+
+    private int[] RemoveTriangles()
     {
         List<Vector3> newVerticesList = new List<Vector3>(newVerties);
         List<int> newTrianglesList = new List<int>(copyMesh.triangles);
@@ -213,61 +222,16 @@ public class DecimationEditor : Editor
             }
         }
 
-        // 갱신된 메시 정보 적용
-        copyMesh.triangles = newTrianglesList.ToArray();
+        return newTrianglesList.ToArray();
     }
 
-    private void MoveVertex(int _minIndex, Vector3 _newPos)
-    {
-        for (int i = 0; i < newTriangle.Count; i += 3)
-        {
-            int i0 = newTriangle[i];
-            int i1 = newTriangle[i + 1];
-            int i2 = newTriangle[i + 2];
 
-            Vector3 v0 = newVerties[i0];
-            Vector3 v1 = newVerties[i1];
-            Vector3 v2 = newVerties[i2];
 
-            if (IsPointInsideTriangle(v0, triangles[_minIndex]) && IsPointInsideTriangle(v1, triangles[_minIndex]) && IsPointInsideTriangle(v2, triangles[_minIndex]))
-            {
-                newVerties[i0] = _newPos;
-                newVerties[i1] = _newPos;
-                newVerties[i2] = _newPos;
-            }
-            else if (IsPointInsideTriangle(v0, triangles[_minIndex]) && IsPointInsideTriangle(v1, triangles[_minIndex]))
-            {
-                newVerties[i0] = _newPos;
-                newVerties[i1] = _newPos;
-            }
-            else if (IsPointInsideTriangle(v1, triangles[_minIndex]) && IsPointInsideTriangle(v2, triangles[_minIndex]))
-            {
-                newVerties[i1] = _newPos;
-                newVerties[i2] = _newPos;
-            }
-            else if (IsPointInsideTriangle(v2, triangles[_minIndex]) && IsPointInsideTriangle(v0, triangles[_minIndex]))
-            {
-                newVerties[i2] = _newPos;
-                newVerties[i0] = _newPos;
-            }
-            else if (IsPointInsideTriangle(v0, triangles[_minIndex]))
-            {
-                newVerties[i0] = _newPos;
-            }
-            else if (IsPointInsideTriangle(v1, triangles[_minIndex]))
-            {
-                newVerties[i1] = _newPos;
-            }
-            else if (IsPointInsideTriangle(v2, triangles[_minIndex]))
-            {
-                newVerties[i2] = _newPos;
-            }
-        }
-    }
-
+    // 삼각형에 포함되는 정점이 있는지 확인하는 메서드
     private bool IsPointInsideTriangle(Vector3 _point, Triangle _triangle)
     => _point == _triangle.v0 || _point == _triangle.v1 || _point == _triangle.v2;
 
+    // 삼각형의 중심 좌표를 알아내는 메서드
     private Vector3 CalculateTriangleCenter(Vector3 _v0, Vector3 _v1, Vector3 _v2)
     {
         float cX = (_v0.x + _v1.x + _v2.x) / 3f;
@@ -279,9 +243,47 @@ public class DecimationEditor : Editor
     #endregion
 
     #region Lagacy
+    //private Vector3 CalculateTriangleCenter(Vector3 _v0, Vector3 _v1, Vector3 _v2)
+    //{
+    //    float cX = (_v0.x + _v1.x + _v2.x) / 3f;
+    //    float cY = (_v0.y + _v1.y + _v2.y) / 3f;
+    //    float cZ = (_v0.z + _v1.z + _v2.z) / 3f;
+
+    //    return new Vector3(cX, cY, cZ);
+    //}
+
+    //private void RemoveMisuseVertices(Mesh _mesh)
+    //{
+    //    HashSet<int> triangleIndices = new HashSet<int>(_mesh.triangles);
+    //    HashSet<int> vertexIndices = new HashSet<int>();
+
+    //    // 트라이앵글 인덱스를 vertexIndices에 추가
+    //    for (int i = 0; i < _mesh.triangles.Length; i++)
+    //    {
+    //        vertexIndices.Add(_mesh.triangles[i]);
+    //    }
+
+    //    // 트라이앵글 인덱스에는 존재하지 않고 정점 인덱스에만 존재하는 정점을 식별하여 삭제
+    //    List<Vector3> newVerticesList = new List<Vector3>(_mesh.vertices);
+    //    foreach (int index in vertexIndices)
+    //    {
+    //        if (!triangleIndices.Contains(index))
+    //        {
+    //            Debug.Log("여기 몇번 들어오게 ?");
+    //            newVerticesList[index] = Vector3.zero; // 혹은 다른 방법으로 정점을 삭제
+    //        }
+    //    }
+
+    //    // 쓸모 없는 정점을 정리 (0 벡터로 설정된 정점들을 제거)
+    //    newVerticesList.RemoveAll(vertex => vertex == Vector3.zero);
+
+    //    // 갱신된 메시 정보 적용
+    //    copyMesh.vertices = newVerticesList.ToArray();
+    //}
+
     //private void RemoveVertex(int _minIndex)
     //{
-    //    for (int i = 0; i < copyMesh.triangles.Length; i += 3)
+    //    for (int i = 0; i < triangleLength; i += 3)
     //    {
     //        int i0 = copyMesh.triangles[i];
     //        int i1 = copyMesh.triangles[i + 1];
@@ -305,7 +307,7 @@ public class DecimationEditor : Editor
     //}
     //private void MeshSimplification()
     //{
-    //    Debug.LogFormat($"트라이앵글 초기 갯수 {copyMesh.triangles.Length}");
+    //    Debug.LogFormat($"트라이앵글 초기 갯수 {triangleLength}");
     //    Debug.LogFormat($"버텍스 초기 갯수 {copyMesh.vertexCount}");
 
     //    int minIndex;
@@ -319,7 +321,7 @@ public class DecimationEditor : Editor
     //        // 가장 작은 인덱스에 해당하는 두 정점의 가운데 좌표
     //        newPos = CalculateTriangleCenter(triangles[minIndex].v0, triangles[minIndex].v1, triangles[minIndex].v2);
 
-    //        for (int i = 0; i < copyMesh.triangles.Length; i += 3)
+    //        for (int i = 0; i < triangleLength; i += 3)
     //        {
     //            int i0 = copyMesh.triangles[i];
     //            int i1 = copyMesh.triangles[i + 1];
@@ -367,7 +369,7 @@ public class DecimationEditor : Editor
 
 
 
-    //    Debug.Log(copyMesh.triangles.Length);   // 3000
+    //    Debug.Log(triangleLength);   // 3000
     //    Debug.Log(copyMesh.vertices.Length);    // 2646
     //    Debug.Log(newVerties.Count);          // 3000
 
@@ -380,7 +382,7 @@ public class DecimationEditor : Editor
 
     //private void MeshSimplification()
     //{
-    //    Debug.LogFormat($"트라이앵글 초기 갯수 {copyMesh.triangles.Length}");
+    //    Debug.LogFormat($"트라이앵글 초기 갯수 {triangleLength}");
     //    Debug.LogFormat($"버텍스 초기 갯수 {copyMesh.vertexCount}");
 
     //    int minIndex;
@@ -401,7 +403,7 @@ public class DecimationEditor : Editor
     //        // Set to track removed triangles
     //        HashSet<int> removedTriangles = new HashSet<int>();
 
-    //        for (int i = 0; i < copyMesh.triangles.Length; i += 3)
+    //        for (int i = 0; i < triangleLength; i += 3)
     //        {
     //            int i0 = copyMesh.triangles[i];
     //            int i1 = copyMesh.triangles[i + 1];
