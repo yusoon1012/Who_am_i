@@ -8,7 +8,7 @@ public class QuestNPC : MonoBehaviour
 {
    
     public string npcName;
-
+    public GameObject questIcon;
     private void Start()
     {
         GameEventManager.instance.miscEvent.onNpcTalked += TalkNPC;
@@ -17,14 +17,11 @@ public class QuestNPC : MonoBehaviour
     {
         if (other.tag.Equals("Player"))
         {
-
             GameEventManager.instance.miscEvent.NpcTalked(npcName);
-
-
+            questIcon.SetActive(false);
         }
     }
     private void TalkNPC(string name)
     {
-        Debug.Log(name + "과 대화");
     }
 }

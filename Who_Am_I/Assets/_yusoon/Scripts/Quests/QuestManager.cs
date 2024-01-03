@@ -28,11 +28,11 @@ public class QuestManager : MonoBehaviour
     }
     private void OnEnable()
     {
-        GameEventManager.instance.questEvent.onStartQuest += StartQuest;
-        GameEventManager.instance.questEvent.onAdvanceQuest += AdvanceQuest;
-        GameEventManager.instance.questEvent.onFinishQuest += FinishQuest;
-        GameEventManager.instance.questEvent.onQuestIndexChange += QuestIndexChange;
-        GameEventManager.instance.questEvent.onQuestStepStateChange += QuestStepStateChange;
+        GameEventManager.instance.questEvent.onStartQuest += StartQuest;        //퀘스트시작 이벤트
+        GameEventManager.instance.questEvent.onAdvanceQuest += AdvanceQuest;    //퀘스트 완료상태 이벤트
+        GameEventManager.instance.questEvent.onFinishQuest += FinishQuest;      //퀘스트 완료 이벤트
+        GameEventManager.instance.questEvent.onQuestIndexChange += QuestIndexChange;// 다음퀘스트 진행하기위한 인덱스 증가 이벤트
+        GameEventManager.instance.questEvent.onQuestStepStateChange += QuestStepStateChange;// 퀘스트 조건 진행도 변경 이벤트
        
 
 
@@ -55,6 +55,7 @@ public class QuestManager : MonoBehaviour
             }
             GameEventManager.instance.questEvent.QuestStateChange(quest);
         }
+        //퀘스트 목록 초기화 및 진행중이던 퀘스트 상태 불러오기
 
     }
     private void Update()
@@ -68,26 +69,26 @@ public class QuestManager : MonoBehaviour
 
                 ChangeQuestState(quest.info.id, QuestState.CAN_START);
             }
-        }
+        }// 이전 퀘스트를 클리어해서 시작가능한상태로 변경해주는 루프
         
     }
 
     private void ChangeQuestState(string id,QuestState state_)
     {
-        Quest quest = GetQuestById(id);
+        Quest quest = GetQuestById(id); //퀘스트 id값으로 찾아온값을 저장
         quest.state = state_;
-        GameEventManager.instance.questEvent.QuestStateChange(quest);
-    }
+        GameEventManager.instance.questEvent.QuestStateChange(quest);//퀘스트 상태 변경 이벤트
+    }       //ChangeQuestState() 퀘스트 상태 변경 이벤트 구독받기위한 함수
     private void QuestIndexChange(int index_)
     {
         currentQuestIndex = index_;
-    }
+    }       //QuestIndexChange() 퀘스트 인덱스 변경 이벤트 구독받기위한 함수
     private void QuestStepStateChange(string id,int stepIdx,QuestStepState queststepState)
     {
         Quest quest = GetQuestById(id);
         quest.StoreQuestStepState(queststepState, stepIdx);
         ChangeQuestState(id, quest.state);
-    }
+    }       //QuestStepStateChange() 퀘스트 조건 진행도 변경 이벤트 구독받기위한 함수
     private bool CheckRequirementsMet(Quest quest)
     {
         bool meetRequirements = true;
@@ -103,14 +104,14 @@ public class QuestManager : MonoBehaviour
             }
         }
         return meetRequirements;
-    }
+    }       //CheckRequirementsMet() 선행퀘스트 클리어했는지 반환하는 함수
     private void StartQuest(string id)
     {
         Debug.Log("Start Quest : "+id);
         Quest quest = GetQuestById(id);
         quest.InstantiateCurrentQuestStep(this.transform);
         ChangeQuestState(quest.info.id, QuestState.IN_PROGRESS);
-    }
+    }       //StartQuest() 퀘스트 시작 이벤트 구독해서 상태 변경해주는 함수
     private void AdvanceQuest(string id)
     {
         Debug.Log("Advanced Quest : " + id);
@@ -125,7 +126,7 @@ public class QuestManager : MonoBehaviour
             ChangeQuestState(quest.info.id, QuestState.CAN_FINISH);
         }
 
-    }
+    }       //AdvanceQuest() 퀘스트 진행하여서 클리어 가능한 상태로 변경해주는 함수
 
     private void FinishQuest(string id)
     {
@@ -134,11 +135,11 @@ public class QuestManager : MonoBehaviour
         ClaimRewards(quest);
        ChangeQuestState(quest.info.id, QuestState.FINISHED);
 
-    }
+    }       //FinishQuest() 퀘스트 클리어하여서 상태를 변경해줄때 사용하는 함수
     private void ClaimRewards(Quest quest)
     {
         GameEventManager.instance.questEvent.QuestIndexChange(quest.info.questIndex + 1);
-    }
+    }       //ClaimRewards() 퀘스트 보상 등을 획득하는 함수 현재는 인덱스 증가해서 다음 퀘스트 진행할 수 있도록 한 상황
     private Dictionary<string, Quest> CreateQuestMap()
     {
         QuestData[] allQuests = Resources.LoadAll<QuestData>("Quests");
@@ -150,12 +151,12 @@ public class QuestManager : MonoBehaviour
                 Debug.LogWarning("Duplicate ID found when creating quest map : " + questInfo.id);
             }
             idToQuestMap.Add(questInfo.id,LoadQuest(questInfo));
-            Debug.Log(idToQuestMap.Values);
-            Debug.Log("All Quest ID: " + questInfo.id);
+           // Debug.Log(idToQuestMap.Values);
+           // Debug.Log("All Quest ID: " + questInfo.id);
         }
-        Debug.Log("CreateQuestMap Done");
+       // Debug.Log("CreateQuestMap Done");
         return idToQuestMap;
-    }
+    }       //CreateQuestMap() Resources폴더 안에 있는 QuestData 스크립트들을 불러와서 전체 퀘스트 목록 만들어주는 함수
     private Quest GetQuestById(string id)
     {
         Quest quest = questMap[id];
@@ -164,15 +165,15 @@ public class QuestManager : MonoBehaviour
             Debug.LogError("ID not found");
         }
         return quest;
-    }
+    }       //GetQuestById() 퀘스트 id로 찾아와 리턴하는 함수
     private void OnApplicationQuit()
     {
         Debug.Log("OnApplicationQuit");
         foreach(Quest quest in questMap.Values)
         {
             SaveQuest(quest);
-        }
-    }
+        }       // loop: 퀘스트 목록에 있는 퀘스트들을 저장하기위한 루프
+    }       //OnApplicationQuit() 퀘스트 저장하는 함수를 호출
     private void SaveQuest(Quest quest)
     {
         try
@@ -187,7 +188,7 @@ public class QuestManager : MonoBehaviour
         {
             Debug.LogWarning("Failed to save quest with id  " + quest.info.id + ":" + e);
         }
-    }
+    }       //SaveQuest() quest 클래스에있는 값들을 json파일로 직렬화시켜서 playerprefs로 저장하는 함수
     public Quest LoadQuest(QuestData qData)
     {
         Quest quest = null;
@@ -211,8 +212,8 @@ public class QuestManager : MonoBehaviour
         }
         
         return quest;
-    }
-    
+    }       //LoadQuest() PlayerPrefs에 저장된 퀘스트 id를 찾아서 진행도 등을 불러오는 함수
+
     #region legacy
     //private static QuestManager instance;
     //public static QuestManager Instance { get { return instance; } }

@@ -58,7 +58,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Editor\Windows\DSGraphView.cs" />
-    <Compile Include="Assets\_PJO\Scripts\Editor\MeshEditor.cs" />
+    <Compile Include="Assets\_PJO\Scripts\Editor\MeshControllerEditor.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Usage\OVROverlayCanvas\Editor\OVROverlayCanvasEditor.cs" />
     <Compile Include="Assets\BNG Framework\Editor\GrabPointEditor.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Editor\OculusSampleFrameworkUtil.cs" />
@@ -74,6 +74,7 @@
     <Compile Include="Assets\Editor\Enumerations\DSDialogueType.cs" />
     <Compile Include="Assets\BNG Framework\Editor\GrabPointTriggerEditor.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Editor\BuildAssetPackages.cs" />
+    <Compile Include="Assets\_PJO\Scripts\Editor\RemoveComponentEditor.cs" />
     <Compile Include="Assets\Editor\Windows\DialogueEditorWindow.cs" />
     <Compile Include="Assets\BNG Framework\Editor\InputBridgeEditor.cs" />
     <Compile Include="Assets\_PJO\Scripts\Editor\AddVertexObjectEditor.cs" />
@@ -85,6 +86,7 @@
     <Compile Include="Assets\Oculus\SampleFramework\Editor\BuildSamples.cs" />
     <Compile Include="Assets\BNG Framework\HandPoser\Editor\HandPoserEditor.cs" />
     <Compile Include="Assets\Editor\TextureArrayWizard.cs" />
+    <Compile Include="Assets\_PJO\Scripts\Editor\InvertMeshEditor.cs" />
     <Compile Include="Assets\BNG Framework\Editor\LeverEditor.cs" />
     <Compile Include="Assets\_PJO\Scripts\Editor\TerrainMeshSendEditor.cs" />
     <Compile Include="Assets\BNG Framework\Editor\PluginsEditor.cs" />

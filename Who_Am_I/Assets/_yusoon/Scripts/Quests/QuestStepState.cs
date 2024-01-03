@@ -9,6 +9,7 @@ public class QuestStepState
     public QuestStepState(string state)
     {
         this.state = state;
+        Debug.Log("QuestStepState.state : " + state);
     }
 
     public QuestStepState()

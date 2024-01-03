@@ -48,7 +48,7 @@ public class Quest
         if(questStepPrefab!=null)
         {
            QuestStep questStep= Object.Instantiate<GameObject>(questStepPrefab, parent).GetComponent<QuestStep>();
-            questStep.InitializeQeustStep(info.id, currentQuestStepIndex, queststepStates[currentQuestStepIndex].state);
+           questStep.InitializeQeustStep(info.id, currentQuestStepIndex, queststepStates[currentQuestStepIndex].state);
         }
     }
     private GameObject GetCurrentQuestStepPrefab()

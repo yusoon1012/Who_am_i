@@ -6,8 +6,8 @@ public class QuestPoint : MonoBehaviour
 {
     [SerializeField] private QuestData questInfoForPoint;
     [Header("Config")]
-    [SerializeField] private bool isStartPoint = false;
-    [SerializeField] private bool isEndPoint = false;
+    [SerializeField] public bool isStartPoint = false;
+    public bool isEndPoint = false;
     private bool playerIsNear = false;
     private QuestIcon questIcon;
    [SerializeField] private string questId;
@@ -33,7 +33,7 @@ public class QuestPoint : MonoBehaviour
         {
             currentQuestState = quest.state;
             questIcon.SetState(currentQuestState, isStartPoint, isEndPoint);
-            Debug.Log("Quest with id: " + questId + "update to state: " + currentQuestState);
+            //Debug.Log("Quest with id: " + questId + "update to state: " + currentQuestState);
         }
     }
  

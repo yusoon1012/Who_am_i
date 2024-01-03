@@ -20,19 +20,20 @@ public class MeetNPCStep : QuestStep
 
     private void NpcTalk(string name)
     {
-        // Check if the NPC has not been talked to yet
+       
         if (!talkedNPCs.Contains(name))
         {
             talkedNPCs.Add(name);
+            Debug.Log(name + "과 대화");
 
-            // Increment the talk count
+
             npcTalkCount++;
             UpdateState();
 
-            // Check if the required number of unique NPCs have been talked to
+            
             if (npcTalkCount >= 1)
             {
-                FinishQuestStep();
+               FinishQuestStep();
             }
         }
     }
@@ -40,6 +41,7 @@ public class MeetNPCStep : QuestStep
     {
         string state = npcTalkCount.ToString();
         ChangeState(state);
+        Debug.Log("NPCstep state : " + state);
     }
     protected override void SetQuestStepState(string state)
     {

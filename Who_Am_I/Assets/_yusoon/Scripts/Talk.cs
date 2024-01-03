@@ -7,6 +7,7 @@ public class Talk : MonoBehaviour
 {
     public TMP_Text talkerNameTxt;
     public TMP_Text talkScriptTxt;
+    public GameObject questIcon;
     public GameObject talkCanvas;
     [SerializeField] private int startNum;
     [SerializeField] private int endNum;
@@ -21,17 +22,20 @@ public class Talk : MonoBehaviour
     private int currentTalkIndex = 0;
     private bool isNearPlayer = false;
     private bool isNotTalking=false;
+    private string npcName;
 
     // Start is called before the first frame update
     void Start()
     {
+        talkCanvas.SetActive(false);
         interactionEvent = GetComponent<InteractionEvent>();
         dialogues = interactionEvent.GetDialogue(startNum, endNum);
         questPoint = GetComponent<QuestPoint>();
         contexts = dialogues[contextIndex].contexts;
         talkerName = dialogues[contextIndex].name;
+        npcName = talkerName;
         eventNumber = dialogues[contextIndex].number;
-        Debug.Log("dialogues length: " + dialogues.Length);
+        //Debug.Log("dialogues length: " + dialogues.Length);
         if (questPoint != null) { isQuestNpc = true; }
         else { isQuestNpc = false; }
 
@@ -99,6 +103,24 @@ public class Talk : MonoBehaviour
     public void EndTalk()
     {
         Debug.Log("EndTalk");
+        talkCanvas.SetActive(false);
+        currentTalkIndex = 0;
+        contextIndex = 0;
+        GameEventManager.instance.miscEvent.NpcTalked(npcName);
+
+        isNotTalking = false;
+        if(questIcon!=null)
+        {
+            questIcon.SetActive(false);
+        }
+        if (questPoint.isStartPoint)
+        {
+        dialogues = interactionEvent.GetDialogue(endNum, endNum+1);
+            
+        }
+
+        contexts = dialogues[contextIndex].contexts;
+
     }
     private void OnTriggerEnter(Collider other)
     {
