@@ -702,9 +702,9 @@ namespace BNG {
                 }
             }
 
-            if (HoldingItem && other.GetComponent<VRIFItem_TreeFruit>()) // 나무에 달려있는 과일인지 판단
+            if (HoldingItem && other.GetComponent<VRIFItem_CropGravity>()) // 나무에 달려있는 과일인지 판단
             {
-                VRIFItem_TreeFruit treeFruit = other.GetComponent<VRIFItem_TreeFruit>();
+                VRIFItem_CropGravity treeFruit = other.GetComponent<VRIFItem_CropGravity>();
                 treeFruit.ActivateGravity(); // 잡은 나무 과일의 중력 활성화
             }
         }

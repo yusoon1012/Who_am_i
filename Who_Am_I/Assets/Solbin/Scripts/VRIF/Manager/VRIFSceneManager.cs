@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class VRIFSceneManager : MonoBehaviour
 {
@@ -12,9 +13,18 @@ public class VRIFSceneManager : MonoBehaviour
     [Header("XR Rig Advanced")]
     [SerializeField] private GameObject xrRigPlayer = default;
 
-    // 씬 이동 시 플레이어 위치 이동을 위함
-    private Transform playerController;
-    private bool setting = false;
+    [Header("Player Controller")]
+    [SerializeField] private Transform playerController = default;
+
+    [Header("Loading Canvas")]
+    [Tooltip("로딩창(UI)")]
+    [SerializeField] private GameObject loadingCanvas = default;
+
+    [Header("Dark Canvas")]
+    [Tooltip("암전 효과를 위한 캔버스")]
+    [SerializeField] private GameObject darkCanvas = default;
+    // darkCanvas 밑의 검은색 Panel
+    private Image darkPanel = default;
 
     // 플레이어 이동/회전 컴포넌트
     private LocomotionManager locomotionManager = default;
@@ -42,34 +52,17 @@ public class VRIFSceneManager : MonoBehaviour
 
     private void Start()
     {
-        playerController = xrRigPlayer.transform.GetChild(1);
-
         locomotionManager = playerController.GetComponent<LocomotionManager>();
         smoothLocomotion = playerController.GetComponent<SmoothLocomotion>();
         playerRotation = playerController.GetComponent<PlayerRotation>();
+
+        darkPanel = darkCanvas.transform.GetChild(0).GetComponent<Image>();
+
+        SceneManager.sceneLoaded += PlayerSetting; // 씬 전환이 완벽히 이뤄지면 해당 이벤트가 발생한다. 
     }
 
-    void Update()
-    {
-        // if (Input.GetKeyDown(KeyCode.R)) { LoadCheckPoint("Summer", 2); } // 체크포인트를 이용한 이동 예시 
-
-        // if (Input.GetKeyDown(KeyCode.L)) { StartCoroutine(LoadHallScene("Summer")); } // 로딩통로를 이용한 이동 예시 
-
-        /// <Point> 씬 이동 전부터 실행되던 코루틴에서 플레이어를 위치시키려 하면 제대로 작동하지 않아 Update를 이용
-        if (setting)
-        {
-            setting = false;
-
-            Transform birthPoint = GameObject.Find("Birth Point").transform;
-
-            playerController.position = birthPoint.position;
-            playerController.rotation = birthPoint.rotation;
-
-            locomotionManager.enabled = true; // 플레이어 위치시킨 후 이동 재활성화
-            smoothLocomotion.enabled = true;
-            playerRotation.enabled = true; // 회전 재활성화
-        }
-    }
+    // if (Input.GetKeyDown(KeyCode.R)) { LoadCheckPoint("Summer", 2); } // 체크포인트를 이용한 이동 예시 
+    // if (Input.GetKeyDown(KeyCode.L)) { StartCoroutine(LoadHallScene("Summer")); } // 로딩통로를 이용한 이동 예시 
 
     #region 로딩 통로를 통한 씬 이동
     public IEnumerator LoadHallScene(string _season)
@@ -81,14 +74,17 @@ public class VRIFSceneManager : MonoBehaviour
         {
             if (loadingOperation.progress >= 0.9f) // 0.9 이상 로드에 성공했다면
             {
+                locomotionManager.enabled = false; // 이동 비활성화
+                smoothLocomotion.enabled = false;
+
+                playerRotation.enabled = false; // 회전 비활성화
+
                 loadingOperation.allowSceneActivation = true; // 씬 활성화
                 break;
             }
 
             yield return null;
         }
-
-        setting = true;
 
         StartCoroutine(OpenMainScene(_season));
     }
@@ -148,10 +144,22 @@ public class VRIFSceneManager : MonoBehaviour
         {
             yield return null;
         }
-
-        setting = true;
     }
     #endregion
+
+    /// <summary>
+    /// 씬 완료 이벤트를 구독하고 있다. (플레이어 위치 세팅)
+    /// </summary>
+    private void PlayerSetting(Scene scene, LoadSceneMode mode)
+    {
+        Transform birthPos = GameObject.FindGameObjectWithTag("BirthPos").transform;
+        playerController.position = birthPos.position;
+        playerController.rotation = birthPos.rotation;
+
+        locomotionManager.enabled = true; // 플레이어 위치시킨 후 이동 재활성화
+        smoothLocomotion.enabled = true;
+        playerRotation.enabled = true; // 회전 재활성화
+    }
 
     #region 체크포인트를 통한 씬 이동
     public void LoadCheckPoint(string _region, int _number)
@@ -169,7 +177,8 @@ public class VRIFSceneManager : MonoBehaviour
         }
         else if (inRegion != _region) // 현 지역과 체크포인트 지역이 다르면
         {
-            StartCoroutine(DifferentRegion(_region, _number)); // TODO: 로딩씬을 얹어야 한다. 
+            loadingCanvas.SetActive(true); // 로딩캔버스 활성화
+            StartCoroutine(DifferentRegion(_region, _number));
         }    
     }
 
@@ -237,9 +246,11 @@ public class VRIFSceneManager : MonoBehaviour
         {
             if (checkPoint.number == _number)
             {
-                playerController.position = checkPoint.teleportPosition;
+                playerController.position = checkPoint.teleportPosition; // 체크포인트 내에 포함된 텔레포트 포지션으로 이동
             }
         }
+
+        loadingCanvas.SetActive(false); // 로딩 캔버스 비활성화
     }
     #endregion
 }

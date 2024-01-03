@@ -17,7 +17,8 @@ namespace BNG {
 
         [Header("CharacterController Settings : ")]
         [Tooltip("플레이어 이동 속도")]
-        public float MovementSpeed = 1.25f;
+        // LEGACY: public float MovementSpeed = 1.25f;
+        public float MovementSpeed = 3f;
 
         [Header("Rigidbody Settings : ")]
         [Tooltip("How much force to apply to the rigidbody when the player is grounded")]

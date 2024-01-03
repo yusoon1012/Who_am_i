@@ -29,8 +29,8 @@ public class Dictionary : MonoBehaviour
     // 아이템 획득, 미획득 구분 컬러 값
     private Color itemColor = default;
 
-    // 플레이어 트랜스폼
-    private Transform playerTf = default;
+    // 아이템 데이터 그룹 메인 오브젝트 트랜스폼
+    private Transform mainObjTf = default;
 
     // 미리 저장한 재료 이름 배열
     private string[,] stuffPageItems = new string[2, 18];
@@ -67,7 +67,7 @@ public class Dictionary : MonoBehaviour
 
     void Start()
     {
-        playerTf = GetComponent<Transform>().transform;
+        mainObjTf = GetComponent<Transform>().transform;
 
         SettingDictionary();
     }     // Start()
@@ -86,6 +86,13 @@ public class Dictionary : MonoBehaviour
         collectionPageItems[0, 2] = "고기";
         collectionPageItems[0, 3] = "딸기";
         collectionPageItems[0, 4] = "우유";
+
+        equipmentPageItems[0, 0] = "너프건";
+
+        for (int l = 1; l < 18; l++)
+        {
+            equipmentPageItems[0, l] = "Empty";
+        }
 
         for (int i = 4; i < 18; i++)
         {
@@ -106,7 +113,6 @@ public class Dictionary : MonoBehaviour
         {
             stuffPageItems[1, j] = "Empty";
             foodPageItems[1, j] = "Empty";
-            equipmentPageItems[0, j] = "Empty";
             //collectionPageItems[0, j] = "Empty";
             collectionPageItems[1, j] = "Empty";
             collectionPageItems[2, j] = "Empty";

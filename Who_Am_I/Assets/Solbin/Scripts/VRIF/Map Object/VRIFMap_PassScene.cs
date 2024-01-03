@@ -12,35 +12,43 @@ public class VRIFMap_PassScene : MonoBehaviour
         Winter
     }
 
-    // 이동하고 싶은 계절의 이름 
+    [Header("이동할 계절")]
     [SerializeField] private Season season = default;
 
+    [Header("힌지 조인트")]
+    [SerializeField] private HingeJoint hinge = default;
+    
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.layer == LayerMask.NameToLayer("Player")) // 플레이어가 닿았다면
         {
-            string seasonName = default;
+            float angle = hinge.angle; // 문이 열리는 각도 
 
-            switch(season)
+            if (angle >= 45)
             {
-                case Season.Spring:
-                    seasonName = "Spring";
-                    break;
+                string seasonName = default;
 
-                case Season.Summer:
-                    seasonName = "Summer";
-                    break;
+                switch (season)
+                {
+                    case Season.Spring:
+                        seasonName = "Spring";
+                        break;
 
-                case Season.Fall:
-                    seasonName = "Fall";
-                    break;
+                    case Season.Summer:
+                        seasonName = "Summer";
+                        break;
 
-                case Season.Winter:
-                    seasonName = "Winter";
-                    break;
+                    case Season.Fall:
+                        seasonName = "Fall";
+                        break;
+
+                    case Season.Winter:
+                        seasonName = "Winter";
+                        break;
+                }
+
+                StartCoroutine(VRIFSceneManager.Instance.LoadHallScene(seasonName)); // 로딩 복도 씬 로드
             }
-
-            StartCoroutine(VRIFSceneManager.Instance.LoadHallScene(seasonName)); // 로딩 복도 씬 로드
         }
     }
 }

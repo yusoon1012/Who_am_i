@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR;
@@ -20,6 +20,9 @@ namespace BNG {
 
         protected Vector3 currentLocalPosition;
         protected Quaternion currentLocalRotation;
+
+        [Header("GameObject: Player Sub Camera")]
+        [SerializeField] private Transform playerSubCamera = default;
 
         protected virtual void Awake() {
             initialLocalPosition = transform.localPosition;
@@ -72,13 +75,19 @@ namespace BNG {
             }
         }
 
+    // <Solbin> 디바이스 추적 
     public virtual void UpdateDevice() {
 
         // Check and assign our device status
         if (deviceToTrack.isValid) {
                 if (Device == TrackableDevice.HMD) {
+                    // <Solbin> 아래 코드는 HMD 입력값을 받아 카메라 각도를 보정하는 역할을 한다. 
                     transform.localPosition = currentLocalPosition = InputBridge.Instance.GetHMDLocalPosition();
                     transform.localRotation = currentLocalRotation = InputBridge.Instance.GetHMDLocalRotation();
+
+                    // <Solbin> PlayerSubCamera 보정 (Tracking Space를 추적하는 부모 오브젝트가 필요하다.)
+                    playerSubCamera.localRotation = currentLocalRotation = InputBridge.Instance.GetHMDLocalRotation();
+                    // <Solbin> ===
                 }
                 else if (Device == TrackableDevice.LeftController) {
                     transform.localPosition = currentLocalPosition = InputBridge.Instance.GetControllerLocalPosition(ControllerHand.Left);

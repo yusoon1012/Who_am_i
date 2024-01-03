@@ -4,7 +4,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using static UnityEngine.ProBuilder.AutoUnwrapSettings;
-
+using System.Linq;
+using Cinemachine;
+using Yarn.Unity.Editor;
+using Oculus.Interaction;
 
 public class VRIFPlayerClimbingHelper : MonoBehaviour
 {
@@ -18,11 +21,26 @@ public class VRIFPlayerClimbingHelper : MonoBehaviour
     [SerializeField] private Grabber leftGrabber = default;
     [SerializeField] private Grabber rightGrabber = default;
 
+    // Transform: playerController
     private Transform playerController = default;
+    // PlayerGravity
+    private PlayerGravity playerGravity = default;
 
     [Header("Tracking Space")]
     [Tooltip("카메라가 실제로 비추는 것을 관할한다")]
     [SerializeField] private Transform trackingSpace = default;
+
+    [Header("Sub Tracking Space")]
+    [SerializeField] private Transform subTrackingSpace = default;
+
+    [Header("Player Sub Camera")]
+    [Tooltip("컷신용 카메라")]
+    [SerializeField] Transform playerSubCamera = default;
+    private CinemachineVirtualCamera virtualCamera = default;
+
+    [Header("테스트")]
+    [SerializeField] private Transform testCart = default;
+    [SerializeField] private Transform testSphere = default;
 
     private void Awake()
     {
@@ -39,66 +57,67 @@ public class VRIFPlayerClimbingHelper : MonoBehaviour
     private void Start()
     {
         playerController = transform;
+        playerGravity = playerController.GetComponent<PlayerGravity>();
+
+        virtualCamera = playerSubCamera.GetComponent<CinemachineVirtualCamera>();
     }
 
     /// <summary>
     /// 등반 물체의 방향을 판단해 플레이어 앵커 설정 (암벽이 기준)
     /// </summary>
-    public void SetAnchor(GameObject _grabbable)
+    public void SetAnchor(GameObject grabbable_)
     {
-        Transform anchor = _grabbable.transform.GetChild(0); // 자식 오브젝트 Anchor의 위치로 이동 
+        if (grabbable_.CompareTag("ClimbingAnchor")) { StartCoroutine(Rotate()); } // 자동 회전
 
-        climbingAnchor.position = anchor.position;
-        climbingAnchor.LookAt(_grabbable.transform);
+        if (grabbable_.GetComponentInChildren<CinemachineDollyCart>() && grabbable_.GetComponentInChildren<CinemachineSmoothPath>())
+        {
+            CinemachineSmoothPath path = grabbable_.GetComponentInChildren<CinemachineSmoothPath>(); // Dolly Track
+            Transform dollyTrack = path.transform;
+            Vector3 dir = dollyTrack.rotation.eulerAngles; // 트랙의 방향
 
-        if (_grabbable.CompareTag("ClimbingAnchor")) { StartCoroutine(Rotate()); }
+            CinemachineDollyCart dollyCart = grabbable_.GetComponentInChildren<CinemachineDollyCart>(); // Dolly Cart
+            Transform cart = dollyCart.transform; // 카트 트랜스폼
 
-        //if (_grabbable.CompareTag("ClimbingAnchor")) // 각도 변경 있는 물체면
-        //{
-        //    Transform anchor = _grabbable.transform.GetChild(0); // 자식 오브젝트 Anchor의 위치로 이동 
+            subTrackingSpace.rotation = Quaternion.Euler(dir); // 서브 카메라는 트랙의 방향을 바라본다.  
 
-        //    climbingAnchor.position = anchor.position;
-        //    climbingAnchor.LookAt(_grabbable.transform);
+            playerSubCamera.gameObject.SetActive(true);
+            virtualCamera.Follow = cart;
+            virtualCamera.LookAt = cart;
 
-        //    // LEGACY: playerController.rotation = climbingAnchor.rotation;
+            dollyCart.m_Speed = 1f; // 카트 세팅 후 이동 시작
 
-        //    StartCoroutine(Rotate());
-        //}
-        //else // 각도 변경 없는 물체면
-        //{
-        //    climbingAnchor.position = playerController.position;
+            StartCoroutine(CheckArrival(dollyCart, cart));
+        }
+    }
 
-        //    Vector3 originPos = climbingAnchor.position;
-        //    Vector3 pos = _grabbable.transform.position;
+    /// <summary>
+    /// 서브 카메라를 트랙을 따라 이동시킨다. 
+    /// </summary>
+    private IEnumerator CheckArrival(CinemachineDollyCart dollyCart_, Transform cart_)
+    {
+        yield return new WaitForSeconds(2.5f);
 
-        //    climbingAnchor.position = new Vector3(originPos.x, pos.y, originPos.z);
-        //    climbingAnchor.LookAt(_grabbable.transform);
-        //}
+        playerGravity.enabled = false; // 중력 비활성화
+
+        leftGrabber.ReleaseGrab(); // PC는 손을 놓는다
+        rightGrabber.ReleaseGrab();
+
+        playerController.position = playerSubCamera.position; // PC 재위치
+        playerController.rotation = subTrackingSpace.rotation;
+
+        playerGravity.enabled = true; // 중력 재활성화
+
+        playerSubCamera.gameObject.SetActive(false); // 카메라 재세팅
+
+        virtualCamera.Follow = null;
+        virtualCamera.LookAt = null;
+
+        dollyCart_.m_Speed = 0f;
+        dollyCart_.m_Position = 0f; // 카트 복귀
     }
 
     private IEnumerator Rotate()
     {
-        //float time = 0f;
-
-        //while (time < 1f)
-        //{
-        //    time += Time.deltaTime;
-
-        //    playerController.rotation = 
-        //        Quaternion.RotateTowards(playerController.rotation, climbingAnchor.rotation, 100f * Time.deltaTime);
-
-        //    playerController.rotation = Quaternion.Euler(0, playerController.rotation.y, 0);
-
-        //    yield return null;
-        //}
-
-        //while (Vector3.Distance(playerController.position, climbingAnchor.position) > 0.1f)
-        //{
-        //    playerController.position = Vector3.MoveTowards(playerController.position, climbingAnchor.position, 10f * Time.deltaTime);
-
-        //    yield return null;
-        //}
-
         Vector3 dir = climbingAnchor.rotation.eulerAngles;
         dir.x = 0;
         dir.z = 0;
@@ -107,7 +126,29 @@ public class VRIFPlayerClimbingHelper : MonoBehaviour
 
         yield return null;
     }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.V))
+        {
+            playerController.position = testCart.position;
+            //StartCoroutine(TestCode());
+        } // TODO: 돌리카트가 초기화되고 나서 플레이어가 이동을 시도한다. 고치기
+    }
+
+    private IEnumerator TestCode()
+    {
+        yield return new WaitForSeconds(2);
+
+        bool test = true;
+        
+        while (test)
+        {
+            Debug.Log("이동 시도");
+
+            playerController.position = testCart.position;
+
+            yield return null;
+        }
+    }
 }
-
-// TODO: 어떻게 하면 자연스럽게 회전하도록 할 수 있는가? (y축만 회전하도록)
-

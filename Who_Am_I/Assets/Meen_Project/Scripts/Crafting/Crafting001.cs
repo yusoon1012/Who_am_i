@@ -12,12 +12,14 @@ public class Crafting001 : CraftingMain
     public override void Init()
     {
         craftingName = "딸기 우유";
+        effectInfo = " ";
         craftingLength = 2;
         stuffName[0] = "딸기";
         stuffName[1] = "우유";
         stuffStack[0] = 1;
         stuffStack[1] = 1;
         craftingStack = 1;
+        utile = 0;
         disposableType = false;
         disposable = false;
     }     // Init()

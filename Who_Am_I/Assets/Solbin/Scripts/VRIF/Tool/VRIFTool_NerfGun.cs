@@ -23,11 +23,10 @@ public class VRIFTool_NerfGun : MonoBehaviour
     [SerializeField] LineRenderer trajectory = default;
     // 오브젝트 풀
     private Vector3 poolPos = new Vector3(0, -10, 0);
-
+    // 궤적 포인트 배열 
     private Vector3[] trajectoryPos = new Vector3[2];
 
     public static event EventHandler slowTimeEvent;
-
 
     private void OnEnable()
     {
@@ -46,15 +45,12 @@ public class VRIFTool_NerfGun : MonoBehaviour
     private void Start()
     {
         trajectory.positionCount = 2; // 궤적의 포인트는 두 개 
-        //vrifAction.Player.SlowMode.performed += ctx => ActivateSlowTime();
         VRIFInputSystem.Instance.slowMode += ActivateSlowTime; 
     }
 
     private void FixedUpdate() => Aiming();
 
     private void LateUpdate() { trajectory.SetPositions(trajectoryPos); }
-
-    // TODO: Line Renderer의 업데이트 주기가 느린가...?
 
     /// <summary>
     /// 너프건을 조준, 크로스 헤어를 표시한다. 
@@ -95,12 +91,9 @@ public class VRIFTool_NerfGun : MonoBehaviour
     {
         if (_prey.layer == LayerMask.NameToLayer("Animal"))
         {
-            if (_prey.GetComponentInChildren<SendDamage>()) // 데이터 스크립트가 있는 동물이면
+            if (_prey.GetComponent<ThisAnimalData>())
             {
-                Debug.Log(_prey.name);
-
-                SendDamage sendDamage = _prey.GetComponentInChildren<SendDamage>();
-                sendDamage.Hit(1); // 1만큼 데미지 
+                _prey.GetComponent<ThisAnimalData>().Hit(1); // 1만큼 데미지
             }
         }
 

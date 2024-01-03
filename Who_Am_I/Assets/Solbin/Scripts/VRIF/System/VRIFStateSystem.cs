@@ -16,21 +16,20 @@ namespace BNG
             LADDER,
             UI,
             POO,
-            ZIPLINE
+            ZIPLINE,
+            FISHING
         }
 
         // 현재 게임 상태 
         public GameState gameState { get; private set; }
 
-        [Header("플레이어 트랜스폼")]
-        [SerializeField] private Transform player = default;
+        [Header("Player Controller")]
+        public Transform playerController = default;
 
         // 플레이어 움직임 컴포넌트 (아래 둘 스크립트가 쌍으로 작동)
         private LocomotionManager locomotionManager = default;
         private SmoothLocomotion smoothLocomotion = default;
-        // 플레이어 등반 컴포넌트 (아래 둘 스크립트가 쌍으로 작동)
-        private PlayerClimbing playerClimbing = default;
-        private VRIFPlayerClimbing vrifPlayerClimbing = default;
+
         // 플레이어 회전 컴포넌트 
         private PlayerRotation playerRotation;
 
@@ -68,13 +67,10 @@ namespace BNG
         {
             gameState = GameState.NORMAL; // 기본 상태로 초기화 
 
-            locomotionManager = player.GetComponent<LocomotionManager>();
-            smoothLocomotion = player.GetComponent<SmoothLocomotion>();
+            locomotionManager = playerController.GetComponent<LocomotionManager>();
+            smoothLocomotion = playerController.GetComponent<SmoothLocomotion>();
 
-            playerClimbing = player.GetComponent<PlayerClimbing>();
-            vrifPlayerClimbing = player.GetComponent<VRIFPlayerClimbing>();
-
-            playerRotation = player.GetComponent<PlayerRotation>();
+            playerRotation = playerController.GetComponent<PlayerRotation>();
 
             vrifStatusSystem = transform.GetComponent<VRIFStatusSystem>();
         }
@@ -109,6 +105,10 @@ namespace BNG
                 case GameState.ZIPLINE: // ZIPLINE 상태 (짚라인 상태)
                     ZipLineState(); 
                     break;
+
+                case GameState.FISHING: // FISHINF 상태 (낚시 상태)
+                    FishingState();
+                    break;
             }
         }
 
@@ -120,7 +120,7 @@ namespace BNG
         /// </summary>
         private void NormalState()
         {
-            VRIFItemSystem.Instance.ReleaseItem();
+            //VRIFItemSystem.Instance.ReleaseItem();
 
             gameState = GameState.NORMAL;
 
@@ -148,16 +148,10 @@ namespace BNG
         {
             gameState = GameState.UI;
 
-            if (locomotionManager.enabled) // 이동 활성화 상태면
-            {
-                locomotionManager.enabled = false; // 이동 비활성화
-                smoothLocomotion.enabled = false;
-            }
+            locomotionManager.enabled = false; // 이동 비활성화
+            smoothLocomotion.enabled = false;
 
-            if (playerRotation.enabled) // 회전 활성화 상태면
-            {
-                playerRotation.enabled = false; // 회전 비활성화
-            }
+            playerRotation.enabled = false; // 회전 비활성화
 
             foreach (Transform child in leftController) { child.gameObject.SetActive(false); } // 왼손 비활성화
 
@@ -206,6 +200,9 @@ namespace BNG
             }
         }
 
+        /// <summary>
+        /// 짚라인 상태
+        /// </summary>
         private void ZipLineState()
         {
             gameState = GameState.ZIPLINE;
@@ -214,6 +211,19 @@ namespace BNG
 
             quickSlot.enabled = false;
             uiController.enabled = false;
+        }
+
+        /// <summary>
+        /// 낚시 상태 
+        /// </summary>
+        private void FishingState()
+        {
+            gameState = GameState.FISHING;
+
+            locomotionManager.enabled = false; // 이동 비활성화
+            smoothLocomotion.enabled = false;
+
+            playerRotation.enabled = false; // 회전 비활성화
         }
         #endregion
     }
