@@ -132,7 +132,7 @@ public class UIController : MonoBehaviour
             OnMainMenuControl();
         }
         // 모든 진입 키 입력 값
-        else if (Input.GetKeyDown(KeyCode.Z) /*|| vrifAction.Player.UI_Click.triggered*/) // <Solbin> Menu Select
+        else if (Input.GetKeyDown(KeyCode.Z)) // <Solbin> Menu Select
         {
             OnOffControl(0);
         }

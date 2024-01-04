@@ -889,7 +889,7 @@ public class ItemManager : MonoBehaviour
     }     // CraftingEffectInfo()
 
     // 아이템 제작 시 재료들의 정보를 내보내는 함수
-    public string CraftingStuffInfo(string stuffName, int count, out string stuffInfo)
+    public string CraftingStuffInfo(string stuffName, out string stuffInfo)
     {
         ItemsMain itemInfo = new ItemsMain();
 
