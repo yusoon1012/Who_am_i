@@ -10,7 +10,7 @@ public class VRIFTool_Shovel : MonoBehaviour
 {
     private void OnTriggerExit(Collider other)
     {
-        if (other.name.Contains("Dirt File")) // TODO: 이후 합의 시 레이어 등으로 교체 
+        if (other.name.Contains("Mound")) // TODO: 이후 합의 시 레이어 등으로 교체 
         {
             if (VRIFInputSystem.Instance.rVelocity.y >= 0.03f) // 위로 삽질
             {

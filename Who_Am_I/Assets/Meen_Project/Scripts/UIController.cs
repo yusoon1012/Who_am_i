@@ -125,10 +125,14 @@ public class UIController : MonoBehaviour
         // <Solbin> 메뉴 진입
         else if (Input.GetKeyDown(KeyCode.M) || vrifAction.Player.UI_Menu.triggered) // <Solbin> Menu Enter
         {
+            // <Solbin> 선택 키 감 개선 (키 매핑이 풀리는 문제가 있어 이곳에 삽입)
+            vrifAction.Player.UI_Click.performed += ctx => OnOffControl(0);
+            // <Solbin> ===
+
             OnMainMenuControl();
         }
         // 모든 진입 키 입력 값
-        else if (Input.GetKeyDown(KeyCode.Z) || vrifAction.Player.UI_Click.triggered) // <Solbin> Menu Select
+        else if (Input.GetKeyDown(KeyCode.Z) /*|| vrifAction.Player.UI_Click.triggered*/) // <Solbin> Menu Select
         {
             OnOffControl(0);
         }
@@ -576,13 +580,15 @@ public class UIController : MonoBehaviour
     // 단일 퀵슬롯이 열릴때 게임 시간 슬로우 효과
     private void OpenQuickSlot()
     {
-        // TODO: 타임 슬로우 효과 연결
+        // TODO: 타임 슬로우 효과 연결, UI 상태로 변환
+        VRIFStateSystem.Instance.ChangeState(VRIFStateSystem.GameState.UI);
     }
 
     // 단일 퀵슬롯을 닫았을 때 슬로우 효과 해제
     private void ExitQuickSlot()
     {
-        // TODO: 타임 슬로우 효과 해제 연결
+        // TODO: 타임 슬로우 효과 해제 연결, NORMAL 상태로 변환
+        VRIFStateSystem.Instance.ChangeState(VRIFStateSystem.GameState.NORMAL);
     }
 
     // 어떤 메뉴든 열릴 때 게임 시간 정지

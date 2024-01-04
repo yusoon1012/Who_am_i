@@ -1,4 +1,5 @@
 using BNG;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
@@ -20,27 +21,26 @@ public class VRIFSceneManager : MonoBehaviour
     [Tooltip("로딩창(UI)")]
     [SerializeField] private GameObject loadingCanvas = default;
 
-    [Header("Dark Canvas")]
-    [Tooltip("암전 효과를 위한 캔버스")]
-    [SerializeField] private GameObject darkCanvas = default;
-    // darkCanvas 밑의 검은색 Panel
-    private Image darkPanel = default;
-
     // 플레이어 이동/회전 컴포넌트
     private LocomotionManager locomotionManager = default;
     private SmoothLocomotion smoothLocomotion = default;
     private PlayerRotation playerRotation = default;
 
+    // 잠겨 있는 문을 여는 이벤트
+    public event EventHandler openDoorEvent;
+    // 메인씬 오픈을 위한 임시 Operation
+    private AsyncOperation tempOperation = default;
+
     public class SeasonName
     {
-        public static string spring { get; private set; } = "Solbin_Scene"; // TODO: 이후 수정 필요 
-        public static string summer { get; private set; } = "Summer_Scene";
+        public static string spring { get; private set; } = "M_Spring_Scene"; // TODO: 이후 수정 필요 
+        public static string summer { get; private set; } = "M_Summer_Scene";
         public static string fall { get; private set; } = "Fall_Scene";
         public static string winter { get; private set; } = "Winter_Scene";
-        public static string passage { get; private set; } = "Loading_Scene"; // TODO: 추후 로딩씬이 된다. 
+        public static string passage { get; private set; } = "M_Passage_Scene"; // 로딩씬
     }
 
-    private void Awake()
+    protected void Awake()
     {
         DontDestroyOnLoad(xrRigPlayer); // 플레이어 파괴 금지 
 
@@ -55,8 +55,6 @@ public class VRIFSceneManager : MonoBehaviour
         locomotionManager = playerController.GetComponent<LocomotionManager>();
         smoothLocomotion = playerController.GetComponent<SmoothLocomotion>();
         playerRotation = playerController.GetComponent<PlayerRotation>();
-
-        darkPanel = darkCanvas.transform.GetChild(0).GetComponent<Image>();
 
         SceneManager.sceneLoaded += PlayerSetting; // 씬 전환이 완벽히 이뤄지면 해당 이벤트가 발생한다. 
     }
@@ -115,35 +113,32 @@ public class VRIFSceneManager : MonoBehaviour
         AsyncOperation mainOperation = SceneManager.LoadSceneAsync(sceneName);
         mainOperation.allowSceneActivation = false;
 
-        // <Solbin> 삽입 예정 코드 
-        // TODO: 이후 로딩 통로에 맞춰 수정 (초를 세는 것이 아닌 다음 씬의 로딩 정도에 따르도록)
+        tempOperation = mainOperation;
 
-        //while (mainOperation.progress < 0.9f) // 메인씬이 로드되지 않았다면 대기 
-        //{
-        //    yield return null;
-        //}
-        // <Solbin> ===
-
-        // <Solbin> 임시 삽입 코드 
-        float time = 0f;
-
-        while (time < 10)
+        while (!mainOperation.isDone) // 씬이 완전히 로드되지 않았을때
         {
-            time += Time.deltaTime;
+            if (mainOperation.progress >= 0.9f) // 0.9 이상 로드에 성공했다면
+            {
+                openDoorEvent?.Invoke(this, EventArgs.Empty); // 잠겨있는 로딩씬의 문을 여는 이벤트
+                break;
+            }
+
             yield return null;
         }
-        // <Solbin> ===
+    }
 
+    /// <summary>
+    /// (계절) 로딩씬 문을 열고 진입 시 메인씬 활성화
+    /// </summary>
+    public void OpenMainScene() 
+    {
         locomotionManager.enabled = false; // 씬 활성화 직전 이동 비활성화
         smoothLocomotion.enabled = false;
         playerRotation.enabled = false; // 회전 비활성화
 
-        mainOperation.allowSceneActivation = true; // 로드 
+        tempOperation.allowSceneActivation = true; // 메인씬 활성화
 
-        while (!mainOperation.isDone) // 메인씬이 다시 완벽히 로드되기까지 대기 
-        {
-            yield return null;
-        }
+        tempOperation = default; // 비우기
     }
     #endregion
 
@@ -153,6 +148,7 @@ public class VRIFSceneManager : MonoBehaviour
     private void PlayerSetting(Scene scene, LoadSceneMode mode)
     {
         Transform birthPos = GameObject.FindGameObjectWithTag("BirthPos").transform;
+
         playerController.position = birthPos.position;
         playerController.rotation = birthPos.rotation;
 

@@ -3,10 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEngine.ProBuilder.AutoUnwrapSettings;
-using System.Linq;
 using Cinemachine;
-using Yarn.Unity.Editor;
 using Oculus.Interaction;
 
 public class VRIFPlayerClimbingHelper : MonoBehaviour
@@ -38,9 +35,7 @@ public class VRIFPlayerClimbingHelper : MonoBehaviour
     [SerializeField] Transform playerSubCamera = default;
     private CinemachineVirtualCamera virtualCamera = default;
 
-    [Header("테스트")]
-    [SerializeField] private Transform testCart = default;
-    [SerializeField] private Transform testSphere = default;
+    private bool posSetting = false;
 
     private void Awake()
     {
@@ -67,7 +62,7 @@ public class VRIFPlayerClimbingHelper : MonoBehaviour
     /// </summary>
     public void SetAnchor(GameObject grabbable_)
     {
-        if (grabbable_.CompareTag("ClimbingAnchor")) { StartCoroutine(Rotate()); } // 자동 회전
+        if (grabbable_.CompareTag("ClimbingAnchor")) { Rotate(grabbable_.transform.GetChild(0)); } // 자동 회전
 
         if (grabbable_.GetComponentInChildren<CinemachineDollyCart>() && grabbable_.GetComponentInChildren<CinemachineSmoothPath>())
         {
@@ -95,9 +90,7 @@ public class VRIFPlayerClimbingHelper : MonoBehaviour
     /// </summary>
     private IEnumerator CheckArrival(CinemachineDollyCart dollyCart_, Transform cart_)
     {
-        yield return new WaitForSeconds(2.5f);
-
-        playerGravity.enabled = false; // 중력 비활성화
+        yield return new WaitForSeconds(1.7f); // TODO: 카트 진행률로 교체 필요
 
         leftGrabber.ReleaseGrab(); // PC는 손을 놓는다
         rightGrabber.ReleaseGrab();
@@ -105,7 +98,9 @@ public class VRIFPlayerClimbingHelper : MonoBehaviour
         playerController.position = playerSubCamera.position; // PC 재위치
         playerController.rotation = subTrackingSpace.rotation;
 
-        playerGravity.enabled = true; // 중력 재활성화
+        playerGravity.enabled = false;
+        posSetting = true;
+        Invoke("Resetting", 0.15f); // 테스트
 
         playerSubCamera.gameObject.SetActive(false); // 카메라 재세팅
 
@@ -116,39 +111,18 @@ public class VRIFPlayerClimbingHelper : MonoBehaviour
         dollyCart_.m_Position = 0f; // 카트 복귀
     }
 
-    private IEnumerator Rotate()
+    private void Rotate(Transform anchor_)
     {
-        Vector3 dir = climbingAnchor.rotation.eulerAngles;
-        dir.x = 0;
-        dir.z = 0;
+        anchor_.LookAt(anchor_.parent);
 
-        playerController.rotation = Quaternion.Euler(dir);
-
-        yield return null;
+        playerController.rotation = anchor_.rotation;
     }
 
+    /// <Point> 코루틴을 통한 포지션 세팅에 문제가 있어 불가피하게 Update 사용
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.V))
-        {
-            playerController.position = testCart.position;
-            //StartCoroutine(TestCode());
-        } // TODO: 돌리카트가 초기화되고 나서 플레이어가 이동을 시도한다. 고치기
+        if (posSetting) { playerController.position = playerSubCamera.position; }
     }
 
-    private IEnumerator TestCode()
-    {
-        yield return new WaitForSeconds(2);
-
-        bool test = true;
-        
-        while (test)
-        {
-            Debug.Log("이동 시도");
-
-            playerController.position = testCart.position;
-
-            yield return null;
-        }
-    }
+    private void Resetting() { posSetting = false; playerGravity.enabled = true; }
 }

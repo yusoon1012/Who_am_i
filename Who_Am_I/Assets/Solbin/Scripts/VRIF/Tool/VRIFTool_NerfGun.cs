@@ -16,7 +16,7 @@ public class VRIFTool_NerfGun : MonoBehaviour
     // 레이 발사 지점
     [SerializeField] Transform firePos = default;
     // 사정거리
-    private float distance = 100f;
+    private float distance = 50f;
     // 포인터(크로스 헤어)
     [SerializeField] Transform pointer = default;
     // 너프건 궤적
@@ -48,7 +48,7 @@ public class VRIFTool_NerfGun : MonoBehaviour
         VRIFInputSystem.Instance.slowMode += ActivateSlowTime; 
     }
 
-    private void FixedUpdate() => Aiming();
+    private void FixedUpdate() { Aiming(); }
 
     private void LateUpdate() { trajectory.SetPositions(trajectoryPos); }
 
@@ -57,15 +57,17 @@ public class VRIFTool_NerfGun : MonoBehaviour
     /// </summary>
     private void Aiming()
     {
-        trajectoryPos[0] = firePos.position;
-
         Ray ray = new Ray(firePos.position, firePos.forward);
         RaycastHit hit;
 
         if (Physics.Raycast(ray, out hit, distance)) // 총구가 물체를 향하고 있을때
         {
-            if (!hit.collider.isTrigger) // 실체를 가지고 있을 때 
+            // 실체를 가지고 있거나 실체가 없지만 동물 레이어일때
+            if (!hit.collider.isTrigger || 
+                (hit.collider.isTrigger && hit.transform.gameObject.layer == LayerMask.NameToLayer("Animal")))
             {
+                trajectoryPos[0] = firePos.position;
+
                 pointer.position = hit.point;
                 trajectoryPos[1] = pointer.position;
 
@@ -75,13 +77,25 @@ public class VRIFTool_NerfGun : MonoBehaviour
                     Shoot(prey);
                 }
             }
-            else // 아닐때
+            else // 어느 경우에도 해당하지 않을때
             {
-                pointer.position = poolPos;
-                trajectoryPos[0] = poolPos;
-                trajectoryPos[1] = poolPos;
+                ClearTrajectory();
             }
         }
+        else
+        {
+            ClearTrajectory();
+        }
+    }
+
+    /// <summary>
+    /// 궤적 지우기
+    /// </summary>
+    private void ClearTrajectory()
+    {
+        pointer.position = poolPos;
+        trajectoryPos[0] = poolPos;
+        trajectoryPos[1] = poolPos;
     }
 
     /// <summary>

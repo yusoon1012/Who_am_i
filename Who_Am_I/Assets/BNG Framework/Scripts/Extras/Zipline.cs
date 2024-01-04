@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,10 +15,13 @@ namespace BNG {
         public bool UseLinearMovement = true;
 
         [Header("짚라인 출발 속도")]
-        public float ZiplineSpeed = 1;
+        [SerializeField] private float ZiplineSpeed = 1;
 
         [Header("짚라인 최대 속도")]
-        public float ZipLineMaxSpeed = default;
+        [SerializeField] private float ZipLineMaxSpeed = default;
+
+        [Header("짚라인 위치 복귀 타이머")]
+        [SerializeField] private int ZipLineTimer = 10;
 
         float lastMoveTime = -1f;
         bool movingForward = true;
@@ -144,7 +148,7 @@ namespace BNG {
         /// </summary>
         private IEnumerator ResetPosition()
         {
-            yield return new WaitForSeconds(60); // 60초 뒤 
+            yield return new WaitForSeconds(ZipLineTimer); // 대기 후 복귀
 
             transform.position = originPos; // 원 위치로 이동 
         }

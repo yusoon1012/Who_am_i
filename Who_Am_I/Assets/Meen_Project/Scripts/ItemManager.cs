@@ -45,8 +45,14 @@ public class ItemManager : MonoBehaviour
 
     void Awake()
     {
-        if (instance == null || instance == default) { instance = this; DontDestroyOnLoad(instance.gameObject); }
-        else { Destroy(gameObject); }
+        if (instance == null || instance == default)
+        {
+            instance = this; DontDestroyOnLoad(instance.gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
         FirebaseAuth auth = FirebaseAuth.DefaultInstance;
         Debug.Log(auth.CurrentUser);
         itemCount = 0;
