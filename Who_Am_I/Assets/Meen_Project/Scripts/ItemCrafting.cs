@@ -534,22 +534,26 @@ public class ItemCrafting : MonoBehaviour
                 case 0:
                     if (craftingEffectCount[1] > 0)
                     {
-                        itemInfoText.text = string.Format("사용 효과 : 포만감 + {0}, 응가 게이지 + {1}", craftingEffectCount[0], craftingEffectCount[1]);
+                        itemInfoText.text = string.Format("사용 효과 : 포만감 + {0}, 응가 게이지 + {1}", 
+                            craftingEffectCount[0], craftingEffectCount[1]);
                     }
                     else if (craftingEffectCount[1] < 0)
                     {
-                        itemInfoText.text = string.Format("사용 효과 : 포만감 + {0}, 응가 게이지 - {1}", craftingEffectCount[0], craftingEffectCount[1]);
+                        itemInfoText.text = string.Format("사용 효과 : 포만감 + {0}, 응가 게이지 {1}", 
+                            craftingEffectCount[0], craftingEffectCount[1]);
                     }
                     break;
                 // 제작 아이템의 효과 타입이 1 이면 일반 효과와 특수 효과를 출력함
                 case 1:
                     if (craftingEffectCount[1] > 0)
                     {
-                        itemInfoText.text = string.Format("사용 효과 : 포만감 + {0}, 응가 게이지 + {1}, {2}", craftingEffectCount[0], craftingEffectCount[1], craftingEffectInfo);
+                        itemInfoText.text = string.Format("사용 효과 : 포만감 + {0}, 응가 게이지 + {1}, {2}", 
+                            craftingEffectCount[0], craftingEffectCount[1], craftingEffectInfo);
                     }
                     else if (craftingEffectCount[1] < 0)
                     {
-                        itemInfoText.text = string.Format("사용 효과 : 포만감 + {0}, 응가 게이지 - {1}, {2}", craftingEffectCount[0], craftingEffectCount[1], craftingEffectInfo);
+                        itemInfoText.text = string.Format("사용 효과 : 포만감 + {0}, 응가 게이지 {1}, {2}", 
+                            craftingEffectCount[0], craftingEffectCount[1], craftingEffectInfo);
                     }
                     break;
                 default:
@@ -682,6 +686,7 @@ public class ItemCrafting : MonoBehaviour
         ItemManager.instance.ItemTypeCheck(craftingName, out completeItemType);
         ItemManager.instance.ItemImage(craftingName, 3, out craftingImageNum);
         ItemManager.instance.CraftingLength(craftingName, out craftingLength);
+
         ItemManager.instance.CraftingEffectType(craftingName, out craftingEffectType);
         ItemManager.instance.CraftingEffectCount(craftingName, 0, out craftingEffectCount[0]);
         ItemManager.instance.CraftingEffectCount(craftingName, 1, out craftingEffectCount[1]);
@@ -701,7 +706,7 @@ public class ItemCrafting : MonoBehaviour
             stuffStackNum[i] = stuffStack[i];
             ItemManager.instance.InventoryStack(stuffName[i], stuffItemTypes[i], out stuffNowStack[i]);
             ItemManager.instance.ItemImage(stuffName[i], 3, out stuffImageNum[i]);
-            ItemManager.instance.CraftingStuffInfo(stuffName[i], i, out stuffItemInfo[i]);
+            ItemManager.instance.CraftingStuffInfo(stuffName[i], out stuffItemInfo[i]);
         }
         //* 제작에 필요한 재료들의 정보를 순차적으로 불러옴
 
@@ -818,22 +823,26 @@ public class ItemCrafting : MonoBehaviour
             case 0:
                 if (craftingEffectCount[1] > 0)
                 {
-                    completeCraftingText[1].text = string.Format("사용 효과 : 포만감 + {0}, 응가 게이지 + {1}", craftingEffectCount[0], craftingEffectCount[1]);
+                    completeCraftingText[1].text = string.Format("사용 효과 : 포만감 + {0}, 응가 게이지 + {1}", 
+                        craftingEffectCount[0], craftingEffectCount[1]);
                 }
                 else if (craftingEffectCount[1] < 0)
                 {
-                    completeCraftingText[1].text = string.Format("사용 효과 : 포만감 + {0}, 응가 게이지 - {1}", craftingEffectCount[0], craftingEffectCount[1]);
+                    completeCraftingText[1].text = string.Format("사용 효과 : 포만감 + {0}, 응가 게이지 {1}", 
+                        craftingEffectCount[0], craftingEffectCount[1]);
                 }
                 break;
             // 제작 아이템의 효과 타입이 1 이면 일반 효과와 특수 효과를 출력함
             case 1:
                 if (craftingEffectCount[1] > 0)
                 {
-                    completeCraftingText[1].text = string.Format("사용 효과 : 포만감 + {0}, 응가 게이지 + {1}, {2}", craftingEffectCount[0], craftingEffectCount[1], craftingEffectInfo);
+                    completeCraftingText[1].text = string.Format("사용 효과 : 포만감 + {0}, 응가 게이지 + {1}, {2}", 
+                        craftingEffectCount[0], craftingEffectCount[1], craftingEffectInfo);
                 }
                 else if (craftingEffectCount[1] < 0)
                 {
-                    completeCraftingText[1].text = string.Format("사용 효과 : 포만감 + {0}, 응가 게이지 - {1}, {2}", craftingEffectCount[0], craftingEffectCount[1], craftingEffectInfo);
+                    completeCraftingText[1].text = string.Format("사용 효과 : 포만감 + {0}, 응가 게이지 {1}, {2}", 
+                        craftingEffectCount[0], craftingEffectCount[1], craftingEffectInfo);
                 }
                 break;
             default:

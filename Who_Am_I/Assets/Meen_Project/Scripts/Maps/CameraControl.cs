@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEditor.PackageManager;
 using UnityEngine;
 using UnityEngine.UI;
@@ -45,15 +46,21 @@ public class CameraControl : MonoBehaviour
     private bool isWarpMarkCheck = false;
     // 워프 포인트 체크 UI 내의 커서 값
     private int checkPointInfoCursor = default;
+    // 1 번째 봄 맵 상, 하, 좌, 우 카메라 한계값
+    private float[] map01LimitCamera = new float[4];
 
     //// 지도상의 플레이어 트랜스폼
     //public Transform onMapPlayerTf;
 
     void Awake()
     {
-        speed = 0.4f;
+        speed = 1f;
         zoomSpeed = 0.2f;
         checkPointInfoCursor = 0;
+        map01LimitCamera[0] = 11600f;
+        map01LimitCamera[1] = 8400f;
+        map01LimitCamera[2] = 8700f;
+        map01LimitCamera[3] = 11200f;
     }     // Awake()
 
     void Start()
@@ -153,16 +160,61 @@ public class CameraControl : MonoBehaviour
             moveCount[1] = mapCamera.transform.position.z;
 
             // 카메라 움직이는 키 값에 따라 카메라 위치값을 변경시킴
-            if (moveCamera[0] == true) { moveCount[1] += speed; }
-            else if (moveCamera[1] == true) { moveCount[1] -= speed; }
-            else if (moveCamera[2] == true) { moveCount[0] -= speed; }
-            else if (moveCamera[3] == true) { moveCount[0] += speed; }
+            if (moveCamera[0] == true)
+            {
+                moveCount[1] += speed;
+                //if (mapCamera.transform.position.z >= map01LimitCamera[0])
+                //{
+                //    moveCount[1] = map01LimitCamera[0];
+                //}
+                //else
+                //{
+                //    moveCount[1] += speed;
+                //}
+            }
+            else if (moveCamera[1] == true)
+            {
+                moveCount[1] -= speed;
+                //if (mapCamera.transform.position.z <= map01LimitCamera[1])
+                //{
+                //    moveCount[1] = map01LimitCamera[1];
+                //}
+                //else
+                //{
+                //    moveCount[1] -= speed;
+                //}
+            }
+            else if (moveCamera[2] == true)
+            {
+                moveCount[0] -= speed;
+                //if (mapCamera.transform.position.x <= map01LimitCamera[2])
+                //{
+                //    moveCount[0] = map01LimitCamera[2];
+                //}
+                //else
+                //{
+                //    moveCount[0] -= speed;
+                //}
+            }
+            else if (moveCamera[3] == true)
+            {
+                moveCount[0] += speed;
+                //if (mapCamera.transform.position.x >= map01LimitCamera[3])
+                //{
+                //    moveCount[0] = map01LimitCamera[3];
+                //}
+                //else
+                //{
+                //    moveCount[0] += speed;
+                //}
+            }
 
             // 변경된 위치값을 지도상의 카메라의 위치에 대입함
-            mapCamera.transform.position = new Vector3(moveCount[0], 300f, moveCount[1]);
+            mapCamera.transform.position = new Vector3(moveCount[0], 500f, moveCount[1]);
         }
-        // 지도 카메라 확대, 축소 기능 함수 실행
-        else if (inCamera == true || outCamera == true) { MoveInOutCamera(); }
+
+        //// 지도 카메라 확대, 축소 기능 함수 실행
+        //else if (inCamera == true || outCamera == true) { MoveInOutCamera(); }
     }     // UpdateFunction()
 
     // 지도 카메라에서 레이를 발사하는 함수
@@ -312,6 +364,6 @@ public class CameraControl : MonoBehaviour
     // 지도를 비활성화 할 때 지도의 확대, 축소 값을 초기화하는 함수
     public void EndMapCamera()
     {
-        mapCamera.orthographicSize = 300f;
+        mapCamera.orthographicSize = 150f;
     }     // EndMapCamera()
 }
