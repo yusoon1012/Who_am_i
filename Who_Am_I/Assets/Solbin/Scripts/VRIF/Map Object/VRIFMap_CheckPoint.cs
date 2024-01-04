@@ -21,9 +21,18 @@ public class VRIFMap_CheckPoint : MonoBehaviour
     // 빠른 이동 좌표 
     public Vector3 teleportPosition { get; private set; }
 
+    private VRIFMap_CheckPoint[] cpArray = default;
+
+    [Tooltip("체크포인트 개수")]
+    private int CPCount()
+    {
+        VRIFMap_CheckPoint[] checkPoints = FindObjectsOfType<VRIFMap_CheckPoint>();
+        return checkPoints.Length;
+    }
+
     private void Start()
     {
-        // [FB]TODO: 파이어베이스에서 (bool)activated 정보 불러오기 
+        //cpArray = new VRIFMap_CheckPoint[5]; // 체크포인트 개수 대로 배열 생성 ? 필요한가?
 
         if (!activated)
         {
@@ -61,3 +70,6 @@ public class VRIFMap_CheckPoint : MonoBehaviour
         }
     }
 }
+
+// TODO: 1. 활성화 했다면 다른 체크포인트를 활성화하기 전까지 재활성화 불가 
+// TODO: 2. 다른 체크포인트를 활성화할 때 해당 체크포인트를 제외한 다른 체크 포인트는 전부 비활성화 된다. 재활성화 가능한 상태 

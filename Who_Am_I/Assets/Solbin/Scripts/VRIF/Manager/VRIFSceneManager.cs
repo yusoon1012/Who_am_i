@@ -1,4 +1,5 @@
 using BNG;
+using Febucci.UI.Core.Parsing;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -56,6 +57,7 @@ public class VRIFSceneManager : MonoBehaviour
         smoothLocomotion = playerController.GetComponent<SmoothLocomotion>();
         playerRotation = playerController.GetComponent<PlayerRotation>();
 
+        /// <Point> SceneManager를 통한 씬 오픈이라면 일단 작동한다. 
         SceneManager.sceneLoaded += PlayerSetting; // 씬 전환이 완벽히 이뤄지면 해당 이벤트가 발생한다. 
     }
 
@@ -142,27 +144,12 @@ public class VRIFSceneManager : MonoBehaviour
     }
     #endregion
 
-    /// <summary>
-    /// 씬 완료 이벤트를 구독하고 있다. (플레이어 위치 세팅)
-    /// </summary>
-    private void PlayerSetting(Scene scene, LoadSceneMode mode)
-    {
-        Transform birthPos = GameObject.FindGameObjectWithTag("BirthPos").transform;
-
-        playerController.position = birthPos.position;
-        playerController.rotation = birthPos.rotation;
-
-        locomotionManager.enabled = true; // 플레이어 위치시킨 후 이동 재활성화
-        smoothLocomotion.enabled = true;
-        playerRotation.enabled = true; // 회전 재활성화
-    }
-
     #region 체크포인트를 통한 씬 이동
     public void LoadCheckPoint(string _region, int _number)
     {
         string inRegion = SceneManager.GetActiveScene().name;
 
-        if (inRegion.Contains("VRIF")) { inRegion = "Spring"; } // TODO: 이후 Spring으로 수정 필요
+        if (inRegion.Contains("Spring")) { inRegion = "Spring"; }
         else if (inRegion.Contains("Summer")) { inRegion = "Summer"; }
         else if (inRegion.Contains("Fall")) { inRegion = "Fall"; }
         else if (inRegion.Contains("Winter")) { inRegion = "Winter"; }
@@ -171,9 +158,8 @@ public class VRIFSceneManager : MonoBehaviour
         {
             SameRegion(_number); // TODO: 암전효과를 얹어야 한다. 
         }
-        else if (inRegion != _region) // 현 지역과 체크포인트 지역이 다르면
+        else if (inRegion != _region) // 현 지역과 이동을 원하는 체크포인트 지역이 다르면
         {
-            loadingCanvas.SetActive(true); // 로딩캔버스 활성화
             StartCoroutine(DifferentRegion(_region, _number));
         }    
     }
@@ -199,6 +185,8 @@ public class VRIFSceneManager : MonoBehaviour
     /// </summary>
     private IEnumerator DifferentRegion(string _region, int _number)
     {
+        loadingCanvas.SetActive(true); // 로딩캔버스 활성화
+
         string regionName = default;
 
         switch (_region) // 전달받은 계절을 씬 이름으로 변환
@@ -249,4 +237,21 @@ public class VRIFSceneManager : MonoBehaviour
         loadingCanvas.SetActive(false); // 로딩 캔버스 비활성화
     }
     #endregion
+
+    /// <summary>
+    /// 씬 완료 이벤트를 구독하고 있다. (플레이어 위치 세팅)
+    /// </summary>
+    private void PlayerSetting(Scene scene, LoadSceneMode mode)
+    {
+        Debug.Log("씬 활성화 체크");
+
+        Transform birthPos = GameObject.FindGameObjectWithTag("BirthPos").transform;
+
+        playerController.position = birthPos.position;
+        playerController.rotation = birthPos.rotation;
+
+        locomotionManager.enabled = true; // 플레이어 위치시킨 후 이동 재활성화
+        smoothLocomotion.enabled = true;
+        playerRotation.enabled = true; // 회전 재활성화
+    }
 }
