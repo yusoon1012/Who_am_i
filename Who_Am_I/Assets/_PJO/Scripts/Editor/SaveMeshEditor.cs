@@ -52,7 +52,7 @@ public class SaveMeshEditor : Editor
         // } 저장할 타겟 오브젝트 메쉬 가져오기
 
         // 저장 위치 설정
-        string path = $"Assets/Meshes/{meshName.stringValue}.asset";
+        string path = $"Assets/_Meshes/{meshName.stringValue}.asset";
 
         // targetMesh를 path에 지정된 경로에 새로운 에셋으로 생성
         AssetDatabase.CreateAsset(targetMesh, path);
