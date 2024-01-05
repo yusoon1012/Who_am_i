@@ -261,7 +261,7 @@ public class CameraControl : MonoBehaviour
     {
         if (isWarpMarkCheck == false) { return; }
 
-        playerTf.GetComponent<UIController>().uiController = 11;
+        mainObjTf.GetComponent<UIController>().uiController = 11;
         checkPointInfoCursor = 0;
         warpInfoUI.gameObject.SetActive(true);
 
@@ -300,7 +300,7 @@ public class CameraControl : MonoBehaviour
         imageColor.a = 0.2f;
         warpCheckButton[checkPointInfoCursor].color = imageColor;
 
-        playerTf.GetComponent<UIController>().uiController = 10;
+        mainObjTf.GetComponent<UIController>().uiController = 10;
         checkPointInfoCursor = 0;
         warpInfoUI.gameObject.SetActive(false);
     }     // ExitCheckPointInfo()

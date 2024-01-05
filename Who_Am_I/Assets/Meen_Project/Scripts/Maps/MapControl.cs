@@ -20,12 +20,12 @@ public class MapControl : MonoBehaviour
     // 지도 체크 포인트 마크 트랜스폼
     public Transform[] onMapWarpTf = new Transform[3];
     // 체크 포인트들의 워프 지점을 배열로 가져오는 트랜스폼
-    public Transform[] checkPointPositions = new Transform[3];
+    //public Transform[] checkPointPositions = new Transform[3];
     // 0 : 실제 지형 트랜스폼
     // 1 : 지도 지형 트랜스폼
     public Transform[] mapSizeCheck = new Transform[2];
     // 스크린 컨트롤러 트랜스폼
-    public Transform screenControllerTf;
+    //public Transform screenControllerTf;
 
     // 플레이어와 지도 카메라의 움직임 구분값
     public int moveCheck { get; set; } = default;
@@ -141,7 +141,7 @@ public class MapControl : MonoBehaviour
             playerTf.position = checkPointPosition;
 
             mainObjTf.GetComponent<UIController>().AfterWarpExitMap();
-            screenControllerTf.GetComponent<ScreenController>().ScreenEffect(0, 0.02f, 0.02f, 1f, 1);
+            //screenControllerTf.GetComponent<ScreenController>().ScreenEffect(0, 0.02f, 0.02f, 1f, 1);
 
             Debug.Log("체크 포인트 워프 성공!!");
         }

@@ -12,7 +12,7 @@ public class UIController : MonoBehaviour
     // 맵 컨트롤러 트랜스폼
     public Transform mapControllerTf;
     // NPC 컨트롤러 트랜스폼
-    public Transform npcControllerTf;
+    //public Transform npcControllerTf;
 
     // 활성화 상태 UI 창 타입 구분값
     // 0 : UI 창 모두 꺼짐
@@ -80,18 +80,18 @@ public class UIController : MonoBehaviour
         {
             mainObjTf.GetComponent<Meen_MovePlayer>().UpdateFunction();
 
-            if (npcControllerTf.GetComponent<NPCController>().onNavigationCheck > 0)
-            {
-                npcControllerTf.GetComponent<NPCController>().ConnectUpdateFunction();
-            }
+            //if (npcControllerTf.GetComponent<NPCController>().onNavigationCheck > 0)
+            //{
+            //    npcControllerTf.GetComponent<NPCController>().ConnectUpdateFunction();
+            //}
         }
         else if (uiController == 10) { mapCameraTf.GetComponent<CameraControl>().UpdateFunction(); }
 
         // 모든 상, 하, 좌, 우 기본 키보드 키 입력 값
         if (Input.GetKeyDown(KeyCode.UpArrow) || vrifAction.Player.LeftController.ReadValue<Vector2>().y >= joystickInput)
         {
-            // <Solbin> GetKey 같은 느낌이라 너무 예민하다고 느껴진다. 수정 필요
             if (!inputDelay) { DirectionControl(0); }
+            // <Solbin> GetKey 같은 느낌이라 너무 예민하다고 느껴진다. 수정 필요
         }
         else if (Input.GetKeyDown(KeyCode.DownArrow) || vrifAction.Player.LeftController.ReadValue<Vector2>().y <= -joystickInput)
         {
@@ -149,7 +149,7 @@ public class UIController : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.C))
         {
-            npcControllerTf.GetComponent<NPCController>().InputController();
+            //npcControllerTf.GetComponent<NPCController>().InputController();
         }
         else if (Input.GetKeyDown(KeyCode.T))
         {
@@ -236,8 +236,8 @@ public class UIController : MonoBehaviour
     // 모든 UI 에서 방향키 입력을 받아 전달하는 함수
     public void DirectionControl(int arrowType)
     {
-        // <Solbin>
-        inputDelay = true;
+        // <Solbin> 만약 지도 상태가 아니라면 Delay 값을 준다
+        if (uiController != 10) { inputDelay = true; }
         // <Solbin> ===
 
         switch (uiController)
