@@ -310,7 +310,7 @@ public class CameraControl : MonoBehaviour
         {
             // 현재 활성화 된 커서값이 0 이면
             case 0:
-                FunctionCheckPoint();
+                //FunctionCheckPoint();
                 break;
             // 현재 활성화 된 커서값이 1 이면
             case 1:
@@ -337,7 +337,7 @@ public class CameraControl : MonoBehaviour
             //disMapSize[0] = mapController.GetComponent<MapControl>().distanceMapSize[0];
             //disMapSize[1] = mapController.GetComponent<MapControl>().distanceMapSize[1];
 
-            //countPosition[0] = (checkPointPosition.x / disMapSize[0]) + dragMapSize;f
+            //countPosition[0] = (checkPointPosition.x / disMapSize[0]) + dragMapSize;
             //countPosition[1] = (checkPointPosition.z / disMapSize[1]) + dragMapSize;
             //Vector3 resultPosition = new Vector3(countPosition[0], 20f, countPosition[1]);
 
