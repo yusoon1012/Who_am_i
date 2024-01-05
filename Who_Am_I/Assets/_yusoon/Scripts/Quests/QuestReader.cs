@@ -44,18 +44,18 @@ public class QuestReader : MonoBehaviour
                         {
                             if (int.TryParse(row[j], out parsedValue))
                             {
-                                // 정수로 성공적으로 변환되면 parsedValue를 사용
+                                
                                 questMainTable.previousQuest = parsedValue;
                             }
                             else
                             {
-                                // 변환에 실패한 경우 처리 (예: 경고 로그 기록)
+                                
                                 Debug.LogWarning($"{i}행, {j}열에서 {row[j]}를 정수로 변환하는 데 실패했습니다.");
                             }
                         }
                         else
                         {
-                            // 문자열이 비어 있거나 null인 경우 처리
+                            
                             Debug.LogWarning($"{i}행, {j}열에서 빈 값 또는 null을 발견했습니다.");
                         }
                         break;
