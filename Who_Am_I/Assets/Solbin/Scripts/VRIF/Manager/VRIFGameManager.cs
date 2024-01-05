@@ -40,10 +40,12 @@ public class VRIFGameManager : MonoBehaviour
 
     #region 종료: 정보를 최신화 한 후 VRIFSaveManager로 전달 
     /// <summary>
-    /// 저장 전 정보를 최신화하는 메소드 
+    /// 저장 전 정보를 최신화하는 메소드 (저장은 이 메소드를 무조건 통해야 한다.) 
     /// </summary>
     public void SaveGame()
     {
+        Debug.Log("저장 완료");
+
         currentScene = SceneManager.GetActiveScene().name; // 현재 씬 정보 (string)
 
         playerPos = playerController.position;

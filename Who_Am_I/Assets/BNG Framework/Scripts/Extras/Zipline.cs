@@ -34,6 +34,9 @@ namespace BNG {
         // <Solbin> 짚라인 원래 출발속도 
         private float originZiplineSpeed = default;
 
+        // <Solbin> 해당 물체가 Grabber에 닿아있는지 판단
+        private bool inTrigger = false;
+
         void Start() {
             // Start off by orienting the zipline holder
             if(ZiplineEnd != null) {
@@ -76,6 +79,16 @@ namespace BNG {
             }
         }
 
+        private void OnTriggerStay(Collider other)
+        {
+            if (other.GetComponent<Grabber>()) { inTrigger = true; }
+        }
+
+        private void OnTriggerExit(Collider other)
+        {
+            if (other.GetComponent<Grabber>()) { inTrigger = false; }
+        }
+
         void OnDrawGizmosSelected() {
             if (ZiplineStart != null && ZiplineEnd != null) {
                 // Draws a blue line from this transform to the target
@@ -115,32 +128,38 @@ namespace BNG {
         /// </summary>
         private void ShakingController()
         {
-            // 컨트롤러를 아래로 흔들면 (가속력 구분)
-            if (VRIFInputSystem.Instance.lVelocity.y <= -0.5f || VRIFInputSystem.Instance.rVelocity.y <= -0.5f)
+            if (inTrigger)
             {
-                move = true;
+                Debug.Log("짚라인 활성");
 
-                StartCoroutine(AccelerationForce()); // 가속력 코루틴
-            }
-            else if (VRIFInputSystem.Instance.lVelocity.y <= -0.75f || VRIFInputSystem.Instance.rVelocity.y <= -0.75f)
-            {
-                move = true;
-                ZiplineSpeed += 3;
-
-                StartCoroutine(AccelerationForce()); // 가속력 코루틴
-            }
-
-            if (move) // 이동 bool값일때
-            {
-                moveTowards(ZiplineEnd.position, true);
-
-                if (Vector3.Distance(transform.position, ZiplineEnd.position) <= 0.1f ||
-                    VRIFStateSystem.Instance.gameState != VRIFStateSystem.GameState.ZIPLINE) // 끝에 도달했거나 짚라인 상태가 아니면 
+                // 컨트롤러를 아래로 흔들면 (가속력 구분)
+                if (VRIFInputSystem.Instance.lVelocity.y <= -0.5f || VRIFInputSystem.Instance.rVelocity.y <= -0.5f)
                 {
-                    move = false;
-                    StartCoroutine(ResetPosition());
+                    move = true;
+
+                    StartCoroutine(AccelerationForce()); // 가속력 코루틴
+                }
+                else if (VRIFInputSystem.Instance.lVelocity.y <= -0.75f || VRIFInputSystem.Instance.rVelocity.y <= -0.75f)
+                {
+                    move = true;
+                    ZiplineSpeed += 3;
+
+                    StartCoroutine(AccelerationForce()); // 가속력 코루틴
+                }
+
+                if (move) // 이동 bool값일때
+                {
+                    moveTowards(ZiplineEnd.position, true);
+
+                    if (Vector3.Distance(transform.position, ZiplineEnd.position) <= 0.1f ||
+                        VRIFStateSystem.Instance.gameState != VRIFStateSystem.GameState.ZIPLINE) // 끝에 도달했거나 짚라인 상태가 아니면 
+                    {
+                        move = false;
+                        StartCoroutine(ResetPosition());
+                    }
                 }
             }
+            else { Debug.Log("짚라인 비활성"); }
         }
 
         /// <summary>

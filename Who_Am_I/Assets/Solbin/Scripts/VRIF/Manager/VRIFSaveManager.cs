@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.IO;
 using Meta.WitAi;
-using static VRIFSceneManager;
 using System.Drawing;
 
 [System.Serializable]
@@ -20,9 +19,6 @@ public class SaveData
 
 public class VRIFSaveManager : MonoBehaviour
 {
-    // TODO: 'PC의 위치와 각도'를 저장하고 불러오는 것이 가능한지 테스트
-    // 세팅은 다른 기능 스크립트의 Start()가 종료되고 하는 것으로...?
-
     public static VRIFSaveManager Instance;
 
     // 저장 폴더 이름
@@ -49,7 +45,7 @@ public class VRIFSaveManager : MonoBehaviour
 
         savePath = Path.Combine(saveFolderPath, "playerData.json"); // 저장 폴더 안 json 폴더 경로
         
-        SelectLoad(); // TODO: 추후 Start()에서 빠져야 한다. 
+        //SelectLoad(); // TODO: 추후 Start()에서 빠져야 한다. 
     }
 
     /// <summary>
@@ -89,7 +85,7 @@ public class VRIFSaveManager : MonoBehaviour
         SaveData saveData = new SaveData();
 
         string loadJson = File.ReadAllText(savePath); // 경로의 모든 텍스트를 읽어와 string에 할당
-        saveData = JsonUtility.FromJson<SaveData>(loadJson); // 역직렬화 (경로의 json에서 class를 읽어와 담음)
+        saveData = JsonUtility.FromJson<SaveData>(loadJson); // 역직렬화
 
         if (saveData != null) // json을 읽어오는 것에 성공했을때
         {
@@ -148,8 +144,3 @@ public class VRIFSaveManager : MonoBehaviour
     }
     #endregion
 }
-
-// TODO: 새로운 게임 => 기존 json 파일을 삭제하고 새로 시작하기
-// 이어하기 => 기존 json 파일을 기반으로 한 데이터 로드 
-// 종료 => APK 종료 
-// 새로운 게임을 시작할 때는 기존 json 데이터를 덮어쓴 후 VRIFSceneManager를 통해 봄 씬을 로드

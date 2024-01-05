@@ -21,18 +21,12 @@ public class VRIFMap_CheckPoint : MonoBehaviour
     // 빠른 이동 좌표 
     public Vector3 teleportPosition { get; private set; }
 
+    // 현재 씬의 체크 포인트 배열
     private VRIFMap_CheckPoint[] cpArray = default;
-
-    [Tooltip("체크포인트 개수")]
-    private int CPCount()
-    {
-        VRIFMap_CheckPoint[] checkPoints = FindObjectsOfType<VRIFMap_CheckPoint>();
-        return checkPoints.Length;
-    }
 
     private void Start()
     {
-        //cpArray = new VRIFMap_CheckPoint[5]; // 체크포인트 개수 대로 배열 생성 ? 필요한가?
+        cpArray = FindObjectsOfType<VRIFMap_CheckPoint>(); // 체크포인트 개수 대로 배열 생성 ? 필요한가?
 
         if (!activated)
         {
@@ -45,6 +39,9 @@ public class VRIFMap_CheckPoint : MonoBehaviour
         CheckRegion();
     }
 
+    /// <summary>
+    /// 체크포인트 이름을 확인해 지역 자동 할당 
+    /// </summary>
     private void CheckRegion()
     {
         if (gameObject.name.Contains("Spring")) { region = "Spring"; }
@@ -53,11 +50,19 @@ public class VRIFMap_CheckPoint : MonoBehaviour
         else if (gameObject.name.Contains("Winter")) { region = "Winter"; }
     }
 
+    /// <summary>
+    /// 체크포인트 비활성화 => 활성화 동작
+    /// </summary>
     public void Activated()
     {
-        if (!activated) { activated = true; } // 비활성화 상태일때 '활성화' 변경 
+        foreach (var cp in cpArray)
+        {
+            cp.activated = false; // 체크포인트 전부 비활성화
+        }
 
-        // [FB]TODO: 파이어베이스에 (bool)activated 저장
+        activated = true; // 해당 체크포인트만 활성화
+
+        Save(); // 저장
 
         transform.GetChild(0).gameObject.SetActive(true); // 빛 켜기 
 
@@ -69,7 +74,15 @@ public class VRIFMap_CheckPoint : MonoBehaviour
             materials[materials.Length - 1].SetFloat("_Scale", 0); // Material Scale Down
         }
     }
+
+    /// <summary>
+    /// VRIFSaveManager가 저장할 수 있도록 한다. 
+    /// </summary>
+    private void Save()
+    {
+        // TODO: 아이템 저장도 필요 
+
+        VRIFGameManager.Instance.SaveGame(); // 저장 
+    }
 }
 
-// TODO: 1. 활성화 했다면 다른 체크포인트를 활성화하기 전까지 재활성화 불가 
-// TODO: 2. 다른 체크포인트를 활성화할 때 해당 체크포인트를 제외한 다른 체크 포인트는 전부 비활성화 된다. 재활성화 가능한 상태 

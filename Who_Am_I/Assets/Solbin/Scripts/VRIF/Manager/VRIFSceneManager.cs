@@ -243,8 +243,6 @@ public class VRIFSceneManager : MonoBehaviour
     /// </summary>
     private void PlayerSetting(Scene scene, LoadSceneMode mode)
     {
-        Debug.Log("씬 활성화 체크");
-
         Transform birthPos = GameObject.FindGameObjectWithTag("BirthPos").transform;
 
         playerController.position = birthPos.position;

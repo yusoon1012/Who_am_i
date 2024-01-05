@@ -87,7 +87,7 @@ public class ThisAnimalAI : MonoBehaviour
 
         if (isAction == true)
         {
-            moveCoroutine = StartCoroutine(Move(mapPoints[GFunc.RandomValueInt(0, mapPoints.Length)]));
+            //moveCoroutine = StartCoroutine(Move(mapPoints[GFunc.RandomValueInt(0, mapPoints.Length)]));
         }
         else
         {
