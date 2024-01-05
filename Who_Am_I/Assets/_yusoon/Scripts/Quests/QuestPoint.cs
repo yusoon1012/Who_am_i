@@ -6,11 +6,11 @@ public class QuestPoint : MonoBehaviour
 {
     [SerializeField] private QuestData questInfoForPoint;
     [Header("Config")]
-    [SerializeField] public bool isStartPoint = false;
-    public bool isEndPoint = false;
-    private bool playerIsNear = false;
+    public bool isStartPoint = false;   //퀘스트 수락NPC인지 체크
+    public bool isEndPoint = false;     //퀘스트 완료 NPC인지 체크
+    private bool playerIsNear = false;  //플레이어가 근처에있는지 체크
     private QuestIcon questIcon;
-   [SerializeField] private string questId;
+    [SerializeField] private string questId;
     [SerializeField] private QuestState currentQuestState;
 
     private void Awake()
