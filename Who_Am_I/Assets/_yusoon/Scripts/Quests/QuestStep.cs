@@ -24,7 +24,8 @@ public abstract class QuestStep : MonoBehaviour
         {
             isFinished = true;
             GameEventManager.instance.questEvent.AdvanceQuest(questId);
-            Destroy(this.gameObject);
+            //해당 퀘스트ID를 가진 퀘스트 완료상태로 변경하는 이벤트 호출
+           // Destroy(this.gameObject);
         }
     }
     protected void ChangeState(string newState)

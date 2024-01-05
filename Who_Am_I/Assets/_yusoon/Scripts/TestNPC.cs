@@ -27,7 +27,7 @@ public class TestNPC : MonoBehaviour
     public Dictionary<string, int> questCondition;
     public Dictionary<string, int> currentCondition;
     QuestList questlist;
-    Testpilot player;
+    
     string conditionStr;
     int conditionIndex = 0;
     int conditionCount;
@@ -188,29 +188,7 @@ public class TestNPC : MonoBehaviour
     {
         if (other.tag.Equals("Player"))
         {
-            player = other.GetComponent<Testpilot>();
-            if (player != null)
-            {
-                if (player.isAction)
-                {
-                    if (isTalking) { return; }
-                    if (isAccept) { return; }
-
-                    if(isClear==false) 
-                    {
-                         NextIndex();
-                    }
-                    else
-                    {
-                        
-                        ClearIndex();
-                    }
-                    questTitleTxt.text = questlist.mainQuestName.ToString();
-                    chatObj.SetActive(true);
-                    isTalking = true;
-
-                }
-            }
+           
         }
     }
 

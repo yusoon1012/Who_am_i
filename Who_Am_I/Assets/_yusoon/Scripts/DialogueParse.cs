@@ -19,14 +19,14 @@ public class DialogueParse : MonoBehaviour
             //Debug.Log(row[2]); //이름
             Dialogue dialogue = new Dialogue();//대사 리스트 생성
 
-            dialogue.name = row[2];
+            dialogue.name = row[3];
             List<string> contextList= new List<string>();
             List<string> eventNumberList = new List<string>();
             //List<string> jumpList = new List<string>();
             do
             {
-                contextList.Add(row[3]);
-                eventNumberList.Add(row[4]);
+                contextList.Add(row[4]);
+               // eventNumberList.Add(row[4]);
                 //jumpList.Add(row[5]);
                // Debug.Log(row[3]);// 스크립트
 

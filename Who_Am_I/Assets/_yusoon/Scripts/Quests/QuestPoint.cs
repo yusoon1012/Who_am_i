@@ -6,8 +6,8 @@ public class QuestPoint : MonoBehaviour
 {
     [SerializeField] private QuestData questInfoForPoint;
     [Header("Config")]
-    [SerializeField] private bool isStartPoint = false;
-    [SerializeField] private bool isEndPoint = false;
+    [SerializeField] public bool isStartPoint = false;
+    public bool isEndPoint = false;
     private bool playerIsNear = false;
     private QuestIcon questIcon;
    [SerializeField] private string questId;
@@ -33,7 +33,7 @@ public class QuestPoint : MonoBehaviour
         {
             currentQuestState = quest.state;
             questIcon.SetState(currentQuestState, isStartPoint, isEndPoint);
-            Debug.Log("Quest with id: " + questId + "update to state: " + currentQuestState);
+            //Debug.Log("Quest with id: " + questId + "update to state: " + currentQuestState);
         }
     }
  
@@ -54,14 +54,16 @@ public class QuestPoint : MonoBehaviour
             if(currentQuestState.Equals(QuestState.CAN_START)&&isStartPoint)
             {
                 GameEventManager.instance.questEvent.StartQuest(questId);
+                //해당 id를 가진 퀘스트를 시작한다는 이벤트 전송
             }
             else if(currentQuestState.Equals(QuestState.CAN_FINISH)&&isEndPoint)
             {
                 GameEventManager.instance.questEvent.FinishQuest(questId);
+                //해당 id를 가진 퀘스트를 끝냈다는 이벤트 전송
             }
 
         }
-    }
+    }       //SubmitPressed() 플레이어가 근처에서 말거는 버튼을 눌렀을때 동작하는 함수
     private void OnTriggerEnter(Collider other)
     {
         if(other.CompareTag("Player"))

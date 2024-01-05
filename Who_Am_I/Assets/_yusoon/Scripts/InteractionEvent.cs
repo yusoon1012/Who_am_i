@@ -9,7 +9,7 @@ public class InteractionEvent : MonoBehaviour
 
     public Dialogue[] GetDialogue(int firstline,int endline)
     {
-        Debug.Log("InteractionEvent GetDialogue ");
+        //Debug.Log("InteractionEvent GetDialogue ");
         
         dialogue.dialogues = DialogueManager.instance.GetDialogue(firstline, endline);
         return dialogue.dialogues;
