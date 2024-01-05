@@ -5,16 +5,20 @@ using UnityEditor;
 [CustomEditor(typeof(AddVertexObject))]
 public class AddVertexObjectEditor : Editor
 {
-    // 맵 오브젝트
-    SerializedProperty targetObject;
-    // 저장될 위치
-    SerializedProperty saveParent;
-    // 예외 높이
-    SerializedProperty height;
+    #region Property members
+    SerializedProperty targetObject;        // 해당 오브젝트
+    SerializedProperty saveParent;          // 저장될 위치
+    SerializedProperty height;              // 예외 높이
+    #endregion
 
-    // 박스 콜라이더 크기 상수
-    private Vector3 SIDE_SCALE = new Vector3(0.1f, 0.1f, 0.1f);
+    #region private members
+    private Transform saveTransform;                                // 저장될 위치
+    private MeshFilter targetMeshFilter;                            // 해당 오브젝트의 메쉬 필터
+    private Mesh targetMesh;                                        // 해당 오브젝트의 메쉬
+    private Vector3 SIDE_SCALE = new Vector3(0.1f, 0.1f, 0.1f);     // 박스 콜라이더 크기 상수
+    #endregion
 
+    #region Editor default
     private void OnEnable()
     {
         // 프로퍼티 초기화
@@ -27,45 +31,52 @@ public class AddVertexObjectEditor : Editor
     {
         // 인스펙터 창 업데이트
         serializedObject.Update();
-        // { 인스펙터에서 변수를 편집 가능한 필드로 표시
+
+        // 인스펙터 창 업데이트
         EditorGUILayout.PropertyField(targetObject, new GUIContent("해당 오브젝트"));
-        EditorGUILayout.PropertyField(saveParent, new GUIContent("저장할 오브젝트"));
+        EditorGUILayout.PropertyField(saveParent, new GUIContent("저장될 위치"));
         EditorGUILayout.PropertyField(height, new GUIContent("예외 높이"));
-        // } 인스펙터에서 변수를 편집 가능한 필드로 표시
 
         // "Apply" 버튼 클릭시 맵 오브젝트의 정점위치에 박스 콜라이더를 생성
         if (GUILayout.Button("Apply"))
         {
-            AddObject();
+            EditorStart();
         }
 
         // SerializedProperty 변경사항 적용
         serializedObject.ApplyModifiedProperties();
     }       // OnInspectorGUI()
+    #endregion
 
+    #region Editor Initialization and Setup
+    private void EditorStart()
+    {
+        InitializationComponents();             // 컴포넌트 초기화
+        if (HasNullReference()) { return; }     // Null 
+
+        AddObject();
+    }
+
+    private void InitializationComponents()
+    {
+        saveTransform = GFuncE.SetTransform(saveParent);
+        targetMeshFilter = GFuncE.SetComponent<MeshFilter>(targetObject);
+        targetMesh = targetMeshFilter.sharedMesh != null ? targetMeshFilter.sharedMesh : null;
+    }
+
+    private bool HasNullReference()
+    {
+        if (saveTransform == null) { GFuncE.SubmitNonFindText(saveParent, typeof(Transform)); return true; }
+        if (targetMeshFilter == null) { GFuncE.SubmitNonFindText(targetObject, typeof(MeshFilter)); return true; }
+        if (targetMesh == null) { GFuncE.SubmitNonFindText(targetObject, typeof(Mesh)); return true; }
+
+        return false;
+    }
+    #endregion
+
+    #region Editor function start
     private void AddObject()
     {
-        // { 저장할 위치의 Transform 가져오기
-        Transform saveTransform = GFuncE.SetTransform(saveParent);
-
-        if (GFuncE.HasChild(saveTransform) == false) { return; }
-        // } 저장할 위치의 Transform 가져오기
-
-        // { 맵의 메쉬 가져오기
-        MeshFilter targetMeshFilter = GFuncE.SetComponent<MeshFilter>(targetObject);
-        if (targetMeshFilter == null)
-        {
-            GFuncE.SubmitNonFindText(targetObject, typeof(MeshFilter));
-            return;
-        }
-        Mesh targetMesh = targetMeshFilter.sharedMesh != null ? targetMeshFilter.sharedMesh : null;
-        if (targetMesh == null)
-        {
-            GFuncE.SubmitNonFindText(targetObject, typeof(Mesh));
-            return;
-        }
-        // } 맵의 메쉬 가져오기
-
         // 박스 콜라이더를 생성할 빈 GameObject 생성
         GameObject newObject = new GameObject("pointObject");
 
@@ -73,29 +84,30 @@ public class AddVertexObjectEditor : Editor
         foreach (Vector3 vertice in targetMesh.vertices)
         {
             // 정점의 월드 좌표 계산
-            Vector3 worldPos = targetMeshFilter.transform.TransformPoint(vertice);
+            Vector3 worldPosition = targetMeshFilter.transform.TransformPoint(vertice);
 
             // 정점의 높이가 예외 높이보다 낮으면 continue
-            if (worldPos.y < height.floatValue)
+            if (worldPosition.y < height.floatValue)
             {
                 continue;
             }
             else
             {
                 // 박스 콜라이더 생성 및 크기 설정
-                BoxCollider newCol = Instantiate
+                BoxCollider newCollider = Instantiate
                     (
                     GFunc.AddComponent<BoxCollider>(newObject),
-                    worldPos,
+                    worldPosition,
                     Quaternion.identity,
                     saveTransform
                     );
 
-                newCol.size = SIDE_SCALE;
+                newCollider.size = SIDE_SCALE;
             }
         }
 
         // 빈 GameObject 제거
         DestroyImmediate(newObject);
     }       // AddObject()
+    #endregion
 }
