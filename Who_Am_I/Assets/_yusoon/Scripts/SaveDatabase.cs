@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 using Firebase;
 using Firebase.Database;
 
-public class SaveData : MonoBehaviour
+public class SaveDatabase : MonoBehaviour
 {
 
 
