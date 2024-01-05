@@ -175,7 +175,10 @@ public class VRIFSceneManager : MonoBehaviour
         {
             if (checkPoint.number == _number)
             {
-                playerController.position = checkPoint.teleportPosition;
+                Vector3 teleportPos = checkPoint.teleportPosition;
+                playerController.position = teleportPos;
+
+                // TODO: 왜 이동이 제대로 이루어지지 않는가?
             }
         }
     }
@@ -230,7 +233,8 @@ public class VRIFSceneManager : MonoBehaviour
         {
             if (checkPoint.number == _number)
             {
-                playerController.position = checkPoint.teleportPosition; // 체크포인트 내에 포함된 텔레포트 포지션으로 이동
+                Vector3 teleportPos = checkPoint.teleportPosition;
+                playerController.position = teleportPos; // 체크포인트 내에 포함된 텔레포트 포지션으로 이동
             }
         }
 
