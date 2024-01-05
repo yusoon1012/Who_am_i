@@ -124,6 +124,8 @@ public class ThisAnimalData : MonoBehaviour
 
             DropItem(newObject.GetComponent<Rigidbody>());
 
+            collider.enabled = false;
+
             StartCoroutine(Death());
         }
     }
