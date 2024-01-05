@@ -71,7 +71,7 @@ public class MapControl : MonoBehaviour
         {
             Vector3 saveCheckPointPos = new Vector3(checkPointPosX[i], 5f, checkPointPosZ[i]);
 
-            onMapWarpTf[i].GetComponent<MapMarkInfo>().StartInfoSetting("활성화된 체크 포인트", true, i + 1);
+            onMapWarpTf[i].GetComponent<MapMarkInfo>().StartInfoSetting("활성화된 체크 포인트", true, i);
             SettingOnMapCheckPoint(i, saveCheckPointPos);
 
             //checkPointDic.Add(i + 1, saveCheckPointPos);

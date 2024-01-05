@@ -18,6 +18,8 @@ public class CameraControl : MonoBehaviour
     // 플레이어 트랜스폼
     public Transform playerTf;
 
+    public Transform mainObjTf;
+
     // 지도상의 표식들을 체크하는 레이어 마스크
     public LayerMask mapMarkLayer;
 
@@ -310,7 +312,7 @@ public class CameraControl : MonoBehaviour
         {
             // 현재 활성화 된 커서값이 0 이면
             case 0:
-                //FunctionCheckPoint();
+                FunctionCheckPoint();
                 break;
             // 현재 활성화 된 커서값이 1 이면
             case 1:
@@ -328,7 +330,15 @@ public class CameraControl : MonoBehaviour
         if (isWarpMarkCheck == true && nowSelectMapMark != null)
         {
             nowSelectMapMark.GetComponent<MapMarkInfo>().SendCountInfo(out int warpCount);
-            mapController.GetComponent<MapControl>().ConnectCheckPoint(warpCount, out Vector3 checkPointPosition);
+
+            VRIFSceneManager.Instance.LoadCheckPoint("Spring", warpCount);
+
+            mainObjTf.GetComponent<UIController>().OnMainMenuControl();
+
+            Debug.LogFormat("빠른 이동 체크포인트 번호 : {0}", warpCount);
+            Debug.Log("빠른 이동 기능 구현 후 지도 UI 모두 종료");
+
+            //mapController.GetComponent<MapControl>().ConnectCheckPoint(warpCount, out Vector3 checkPointPosition);
 
             //float[] countPosition = new float[2];
             //float[] disMapSize = new float[2];
