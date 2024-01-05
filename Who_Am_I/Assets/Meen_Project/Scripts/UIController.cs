@@ -61,8 +61,7 @@ public class UIController : MonoBehaviour
 
     void Update()
     {
-        // <Meen Change>
-        //if (inputDelay) { return; } // <Solbin> 입력 딜레이 중 입력 금지 
+        if (inputDelay) { return; } // <Solbin> 입력 딜레이 중 입력 금지 
 
         UpdateFunction();
     }     // Update()
@@ -214,9 +213,8 @@ public class UIController : MonoBehaviour
             mainObjTf.GetComponent<Inventory>().AddInventory("송이 버섯", 1);
         }
 
-        // <Meen Change>
         // <Solbin> 지나치게 예민한 입력값을 막기 위함
-        //if (inputDelay) { Invoke("ClearInputDelay", 0.55f); }
+        if (inputDelay) { Invoke("ClearInputDelay", 0.55f); }
         // <Solbin> ===
     }     // UpdateFunction()
 
@@ -238,9 +236,8 @@ public class UIController : MonoBehaviour
     // 모든 UI 에서 방향키 입력을 받아 전달하는 함수
     public void DirectionControl(int arrowType)
     {
-        // <Meen Change>
         // <Solbin>
-        //inputDelay = true;
+        inputDelay = true;
         // <Solbin> ===
 
         switch (uiController)
@@ -299,9 +296,8 @@ public class UIController : MonoBehaviour
     // 모든 UI 에서 다른 방향키 입력을 받아 전달하는 함수
     public void RightDirectionControl(int arrowType)
     {
-        // <Meen Change>
         // <Solbin>
-        //inputDelay = true;
+        inputDelay = true;
         // <Solbin> ===
 
         switch (uiController)
@@ -831,9 +827,8 @@ public class UIController : MonoBehaviour
     //}
     #endregion LAGACY
 
-    // <Meen Change>
     // <Solbin>
-    //private void ClearInputDelay() { inputDelay = false; }
+    private void ClearInputDelay() { inputDelay = false; }
     // <Solbin> ===
 
 }     // Update()
