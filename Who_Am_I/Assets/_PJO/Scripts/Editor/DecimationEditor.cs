@@ -61,6 +61,7 @@ public class DecimationEditor : Editor
             EditorStart();
         }
 
+        // SerializedProperty 변경사항 적용
         serializedObject.ApplyModifiedProperties();
     }       // OnInspectorGUI()
     #endregion
