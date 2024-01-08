@@ -55,7 +55,7 @@ public class CameraControl : MonoBehaviour
 
     void Awake()
     {
-        speed = 1f;
+        speed = 1.75f;
         zoomSpeed = 0.2f;
         checkPointInfoCursor = 0;
         map01LimitCamera[0] = 11600f;

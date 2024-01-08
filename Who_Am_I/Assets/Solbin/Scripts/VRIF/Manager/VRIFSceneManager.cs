@@ -1,5 +1,6 @@
 using BNG;
 using Febucci.UI.Core.Parsing;
+using Oculus.Interaction.DistanceReticles;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -31,6 +32,12 @@ public class VRIFSceneManager : MonoBehaviour
     public event EventHandler openDoorEvent;
     // 메인씬 오픈을 위한 임시 Operation
     private AsyncOperation tempOperation = default;
+
+    // 체크포인트를 통한 이동을 위함 
+    private bool cpTeleport = false;
+    private Vector3 teleportPos = default;
+    // 빠른 이동 완료 이벤트
+    public event EventHandler teleportComplete = default;
 
     public class SeasonName
     {
@@ -175,10 +182,8 @@ public class VRIFSceneManager : MonoBehaviour
         {
             if (checkPoint.number == _number)
             {
-                Vector3 teleportPos = checkPoint.teleportPosition;
-                playerController.position = teleportPos;
-
-                // TODO: 왜 이동이 제대로 이루어지지 않는가?
+                cpTeleport = true;
+                teleportPos = checkPoint.teleportPosition;
             }
         }
     }
@@ -233,8 +238,8 @@ public class VRIFSceneManager : MonoBehaviour
         {
             if (checkPoint.number == _number)
             {
-                Vector3 teleportPos = checkPoint.teleportPosition;
-                playerController.position = teleportPos; // 체크포인트 내에 포함된 텔레포트 포지션으로 이동
+                cpTeleport = true;
+                teleportPos = checkPoint.teleportPosition;
             }
         }
 
@@ -255,5 +260,19 @@ public class VRIFSceneManager : MonoBehaviour
         locomotionManager.enabled = true; // 플레이어 위치시킨 후 이동 재활성화
         smoothLocomotion.enabled = true;
         playerRotation.enabled = true; // 회전 재활성화
+    }
+
+    /// <summary>
+    /// 메소드 내 이동이 제대로 작동하지 않아 만든 임시 코드 
+    /// </summary>
+    private void Update()
+    {
+        if (cpTeleport)
+        {
+            playerController.position = teleportPos;
+            teleportComplete?.Invoke(this, EventArgs.Empty);
+
+            cpTeleport = false;
+        }
     }
 }
