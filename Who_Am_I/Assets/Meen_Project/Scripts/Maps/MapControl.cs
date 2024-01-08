@@ -19,13 +19,9 @@ public class MapControl : MonoBehaviour
     public Transform mapCameraTf;
     // 지도 체크 포인트 마크 트랜스폼
     public Transform[] onMapWarpTf = new Transform[3];
-    // 체크 포인트들의 워프 지점을 배열로 가져오는 트랜스폼
-    //public Transform[] checkPointPositions = new Transform[3];
     // 0 : 실제 지형 트랜스폼
     // 1 : 지도 지형 트랜스폼
     public Transform[] mapSizeCheck = new Transform[2];
-    // 스크린 컨트롤러 트랜스폼
-    //public Transform screenControllerTf;
 
     // 플레이어와 지도 카메라의 움직임 구분값
     public int moveCheck { get; set; } = default;
@@ -40,6 +36,10 @@ public class MapControl : MonoBehaviour
     private float[] checkPointPosX = new float[10];
     private float[] checkPointPosZ = new float[10];
 
+    // 스크린 컨트롤러 트랜스폼
+    //public Transform screenControllerTf;
+    // 체크 포인트들의 워프 지점을 배열로 가져오는 트랜스폼
+    //public Transform[] checkPointPositions = new Transform[3];
     //// 체크 포인트들의 워프 지점을 저장하기 위한 딕셔너리
     //Dictionary<int, Vector3> checkPointDic = new Dictionary<int, Vector3>();
 
@@ -51,13 +51,17 @@ public class MapControl : MonoBehaviour
         checkPointPosZ[1] = 13.08f;
 
         moveCheck = 0;
+
+        // 실제 지형과 지도 이미지의 실제 거리 차이
         dragMap[0] = 1000f;
         dragMap[1] = 1000f;
 
-        multipleMapSize[0] = 4.08f;
+        // 실제 지형과 지도 이미지의 축적 배율
+        multipleMapSize[0] = 4.03f;
         multipleMapSize[1] = 6.2f;
-        distanceMapSize[0] = 9.8f;
-        distanceMapSize[1] = 35.48f;
+        // 실제 지형과 지도 이미지의 중심 축 이동 배율 값
+        distanceMapSize[0] = 9.92f;
+        distanceMapSize[1] = 36.66f;
     }     // Awake()
 
     void Start()
@@ -120,48 +124,6 @@ public class MapControl : MonoBehaviour
         mapCameraTf.GetComponent<Rigidbody>().velocity = Vector3.zero;
     }     // ResetCamera()
 
-    // 워프 지점 순서를 체크하여 해당 워프 지점으로 플레이어가 워프하는 기능의 함수
-    public Vector3 ConnectCheckPoint(int checkPoint, out Vector3 checkPointPosition)
-    {
-        if (checkPoint == 0)
-        {
-            checkPointPosition = Vector3.zero;
-        }
-        //else if (checkPointDic.ContainsKey(checkPoint))
-        //{
-        //    checkPointPosition = checkPointDic[checkPoint];
-        //}
-        else
-        {
-            checkPointPosition = Vector3.zero;
-        }
-
-        if (checkPointPosition != Vector3.zero)
-        {
-            playerTf.position = checkPointPosition;
-
-            mainObjTf.GetComponent<UIController>().AfterWarpExitMap();
-            //screenControllerTf.GetComponent<ScreenController>().ScreenEffect(0, 0.02f, 0.02f, 1f, 1);
-
-            Debug.Log("체크 포인트 워프 성공!!");
-        }
-        else
-        {
-            Debug.Log("체크 포인트 워프 Error!!!");
-        }
-        
-        return checkPointPosition;
-    }     // ConnectCheckPoint()
-
-    //// 게임 시작 시 실제 플레이 맵과 지도 맵의 차이를 계산하는 함수
-    //private void AccountMapSize()
-    //{
-    //    dragMap[0] = (mapSizeCheck[1].position.x - mapSizeCheck[0].position.x) + 20f;
-    //    dragMap[1] = (mapSizeCheck[1].position.z - mapSizeCheck[0].position.z) - 110f;
-
-    //    Debug.LogFormat("맵의 거리 차이 : {0}, {1}", dragMap[0], dragMap[1]);
-    //}     // AccountMapSize()
-
     // 지도를 활성화할 때 지도상의 플레이어 표식 위치를 실제 플레이어 위치에 기반해 계산하여 위치를 변경하는 함수
     private void OnMapPlayerSetting()
     {
@@ -219,4 +181,46 @@ public class MapControl : MonoBehaviour
         
         return countPos;
     }     // CountDistanceMap()
+
+    //// 워프 지점 순서를 체크하여 해당 워프 지점으로 플레이어가 워프하는 기능의 함수
+    //public Vector3 ConnectCheckPoint(int checkPoint, out Vector3 checkPointPosition)
+    //{
+    //    if (checkPoint == 0)
+    //    {
+    //        checkPointPosition = Vector3.zero;
+    //    }
+    //    //else if (checkPointDic.ContainsKey(checkPoint))
+    //    //{
+    //    //    checkPointPosition = checkPointDic[checkPoint];
+    //    //}
+    //    else
+    //    {
+    //        checkPointPosition = Vector3.zero;
+    //    }
+
+    //    if (checkPointPosition != Vector3.zero)
+    //    {
+    //        playerTf.position = checkPointPosition;
+
+    //        mainObjTf.GetComponent<UIController>().AfterWarpExitMap();
+    //        //screenControllerTf.GetComponent<ScreenController>().ScreenEffect(0, 0.02f, 0.02f, 1f, 1);
+
+    //        Debug.Log("체크 포인트 워프 성공!!");
+    //    }
+    //    else
+    //    {
+    //        Debug.Log("체크 포인트 워프 Error!!!");
+    //    }
+
+    //    return checkPointPosition;
+    //}     // ConnectCheckPoint()
+
+    //// 게임 시작 시 실제 플레이 맵과 지도 맵의 차이를 계산하는 함수
+    //private void AccountMapSize()
+    //{
+    //    dragMap[0] = (mapSizeCheck[1].position.x - mapSizeCheck[0].position.x) + 20f;
+    //    dragMap[1] = (mapSizeCheck[1].position.z - mapSizeCheck[0].position.z) - 110f;
+
+    //    Debug.LogFormat("맵의 거리 차이 : {0}, {1}", dragMap[0], dragMap[1]);
+    //}     // AccountMapSize()
 }
