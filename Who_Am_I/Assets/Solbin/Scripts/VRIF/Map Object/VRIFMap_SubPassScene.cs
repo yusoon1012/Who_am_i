@@ -30,7 +30,6 @@ public class VRIFMap_SubPassScene : MonoBehaviour
             VRIFSceneManager.Instance.OpenMainScene(); // 메인씬 열기
         }
     }
-
 }
 
 // MainPassScene과 비슷한 처리가 필요하다. 문을 열고 닿으면 메인씬으로 이동할 수 있도록 처리한다. 

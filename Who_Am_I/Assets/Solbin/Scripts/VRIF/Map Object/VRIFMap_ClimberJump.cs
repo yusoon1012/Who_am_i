@@ -35,6 +35,6 @@ public class VRIFMap_ClimberJump : MonoBehaviour
     private void OrderJump()
     {
         VRIFPlayerClimbing playerClimbing = VRIFStateSystem.Instance.playerController.GetComponent<VRIFPlayerClimbing>();
-        if (playerClimbing != null) { playerClimbing.DoJump(direction, transform, sideUpForce, sideForce, upForce); }
+        if (playerClimbing != null) { playerClimbing.DoJump(direction, transform.GetChild(0), sideUpForce, sideForce, upForce); }
     }
 }

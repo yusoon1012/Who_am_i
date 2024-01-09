@@ -1,7 +1,4 @@
 using BNG;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class VRIFMap_Crop : MonoBehaviour
@@ -132,7 +129,7 @@ public class VRIFMap_Crop : MonoBehaviour
         else if (hp <= 0 && !secondPull)
         {
             secondPull = true;
-            radishRigid.AddForce(Vector3.up * 1.2f, ForceMode.Impulse);
+            radishRigid.AddForce(Vector3.up * 0.7f, ForceMode.Impulse);
 
             grabbable.enabled = true;
             radishCollider.enabled = true;

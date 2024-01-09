@@ -67,18 +67,26 @@ public class VRIFPlayerItem : MonoBehaviour
     {
         if (other.gameObject.layer == LayerMask.NameToLayer("Item"))
         {
-            Renderer renderer = other.transform.parent.GetComponent<Renderer>(); // 렌더러
-
-            if (renderer == null) // 뿌리채소는 구성이 약간 다르다.
+            if (other.transform.parent.GetComponent<Outline>())
             {
-                renderer = other.transform.GetComponent<Renderer>();
+                other.transform.parent.GetComponent<Outline>().OutlineWidth = 10;
             }
+            else 
+            {
+                Renderer renderer = other.transform.parent.GetComponent<Renderer>(); // 렌더러
 
-            Material[] materials = renderer.materials;
+                if (renderer == null) // 뿌리채소는 구성이 약간 다르다.
+                {
+                    renderer = other.transform.GetComponent<Renderer>();
+                }
 
-            for (int i = 0; i < materials.Length; i++) 
-            {       
-                materials[materials.Length - 1].SetFloat("_Scale", shiningInitialValue); // Material Scale Up 
+                Material[] materials = renderer.materials;
+
+
+                for (int i = 0; i < materials.Length; i++)
+                {
+                    materials[materials.Length - 1].SetFloat("_Scale", shiningInitialValue); // Material Scale Up 
+                }
             }
         }
     }
@@ -99,18 +107,25 @@ public class VRIFPlayerItem : MonoBehaviour
     {
         if (other.gameObject.layer == LayerMask.NameToLayer("Item"))
         {
-            Renderer renderer = other.transform.parent.GetComponent<Renderer>(); // 렌더러
-
-            if (renderer == null) // 뿌리 작물의 경우 구성이 약간 다르다. 
+            if (other.transform.parent.GetComponent<Outline>())
             {
-                renderer = other.transform.GetComponent<Renderer>();
+                other.transform.parent.GetComponent<Outline>().OutlineWidth = 0;
             }
-
-            Material[] materials = renderer.materials;
-
-            for (int i = 0; i < materials.Length; i++)
+            else
             {
-                materials[materials.Length - 1].SetFloat("_Scale", 0); // Material Scale Down
+                Renderer renderer = other.transform.parent.GetComponent<Renderer>(); // 렌더러
+
+                if (renderer == null) // 뿌리채소는 구성이 약간 다르다.
+                {
+                    renderer = other.transform.GetComponent<Renderer>();
+                }
+
+                Material[] materials = renderer.materials;
+
+                for (int i = 0; i < materials.Length; i++)
+                {
+                    materials[materials.Length - 1].SetFloat("_Scale", 0); // Material Scale Up 
+                }
             }
         }
     }

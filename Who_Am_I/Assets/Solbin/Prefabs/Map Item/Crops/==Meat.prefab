@@ -59,6 +59,7 @@ GameObject:
   - component: {fileID: 1038877719311535650}
   - component: {fileID: 1038877719311535651}
   - component: {fileID: 1038877719311535652}
+  - component: {fileID: -3008054280647326985}
   m_Layer: 10
   m_Name: ==Meat
   m_TagString: Untagged
@@ -113,7 +114,6 @@ MeshRenderer:
   - {fileID: 2100000, guid: 24797d2d94c724e4d850e787ac13bf3c, type: 2}
   - {fileID: 2100000, guid: 793ecf2a69636cc43bd82799d29f144c, type: 2}
   - {fileID: 2100000, guid: de56b0ea9f06bdb41b677125356ac5a8, type: 2}
-  - {fileID: 2100000, guid: ff6bd37dba62f4646af3f593d97b6feb, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -233,3 +233,21 @@ MonoBehaviour:
   UseCustomInspector: 1
   lastFlickTime: 0
   FlickForce: 1
+--- !u!114 &-3008054280647326985
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1038877719311535653}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 0
+  outlineColor: {r: 1, g: 0.6666667, b: 0.1764706, a: 1}
+  outlineWidth: 10
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []

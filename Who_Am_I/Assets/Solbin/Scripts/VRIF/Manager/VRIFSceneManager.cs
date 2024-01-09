@@ -23,6 +23,10 @@ public class VRIFSceneManager : MonoBehaviour
     [Tooltip("로딩창(UI)")]
     [SerializeField] private GameObject loadingCanvas = default;
 
+    [Header("Character Controller")]
+    [Tooltip("CC가 position값을 덮어쓰기 때문에 비활성화 필요")]
+    [SerializeField] private CharacterController characterController = default;
+
     // 플레이어 이동/회전 컴포넌트
     private LocomotionManager locomotionManager = default;
     private SmoothLocomotion smoothLocomotion = default;
@@ -32,12 +36,6 @@ public class VRIFSceneManager : MonoBehaviour
     public event EventHandler openDoorEvent;
     // 메인씬 오픈을 위한 임시 Operation
     private AsyncOperation tempOperation = default;
-
-    // 체크포인트를 통한 이동을 위함 
-    private bool cpTeleport = false;
-    private Vector3 teleportPos = default;
-    // 빠른 이동 완료 이벤트
-    public event EventHandler teleportComplete = default;
 
     public class SeasonName
     {
@@ -182,8 +180,9 @@ public class VRIFSceneManager : MonoBehaviour
         {
             if (checkPoint.number == _number)
             {
-                cpTeleport = true;
-                teleportPos = checkPoint.teleportPosition;
+                characterController.enabled = false;
+                playerController.position = checkPoint.teleportPosition;
+                characterController.enabled = true;
             }
         }
     }
@@ -238,8 +237,9 @@ public class VRIFSceneManager : MonoBehaviour
         {
             if (checkPoint.number == _number)
             {
-                cpTeleport = true;
-                teleportPos = checkPoint.teleportPosition;
+                characterController.enabled = false;
+                playerController.position = checkPoint.teleportPosition;
+                characterController.enabled = true;
             }
         }
 
@@ -254,25 +254,13 @@ public class VRIFSceneManager : MonoBehaviour
     {
         Transform birthPos = GameObject.FindGameObjectWithTag("BirthPos").transform;
 
+        characterController.enabled = false;
         playerController.position = birthPos.position;
         playerController.rotation = birthPos.rotation;
+        characterController.enabled = true;
 
         locomotionManager.enabled = true; // 플레이어 위치시킨 후 이동 재활성화
         smoothLocomotion.enabled = true;
         playerRotation.enabled = true; // 회전 재활성화
-    }
-
-    /// <summary>
-    /// 메소드 내 이동이 제대로 작동하지 않아 만든 임시 코드 
-    /// </summary>
-    private void Update()
-    {
-        if (cpTeleport)
-        {
-            playerController.position = teleportPos;
-            teleportComplete?.Invoke(this, EventArgs.Empty);
-
-            cpTeleport = false;
-        }
     }
 }
