@@ -1,3 +1,4 @@
+using BNG;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,7 +18,14 @@ public class VRIFGameManager : MonoBehaviour
     public Transform playerController = default;
 
     [Header("Character Controller")]
-    [SerializeField] private CharacterController characterController = default;
+    public CharacterController characterController = default;
+
+    [Header("Grabbers")]
+    public Grabber leftGrabber = default;
+    public Grabber rightGrabber = default;
+
+    [Header("Grabber List")]
+    public Grabber[] grabberArray = new Grabber[2];
 
     // 플레이어 포지션
     public Vector3 playerPos = default;
@@ -32,6 +40,9 @@ public class VRIFGameManager : MonoBehaviour
         {
             Instance = this;
         }
+
+        grabberArray[0] = leftGrabber;
+        grabberArray[1] = rightGrabber;
     }
 
     #region 시작: VRIFSaveManager에서 정보를 받아 세팅

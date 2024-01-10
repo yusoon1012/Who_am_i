@@ -14,14 +14,11 @@ public class VRIFTool_DragonflyOrigin : MonoBehaviour
         dragonflyNet = transform.parent.GetComponent<VRIFTool_DragonflyNet>();
     }
 
-    private void OnTriggerExit(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.name.Contains("Butterfly")) // TODO: 후에 곤충 분류로 변경 (레이어)
+        if ((other.gameObject.layer == dragonflyNet.getherLayer))
         {
-            if (dragonflyNet.dirCheck)
-            {
-                dragonflyNet.Gotha(other.gameObject);
-            }
+            dragonflyNet.Gotha(other.transform);
         }
     }
 }
