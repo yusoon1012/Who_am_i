@@ -19,14 +19,16 @@ public class VRIFTool_DragonflyNet : MonoBehaviour
     [SerializeField] private MeshRenderer meshRenderer = default;
     // 그물망 머티리얼
     private Material netMaterial = default;
+    // 그물망의 늘어남 정도
+    private float netStretch = default;
 
-    // 컨트롤러를 흔드는 값
-    private float magnitude = default;
-    // 컨트롤러를 흔드는 기준이 되는 값
-    private float guideVel = default;
-
-    // 현재 NetMeterial의 Move값
-    private float currentNet = default;
+    [Tooltip("로컬 각속도를 구하기 위한 변수")]
+    // 이전 프레임 Rotation
+    private Quaternion previousRotation = default;
+    // 각속도 관리 변수
+    private Vector3 angularVelocity = default;
+    // 각속도의 magnitude
+    private float angularMagnitude = default;
 
     private void Start()
     {
@@ -47,43 +49,60 @@ public class VRIFTool_DragonflyNet : MonoBehaviour
         }
     }
 
-    private void FixedUpdate()
+    private void Update()
+    {
+        GetLocalAngularVelocity();
+        netStretch = netMaterial.GetFloat("_Move");
+    }
+
+    /// <summary>
+    /// 1. 컨트롤러 velocity의 magnitude(0.0001 등 소수점 단위 출력)로는 정확한 구현이 어려워 각속도 사용 결정
+    /// 2. 로컬 velocity.angularVelocity로 로컬 각속도를 구하는데 어려움이 있어 아래 메소드를 활용해 로컬 각속도 계산
+    /// 3. 곤충 채집망을 휘두르는 정도를 나타냄
+    /// </summary>
+    private void GetLocalAngularVelocity()
+    {
+        Quaternion deltaRotation = transform.rotation * Quaternion.Inverse(previousRotation);
+
+        previousRotation = transform.rotation;
+
+        deltaRotation.ToAngleAxis(out var angle, out var axis);
+
+        //각도에서 라디안으로 변환
+        angle *= Mathf.Deg2Rad;
+
+        angularVelocity = (1.0f / Time.deltaTime) * angle * axis;
+
+        //각속도의 Magnitude
+        angularMagnitude = angularVelocity.magnitude;
+    }
+
+    /// <summary>
+    /// 위 계산이 끝난 후 머티리얼 업데이트 진행
+    /// </summary>
+    private void LateUpdate()
     {
         Stretch();
     }
 
-    private void LateUpdate()
-    {
-        Shrink();
-    }
-
+    /// <summary>
+    /// 위 로컬 각속도 계산값을 받아와 채집망을 휘두를 때 그물망이 늘어나는 것을 구현
+    /// </summary>
     private void Stretch()
     {
-        magnitude = VRIFInputSystem.Instance.rMagnitude;
-        currentNet = netMaterial.GetFloat("_Move");
-
-        if (magnitude >= 0.0001f) // 값이 -0.7을 향해 간다.
+        if (angularMagnitude >= 5) // 그물망이 -0.7을 향해 간다
         {
-            Debug.Log("@1");
-            if (currentNet >= -0.7)
+            if (netStretch > -0.7f) // 한계점 이하가 아닐 때
             {
-                netMaterial.SetFloat("_Move", currentNet -= 0.1f);
+                netMaterial.SetFloat("_Move", netStretch -= 0.15f);
             }
         }
-        else if (magnitude < 0.0001f)// 값이 0을 향해 간다
+        else // 그물망이 0을 향해 간다 
         {
-            Debug.Log("@2");
-            if (currentNet <= 0)
+            if (netStretch < 0) // 한계점 이상이 아닐 때 
             {
-                netMaterial.SetFloat("_Move", currentNet += 0.1f);
+                netMaterial.SetFloat("_Move", netStretch += 0.1f);
             }
         }
-    }
-
-    private void Shrink()
-    {
-        // TODO: 여기에 줄어드는 로직을 집어넣으면 딜레이를 조금 더 확보할 수 있나?
     }
 }
-
-// TODO: @1와 @2가 동시에 들어오는 문제 => 네트 크기가 불안정한 이유 

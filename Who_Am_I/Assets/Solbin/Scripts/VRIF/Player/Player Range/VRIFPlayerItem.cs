@@ -75,9 +75,9 @@ public class VRIFPlayerItem : MonoBehaviour
             {
                 Renderer renderer = other.transform.parent.GetComponent<Renderer>(); // 렌더러
 
-                if (renderer == null) // 뿌리채소는 구성이 약간 다르다.
+                if (renderer == null) // 구성이 다른 경우가 있다.
                 {
-                    renderer = other.transform.GetComponent<Renderer>();
+                    renderer = other.transform.parent.GetComponentInChildren<Renderer>();
                 }
 
                 Material[] materials = renderer.materials;
@@ -117,7 +117,7 @@ public class VRIFPlayerItem : MonoBehaviour
 
                 if (renderer == null) // 뿌리채소는 구성이 약간 다르다.
                 {
-                    renderer = other.transform.GetComponent<Renderer>();
+                    renderer = other.transform.parent.GetComponentInChildren<Renderer>();
                 }
 
                 Material[] materials = renderer.materials;

@@ -73,11 +73,11 @@ public class VRIFPlayerLadder : MonoBehaviour
         Ray ray = new Ray(VRIFInputSystem.Instance.rController.position, VRIFInputSystem.Instance.rController.forward);
         RaycastHit hit;
 
-        if (Physics.Raycast(ray, out hit, 5f)) // 바닥을 향하고 있을 때, 일정 거리 이내 
-        {
-            Debug.LogWarning("Check Tree");
+        Debug.DrawRay(VRIFInputSystem.Instance.rController.position, VRIFInputSystem.Instance.rController.forward * 100f, Color.green);
 
-            if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Floor")) // 사다리가 비활성화 중일때
+        if (Physics.Raycast(ray, out hit, 5f))
+        {
+            if (!hit.transform.GetComponent<Collider>().isTrigger) // TODO: 가능하다면 "Floor" 레이어로 교체 
             {
                 ladderPointer.transform.position = hit.point;
 
@@ -86,6 +86,11 @@ public class VRIFPlayerLadder : MonoBehaviour
                 ladderPointer.transform.rotation = Quaternion.Euler(0, rotation.y, 0);
             }
             else
+            {
+                ladderPointer.transform.position = poolPos;
+            }
+
+            if (hit.transform == null)
             {
                 ladderPointer.transform.position = poolPos;
             }
@@ -99,19 +104,24 @@ public class VRIFPlayerLadder : MonoBehaviour
     {
         if (triggerStay)
         {
+            Debug.Log("확인");
+
             installObj = tempObj;
 
             ladderItem.transform.position = ladderPointer.transform.position;
             ladderItem.transform.rotation = ladderPointer.transform.rotation;
             ladderPointer.transform.position = poolPos;
 
-            activeLadder = true; // 해당 조건은 사다리가 비활성화 될 때 false.
+            // <Point> 아래 CheckDownKey()의 조건 체크 때문에 Invoke 사용
+            Invoke("CheckActiveLadder", 1f); // 해당 조건은 사다리가 비활성화 될 때 false.
 
             StartCoroutine(CheckDistance());
 
             VRIFItemSystem.Instance.ReleaseItem(); // 아이템 장착 중이었다면 아이템 해제
         }
     }
+
+    private void CheckActiveLadder() { activeLadder = true; }
 
     /// <summary>
     /// 회수 조건 체크 (거리)

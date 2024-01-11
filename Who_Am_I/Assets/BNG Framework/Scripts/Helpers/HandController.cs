@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -470,7 +470,8 @@ namespace BNG {
 
             // Update pose blender depending on inputs from controller
             // Thumb near can be counted as 'thumbTouch', primaryTouch, secondaryTouch, or primary2DAxisTouch (such as on knuckles controller)
-            poseBlender.ThumbValue = Mathf.Lerp(poseBlender.ThumbValue, _thumbIsNear ? 1 : 0, Time.deltaTime * handPoser.AnimationSpeed);
+            // <Solbin> 아래 코드가 엄지 손가락을 자동 업데이트 해 주석 처리함. 
+            //poseBlender.ThumbValue = Mathf.Lerp(poseBlender.ThumbValue, _thumbIsNear ? 1 : 0, Time.deltaTime * handPoser.AnimationSpeed);
 
             // Use Trigger for Index Finger
             float targetIndexValue = _triggerValue;
@@ -479,7 +480,9 @@ namespace BNG {
             if (targetIndexValue < 0.1f && _indexIsNear) {
                 targetIndexValue = 0.1f;
             }
-            poseBlender.IndexValue = Mathf.Lerp(poseBlender.IndexValue, targetIndexValue, Time.deltaTime * handPoser.AnimationSpeed);
+
+            // <Solbin> 아래 코드가 검지 손가락을 자동 업데이트 해 주석 처리함. 
+            //poseBlender.IndexValue = Mathf.Lerp(poseBlender.IndexValue, targetIndexValue, Time.deltaTime * handPoser.AnimationSpeed);
 
             // Grip
             poseBlender.GripValue = _gripValue;
