@@ -131,6 +131,16 @@ namespace BNG {
         public static event OnAfterMoveAction OnAfterMove;
         #endregion
 
+        // <Solbin> 걷는 소리 오디오 소스
+        [Header("AudioSource")]
+        private AudioSource audioSource = default;
+
+        // <Solbin> Audio Source 추가
+        public void Start()
+        {
+            audioSource = GetComponent<AudioSource>();
+        }
+
         public virtual void Update() {
             CheckControllerReferences();
             UpdateInputs();
@@ -206,12 +216,13 @@ namespace BNG {
             // Add Jump Force
             if (CheckJump()) {
                 // Add movement directly to CC type
-                if(ControllerType == PlayerControllerType.CharacterController) {
-                    movementY += JumpForce;
-                }
-                else if (ControllerType == PlayerControllerType.Rigidbody) {
-                    DoRigidBodyJump();
-                }
+                // <Solbin> 점프 기능은 없으므로 주석 처리
+                //if(ControllerType == PlayerControllerType.CharacterController) {
+                //    movementY += JumpForce;
+                //}
+                //else if (ControllerType == PlayerControllerType.Rigidbody) {
+                //    DoRigidBodyJump();
+                //}
             }
 
             // Attach any additional speed
@@ -295,6 +306,7 @@ namespace BNG {
             if (playerController != null && playerController.IsGrounded()) {
                 // Reset jump speed if grounded
                 _verticalSpeed = 0;
+
                 if (CheckJump()) {
                     _verticalSpeed = JumpForce;
                 }
@@ -306,8 +318,16 @@ namespace BNG {
                 playerController.LastPlayerMoveTime = Time.time;
             }
 
-            if(moveDirection != Vector3.zero) {
+            if (moveDirection != Vector3.zero)
+            {
+                // <Solbin>
+                CheckMove();
+                // <Solbin> ===
                 MoveCharacter(moveDirection * Time.deltaTime);
+            }
+            else 
+            {
+                if (audioSource.isPlaying) { audioSource.Stop(); } // <Solbin> 걷는 소리 정지
             }
         }
 
@@ -438,6 +458,19 @@ namespace BNG {
             // Call any After Move Events
             if (callEvents) {
                 OnAfterMove?.Invoke();
+            }
+        }
+
+        // <Solbin> 이동 확인을 위해 만든 개별 메서드 (사운드 출력)
+        private void CheckMove() 
+        {
+            if (ControllerType == PlayerControllerType.CharacterController)
+            {
+                if (characterController && characterController.enabled)
+                {
+                    // 걷는 소리 재생 중이 아니라면 재생할 것
+                    if (!audioSource.isPlaying) { audioSource.Play(); } 
+                }
             }
         }
 

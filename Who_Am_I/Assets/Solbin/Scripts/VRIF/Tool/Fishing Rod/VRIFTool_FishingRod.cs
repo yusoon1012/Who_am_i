@@ -33,6 +33,11 @@ public class VRIFTool_FishingRod : MonoBehaviour
     [Header("물고기 프리팹")]
     [SerializeField] private GameObject fishPrefab = default;
 
+    [Header("오디오")]
+    public AudioClip fishBiteClip = default; // 입질 소리
+    public AudioClip fishFlapClip = default; // 퍼덕이는 소리 
+    private AudioSource audioSource = default;
+
     // 낚시찌 게임 오브젝트
     private GameObject bobber = default;
     // 낚시찌 Rigidbody
@@ -48,6 +53,9 @@ public class VRIFTool_FishingRod : MonoBehaviour
     public bool isFishing { get; private set; } = false;
     // 낚시줄 그리기 
     private bool drawing = false;
+
+    // 낚시 완료 이벤트
+    public event EventHandler fishingEvent;
 
     private void Awake()
     {
@@ -69,6 +77,8 @@ public class VRIFTool_FishingRod : MonoBehaviour
         fish = Instantiate(fishPrefab, poolPos, Quaternion.identity); // 낚을 물고기 오브젝트
 
         lineRenderer.positionCount = 2; // 낚시대 끝과 낚시찌
+
+        audioSource = GetComponent<AudioSource>();
     }
 
     private void OnTriggerExit(Collider other)
@@ -137,6 +147,8 @@ public class VRIFTool_FishingRod : MonoBehaviour
         StartCoroutine(DrawLine()); // 낚시줄 그리기 시작
 
         VRIFStateSystem.Instance.ChangeState(VRIFStateSystem.GameState.FISHING); // 낚시 상태로 전환
+
+        audioSource.PlayOneShot(fishBiteClip); // 물고기 입질 소리
 
         int successNum = 0; // 낚시 성공 횟수
 
@@ -208,6 +220,8 @@ public class VRIFTool_FishingRod : MonoBehaviour
     /// <param name="_gotcha">물고기를 잡았는가</param>
     private IEnumerator GetFish(bool _gotcha)
     {
+        audioSource.PlayOneShot(fishFlapClip); // 물고기 퍼덕이는 소리
+
         Vector3 bobberPos = bobber.transform.position;
 
         bobberRigid.AddForce(Vector3.up * 5.5f, ForceMode.Impulse);
@@ -222,6 +236,8 @@ public class VRIFTool_FishingRod : MonoBehaviour
 
             yield return null;
         }
+
+        fishingEvent?.Invoke(this, EventArgs.Empty); // 낚시 완료 이벤트 발생
 
         drawing = false;
         StopCoroutine(DrawLine());

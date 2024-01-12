@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,6 +8,8 @@ using UnityEngine;
 /// </summary>
 public class VRIFTool_DragonflyNet : MonoBehaviour
 {
+    public static VRIFTool_DragonflyNet Instance;
+
     // Dir Pannel에 닿았는지 체크
     [Tooltip("채집 콜라이더 전의 콜라이더를 말한다.")]
     public bool dirCheck = false;
@@ -30,11 +33,26 @@ public class VRIFTool_DragonflyNet : MonoBehaviour
     // 각속도의 magnitude
     private float angularMagnitude = default;
 
+    // Audio Source
+    private AudioSource audioSource = default;
+
+    // 채집 완료 이벤트
+    public event EventHandler gatheringEvent;
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+    }
+
     private void Start()
     {
         getherLayer = LayerMask.NameToLayer("Gether");
         netMaterial = meshRenderer.material;
-        // 적용방법: netMaterial.GetFloat("_Move")
+
+        audioSource = GetComponent<AudioSource>();
     }
 
     public void Gotha(Transform targetChild_)
@@ -44,6 +62,7 @@ public class VRIFTool_DragonflyNet : MonoBehaviour
             GameObject target = targetChild_.transform.parent.gameObject; // 채집할 게임 오브젝트
 
             Destroy(target); // 테스트용
+            gatheringEvent?.Invoke(this, EventArgs.Empty);
 
             // TODO: 이펙트 출력하기
         }
@@ -96,6 +115,8 @@ public class VRIFTool_DragonflyNet : MonoBehaviour
             {
                 netMaterial.SetFloat("_Move", netStretch -= 0.15f);
             }
+
+            if (!audioSource.isPlaying) { audioSource.Play(); } // 채집망 휘두르는 소리
         }
         else // 그물망이 0을 향해 간다 
         {

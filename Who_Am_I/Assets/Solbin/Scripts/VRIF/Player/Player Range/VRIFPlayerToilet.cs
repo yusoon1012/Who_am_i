@@ -13,6 +13,16 @@ public class VRIFPlayerToilet : MonoBehaviour
 
     private float shiningInitialValue = 1.05f;
 
+    [Header("배출과 물 내리는 사운드")]
+    public AudioClip pooClip = default;
+    public AudioClip pushClip = default;
+    private AudioSource audioSource = default;
+
+    private void Start()
+    {
+        audioSource = GetComponent<AudioSource>();
+    }
+
     private void OnEnable()
     {
         vrifAction = new VRIFAction();
@@ -69,9 +79,11 @@ public class VRIFPlayerToilet : MonoBehaviour
     /// </summary>
     private void VisitToilet(Transform toilet_)
     {
-        // TODO: 변기 소리 추가 
+        audioSource.PlayOneShot(pooClip);
+        Invoke("StartPushAudio", 2);
+
         vrifStatusSystem.GetPoo(); // 배출 수치 초기화 
     }
+
+    private void StartPushAudio() { audioSource.PlayOneShot(pushClip); }
 }
-
-

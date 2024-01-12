@@ -9,6 +9,8 @@ using UnityEngine.EventSystems;
 
 public class VRIFTool_NerfGun : MonoBehaviour
 {
+    public static VRIFTool_NerfGun Instance;
+
     // VRIF Action
     private VRIFAction vrifAction = default;
     // Test Action
@@ -26,7 +28,21 @@ public class VRIFTool_NerfGun : MonoBehaviour
     // 궤적 포인트 배열 
     private Vector3[] trajectoryPos = new Vector3[2];
 
+    // 수렵 완료 이벤트
+    public event EventHandler huntEvent;
+    // B버튼 클릭시 타임슬로우 이벤트 
     public static event EventHandler slowTimeEvent;
+
+    // Audio Source
+    private AudioSource audioSource = default;
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+    }
 
     private void OnEnable()
     {
@@ -46,6 +62,8 @@ public class VRIFTool_NerfGun : MonoBehaviour
     {
         trajectory.positionCount = 2; // 궤적의 포인트는 두 개 
         VRIFInputSystem.Instance.slowMode += ActivateSlowTime; 
+
+        audioSource = GetComponent<AudioSource>();
     }
 
     private void FixedUpdate() { Aiming(); }
@@ -108,10 +126,13 @@ public class VRIFTool_NerfGun : MonoBehaviour
             if (_prey.GetComponent<ThisAnimalData>())
             {
                 _prey.GetComponent<ThisAnimalData>().Hit(1); // 1만큼 데미지
+
+                huntEvent?.Invoke(this, EventArgs.Empty); // 수렵 완료 이벤트 발생
             }
         }
 
-        // TODO: 레이가 닿은 부분, 총구에 파티클(혹은 다른 효과) 발생
+        audioSource.PlayOneShot(audioSource.clip); // 발사음 중첩 재생 
+        // TODO: 레이가 닿은 부분, 총구에 파티클(혹은 다른 효과) 발생, 소리 추가
     }
 
     /// <summary>

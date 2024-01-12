@@ -37,6 +37,10 @@ public class VRIFSceneManager : MonoBehaviour
     // 메인씬 오픈을 위한 임시 Operation
     private AsyncOperation tempOperation = default;
 
+    [Header("오디오")]
+    public AudioClip mapTeleportClip = default;
+    private AudioSource audioSource = default;
+
     public class SeasonName
     {
         public static string spring { get; private set; } = "M_Spring_Scene"; // TODO: 이후 수정 필요 
@@ -58,6 +62,8 @@ public class VRIFSceneManager : MonoBehaviour
 
     private void Start()
     {
+        audioSource = GetComponent<AudioSource>();
+
         locomotionManager = playerController.GetComponent<LocomotionManager>();
         smoothLocomotion = playerController.GetComponent<SmoothLocomotion>();
         playerRotation = playerController.GetComponent<PlayerRotation>();
@@ -152,6 +158,10 @@ public class VRIFSceneManager : MonoBehaviour
     #region 체크포인트를 통한 씬 이동
     public void LoadCheckPoint(string _region, int _number)
     {
+        audioSource.Stop();
+        audioSource.clip = mapTeleportClip; // 맵 이동 오디오 재생 
+        audioSource.Play();
+
         string inRegion = SceneManager.GetActiveScene().name;
 
         if (inRegion.Contains("Spring")) { inRegion = "Spring"; }
