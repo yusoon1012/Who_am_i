@@ -73,7 +73,6 @@ public class ItemManager : MonoBehaviour
 
         //* 제작 데이터 베이스에 아이템 추가
         crafting.Add("딸기 우유", new Crafting001());
-        crafting.Add("송이 불고기", new Crafting002());
         //* 제작 데이터 베이스에 아이템 추가
 
         //* 컬렉션 그룹 전용 데이터 베이스에 아이템 추가
