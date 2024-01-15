@@ -17,6 +17,8 @@ public class CameraControl : MonoBehaviour
 
     // 플레이어 트랜스폼
     public Transform playerTf;
+    // 아이템 데이터 그룹 메인 오브젝트 트랜스폼
+    public Transform mainObjTf;
 
     // 지도상의 표식들을 체크하는 레이어 마스크
     public LayerMask mapMarkLayer;
@@ -53,13 +55,14 @@ public class CameraControl : MonoBehaviour
 
     void Awake()
     {
-        speed = 1f;
+        speed = 1.75f;
         zoomSpeed = 0.2f;
         checkPointInfoCursor = 0;
-        map01LimitCamera[0] = 11600f;
-        map01LimitCamera[1] = 8400f;
-        map01LimitCamera[2] = 8700f;
-        map01LimitCamera[3] = 11200f;
+
+        map01LimitCamera[0] = 1460f;
+        map01LimitCamera[1] = 765f;
+        map01LimitCamera[2] = 690f;
+        map01LimitCamera[3] = 1270f;
     }     // Awake()
 
     void Start()
@@ -114,33 +117,33 @@ public class CameraControl : MonoBehaviour
     // 지도 카메라를 확대하는 입력키 값을 구분하는 함수
     public void CheckInCamera(int arrowType)
     {
-        switch (arrowType)
-        {
-            case 0:
-                inCamera = true;
-                break;
-            case 1:
-                outCamera = true;
-                break;
-            default:
-                break;
-        }
+        //switch (arrowType)
+        //{
+        //    case 0:
+        //        inCamera = true;
+        //        break;
+        //    case 1:
+        //        outCamera = true;
+        //        break;
+        //    default:
+        //        break;
+        //}
     }     // CheckInCamera()
 
     // 지도 카메라를 축소하는 입력키 값을 구분하는 함수
     public void CheckOutCamera(int arrowType)
     {
-        switch (arrowType)
-        {
-            case 0:
-                inCamera = false;
-                break;
-            case 1:
-                outCamera = false;
-                break;
-            default:
-                break;
-        }
+        //switch (arrowType)
+        //{
+        //    case 0:
+        //        inCamera = false;
+        //        break;
+        //    case 1:
+        //        outCamera = false;
+        //        break;
+        //    default:
+        //        break;
+        //}
     }     // CheckOutCamera()
 
     // Update 마다 조건에 맞으면 실행되는 함수
@@ -161,51 +164,47 @@ public class CameraControl : MonoBehaviour
             // 카메라 움직이는 키 값에 따라 카메라 위치값을 변경시킴
             if (moveCamera[0] == true)
             {
-                moveCount[1] += speed;
-                //if (mapCamera.transform.position.z >= map01LimitCamera[0])
-                //{
-                //    moveCount[1] = map01LimitCamera[0];
-                //}
-                //else
-                //{
-                //    moveCount[1] += speed;
-                //}
+                if (mapCamera.transform.position.z >= map01LimitCamera[0])
+                {
+                    moveCount[1] = map01LimitCamera[0];
+                }
+                else
+                {
+                    moveCount[1] += speed;
+                }
             }
             else if (moveCamera[1] == true)
             {
-                moveCount[1] -= speed;
-                //if (mapCamera.transform.position.z <= map01LimitCamera[1])
-                //{
-                //    moveCount[1] = map01LimitCamera[1];
-                //}
-                //else
-                //{
-                //    moveCount[1] -= speed;
-                //}
+                if (mapCamera.transform.position.z <= map01LimitCamera[1])
+                {
+                    moveCount[1] = map01LimitCamera[1];
+                }
+                else
+                {
+                    moveCount[1] -= speed;
+                }
             }
             else if (moveCamera[2] == true)
             {
-                moveCount[0] -= speed;
-                //if (mapCamera.transform.position.x <= map01LimitCamera[2])
-                //{
-                //    moveCount[0] = map01LimitCamera[2];
-                //}
-                //else
-                //{
-                //    moveCount[0] -= speed;
-                //}
+                if (mapCamera.transform.position.x <= map01LimitCamera[2])
+                {
+                    moveCount[0] = map01LimitCamera[2];
+                }
+                else
+                {
+                    moveCount[0] -= speed;
+                }
             }
             else if (moveCamera[3] == true)
             {
-                moveCount[0] += speed;
-                //if (mapCamera.transform.position.x >= map01LimitCamera[3])
-                //{
-                //    moveCount[0] = map01LimitCamera[3];
-                //}
-                //else
-                //{
-                //    moveCount[0] += speed;
-                //}
+                if (mapCamera.transform.position.x >= map01LimitCamera[3])
+                {
+                    moveCount[0] = map01LimitCamera[3];
+                }
+                else
+                {
+                    moveCount[0] += speed;
+                }
             }
 
             // 변경된 위치값을 지도상의 카메라의 위치에 대입함
@@ -259,7 +258,7 @@ public class CameraControl : MonoBehaviour
     {
         if (isWarpMarkCheck == false) { return; }
 
-        playerTf.GetComponent<UIController>().uiController = 11;
+        mainObjTf.GetComponent<UIController>().uiController = 11;
         checkPointInfoCursor = 0;
         warpInfoUI.gameObject.SetActive(true);
 
@@ -298,7 +297,7 @@ public class CameraControl : MonoBehaviour
         imageColor.a = 0.2f;
         warpCheckButton[checkPointInfoCursor].color = imageColor;
 
-        playerTf.GetComponent<UIController>().uiController = 10;
+        mainObjTf.GetComponent<UIController>().uiController = 10;
         checkPointInfoCursor = 0;
         warpInfoUI.gameObject.SetActive(false);
     }     // ExitCheckPointInfo()
@@ -310,7 +309,7 @@ public class CameraControl : MonoBehaviour
         {
             // 현재 활성화 된 커서값이 0 이면
             case 0:
-                //FunctionCheckPoint();
+                FunctionCheckPoint();
                 break;
             // 현재 활성화 된 커서값이 1 이면
             case 1:
@@ -328,7 +327,15 @@ public class CameraControl : MonoBehaviour
         if (isWarpMarkCheck == true && nowSelectMapMark != null)
         {
             nowSelectMapMark.GetComponent<MapMarkInfo>().SendCountInfo(out int warpCount);
-            mapController.GetComponent<MapControl>().ConnectCheckPoint(warpCount, out Vector3 checkPointPosition);
+
+            VRIFSceneManager.Instance.LoadCheckPoint("Spring", warpCount);
+
+            mainObjTf.GetComponent<UIController>().OnMainMenuControl();
+
+            Debug.LogFormat("빠른 이동 체크포인트 번호 : {0}", warpCount);
+            Debug.Log("빠른 이동 기능 구현 후 지도 UI 모두 종료");
+
+            //mapController.GetComponent<MapControl>().ConnectCheckPoint(warpCount, out Vector3 checkPointPosition);
 
             //float[] countPosition = new float[2];
             //float[] disMapSize = new float[2];

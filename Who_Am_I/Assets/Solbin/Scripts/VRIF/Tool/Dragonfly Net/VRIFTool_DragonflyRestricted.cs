@@ -4,22 +4,22 @@ using UnityEngine;
 
 public class VRIFTool_DragonflyRestricted : MonoBehaviour
 {
-    private VRIFTool_DragonflyNet dragonflyNet = default;
+    //private VRIFTool_DragonflyNet dragonflyNet = default;
 
-    private void Start()
-    {
-        dragonflyNet = transform.parent.GetComponent<VRIFTool_DragonflyNet>();
-    }
+    //private void Start()
+    //{
+    //    dragonflyNet = transform.parent.GetComponent<VRIFTool_DragonflyNet>();
+    //}
 
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.gameObject.name.Contains("Butterfly")) // TODO: 후에 곤충 분류로 변경 (레이어)
-        {
-            dragonflyNet.restricted = true;
+    //private void OnTriggerExit(Collider other)
+    //{
+    //    if (other.gameObject.layer == dragonflyNet.getherLayer)
+    //    {
+    //        dragonflyNet.restricted = true;
 
-            Invoke("Clear", 2f) ;
-        }
-    }
+    //        Invoke("Clear", 1f);
+    //    }
+    //}
 
-    private void Clear() { dragonflyNet.restricted = false; }
+    //private void Clear() { dragonflyNet.restricted = false; }
 }

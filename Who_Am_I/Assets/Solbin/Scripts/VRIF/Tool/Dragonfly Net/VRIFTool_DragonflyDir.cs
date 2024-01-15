@@ -13,7 +13,7 @@ public class VRIFTool_DragonflyDir : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.name.Contains("Butterfly")) // TODO: 후에 곤충 분류로 변경 (레이어)
+        if (other.gameObject.layer == dragonflyNet.getherLayer)
         {
             dragonflyNet.dirCheck = true;
 
@@ -23,7 +23,7 @@ public class VRIFTool_DragonflyDir : MonoBehaviour
 
     private IEnumerator Clear()
     {
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.7f);
         dragonflyNet.dirCheck = false;
     }
 }

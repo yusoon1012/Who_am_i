@@ -1,10 +1,7 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.IO;
-using Meta.WitAi;
-using System.Drawing;
 
 [System.Serializable]
 public class SaveData
@@ -49,7 +46,7 @@ public class VRIFSaveManager : MonoBehaviour
     }
 
     /// <summary>
-    /// 파이어베이스가 연결되면 삭제될 테스트 메소드 (json 테스트용) 
+    /// 파이어베이스가 연결되면 삭제되거나 변경될 테스트 메소드 (json 테스트용) 
     /// </summary>
     private void SelectLoad()
     {
@@ -116,8 +113,6 @@ public class VRIFSaveManager : MonoBehaviour
 
             yield return null;
         }
-
-        // TODO: 씬이 계속 넘어가지 않으면 언로드 고려 
 
         // 플레이어 Position 세팅
         VRIFGameManager.Instance.playerPos = saveData_.playerPos;

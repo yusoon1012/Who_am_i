@@ -1,5 +1,6 @@
 using BNG;
 using Febucci.UI.Core.Parsing;
+using Oculus.Interaction.DistanceReticles;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -22,6 +23,10 @@ public class VRIFSceneManager : MonoBehaviour
     [Tooltip("로딩창(UI)")]
     [SerializeField] private GameObject loadingCanvas = default;
 
+    [Header("Character Controller")]
+    [Tooltip("CC가 position값을 덮어쓰기 때문에 비활성화 필요")]
+    [SerializeField] private CharacterController characterController = default;
+
     // 플레이어 이동/회전 컴포넌트
     private LocomotionManager locomotionManager = default;
     private SmoothLocomotion smoothLocomotion = default;
@@ -31,6 +36,10 @@ public class VRIFSceneManager : MonoBehaviour
     public event EventHandler openDoorEvent;
     // 메인씬 오픈을 위한 임시 Operation
     private AsyncOperation tempOperation = default;
+
+    [Header("오디오")]
+    public AudioClip mapTeleportClip = default;
+    private AudioSource audioSource = default;
 
     public class SeasonName
     {
@@ -53,6 +62,8 @@ public class VRIFSceneManager : MonoBehaviour
 
     private void Start()
     {
+        audioSource = GetComponent<AudioSource>();
+
         locomotionManager = playerController.GetComponent<LocomotionManager>();
         smoothLocomotion = playerController.GetComponent<SmoothLocomotion>();
         playerRotation = playerController.GetComponent<PlayerRotation>();
@@ -147,6 +158,10 @@ public class VRIFSceneManager : MonoBehaviour
     #region 체크포인트를 통한 씬 이동
     public void LoadCheckPoint(string _region, int _number)
     {
+        audioSource.Stop();
+        audioSource.clip = mapTeleportClip; // 맵 이동 오디오 재생 
+        audioSource.Play();
+
         string inRegion = SceneManager.GetActiveScene().name;
 
         if (inRegion.Contains("Spring")) { inRegion = "Spring"; }
@@ -175,7 +190,9 @@ public class VRIFSceneManager : MonoBehaviour
         {
             if (checkPoint.number == _number)
             {
+                characterController.enabled = false;
                 playerController.position = checkPoint.teleportPosition;
+                characterController.enabled = true;
             }
         }
     }
@@ -230,7 +247,9 @@ public class VRIFSceneManager : MonoBehaviour
         {
             if (checkPoint.number == _number)
             {
-                playerController.position = checkPoint.teleportPosition; // 체크포인트 내에 포함된 텔레포트 포지션으로 이동
+                characterController.enabled = false;
+                playerController.position = checkPoint.teleportPosition;
+                characterController.enabled = true;
             }
         }
 
@@ -245,8 +264,10 @@ public class VRIFSceneManager : MonoBehaviour
     {
         Transform birthPos = GameObject.FindGameObjectWithTag("BirthPos").transform;
 
+        characterController.enabled = false;
         playerController.position = birthPos.position;
         playerController.rotation = birthPos.rotation;
+        characterController.enabled = true;
 
         locomotionManager.enabled = true; // 플레이어 위치시킨 후 이동 재활성화
         smoothLocomotion.enabled = true;

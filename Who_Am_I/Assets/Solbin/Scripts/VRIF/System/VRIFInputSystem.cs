@@ -30,10 +30,12 @@ public class VRIFInputSystem : MonoBehaviour
     public Transform rController;
 
     [Tooltip("컨트롤러 입력값")]
-    // 왼쪽 컨트롤러 Velocity
+    // (Vector3) 왼쪽 컨트롤러 Velocity
     public Vector3 lVelocity { get; private set; }
-    // 오른쪽 컨트롤러 Velocity
+    // (Vector3) 오른쪽 컨트롤러 Velocity
     public Vector3 rVelocity { get; private set; }
+    // (float) 오른쪽 컨트롤러 Velocity
+    public float rMagnitude { get; private set; }
 
     [Tooltip("컨트롤러 그랩값")]
     // 왼쪽 컨트롤러 그랩값
@@ -84,8 +86,8 @@ public class VRIFInputSystem : MonoBehaviour
         vrifAction.Player.SlowMode.performed += ctx => SlowMode();
         vrifAction.Player.Interaction.performed += ctx => Interaction();
         vrifAction.Player.UI_Click.performed += ctx => UIClick();
-        vrifAction.Player.ClimbingLeftJump.performed += ctv => LClimbingJump();
-        vrifAction.Player.ClimbingRightJump.performed += ctx => RClimbingJump();
+        vrifAction.Player.ClimbingLeftJump.performed += ctv => LClimbingJump(); // TODO: 해당 용도로 안씀. 이름 변경 예정
+        vrifAction.Player.ClimbingRightJump.performed += ctx => RClimbingJump(); // TODO: 위와 마찬가지
     }
 
 #if UNITY_EDITOR
@@ -117,16 +119,17 @@ public class VRIFInputSystem : MonoBehaviour
     {
         lVelocity = vrifAction.Player.LeftVelocity.ReadValue<Vector3>();
         rVelocity = vrifAction.Player.RightVelocity.ReadValue<Vector3>();
+
+        rMagnitude = lVelocity.magnitude;
     }
 
     /// <summary>
-    /// 컨트롤러 디바이스의 그랩 여부 측정 
+    /// 컨트롤러 디바이스의 그랩 여부 측정                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
     /// </summary>
     private void DeviceGrab()
     {
         lGrab = vrifAction.Player.LeftGrip.ReadValue<float>();
         rGrab = vrifAction.Player.RightGrip.ReadValue<float>();
     }
-
     #endregion
 }

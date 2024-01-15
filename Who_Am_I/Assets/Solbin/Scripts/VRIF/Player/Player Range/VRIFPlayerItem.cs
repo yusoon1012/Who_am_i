@@ -1,10 +1,11 @@
 using BNG;
-using Oculus.Interaction;
+//using Oculus.Interaction;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Linq;
 
 /// <summary>
 /// (Player Controller - Player Range)
@@ -23,9 +24,6 @@ public class VRIFPlayerItem : MonoBehaviour
     // Item Manager
     [SerializeField] private ItemManager itemManager = default;
 
-    // TEST_ 오브젝트 풀 포지션
-    private Vector3 poolPos = new Vector3(0, -10, 0);
-
     [Header("Item UI")]
     // 아이템 UI
     [SerializeField] private GameObject itemInfoCanvas = default;
@@ -41,12 +39,42 @@ public class VRIFPlayerItem : MonoBehaviour
     // 양쪽 Grabber
     private Grabber[] grabbers = default;
 
+    [Header("Audio")]
+    public AudioClip getItemClip = default;
+    private AudioSource audioSource = default;
+
+    private Dictionary<string, string> itemDic = new Dictionary<string, string>()
+    {
+        { "Juksoon", "죽순" },
+        { "Peanut", "땅콩" },
+        { "Song_e", "송이 버섯" },
+        { "Coconut", "코코넛" },
+        { "Ginkgo", "은행" },
+        { "Kakao", "카카오" }
+
+        // TODO: 추가 처리 필요 
+    };
 
     private void Start()
     {
         grabbers = new Grabber[2];
         grabbers[0] = leftGrabber;
         grabbers[1] = rightGrabber;
+
+        audioSource = GetComponent<AudioSource>();
+
+        ItemSetting();
+    }
+
+    private void ItemSetting()
+    {
+        GameObject[] items = FindObjectsOfType<GameObject>()
+                                  .Where(obj => obj.layer == LayerMask.NameToLayer("Item")).ToArray();
+
+        foreach (var item in items)
+        {
+            item.AddComponent<VRIFItem_RespawnHelper>();
+        }
     }
 
     private void OnEnable()
@@ -67,18 +95,26 @@ public class VRIFPlayerItem : MonoBehaviour
     {
         if (other.gameObject.layer == LayerMask.NameToLayer("Item"))
         {
-            Renderer renderer = other.transform.parent.GetComponent<Renderer>(); // 렌더러
-
-            if (renderer == null) // 뿌리채소는 구성이 약간 다르다.
+            if (other.transform.parent.GetComponent<Outline>())
             {
-                renderer = other.transform.GetComponent<Renderer>();
+                other.transform.parent.GetComponent<Outline>().OutlineWidth = 10;
             }
+            else 
+            {
+                Renderer renderer = other.transform.parent.GetComponent<Renderer>(); // 렌더러
 
-            Material[] materials = renderer.materials;
+                if (renderer == null) // 구성이 다른 경우가 있다.
+                {
+                    renderer = other.transform.parent.GetComponentInChildren<Renderer>();
+                }
 
-            for (int i = 0; i < materials.Length; i++) 
-            {       
-                materials[materials.Length - 1].SetFloat("_Scale", shiningInitialValue); // Material Scale Up 
+                Material[] materials = renderer.materials;
+
+
+                for (int i = 0; i < materials.Length; i++)
+                {
+                    materials[materials.Length - 1].SetFloat("_Scale", shiningInitialValue); // Material Scale Up 
+                }
             }
         }
     }
@@ -99,18 +135,25 @@ public class VRIFPlayerItem : MonoBehaviour
     {
         if (other.gameObject.layer == LayerMask.NameToLayer("Item"))
         {
-            Renderer renderer = other.transform.parent.GetComponent<Renderer>(); // 렌더러
-
-            if (renderer == null) // 뿌리 작물의 경우 구성이 약간 다르다. 
+            if (other.transform.parent.GetComponent<Outline>())
             {
-                renderer = other.transform.GetComponent<Renderer>();
+                other.transform.parent.GetComponent<Outline>().OutlineWidth = 0;
             }
-
-            Material[] materials = renderer.materials;
-
-            for (int i = 0; i < materials.Length; i++)
+            else
             {
-                materials[materials.Length - 1].SetFloat("_Scale", 0); // Material Scale Down
+                Renderer renderer = other.transform.parent.GetComponent<Renderer>(); // 렌더러
+
+                if (renderer == null) // 뿌리채소는 구성이 약간 다르다.
+                {
+                    renderer = other.transform.parent.GetComponentInChildren<Renderer>();
+                }
+
+                Material[] materials = renderer.materials;
+
+                for (int i = 0; i < materials.Length; i++)
+                {
+                    materials[materials.Length - 1].SetFloat("_Scale", 0); // Material Scale Up 
+                }
             }
         }
     }
@@ -118,36 +161,39 @@ public class VRIFPlayerItem : MonoBehaviour
     /// <summary>   
     /// 아이템을 획득하는 메소드 
     /// </summary>
-    private void GetItem(GameObject _item)
+    private void GetItem(GameObject item_)
     {
+        audioSource.PlayOneShot(getItemClip); // 아이템 획득 소리 재생
+
+        if (item_.transform.GetComponentInChildren<VRIFItem_RespawnHelper>())
+        {
+            VRIFItem_RespawnHelper respawnHelper = item_.transform.GetComponentInChildren<VRIFItem_RespawnHelper>();
+            StartCoroutine(respawnHelper.Respawn());
+        }
+      
         for (int i = 0; i < grabbers.Length; i++)
         {
             grabbers[i].ReleaseGrab(); // 아이템 획득 전 먼저 손을 놓게 한다. 
         }
 
-        _item.transform.position = poolPos; // 오브젝트 풀로 이동 
-       
         string name = default; // 아이템 이름
 
-        switch (_item.name)
+        foreach (var itemKey in itemDic.Keys)
         {
-            case var tag when tag.Contains("Meat"):
-                name = "고기";
-                break;
-            case var tag when tag.Contains("Milk"):
-                name = "우유";
-                break;
-            case var tag when tag.Contains("Strawberry"):
-                name = "딸기";
-                break;
-            case var tag when tag.Contains("Song_e"):
-                name = "송이 버섯";
-                break;
+            if (item_.name.Contains(itemKey)) // 위 아이템 딕셔너리의 키를 포함하면
+            {
+                name = itemDic[itemKey]; // 한글로 변환 (키에 해당하는 값)
+            }
         }
 
         inventory.AddInventory(name, 1); // 인벤토리에 추가 
 
         StartCoroutine(PrintUI(name));
+
+        if (!item_.transform.GetComponentInChildren<VRIFItem_RespawnHelper>()) // 만약 리스폰 헬퍼가 없는 아이템이며 코드 끝까지 처리되지 않았다면
+        {
+            Destroy(item_);
+        }
     }
 
     /// <summary>
@@ -166,5 +212,3 @@ public class VRIFPlayerItem : MonoBehaviour
         itemInfoCanvas.SetActive(false); // 아이템 정보 UI 비활성화 
     }
 }
-
-// TODO: Meat의 Outline Shader가 제대로 홯성화되지 않는 문제 => Materail가 최외곽선 안쪽으로 적용된다. 

@@ -8,6 +8,14 @@ using UnityEngine;
 /// </summary>
 public class VRIFTool_Shovel : MonoBehaviour
 {
+    // Audio Source
+    private AudioSource audioSource = default;
+
+    private void Start()
+    {
+        audioSource = GetComponent<AudioSource>();
+    }
+
     private void OnTriggerExit(Collider other)
     {
         if (other.name.Contains("Mound")) // TODO: 이후 합의 시 레이어 등으로 교체 
@@ -21,6 +29,7 @@ public class VRIFTool_Shovel : MonoBehaviour
 
     private void Digging(GameObject _dirt)
     {
+        audioSource.Play();
         _dirt.transform.localScale /= 2;
         _dirt.GetComponent<VRIFMap_DirtFile>().AddDestroy(); // 파괴 횟수 증가 
     }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -181,6 +182,8 @@ namespace BNG {
         [SerializeField] private VRIFPlayerClimbing vrifPlayerClimbing = default;
         // <Solbin> 등반 각도 전환을 한 번만 실행하기 위한 bool값. 
         private bool oneGrabCheck = false;
+        // <Solbin> 그랩 시 발생할 이벤트 (해당 손만)
+        public event EventHandler grabEvent = default;
 
         void Start() {
             rb = GetComponent<Rigidbody>();
@@ -558,6 +561,7 @@ namespace BNG {
             return false;
         }               
 
+        // <Solbin> Grabbable을 잡을 때 발생 
         public virtual bool TryGrab() {
             // Already holding something
             if (HeldGrabbable != null) {
@@ -567,7 +571,9 @@ namespace BNG {
             // Activate Nearby Grabbable
             if (grabsInTrigger.ClosestGrabbable != null) {
                 GrabGrabbable(grabsInTrigger.ClosestGrabbable);
-
+                // <Solbin> 그랩 이벤트 발생
+                grabEvent?.Invoke(this, EventArgs.Empty);
+                // <Solbin> ===
                 return true;
             }
             // If no immediate grabbable, see if remote is available to pull

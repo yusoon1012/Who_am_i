@@ -57,7 +57,7 @@ namespace BNG {
         public bool ContinuousUpdate = false;
 
         void Start() {
-            // <Solbin> 애니메이션 변경을 위한 트리고
+            // <Solbin> 애니메이션 변경을 위한 트리거
             // Trigger a pose change to start the animation
             OnPoseChanged();
         }
@@ -264,7 +264,6 @@ namespace BNG {
             for (int x = 0; x < jointCount; x++) {
                 // Make sure the indexes match
                 if (x < toTransforms.Count) {
-
                     // Joint may have not been assigned or destroyed
                     if (joints[x] == null || toTransforms[x] == null) {
                         continue;

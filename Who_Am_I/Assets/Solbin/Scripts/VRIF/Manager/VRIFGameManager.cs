@@ -1,3 +1,4 @@
+using BNG;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,6 +6,8 @@ using UnityEngine.SceneManagement;
 
 /// <summary>
 /// (최우선) VRIFSaveManager, (이후 우선) VRIFGameManager는 다른 스크립트보다 우선순위 실행
+/// 저장: VRIFGameManager => VRIFSaveManeger (정보 최신화 먼저)
+/// 불러오기: VRIFSaveManager => VRIFGameManager (정보 불러오기 먼저)
 /// </summary>
 
 public class VRIFGameManager : MonoBehaviour
@@ -13,6 +16,16 @@ public class VRIFGameManager : MonoBehaviour
 
     [Header("Player Controller")]
     public Transform playerController = default;
+
+    [Header("Character Controller")]
+    public CharacterController characterController = default;
+
+    [Header("Grabbers")]
+    public Grabber leftGrabber = default;
+    public Grabber rightGrabber = default;
+
+    [Header("Grabber List")]
+    public Grabber[] grabberArray = new Grabber[2];
 
     // 플레이어 포지션
     public Vector3 playerPos = default;
@@ -27,14 +40,20 @@ public class VRIFGameManager : MonoBehaviour
         {
             Instance = this;
         }
+
+        grabberArray[0] = leftGrabber;
+        grabberArray[1] = rightGrabber;
     }
 
     #region 시작: VRIFSaveManager에서 정보를 받아 세팅
     // TODO: 추후 이 메소드는 삭제되고 SceneManager에서 birthPoint로 관리하게 된다. 
     public void PlayerSetting()
     {
+        // VRIFSaveManager에서 playerPos와 playerDir을 먼저 세팅한다.
+        characterController.enabled = false; // 위치값 덮어쓰기를 막기 위함
         playerController.position = playerPos;
         playerController.rotation = Quaternion.Euler(playerDir);
+        characterController.enabled = true;
     }
     #endregion
 
@@ -44,8 +63,6 @@ public class VRIFGameManager : MonoBehaviour
     /// </summary>
     public void SaveGame()
     {
-        Debug.Log("저장 완료");
-
         currentScene = SceneManager.GetActiveScene().name; // 현재 씬 정보 (string)
 
         playerPos = playerController.position;
@@ -54,9 +71,4 @@ public class VRIFGameManager : MonoBehaviour
         VRIFSaveManager.Instance.SaveFile(); // 정보를 최신화 해 전달 
     }
     #endregion
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.F5)) { SaveGame(); } // 테스트 코드 
-    }
 }

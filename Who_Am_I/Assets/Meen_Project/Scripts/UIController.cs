@@ -12,7 +12,7 @@ public class UIController : MonoBehaviour
     // 맵 컨트롤러 트랜스폼
     public Transform mapControllerTf;
     // NPC 컨트롤러 트랜스폼
-    public Transform npcControllerTf;
+    //public Transform npcControllerTf;
 
     // 활성화 상태 UI 창 타입 구분값
     // 0 : UI 창 모두 꺼짐
@@ -43,7 +43,7 @@ public class UIController : MonoBehaviour
     // <Solbin> VRIF Time System
     [SerializeField] private VRIFTimeSystem vrifTimeSystem = default;
     // <Solbin> UI 조이스틱 입력 기준값
-    private float joystickInput = 0.95f;
+    private float joystickInput = 0.75f;
     // <Solbin> Input Delay를 위한 bool 값
     private bool inputDelay = false;
 
@@ -80,33 +80,58 @@ public class UIController : MonoBehaviour
         {
             mainObjTf.GetComponent<Meen_MovePlayer>().UpdateFunction();
 
-            if (npcControllerTf.GetComponent<NPCController>().onNavigationCheck > 0)
-            {
-                npcControllerTf.GetComponent<NPCController>().ConnectUpdateFunction();
-            }
+            //if (npcControllerTf.GetComponent<NPCController>().onNavigationCheck > 0)
+            //{
+            //    npcControllerTf.GetComponent<NPCController>().ConnectUpdateFunction();
+            //}
         }
         else if (uiController == 10) { mapCameraTf.GetComponent<CameraControl>().UpdateFunction(); }
 
         // 모든 상, 하, 좌, 우 기본 키보드 키 입력 값
         if (Input.GetKeyDown(KeyCode.UpArrow) || vrifAction.Player.LeftController.ReadValue<Vector2>().y >= joystickInput)
         {
+            if (!inputDelay)
+            {
+                DirectionControl(0);
+            }
             // <Solbin> GetKey 같은 느낌이라 너무 예민하다고 느껴진다. 수정 필요
-            if (!inputDelay) { DirectionControl(0); }
         }
         else if (Input.GetKeyDown(KeyCode.DownArrow) || vrifAction.Player.LeftController.ReadValue<Vector2>().y <= -joystickInput)
         {
-            if (!inputDelay) { DirectionControl(1); }
+            if (!inputDelay)
+            {
+                DirectionControl(1);
+            }
         }
         else if (Input.GetKeyDown(KeyCode.LeftArrow) || vrifAction.Player.LeftController.ReadValue<Vector2>().x <= -joystickInput)
         {
-            if (!inputDelay) { DirectionControl(2); }
+            if (!inputDelay)
+            {
+                DirectionControl(2);
+            }
         }
         else if (Input.GetKeyDown(KeyCode.RightArrow) || vrifAction.Player.LeftController.ReadValue<Vector2>().x >= joystickInput)
         {
-            if (!inputDelay) { DirectionControl(3); }
+            if (!inputDelay)
+            {
+                DirectionControl(3);
+            }
         }
+        else // <Solbin> VR에서의 GetKeyUp 역할
+        {
+            if (uiController == 10)
+            {
+                KeyUpDirectionControl(0);
+                KeyUpDirectionControl(1);
+                KeyUpDirectionControl(2);
+                KeyUpDirectionControl(3);
+            }
+        }
+        // 모든 업 키 기능
         // 모든 상, 하, 좌, 우 키보드 키 입력 종료 값
-        else if (Input.GetKeyUp(KeyCode.UpArrow))
+
+        // <Solbin> 아래 원래 else if였다.
+        if (Input.GetKeyUp(KeyCode.UpArrow))
         {
             KeyUpDirectionControl(0);
         }
@@ -122,8 +147,9 @@ public class UIController : MonoBehaviour
         {
             KeyUpDirectionControl(3);
         }
+
         // <Solbin> 메뉴 진입
-        else if (Input.GetKeyDown(KeyCode.M) || vrifAction.Player.UI_Menu.triggered) // <Solbin> Menu Enter
+        if (Input.GetKeyDown(KeyCode.M) || vrifAction.Player.UI_Menu.triggered) // <Solbin> Menu Enter
         {
             // <Solbin> 선택 키 감 개선 (키 매핑이 풀리는 문제가 있어 이곳에 삽입)
             vrifAction.Player.UI_Click.performed += ctx => OnOffControl(0);
@@ -149,7 +175,7 @@ public class UIController : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.C))
         {
-            npcControllerTf.GetComponent<NPCController>().InputController();
+            //npcControllerTf.GetComponent<NPCController>().InputController();
         }
         else if (Input.GetKeyDown(KeyCode.T))
         {
@@ -213,6 +239,7 @@ public class UIController : MonoBehaviour
             mainObjTf.GetComponent<Inventory>().AddInventory("송이 버섯", 1);
         }
 
+
         // <Solbin> 지나치게 예민한 입력값을 막기 위함
         if (inputDelay) { Invoke("ClearInputDelay", 0.55f); }
         // <Solbin> ===
@@ -236,8 +263,8 @@ public class UIController : MonoBehaviour
     // 모든 UI 에서 방향키 입력을 받아 전달하는 함수
     public void DirectionControl(int arrowType)
     {
-        // <Solbin>
-        inputDelay = true;
+        // <Solbin> 만약 지도 상태가 아니라면 Delay 값을 준다
+        if (uiController != 10) { inputDelay = true; }
         // <Solbin> ===
 
         switch (uiController)
@@ -269,6 +296,7 @@ public class UIController : MonoBehaviour
             case 9:
                 quickSlotTf.GetComponent<QuickSlot>().DirectionControl(arrowType);
                 break;
+            // 지도 움직임 기능 전송
             case 10:
                 mapCameraTf.GetComponent<CameraControl>().MoveMap(arrowType);
                 break;

@@ -30,6 +30,8 @@ namespace BNG {
         [Range(0, 1)]
         public float IndexValue = 0f;
 
+        // TODO: ThumbValue와 IndexValue는 계속해서 기본값으로 되돌리려는 동작이 있다. 출처가 어딘지 확인하기. 
+
         [Range(0, 1)]
         public float MiddleValue = 0f;
 
@@ -92,6 +94,13 @@ namespace BNG {
             RingValue = amount;
             PinkyValue = amount;
 
+            // <Solbin> 둘째 손가락도 셋, 넷, 다섯번째 손가락과 한 뭉텅이로 움직이게 해달라는 기획 요청에 따라 수정 
+            ThumbValue = amount;
+            IndexValue = amount;
+            UpdateThumb(amount);
+            UpdateIndex(amount);
+            // <Solbin> ===
+
             UpdateMiddle(amount);
             UpdateRing(amount);
             UpdatePinky(amount);
@@ -102,13 +111,15 @@ namespace BNG {
         // <Solbin> 입력값에 따라 손 포즈를 바꾼다. 
         public virtual void DoIdleBlendPose() {
             if (Pose1) {
+                // <Solbin> 아래 메소드 실행 코드의 Pose1이 손가락 동작 후 원상태 복귀를 담당한다. 
                 // Start at idle
                 handPoser.UpdateHandPose(Pose1, false);
 
                 // Then lerp each finger to fist pose depending on input
-                UpdateThumb(ThumbValue);
-                UpdateIndex(IndexValue);
-
+                // <Solbin> 둘째 손가락도 셋, 넷, 다섯번째 손가락과 한 뭉텅이로 움직이게 해달라는 기획 요청에 따라 수정 
+                //UpdateThumb(ThumbValue);
+                //UpdateIndex(IndexValue);
+                // <Solbin> ===
 
                 // Set Grip Amount only if it changed. This will override Middle, Ring, and Pinky
                 if (GripValue != _lastGripValue) {
@@ -116,6 +127,10 @@ namespace BNG {
                 }
                 // Otherwise update the remaining fingers independently
                 else {
+                    // <Solbin> 둘째 손가락도 셋, 넷, 다섯번째 손가락과 한 뭉텅이로 움직이게 해달라는 기획 요청에 따라 수정 
+                    UpdateThumb(ThumbValue);
+                    UpdateIndex(IndexValue);
+                    // <Solbin> === 
                     UpdateMiddle(MiddleValue);
                     UpdateRing(RingValue);
                     UpdatePinky(PinkyValue);

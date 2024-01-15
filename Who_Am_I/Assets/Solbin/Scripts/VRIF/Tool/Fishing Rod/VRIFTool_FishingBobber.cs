@@ -21,16 +21,23 @@ public class VRIFTool_FishingBobber : MonoBehaviour
     // 낚시대
     private Transform fishingRod = default;
 
+    // Audio Source 
+    private AudioSource audioSource = default;
+
     private void Start()
     {
         bobberRigid = transform.GetComponent<Rigidbody>();
         fishingRod = FindAnyObjectByType<VRIFTool_FishingRod>().transform;
+
+        audioSource = GetComponent<AudioSource>();
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.name.Contains("Water")) // TODO: 추후 레이어 등으로 변경.
         {
+            audioSource.PlayOneShot(audioSource.clip);
+
             StopCoroutine("CheckDistance");
 
             inWater = true;
@@ -40,7 +47,7 @@ public class VRIFTool_FishingBobber : MonoBehaviour
                 StartCoroutine(StopBobber());
             }
         }
-        else
+        else // 물이 아닌 곳에 닿았다면 낚시대와의 거리를 체크 후 찌 회수
         {
             StartCoroutine("CheckDistance");
         }

@@ -36,6 +36,14 @@ public class VRIFStatusSystem : MonoBehaviour
     [Header("플레이어 사망")]
     [SerializeField] private GameObject dieCanvas = default;
 
+    [Header("오디오")]
+    private AudioSource audioSource = default;
+    public AudioClip normalPooClip = default; // 일반 배출 사운드 
+    public AudioClip toiletPooClip = default; // 화장실 배출 사운드
+    public AudioClip toiletPushClip = default; // 물 내리는 사운드
+    public AudioClip dieClip = default; // 사망 사운드
+    public AudioClip eatClip = default; // 음식 먹는 소리 
+
     // 게이지 총 수는 5로 정해졌다. TODO: 후에 수정 필요 
     private int gageCount = 5;
     // 현 포만감, 배출도 수치 
@@ -53,6 +61,8 @@ public class VRIFStatusSystem : MonoBehaviour
 
     private void Start()
     {
+        audioSource = GetComponent<AudioSource>();
+
         Setting(); // 초기 세팅
 
         FullnessCheck(); // 게이지 체크
@@ -172,7 +182,13 @@ public class VRIFStatusSystem : MonoBehaviour
     /// <summary>
     /// 똥 쌈
     /// </summary>
-    public void GetPoo() { Debug.Log("플레이어는 용변을 해결했다."); m_Poo = 0; PooCheck(); }
+    public void GetPoo() 
+    {
+        audioSource.PlayOneShot(toiletPooClip); // 화장실 배출 사운드 
+        audioSource.PlayOneShot(toiletPushClip); // 화장실 물 내리는 사운드
+
+        m_Poo = 0; PooCheck();
+    }
 
     private void PooCheck()
     {
@@ -247,6 +263,8 @@ public class VRIFStatusSystem : MonoBehaviour
     /// <param name="_poo">얻는 배출도</param>
     public void GetFood(int _satiety, int _poo)
     {
+        audioSource.PlayOneShot(eatClip); // 음식 먹는 소리 
+
         m_Fullness += _satiety; // 포만감 더하기 
         m_Poo += _poo; // 배출값 더하기 
 
@@ -259,8 +277,11 @@ public class VRIFStatusSystem : MonoBehaviour
     /// </summary>
     private void PooEvent()
     {
+        // 똥 생성
         Vector3 pooPos = -player.forward * 0.2f; // 플레이어의 2만큼 뒤 
         Quaternion playerRotation = Quaternion.Euler(player.eulerAngles); // 플레이어의 Euler
+
+        audioSource.PlayOneShot(normalPooClip); // 사운드 중첩 재생
 
         if (VRIFStateSystem.Instance.gameState == VRIFStateSystem.GameState.CLIMBING) // 등반 중이었다면 
         {
@@ -293,6 +314,10 @@ public class VRIFStatusSystem : MonoBehaviour
     /// </summary>
     private void DieEvent()
     {
+        audioSource.Stop();
+        audioSource.clip = dieClip;
+        audioSource.Play();
+
         dieCanvas.SetActive(true);
     }
 }

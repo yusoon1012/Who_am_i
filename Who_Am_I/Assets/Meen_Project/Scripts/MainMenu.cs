@@ -70,10 +70,10 @@ public class MainMenu : MonoBehaviour
                 mainObjTf.GetComponent<Inventory>().ControlInventory();
                 break;
             case 3:
-                //mainObjTf.GetComponent<UIController>().uiController = 10;
-                //menuImage[6].SetActive(false);
-                //menuImage[7].SetActive(false);
-                //mapControllerTf.GetComponent<MapControl>().OpenMap();
+                mainObjTf.GetComponent<UIController>().uiController = 10;
+                menuImage[6].SetActive(false);
+                menuImage[7].SetActive(false);
+                mapControllerTf.GetComponent<MapControl>().OpenMap();
                 break;
             case 4:
                 mainObjTf.GetComponent<UIController>().uiController = 5;
