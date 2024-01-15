@@ -41,6 +41,10 @@ public class ItemManager : MonoBehaviour
     // 도감에 추가할 아이템 그룹 정보 데이터
     Dictionary<string, int> collectionItems = new Dictionary<string, int>();
 
+    //public Transform createItemData;
+
+    private CreateItemData createItemData = new CreateItemData();
+
     #endregion 변수 설정
 
     void Awake()
@@ -60,27 +64,12 @@ public class ItemManager : MonoBehaviour
 
     void Start()
     {
-        //List<Dictionary<string, object>> itemCsvTest = LGM_CSVReader.Read("test");
-
-        //for (int i = 0; i < itemCsvTest.Count; i++)
-        //{
-        //    Debug.LogFormat("{0}", itemCsvTest[i]["Name"].ToString());
-        //}
+        createItemData.AddItemData();
 
         // 게임 이어하기 클릭 시 저장된 아이템 로드 테스트
         testDic.Add("고기", 1);
         testDic.Add("딸기", 1);
         testDic.Add("우유", 1);
-
-        //* 아이템 데이터 베이스에 아이템 추가
-        itemDataBase.Add("고기", new Items001());
-        itemDataBase.Add("딸기", new Items002());
-        itemDataBase.Add("우유", new Items003());
-        itemDataBase.Add("딸기 우유", new Items004());
-        itemDataBase.Add("송이 버섯", new Items005());
-        itemDataBase.Add("송이 불고기", new Items006());
-        itemDataBase.Add("너프건", new Items007());
-        //* 아이템 데이터 베이스에 아이템 추가
 
         //* 제작 데이터 베이스에 아이템 추가
         crafting.Add("딸기 우유", new Crafting001());

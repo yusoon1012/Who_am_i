@@ -22,6 +22,8 @@ public class MapControl : MonoBehaviour
     // 0 : 실제 지형 트랜스폼
     // 1 : 지도 지형 트랜스폼
     public Transform[] mapSizeCheck = new Transform[2];
+    // 지도 메뉴얼 오브젝트
+    public GameObject mapManualObj;
 
     // 플레이어와 지도 카메라의 움직임 구분값
     public int moveCheck { get; set; } = default;
@@ -103,12 +105,14 @@ public class MapControl : MonoBehaviour
     {
         ResetCamera();
         allMapsObj.SetActive(true);
+        mapManualObj.SetActive(true);
     }     // OpenMap()
 
     // 지도를 닫고 UI 를 비활성화 하는 함수
     public void ExitMap()
     {
         mapCameraTf.GetComponent<CameraControl>().EndMapCamera();
+        mapManualObj.SetActive(false);
         allMapsObj.SetActive(false);
     }     // ExitMap()
 

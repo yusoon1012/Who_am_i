@@ -12,24 +12,20 @@ public class Items004 : ItemsMain
 
     public override void Init()
     {
-        itemID = 2002;
-        itemName = "딸기 우유";
-        itemEnglishName = "Strawberry Milk";
-        itemInfo = "딸기 맛이 나는 달콤한 우유 [사용 효과 : 포만감 + 55, 응가 게이지 + 5]";
-        rarity = 3;
-        itemStack = 0;
-        itemType = ItemType.FOOD;
-        itemImageNum = 4;
-
-        cookType = 1;
-        satietyGauge = 55;
-        pooGauge = 5;
-
-        collectType = 0;
+        itemID = 0;
+        itemName = " ";
+        getType = 0;
         hp = 0;
-        range = 0f;
+        rangeRec = 0f;
         respawn = 0f;
+        rarity = 0;
+        itemInfo = " ";
+        getMap = " ";
+        note = " ";
+        itemImageNum = 0;
+        itemEnglishName = " ";
 
-        itemHint = "획득 방법 : ";
+        itemType = ItemType.STUFF;
+        itemStack = 0;
     }     // Init()
 }

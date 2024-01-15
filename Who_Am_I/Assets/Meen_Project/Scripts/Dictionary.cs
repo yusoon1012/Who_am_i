@@ -23,6 +23,8 @@ public class Dictionary : MonoBehaviour
     public Image[] dicInImage = new Image[18];
     // 도감 아이템 타입 페이지 버튼
     public Image[] typeImage = new Image[4];
+    // 접근 메뉴 메뉴얼 오브젝트
+    public GameObject onMenuManualObj;
 
     // 아이콘 선택 변경 시 컬러 값
     private Color orderColor = default;
@@ -786,6 +788,8 @@ public class Dictionary : MonoBehaviour
 
         dicObj.SetActive(true);
         dicInfoObj.SetActive(true);
+        onMenuManualObj.SetActive(true);
+
         orderColor = Color.white;
         dicOutImage[order].color = orderColor;
 
@@ -807,6 +811,8 @@ public class Dictionary : MonoBehaviour
             dicOutImage[7].gameObject.SetActive(true);
             dicOutImage[13].gameObject.SetActive(true);
         }
+
+        onMenuManualObj.SetActive(false);
 
         orderColor = new Color32(155, 155, 155, 255);
         dicOutImage[order].color = orderColor;

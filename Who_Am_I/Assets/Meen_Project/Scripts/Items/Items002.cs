@@ -12,24 +12,20 @@ public class Items002 : ItemsMain
 
     public override void Init()
     {
-        itemID = 2000;
-        itemName = "딸기";
-        itemEnglishName = "Strawberry";
-        itemInfo = "빨갛게 잘 익은 딸기";
-        rarity = 2;
-        itemStack = 0;
-        itemType = ItemType.FOOD;
-        itemImageNum = 2;
-
-        cookType = 1;
-        satietyGauge = 20;
-        pooGauge = 3;
-
-        collectType = 0;
+        itemID = 0;
+        itemName = " ";
+        getType = 0;
         hp = 0;
-        range = 0f;
+        rangeRec = 0f;
         respawn = 0f;
+        rarity = 0;
+        itemInfo = " ";
+        getMap = " ";
+        note = " ";
+        itemImageNum = 0;
+        itemEnglishName = " ";
 
-        itemHint = "획득 방법 : ";
+        itemType = ItemType.STUFF;
+        itemStack = 0;
     }     // Init()
 }

@@ -42,6 +42,8 @@ public class Inventory : MonoBehaviour
     public GameObject dropItemInfo;
     // 아이템 버리기 선택 버튼 UI
     public Image[] dropItemInfoImage = new Image[2];
+    // 접근 메뉴 메뉴얼 오브젝트
+    public GameObject onMenuManualObj;
 
     // 인벤토리를 열고있는 상태인지 체크
     public bool lookInventory { get; set; } = false;
@@ -407,6 +409,7 @@ public class Inventory : MonoBehaviour
         if (lookInventory == false)
         {
             inventory.SetActive(true);
+            onMenuManualObj.SetActive(true);
         }
 
         lookInventory = true;
@@ -463,6 +466,7 @@ public class Inventory : MonoBehaviour
             itemInfo.gameObject.SetActive(false);
         }
 
+        onMenuManualObj.SetActive(false);
         lookItemInfo = false;
 
         // 인벤토리를 닫기 전에 선택한 아이템 창 색을 짙은 색으로 변경
@@ -1020,7 +1024,6 @@ public class Inventory : MonoBehaviour
                     // 아이템 매니저에서 인벤토리에 저장된 아이템을 삭제하는 함수를 실행
                     ItemManager.instance.DeleteItem(itemName);
                 }
-
                 break;
             default:
                 break;
@@ -1110,10 +1113,12 @@ public class Inventory : MonoBehaviour
     // 인벤토리 UI 에서 퀵슬롯 UI 로 이동하는 함수
     public void ConnectQuickSlot()
     {
+        onMenuManualObj.SetActive(false);
         inventory.SetActive(false);
         itemInfo.SetActive(false);
         mainObjTf.GetComponent<MainMenu>().mainMenu.SetActive(false);
         quickSlotTf.GetComponent<QuickSlot>().quickSlotObj.SetActive(true);
+        quickSlotTf.GetComponent<QuickSlot>().saveQuickManualObj.SetActive(true);
     }     // ConnectQuickSlot()
 
     // 인벤토리에 있는 빈 아이콘을 클릭하면 아이템 정보창 초기화 함수

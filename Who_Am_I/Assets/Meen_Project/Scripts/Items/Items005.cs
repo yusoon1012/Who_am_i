@@ -12,24 +12,20 @@ public class Items005 : ItemsMain
 
     public override void Init()
     {
-        itemID = 1001;
-        itemName = "송이 버섯";
-        itemEnglishName = "Matsutake";
-        itemInfo = "송이 버섯";
-        rarity = 3;
-        itemStack = 0;
-        itemType = ItemType.STUFF;
-        itemImageNum = 6;
-
-        cookType = 1;
-        satietyGauge = 0;
-        pooGauge = 0;
-
-        collectType = 0;
+        itemID = 0;
+        itemName = " ";
+        getType = 0;
         hp = 0;
-        range = 0f;
+        rangeRec = 0f;
         respawn = 0f;
+        rarity = 0;
+        itemInfo = " ";
+        getMap = " ";
+        note = " ";
+        itemImageNum = 0;
+        itemEnglishName = " ";
 
-        itemHint = "획득 방법 : ";
+        itemType = ItemType.STUFF;
+        itemStack = 0;
     }     // Init()
 }

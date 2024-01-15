@@ -21,8 +21,12 @@ public class QuickSlot : MonoBehaviour
     public Text[] quickSlotStack = new Text[3];
     // 도구 장착중 텍스트
     public Text[] usingText = new Text[3];
-    // 플레이어 트랜스폼
-    public Transform playerTf;
+    // 아이템 데이터 그룹 메인 오브젝트 트랜스폼
+    public Transform mainObjTf;
+    // 퀵슬롯 아이템 저장 메뉴얼 오브젝트
+    public GameObject saveQuickManualObj;
+    // 퀵슬롯 아이템 사용 메뉴얼 오브젝트
+    public GameObject useQuickManualObj;
 
     // 퀵슬롯에 저장된 아이템 이름 목록
     public string[] quickSlotSaveName { get; set; } = new string[6];
@@ -66,7 +70,7 @@ public class QuickSlot : MonoBehaviour
     {
         ItemsMain items = new ItemsMain();
 
-        string useEquipCheck = playerTf.GetComponent<Inventory>().useEquipStr;
+        string useEquipCheck = mainObjTf.GetComponent<Inventory>().useEquipStr;
 
         for (int j = 0; j < 3; j++)
         {
@@ -140,6 +144,7 @@ public class QuickSlot : MonoBehaviour
         if (itemType == 2)
         {
             menuScreenObj.SetActive(true);
+            useQuickManualObj.SetActive(true);
         }
 
         quickSlotObj.SetActive(true);
@@ -154,7 +159,6 @@ public class QuickSlot : MonoBehaviour
         }
 
         ResetQuickSlot();
-
         changeColor = new Color32(255, 255, 255, 255);
         quickSlotImage[order].color = changeColor;
     }     // TakeItemName()
@@ -167,10 +171,12 @@ public class QuickSlot : MonoBehaviour
 
         connectItemName = string.Empty;
 
+        saveQuickManualObj.SetActive(false);
         quickSlotObj.SetActive(false);
-        playerTf.GetComponent<MainMenu>().mainMenu.SetActive(true);
-        playerTf.GetComponent<Inventory>().inventory.SetActive(true);
-        playerTf.GetComponent<Inventory>().itemInfo.SetActive(true);
+        mainObjTf.GetComponent<MainMenu>().mainMenu.SetActive(true);
+        mainObjTf.GetComponent<Inventory>().inventory.SetActive(true);
+        mainObjTf.GetComponent<Inventory>().itemInfo.SetActive(true);
+        mainObjTf.GetComponent<Inventory>().onMenuManualObj.SetActive(true);
     }     // ConnectInventory()
 
     // 인벤토리에서가 아닌 바로 퀵슬롯 메뉴를 열었을 때 UI 를 활성화 하는 함수
@@ -187,6 +193,7 @@ public class QuickSlot : MonoBehaviour
 
         connectItemName = string.Empty;
 
+        useQuickManualObj.SetActive(false);
         quickSlotObj.SetActive(false);
         menuScreenObj.SetActive(false);
     }     // SingleCloseQuickSlot()
@@ -333,11 +340,11 @@ public class QuickSlot : MonoBehaviour
             {
                 if (order < 3)
                 {
-                    playerTf.GetComponent<Inventory>().UseItem(1, quickSlotSaveName[order]);
+                    mainObjTf.GetComponent<Inventory>().UseItem(1, quickSlotSaveName[order]);
                 }
                 else if (order >= 3)
                 {
-                    playerTf.GetComponent<Inventory>().UseFoods(1, quickSlotSaveName[order]);
+                    mainObjTf.GetComponent<Inventory>().UseFoods(1, quickSlotSaveName[order]);
                 }
             }
         }
