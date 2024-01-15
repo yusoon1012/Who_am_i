@@ -86,7 +86,10 @@ namespace BNG {
                     transform.localRotation = currentLocalRotation = InputBridge.Instance.GetHMDLocalRotation();
 
                     // <Solbin> PlayerSubCamera 보정 (Tracking Space를 추적하는 부모 오브젝트가 필요하다.)
-                    playerSubCamera.localRotation = currentLocalRotation = InputBridge.Instance.GetHMDLocalRotation();
+                    if (playerSubCamera != null)
+                    {
+                        playerSubCamera.localRotation = currentLocalRotation = InputBridge.Instance.GetHMDLocalRotation();
+                    }
                     // <Solbin> ===
                 }
                 else if (Device == TrackableDevice.LeftController) {
