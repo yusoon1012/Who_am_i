@@ -6,23 +6,33 @@ using UnityEngine;
 
 public class VRIFPlayerNPC : MonoBehaviour
 {
-    // 범위 내 npc가 있는지 확인
-    private bool npcCheck = false;
-
-    //WaitForEndOfFrame
-    private WaitForEndOfFrame endOfFrame = new WaitForEndOfFrame();
+    [Header("Center Eye Anchor")]
+    [SerializeField] Transform centerEyeAnchor = default;
 
     // 시야 각도
-    private float viewAngle = 130;
+    private float viewAngle = 100;
     // 시야 거리
-    private float viewDistance = 10;
+    private float viewDistance = 3;
 
-    // NPC 리스트
-    private List<Transform> npcList = new List<Transform>();
+    private int npcLayer = default;
+
+    // VRIF Action
+    private VRIFAction vrifAction = default;
 
     private void Start()
     {
-        //VRIFInputSystem.Instance.interaction += AskNPC;
+        npcLayer = LayerMask.NameToLayer("NPC");
+    }
+
+    private void OnEnable()
+    {
+        vrifAction = new VRIFAction();
+        vrifAction.Enable();
+    }
+
+    private void OnDisable()
+    {
+        vrifAction.Disable();
     }
 
     private void FixedUpdate()
@@ -30,9 +40,9 @@ public class VRIFPlayerNPC : MonoBehaviour
         FieldOfView();
     }
 
-    private Vector3 Angle(float angle_) // TODO: 분석 필요
+    private Vector3 Angle(float angle_)
     {
-        angle_ += transform.eulerAngles.y;
+        angle_ += centerEyeAnchor.eulerAngles.y;
         return new Vector3(Mathf.Sin(angle_ * Mathf.Deg2Rad), 0f, Mathf.Cos(angle_ * Mathf.Deg2Rad));
     }
 
@@ -42,41 +52,42 @@ public class VRIFPlayerNPC : MonoBehaviour
     private void FieldOfView()
     {
         Vector3 leftBoundary = Angle(-viewAngle * 0.5f);  // 시야각 왼쪽 자른거
-        Vector3 rightBoundary = Angle(viewAngle * 0.5f);  // 시야각의 오른쪽 자른거
+        Vector3 rightBoundary = Angle(viewAngle * 0.5f);  // 시야각 오른쪽 자른거
 
-        Debug.DrawRay(transform.position + transform.up, leftBoundary, Color.red);
-        Debug.DrawRay(transform.position + transform.up, rightBoundary, Color.red);
+        //Debug.DrawRay(centerEyeAnchor.position, leftBoundary, Color.red); // 확인용 코드
+        //Debug.DrawRay(centerEyeAnchor.position, rightBoundary, Color.red); // 확인용 코드
 
-        //Collider[] _target = Physics.OverlapSphere(transform.position, viewDistance, targetMask);
+        Collider[] npcs = Physics.OverlapSphere(centerEyeAnchor.position, viewDistance);
 
-        //for (int i = 0; i < _target.Length; i++)
-        //{
-        //    Transform _targetTf = _target[i].transform;
-        //    if (_targetTf.name == "Player")
-        //    {
-        //        Vector3 _direction = (_targetTf.position - transform.position).normalized;
-        //        float _angle = Vector3.Angle(_direction, transform.forward);
+        for (int i = 0; i < npcs.Length; i++)
+        {
+            Transform npcTf = npcs[i].transform; // 감지된 개별 npc
 
-        //        if (_angle < viewAngle * 0.5f)
-        //        {
-        //            RaycastHit _hit;
-        //            if (Physics.Raycast(transform.position + transform.up, _direction, out _hit, viewDistance))
-        //            {
-        //                if (_hit.transform.name == "Player")
-        //                {
-        //                    Debug.Log("플레이어가 돼지 시야 내에 있습니다.");
-        //                    Debug.DrawRay(transform.position + transform.up, _direction, Color.blue);
+            Vector3 direction = (npcTf.position - centerEyeAnchor.position).normalized; // npc - pc 방향
+            float angle = Vector3.Angle(direction, transform.forward);
 
-        //                    thePig.Run(_hit.transform.position);
-        //                }
-        //            }
-        //        }
-        //    }
-        //}
+            if (angle < viewAngle * 0.5f)
+            {
+                RaycastHit hit;
+
+                if (Physics.Raycast(centerEyeAnchor.position, direction, out hit, viewDistance))
+                {
+                    if (hit.transform.gameObject.layer == npcLayer)
+                    {
+                        //Debug.DrawRay(centerEyeAnchor.position, direction, Color.blue); // 확인용 코드
+                        if (vrifAction.Player.Interaction.triggered) { AskNPC(hit.transform); }
+                    }
+                }
+            }
+        }
     }
 
-    private void AskNPC(object sender, EventArgs e)
+    /// <summary>
+    /// 시야 내 NPC에게 대화를 거는 메소드
+    /// </summary>
+    /// <param name="npc_">대화할 NPC</param>
+    private void AskNPC(Transform npc_)
     {
-
+        Debug.Log("시야 내 NPC에 대화 시도");
     }
 }

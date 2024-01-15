@@ -43,6 +43,18 @@ public class VRIFPlayerItem : MonoBehaviour
     public AudioClip getItemClip = default;
     private AudioSource audioSource = default;
 
+    private Dictionary<string, string> itemDic = new Dictionary<string, string>()
+    {
+        { "Juksoon", "죽순" },
+        { "Peanut", "땅콩" },
+        { "Song_e", "송이 버섯" },
+        { "Coconut", "코코넛" },
+        { "Ginkgo", "은행" },
+        { "Kakao", "카카오" }
+
+        // TODO: 추가 처리 필요 
+    };
+
     private void Start()
     {
         grabbers = new Grabber[2];
@@ -166,20 +178,12 @@ public class VRIFPlayerItem : MonoBehaviour
 
         string name = default; // 아이템 이름
 
-        switch (item_.name)
+        foreach (var itemKey in itemDic.Keys)
         {
-            case var tag when tag.Contains("Meat"):
-                name = "고기";
-                break;
-            case var tag when tag.Contains("Milk"):
-                name = "우유";
-                break;
-            case var tag when tag.Contains("Strawberry"):
-                name = "딸기";
-                break;
-            case var tag when tag.Contains("Song_e"):
-                name = "송이 버섯";
-                break;
+            if (item_.name.Contains(itemKey)) // 위 아이템 딕셔너리의 키를 포함하면
+            {
+                name = itemDic[itemKey]; // 한글로 변환 (키에 해당하는 값)
+            }
         }
 
         inventory.AddInventory(name, 1); // 인벤토리에 추가 
