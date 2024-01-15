@@ -82,6 +82,12 @@ public class CreateItemData : MonoBehaviour
 
         #endregion 도구 아이템 데이터 생성
 
+        #region 제작 레시피 데이터 생성
+
+
+
+        #endregion 제작 레시피 데이터 생성
+
     }     // AddItemData()
 
     private void ReadStuffCSVFiles()
