@@ -39,6 +39,8 @@ public class ItemCrafting : MonoBehaviour
     public Text itemNameText;
     // 제작 상세 창에서 선택한 아이템 정보 텍스트
     public Text itemInfoText;
+    // 제작 메뉴얼 오브젝트
+    public GameObject craftingManualObj;
 
     // 제작 창을 보고있는 상태인지 체크
     public bool lookCrafting { get; set; } = false;
@@ -294,6 +296,7 @@ public class ItemCrafting : MonoBehaviour
         {
             mainScreen.SetActive(true);
             crafting.SetActive(true);
+            craftingManualObj.SetActive(true);
         }
 
         lookCrafting = true;
@@ -319,6 +322,7 @@ public class ItemCrafting : MonoBehaviour
 
         CleanSlot();
 
+        craftingManualObj.SetActive(false);
         craftingInfoObj.SetActive(false);
         crafting.SetActive(false);
         mainScreen.SetActive(false);
@@ -583,7 +587,7 @@ public class ItemCrafting : MonoBehaviour
             if (j != 2)
             {
                 // 0, 1 번째 순서에는 재료 아이템 정보
-                craftingStacks[j].text = string.Format("{0} / {1}", stuffStackNum[j], stuffNowStack[j]);
+                craftingStacks[j].text = string.Format("{0} / {1}", stuffNowStack[j], stuffStackNum[j]);
             }
             else
             {
@@ -716,7 +720,7 @@ public class ItemCrafting : MonoBehaviour
             {
                 // 0, 1 번째 순서에는 재료 아이템 정보
                 craftingImages[j].sprite = ItemManager.instance.itemImages[stuffImageNum[j]].sprite;
-                craftingStacks[j].text = string.Format("{0} / {1}", stuffStackNum[j], stuffNowStack[j]);
+                craftingStacks[j].text = string.Format("{0} / {1}", stuffNowStack[j], stuffStackNum[j]);
             }
             else
             {

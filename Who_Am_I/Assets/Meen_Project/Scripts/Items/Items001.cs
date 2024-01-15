@@ -9,23 +9,20 @@ public class Items001 : ItemsMain
 
     public override void Init()
     {
-        itemID = 1000;
-        itemName = "고기";
-        itemEnglishName = "Meat";
-        itemInfo = "불에 구워 먹으면 맛있어 보이는 고기";
-        rarity = 1;
-        itemStack = 0;
+        itemID = 0;
+        itemName = " ";
+        getType = 0;
+        hp = 0;
+        rangeRec = 0f;
+        respawn = 0f;
+        rarity = 0;
+        itemInfo = " ";
+        getMap = " ";
+        note = " ";
+        itemImageNum = 0;
+        itemEnglishName = " ";
+
         itemType = ItemType.STUFF;
-        itemImageNum = 1;
-        collectType = 1;
-        hp = 1;
-        range = 30f;
-        respawn = 60f;
-
-        cookType = 0;
-        satietyGauge = 0;
-        pooGauge = 0;
-
-        itemHint = "획득 방법 : ";
+        itemStack = 0;
     }     // Init()
 }

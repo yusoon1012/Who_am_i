@@ -1,4 +1,5 @@
 //using UnityEditor.PackageManager;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,6 +16,8 @@ public class CameraControl : MonoBehaviour
     // 체크 포인트 워프 체크 UI 버튼
     public Image[] warpCheckButton = new Image[2];
 
+    public Image blackScreen;
+
     // 플레이어 트랜스폼
     public Transform playerTf;
     // 아이템 데이터 그룹 메인 오브젝트 트랜스폼
@@ -27,6 +30,10 @@ public class CameraControl : MonoBehaviour
     public float speed = default;
     // 지도 카메라를 확대, 축소하는 속도값
     public float zoomSpeed = default;
+
+    public float changeAlphaCount = default;
+
+    public float changeAlphaTime = default;
 
     // 지도 카메라 참조
     private Camera mapCamera = default;
@@ -50,6 +57,8 @@ public class CameraControl : MonoBehaviour
     // 1 번째 봄 맵 상, 하, 좌, 우 카메라 한계값
     private float[] map01LimitCamera = new float[4];
 
+    private int warpOrder = default;
+
     //// 지도상의 플레이어 트랜스폼
     //public Transform onMapPlayerTf;
 
@@ -58,6 +67,9 @@ public class CameraControl : MonoBehaviour
         speed = 1.75f;
         zoomSpeed = 0.2f;
         checkPointInfoCursor = 0;
+        warpOrder = 0;
+        changeAlphaCount = 0.05f;
+        changeAlphaTime = 0.04f;
 
         map01LimitCamera[0] = 1460f;
         map01LimitCamera[1] = 765f;
@@ -309,7 +321,7 @@ public class CameraControl : MonoBehaviour
         {
             // 현재 활성화 된 커서값이 0 이면
             case 0:
-                FunctionCheckPoint();
+                ReadyCheckPoint();
                 break;
             // 현재 활성화 된 커서값이 1 이면
             case 1:
@@ -320,36 +332,89 @@ public class CameraControl : MonoBehaviour
         }
     }     // SelectCheckPointButton()
 
-    // 체크 포인트 워프를 실행하는 함수
-    public void FunctionCheckPoint()
+    // 체크 포인트 기능을 실행하기 전 준비 단계 함수
+    public void ReadyCheckPoint()
     {
         // 현재 지도의 크로스헤어가 체크 포인트를 가리키고, 레이에 맞은 표식이 null 값이 아닐 때 실행
         if (isWarpMarkCheck == true && nowSelectMapMark != null)
         {
+            warpOrder = 0;
+
+            // 체크 포인트 번호 값을 가져옴
             nowSelectMapMark.GetComponent<MapMarkInfo>().SendCountInfo(out int warpCount);
+            // 체크 포인트 번호 값을 전역 변수로 저장함
+            warpOrder = warpCount;
+            // 빠른 이동 시작 시 모든 메뉴 UI 를 종료함
+            mainObjTf.GetComponent<UIController>().AllExitMapUI();
 
-            VRIFSceneManager.Instance.LoadCheckPoint("Spring", warpCount);
-
-            mainObjTf.GetComponent<UIController>().OnMainMenuControl();
-
-            Debug.LogFormat("빠른 이동 체크포인트 번호 : {0}", warpCount);
-            Debug.Log("빠른 이동 기능 구현 후 지도 UI 모두 종료");
-
-            //mapController.GetComponent<MapControl>().ConnectCheckPoint(warpCount, out Vector3 checkPointPosition);
-
-            //float[] countPosition = new float[2];
-            //float[] disMapSize = new float[2];
-            //float dragMapSize = mapController.GetComponent<MapControl>().dragMap;
-
-            //disMapSize[0] = mapController.GetComponent<MapControl>().distanceMapSize[0];
-            //disMapSize[1] = mapController.GetComponent<MapControl>().distanceMapSize[1];
-
-            //countPosition[0] = (checkPointPosition.x / disMapSize[0]) + dragMapSize;
-            //countPosition[1] = (checkPointPosition.z / disMapSize[1]) + dragMapSize;
-            //Vector3 resultPosition = new Vector3(countPosition[0], 20f, countPosition[1]);
-
-            //onMapPlayerTf.position = resultPosition;
+            // 화면 암전 효과 기능 코루틴 실행
+            StartCoroutine(TeleportScreen());
         }
+    }     // ReadyCheckPoint()
+
+    // 체크 포인트 빠른 이동 시 화면 암전 효과 기능 코루틴 함수
+    IEnumerator TeleportScreen()
+    {
+        Color screenColor = default;
+        float nowAlpha = 0f;
+        // 암전 효과 스크린을 활성화함
+        blackScreen.gameObject.SetActive(true);
+
+        while (true)
+        {
+            // 스크린의 알파값이 1f 값이 되면 while 문 종료
+            if (nowAlpha >= 1f) { break; }
+
+            // 스크린의 알파값을 미리 지정한 값만큼 증가
+            screenColor.a = nowAlpha += changeAlphaCount;
+            blackScreen.color = screenColor;
+
+            // 미리 지정한 대기 시간만큼 한 프레임 딜레이
+            yield return new WaitForSeconds(changeAlphaTime);
+        }
+
+        // 체크 포인트 빠른 이동 기능의 함수를 실행함
+        FunctionCheckPoint();
+    }     // TeleportScreen()
+
+    // 체크 포인트 빠른 이동 종료 시 화면 암전 효과 종료 기능 코루틴 함수
+    IEnumerator EndTeleportScreen()
+    {
+        Color screenColor = default;
+        float nowAlpha = 1f;
+
+        yield return new WaitForSeconds(0.5f);
+
+        while (true)
+        {
+            // 스크린의 알파값이 0f 값이 되면 while 문 종료
+            if (nowAlpha <= 0f) { break; }
+
+            // 스크린의 알파값을 미리 지정한 값만큼 감소
+            screenColor.a = nowAlpha -= changeAlphaCount;
+            blackScreen.color = screenColor;
+
+            // 미리 지정한 대기 시간만큼 한 프레임 딜레이
+            yield return new WaitForSeconds(changeAlphaTime);
+        }
+
+        // 암전 효과 스크린을 비활성화함
+        blackScreen.gameObject.SetActive(false);
+    }     // EndTeleportScreen()
+    
+    // 체크 포인트 빠른 이동 기능을 실행하는 함수
+    private void FunctionCheckPoint()
+    {
+        // 체크 포인트 빠른 이동 기능 클래스의 함수를 실행함
+        VRIFSceneManager.Instance.LoadCheckPoint("Spring", warpOrder);
+
+        Debug.LogFormat("빠른 이동 체크포인트 번호 : {0}", warpOrder);
+        Debug.Log("빠른 이동 기능 구현 후 지도 UI 모두 종료");
+
+        // 화면 암전 효과 종료 기능 코루틴 실행
+        StartCoroutine(EndTeleportScreen());
+        
+        warpOrder = 0;
     }     // FunctionCheckPoint()
 
     // 지도 카메라 확대, 축소 기능 함수

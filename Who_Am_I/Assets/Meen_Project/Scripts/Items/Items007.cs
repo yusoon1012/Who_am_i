@@ -12,24 +12,20 @@ public class Items007 : ItemsMain
 
     public override void Init()
     {
-        itemID = 3001;
-        itemName = "너프건";
-        itemEnglishName = "NerfGun";
-        itemInfo = "진짜 총을 기대하셨다면 실망하셨겠군요!";
-        rarity = 3;
-        itemStack = 0;
-        itemType = ItemType.EQUIPMENT;
-        itemImageNum = 8;
-
-        cookType = 0;
-        satietyGauge = 0;
-        pooGauge = 0;
-
-        collectType = 0;
+        itemID = 0;
+        itemName = " ";
+        getType = 0;
         hp = 0;
-        range = 0f;
+        rangeRec = 0f;
         respawn = 0f;
+        rarity = 0;
+        itemInfo = " ";
+        getMap = " ";
+        note = " ";
+        itemImageNum = 0;
+        itemEnglishName = " ";
 
-        itemHint = "획득 방법 : ";
+        itemType = ItemType.STUFF;
+        itemStack = 0;
     }     // Init()
 }

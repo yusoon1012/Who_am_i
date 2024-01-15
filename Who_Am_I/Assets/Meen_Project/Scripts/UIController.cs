@@ -56,12 +56,12 @@ public class UIController : MonoBehaviour
     {
         mainObjTf = GetComponent<Transform>().transform;
 
-        mainObjTf.GetComponent<Inventory>().AddInventory("너프건", 1);
+        //mainObjTf.GetComponent<Inventory>().AddInventory("너프건", 1);
     }     // Start()
 
     void Update()
     {
-        if (inputDelay) { return; } // <Solbin> 입력 딜레이 중 입력 금지 
+        if (inputDelay) { return; } // <Solbin> 입력 딜레이 중 입력 금지
 
         UpdateFunction();
     }     // Update()
@@ -76,16 +76,7 @@ public class UIController : MonoBehaviour
     // Update 마다 조건에 맞으면 실행되는 함수
     private void UpdateFunction()
     {
-        if (uiController == 0)
-        {
-            mainObjTf.GetComponent<Meen_MovePlayer>().UpdateFunction();
-
-            //if (npcControllerTf.GetComponent<NPCController>().onNavigationCheck > 0)
-            //{
-            //    npcControllerTf.GetComponent<NPCController>().ConnectUpdateFunction();
-            //}
-        }
-        else if (uiController == 10) { mapCameraTf.GetComponent<CameraControl>().UpdateFunction(); }
+        if (uiController == 10) { mapCameraTf.GetComponent<CameraControl>().UpdateFunction(); }
 
         // 모든 상, 하, 좌, 우 기본 키보드 키 입력 값
         if (Input.GetKeyDown(KeyCode.UpArrow) || vrifAction.Player.LeftController.ReadValue<Vector2>().y >= joystickInput)
@@ -117,16 +108,18 @@ public class UIController : MonoBehaviour
                 DirectionControl(3);
             }
         }
-        else // <Solbin> VR에서의 GetKeyUp 역할
-        {
-            if (uiController == 10)
-            {
-                KeyUpDirectionControl(0);
-                KeyUpDirectionControl(1);
-                KeyUpDirectionControl(2);
-                KeyUpDirectionControl(3);
-            }
-        }
+
+        // <Meen Change>
+        //else // <Solbin> VR에서의 GetKeyUp 역할
+        //{
+        //    if (uiController == 10)
+        //    {
+        //        KeyUpDirectionControl(0);
+        //        KeyUpDirectionControl(1);
+        //        KeyUpDirectionControl(2);
+        //        KeyUpDirectionControl(3);
+        //    }
+        //}
         // 모든 업 키 기능
         // 모든 상, 하, 좌, 우 키보드 키 입력 종료 값
 
@@ -148,15 +141,12 @@ public class UIController : MonoBehaviour
             KeyUpDirectionControl(3);
         }
 
-        // <Solbin> 메뉴 진입
-        if (Input.GetKeyDown(KeyCode.M) || vrifAction.Player.UI_Menu.triggered) // <Solbin> Menu Enter
-        {
-            // <Solbin> 선택 키 감 개선 (키 매핑이 풀리는 문제가 있어 이곳에 삽입)
-            vrifAction.Player.UI_Click.performed += ctx => OnOffControl(0);
-            // <Solbin> ===
+        //// <Solbin> 메뉴 진입
+        //if (Input.GetKeyDown(KeyCode.M) || vrifAction.Player.UI_Menu.triggered) // <Solbin> Menu Enter
+        //{
+        //    OnMainMenuControl();
+        //}
 
-            OnMainMenuControl();
-        }
         // 모든 진입 키 입력 값
         else if (Input.GetKeyDown(KeyCode.Z)) // <Solbin> Menu Select
         {
@@ -165,6 +155,10 @@ public class UIController : MonoBehaviour
         // 모든 뒤로가기 키 입력 값
         else if (Input.GetKeyDown(KeyCode.X) || vrifAction.Player.UI_Exit.triggered) // <Solbin> Exit Menu
         {
+            // <Solbin> 선택 키 감 개선 (키 매핑이 풀리는 문제가 있어 이곳에 삽입)
+            vrifAction.Player.UI_Click.performed += ctx => OnOffControl(0);
+            // <Solbin> ===
+
             OnOffControl(1);
 
             //if (vrifStateSystem.gameState == VRIFStateSystem.GameState.UI) // <Solbin> UI 상태일때
@@ -172,14 +166,6 @@ public class UIController : MonoBehaviour
             //    OnOffControl(1);
             //    vrifStateSystem.ChangeState(VRIFStateSystem.GameState.NORMAL); // <Solbin> NORMAL 상태로 전환
             //}
-        }
-        else if (Input.GetKeyDown(KeyCode.C))
-        {
-            //npcControllerTf.GetComponent<NPCController>().InputController();
-        }
-        else if (Input.GetKeyDown(KeyCode.T))
-        {
-            mapCameraTf.GetComponent<CameraControl>().FunctionCheckPoint();
         }
         // 모든 두번째 상, 하, 좌, 우 키보드 키 입력 값
         else if (Input.GetKeyDown(KeyCode.Keypad8) || vrifAction.Player.RightController.ReadValue<Vector2>().y >= joystickInput)
@@ -224,19 +210,19 @@ public class UIController : MonoBehaviour
         //* Test : 아래의 해당 키를 누르면 인벤토리에 아이템 추가 기능
         else if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            mainObjTf.GetComponent<Inventory>().AddInventory("딸기", 1);
+            mainObjTf.GetComponent<Inventory>().AddInventory("카카오", 1);
         }
         else if (Input.GetKeyDown(KeyCode.Alpha2))
         {
-            mainObjTf.GetComponent<Inventory>().AddInventory("우유", 1);
+            mainObjTf.GetComponent<Inventory>().AddInventory("고구마", 1);
         }
         else if (Input.GetKeyDown(KeyCode.Alpha3))
         {
-            mainObjTf.GetComponent<Inventory>().AddInventory("고기", 1);
+            mainObjTf.GetComponent<Inventory>().AddInventory("꿀", 1);
         }
         else if (Input.GetKeyDown(KeyCode.Alpha4))
         {
-            mainObjTf.GetComponent<Inventory>().AddInventory("송이 버섯", 1);
+            mainObjTf.GetComponent<Inventory>().AddInventory("미완성 불도장", 1);
         }
 
 
@@ -430,6 +416,13 @@ public class UIController : MonoBehaviour
         {
             switch (uiController)
             {
+                // 메뉴가 아무것도 안열려 있으면 메뉴 UI 를 연다
+                case 0:
+                    //StopMovePlayer();
+                    uiController = 1;
+                    mainObjTf.GetComponent<MainMenu>().OnMainMenu();
+                    OpenMenuCheck(); // <Solbin> 메인메뉴 열릴 때 => UI 상태로 전환 
+                    break;
                 case 1:
                     uiController = 0;
                     mainObjTf.GetComponent<MainMenu>().OffMainMenu();
@@ -488,6 +481,20 @@ public class UIController : MonoBehaviour
             }
         }
     }     // OnOffControl()
+
+    // 모든 메뉴 닫기 기능이 개발 중간에 제거되었기 때문에 빠른 이동 기능을 실행하였을 때 모든 메뉴를 닫는 기능의 함수
+    public void AllExitMapUI()
+    {
+        if (uiController == 11)
+        {
+            mapCameraTf.GetComponent<CameraControl>().ExitCheckPointInfo();
+            mapControllerTf.GetComponent<MapControl>().ExitMap();
+            mainObjTf.GetComponent<MainMenu>().DisconnectMenu();
+            mainObjTf.GetComponent<MainMenu>().OffMainMenu();
+            ExitMenuCheck();
+            uiController = 0;
+        }
+    }     // AllExitMapUI()
 
     // 메인 메뉴 버튼을 눌렀을 때 메인 메뉴를 열고, 다른 메뉴들이 열려있으면 모두 닫고 초기화 시키는 함수
     public void OnMainMenuControl()

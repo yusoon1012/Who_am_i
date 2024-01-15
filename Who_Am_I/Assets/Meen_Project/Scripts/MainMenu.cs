@@ -14,7 +14,9 @@ public class MainMenu : MonoBehaviour
     public GameObject[] menuImage = new GameObject[8];
     // 선택된 메뉴 표시 오브젝트
     public GameObject[] selectMenu = new GameObject[8];
-
+    // 메인 메뉴 메뉴얼 오브젝트
+    public GameObject menuManualObj;
+    // 맵 컨트롤러 트랜스폼
     public Transform mapControllerTf;
 
     // 아이템 데이터 그룹 메인 오브젝트 트랜스폼
@@ -37,6 +39,7 @@ public class MainMenu : MonoBehaviour
     {
         menuScreen.SetActive(true);
         mainMenu.SetActive(true);
+        menuManualObj.SetActive(true);
         selectMenu[order].SetActive(true);
 
         for (int i = 0; i < 8; i++)
@@ -54,6 +57,7 @@ public class MainMenu : MonoBehaviour
         }
 
         selectMenu[order].SetActive(false);
+        menuManualObj.SetActive(false);
         menuScreen.SetActive(false);
         mainMenu.SetActive(false);
     }     // OffMainMenu()
@@ -67,18 +71,21 @@ public class MainMenu : MonoBehaviour
                 mainObjTf.GetComponent<UIController>().uiController = 2;
                 menuImage[6].SetActive(false);
                 menuImage[7].SetActive(false);
+                menuManualObj.SetActive(false);
                 mainObjTf.GetComponent<Inventory>().ControlInventory();
                 break;
             case 3:
                 mainObjTf.GetComponent<UIController>().uiController = 10;
                 menuImage[6].SetActive(false);
                 menuImage[7].SetActive(false);
+                menuManualObj.SetActive(false);
                 mapControllerTf.GetComponent<MapControl>().OpenMap();
                 break;
             case 4:
                 mainObjTf.GetComponent<UIController>().uiController = 5;
                 menuImage[6].SetActive(false);
                 menuImage[7].SetActive(false);
+                menuManualObj.SetActive(false);
                 mainObjTf.GetComponent<Dictionary>().OnDictionary();
                 break;
         }
@@ -89,6 +96,7 @@ public class MainMenu : MonoBehaviour
     {
         menuImage[6].SetActive(true);
         menuImage[7].SetActive(true);
+        menuManualObj.SetActive(true);
     }     // DisconnectMenu()
 
     // 메인 메뉴에서 메뉴 선택을 변경하는 함수
