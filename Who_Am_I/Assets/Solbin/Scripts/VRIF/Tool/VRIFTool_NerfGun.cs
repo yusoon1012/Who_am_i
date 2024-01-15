@@ -123,9 +123,9 @@ public class VRIFTool_NerfGun : MonoBehaviour
     {
         if (_prey.layer == LayerMask.NameToLayer("Animal"))
         {
-            if (_prey.GetComponent<ThisAnimalData>())
+            if (_prey.GetComponent<Animal>())
             {
-                _prey.GetComponent<ThisAnimalData>().Hit(1); // 1만큼 데미지
+                _prey.GetComponent<Animal>().Hit(1); // 1만큼 데미지
 
                 huntEvent?.Invoke(this, EventArgs.Empty); // 수렵 완료 이벤트 발생
             }
