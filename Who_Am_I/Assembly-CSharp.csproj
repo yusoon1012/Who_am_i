@@ -59,7 +59,6 @@
   <ItemGroup>
     <Compile Include="Assets\Oculus\SampleFramework\Core\Locomotion\Scripts\TeleportAimHandlerParabolic.cs" />
     <Compile Include="Assets\_yusoon\Scripts\Quests\QuestNPC.cs" />
-    <Compile Include="Assets\_PJO\Scripts\ThisAnimalAI.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Usage\Firebase\StartCrashlytics.cs" />
     <Compile Include="Assets\Solbin\Input System\Oculus\Player Action.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Core\TrackedDevice.cs" />
@@ -74,6 +73,7 @@
     <Compile Include="Assets\BNG Framework\Scripts\Core\SteeringWheel.cs" />
     <Compile Include="Assets\Solbin\Scripts\Oculus\Tool\Fishing Rod\Tool_FishingRod.cs" />
     <Compile Include="Assets\Meen_Project\Scripts\Crafting\Crafting001.cs" />
+    <Compile Include="Assets\_PJO\Scripts\Npc\TestQuest.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Usage\Passthrough\Scripts\HandMeshUI.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Core\HingeHelper.cs" />
     <Compile Include="Assets\Meen_Project\Scripts\Crafting\CraftingMain.cs" />
@@ -83,7 +83,7 @@
     <Compile Include="Assets\Oculus\SampleFramework\Core\HandsInteraction\Scripts\Tools\InteractableTool.cs" />
     <Compile Include="Assets\Solbin\Scripts\VRIF\Player\Player Controller\VRIFPlayerClimbing.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Components\VelocityTracker.cs" />
-    <Compile Include="Assets\_PJO\Scripts\MeshController.cs" />
+    <Compile Include="Assets\_PJO\Scripts\Tool\MeshController.cs" />
     <Compile Include="Assets\MRTK\SDK\Experimental\NonNativeKeyboard\Scripts\CapsLockHighlight.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Core\Video\Plugins\Android\NativeVideoPlayer.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Extras\LiquidWobble.cs" />
@@ -117,6 +117,7 @@
     <Compile Include="Assets\Solbin\Scripts\VRIF\System\VRIFItemSystem.cs" />
     <Compile Include="Assets\Solbin\Scripts\VRIF\Tool\VRIFTool_Ladder.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Core\DistanceGrab\Scripts\PauseOnInputLoss.cs" />
+    <Compile Include="Assets\_PJO\Scripts\Quest\Quest_Jun.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Core\JoystickVehicleControl.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Core\DebugUI\Scripts\DebugUIBuilder.cs" />
     <Compile Include="Assets\Meen_Project\Scripts\Items\Items004.cs" />
@@ -157,6 +158,7 @@
     <Compile Include="Assets\Solbin\Scripts\VRIF\System\VRIFInputSystem.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Extras\MovingPlatform.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Usage\TouchPro\Scripts\Ui\UiDeviceInspector.cs" />
+    <Compile Include="Assets\_PJO\Scripts\Quest\QuestManager_Jun.cs" />
     <Compile Include="Assets\Solbin\Scripts\VRIF\Player\Player Range\VRIFPlayerCrafting.cs" />
     <Compile Include="Assets\Solbin\Scripts\VRIF\Tool\Dragonfly Net\VRIFTool_DragonflyOrigin.cs" />
     <Compile Include="Assets\Solbin\Scripts\VRIF\Tool\Dragonfly Net\VRIFTool_DragonflyDir.cs" />
@@ -172,12 +174,13 @@
     <Compile Include="Assets\_yusoon\Scripts\LookatCamera.cs" />
     <Compile Include="Assets\_yusoon\Scripts\Quests\QuestData.cs" />
     <Compile Include="Assets\_yusoon\Scripts\Select.cs" />
+    <Compile Include="Assets\NewBehaviourScript.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Weapons\BulletInsert.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Usage\Passthrough\Scripts\PassthroughController.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Extras\Explosive.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Extras\HandModelSwitcher.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Usage\HandsTrainExample\Scripts\WindmillController.cs" />
-    <Compile Include="Assets\_PJO\Scripts\ThisAnimalData.cs" />
+    <Compile Include="Assets\_PJO\Scripts\Animals\Animal.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Helpers\StaticBatch.cs" />
     <Compile Include="Assets\Meen_Project\Scripts\NavigationNPC\StartNavigation.cs" />
     <Compile Include="Assets\Meen_Project\Scripts\ItemCrafting.cs" />
@@ -230,11 +233,11 @@
     <Compile Include="Assets\BNG Framework\Scripts\Components\GrabbableHighlightMaterial.cs" />
     <Compile Include="Assets\Meen_Project\Scripts\ItemManager.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Core\Locomotion\Scripts\TeleportTransitionBlink.cs" />
-    <Compile Include="Assets\_PJO\Scripts\TerrainMeshSend.cs" />
+    <Compile Include="Assets\_PJO\Scripts\Tool\TerrainMeshSend.cs" />
     <Compile Include="Assets\BNG Framework\HandPoser\Scripts\EditorHandle.cs" />
     <Compile Include="Assets\Meen_Project\Scripts\LGM_CSVReader.cs" />
     <Compile Include="Assets\_yusoon\Scripts\Quests\PlayerEvent.cs" />
-    <Compile Include="Assets\_PJO\Scripts\DropItem.cs" />
+    <Compile Include="Assets\_PJO\Scripts\Animals\DropItem.cs" />
     <Compile Include="Assets\Solbin\Scripts\Oculus\Player\Player_Climbing.cs" />
     <Compile Include="Assets\BNG Framework\HandPoser\Scripts\SavePoseBinding.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Usage\SceneManager\Scripts\BouncingBallLogic.cs" />
@@ -284,10 +287,11 @@
     <Compile Include="Assets\_PJO\Scripts\Globel\Define.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Usage\HandsTrainExample\Scripts\HandsActiveChecker.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\UI\VRKeyboardKey.cs" />
+    <Compile Include="Assets\_yusoon\Scripts\Quests\Table\QuestMainTable.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Core\SnapZoneScale.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Usage\SceneManager\Scripts\BouncingBallMgr.cs" />
     <Compile Include="Assets\Solbin\Scripts\VRIF\Tool\Dragonfly Net\VRIFTool_DragonflyRestricted.cs" />
-    <Compile Include="Assets\_PJO\Scripts\SaveMesh.cs" />
+    <Compile Include="Assets\_PJO\Scripts\Tool\SaveMesh.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Helpers\JointHelper.cs" />
     <Compile Include="Assets\Meen_Project\Scripts\Quests\Meen_QuestManager.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Extras\FPSText.cs" />
@@ -299,6 +303,7 @@
     <Compile Include="Assets\Oculus\SampleFramework\Usage\Passthrough\Scripts\EnableUnpremultipliedAlpha.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Components\Damageable.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Helpers\UITrigger.cs" />
+    <Compile Include="Assets\_yusoon\Scripts\Quests\QuestReader.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Core\Locomotion\Scripts\TeleportAimVisualLaser.cs" />
     <Compile Include="Assets\Meen_Project\Scripts\SaveItemInfo.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Core\GrabPoint.cs" />
@@ -322,7 +327,7 @@
     <Compile Include="Assets\Solbin\Scripts\Oculus\Climbing\Climbing_SideJump.cs" />
     <Compile Include="Assets\BNG Framework\HandPoser\Scripts\BoneMapping.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Core\Locomotion\Scripts\TeleportInputHandlerHMD.cs" />
-    <Compile Include="Assets\_PJO\Scripts\RemoveComponent.cs" />
+    <Compile Include="Assets\_PJO\Scripts\Tool\RemoveComponent.cs" />
     <Compile Include="Assets\Solbin\Scripts\VRIF\Map Object\VRIFMap_ZipLine.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Core\DistanceGrab\Scripts\GrabManager.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\UI\VRKeyboard.cs" />
@@ -340,6 +345,7 @@
     <Compile Include="Assets\Oculus\SampleFramework\Core\Locomotion\Scripts\TeleportTransitionWarp.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Helpers\HandPhysics.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Core\Video\Scripts\VectorUtil.cs" />
+    <Compile Include="Assets\_PJO\Scripts\Player\MBTI.cs" />
     <Compile Include="Assets\Solbin\Scripts\VRIF\Manager\VRIFSceneManager.cs" />
     <Compile Include="Assets\Meen_Project\Scripts\NavigationNPC\NPCController.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Extras\Marker.cs" />
@@ -354,27 +360,30 @@
     <Compile Include="Assets\Solbin\Scripts\Oculus\Player\PlayerSystem.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Helpers\RagdollHelper.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Usage\Firebase\SampleUI.cs" />
-    <Compile Include="Assets\_PJO\Scripts\SendDamage.cs" />
+    <Compile Include="Assets\_PJO\Scripts\Animals\SendDamage.cs" />
     <Compile Include="Assets\Solbin\Input System\VRIF\VRIF Action.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Core\Lever.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Core\Locomotion\Scripts\TeleportOrientationHandler.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Extras\IKDummy.cs" />
+    <Compile Include="Assets\_PJO\Scripts\Npc\Npc.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Components\GrabAction.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Usage\Locomotion\Scripts\LocomotionSampleSupport.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Extras\LaserSword.cs" />
-    <Compile Include="Assets\_PJO\Scripts\InvertMesh.cs" />
+    <Compile Include="Assets\_PJO\Scripts\Tool\InvertMesh.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Components\CharacterIK.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Extras\ProjectileLauncher.cs" />
     <Compile Include="Assets\Meen_Project\Scripts\Items\Items001.cs" />
-    <Compile Include="Assets\_PJO\Scripts\AddVertexObject.cs" />
-    <Compile Include="Assets\_PJO\Scripts\TargetMeshSend.cs" />
+    <Compile Include="Assets\_PJO\Scripts\Tool\AddVertexObject.cs" />
+    <Compile Include="Assets\_PJO\Scripts\Tool\TargetMeshSend.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Core\PlayerTeleport.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Usage\SpatialAnchor\Scripts\SpatialAnchorLoader.cs" />
     <Compile Include="Assets\_yusoon\Scripts\Quests\QuestItem.cs" />
+    <Compile Include="Assets\_yusoon\Scripts\SaveUserData.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Components\ConstrainLocalPosition.cs" />
     <Compile Include="Assets\BNG Framework\HandPoser\Scripts\PoseableObject.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Helpers\IgnoreColliders.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Extras\CustomCenterOfMass.cs" />
+    <Compile Include="Assets\_PJO\Scripts\Globel\CSVReader.cs" />
     <Compile Include="Assets\BNG Framework\HandPoser\Scripts\FingerTipCollider.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Components\FollowTransform.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Core\HandsInteraction\Scripts\Interactable.cs" />
@@ -388,6 +397,7 @@
     <Compile Include="Assets\BNG Framework\Scripts\Extras\SlidingDoorMover.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Utility\FixNonUniformScale.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Core\Locomotion\Scripts\TeleportTargetHandlerNavMesh.cs" />
+    <Compile Include="Assets\Solbin\Scripts\VRIF\Map Object\VRIFMap_SubPassScene.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Usage\HandsTrainExample\Scripts\ControllerBoxController.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Usage\SceneManager\Scripts\Spawnable.cs" />
     <Compile Include="Assets\Meen_Project\Scripts\NavigationNPC\MoveNavigation.cs" />
@@ -416,20 +426,21 @@
     <Compile Include="Assets\BNG Framework\Scripts\Extras\DrawerSound.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Core\DebugUI\Scripts\LaserPointer.cs" />
     <Compile Include="Assets\MRTK\SDK\Experimental\NonNativeKeyboard\Scripts\SymbolKeyboard.cs" />
-    <Compile Include="Assets\_PJO\Scripts\Decimation.cs" />
+    <Compile Include="Assets\_PJO\Scripts\Tool\Decimation.cs" />
     <Compile Include="Assets\Meen_Project\Scripts\Quests\Quest000.cs" />
-    <Compile Include="Assets\_PJO\Scripts\AnimalsData.cs" />
+    <Compile Include="Assets\_PJO\Scripts\Animals\AnimalsData.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Usage\AppDeeplink\AppDeeplinkUI.cs" />
     <Compile Include="Assets\Solbin\Scripts\VRIF\Tool\Dragonfly Net\VRIFTool_DragonflyNet.cs" />
     <Compile Include="Assets\Solbin\Scripts\VRIF\Tool\Fishing Rod\VRIFTool_FishingRod.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Usage\SceneManager\Scripts\MyCustomSceneModelLoader.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Usage\TouchPro\Scripts\SceneSettings.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Core\HandsInteraction\Scripts\ButtonTriggerZone.cs" />
+    <Compile Include="Assets\_yusoon\Scripts\Quests\Table\QuestProccessTable.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Components\GrabbableBezierLine.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Helpers\HandController.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Components\RotateTowards.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Utility\DestroyIfPlayMode.cs" />
-    <Compile Include="Assets\_PJO\Scripts\GetMapVertex.cs" />
+    <Compile Include="Assets\_PJO\Scripts\Tool\GetMapVertex.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\UI\UIButtonCollider.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Components\CharacterYOffset.cs" />
     <Compile Include="Assets\BNG Framework\HandPoser\Scripts\XRTrackedPoseDriver.cs" />
@@ -461,6 +472,7 @@
     <Compile Include="Assets\BNG Framework\HandPoser\Scripts\FingerJoint.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Usage\StartScene\Scripts\StartMenu.cs" />
     <Compile Include="Assets\Meen_Project\Scripts\SaveCollections.cs" />
+    <Compile Include="Assets\_yusoon\Scripts\SaveDatabase.cs" />
     <Compile Include="Assets\Solbin\Scripts\VRIF\Tool\VRIFTool_NerfGun.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Usage\SceneManager\Scripts\FurnitureSpawner.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Core\BNGPlayerController.cs" />
@@ -477,6 +489,7 @@
     <Compile Include="Assets\BNG Framework\Scripts\Core\GrabbablesInTrigger.cs" />
     <Compile Include="Assets\_yusoon\Scripts\Quests\QuestEvent.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Weapons\AmmoDispenser.cs" />
+    <Compile Include="Assets\Solbin\Scripts\VRIF\Manager\VRIFGameManager.cs" />
     <Compile Include="Assets\_yusoon\Scripts\DialogueManager.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Weapons\Bullet.cs" />
     <Compile Include="Assets\BNG Framework\Scripts\Components\LineToTransform.cs" />
@@ -520,13 +533,6 @@
     <Compile Include="Assets\Oculus\SampleFramework\Usage\Passthrough\Scripts\PassthroughStyler.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Usage\SpatialAnchor\Scripts\AnchorUIManager.cs" />
     <Compile Include="Assets\Meen_Project\Scripts\Quests\QuestsMain.cs" />
-    <Compile Include="Assets\_yusoon\Scripts\Quests\Table\QuestProccessTable.cs" />
-    <Compile Include="Assets\Solbin\Scripts\VRIF\Map Object\VRIFMap_SubPassScene.cs" />
-    <Compile Include="Assets\_yusoon\Scripts\Quests\QuestReader.cs" />
-    <Compile Include="Assets\_yusoon\Scripts\Quests\Table\QuestMainTable.cs" />
-    <Compile Include="Assets\Solbin\Scripts\VRIF\Manager\VRIFGameManager.cs" />
-    <Compile Include="Assets\_yusoon\Scripts\SaveDatabase.cs" />
-    <Compile Include="Assets\_yusoon\Scripts\SaveUserData.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Suriyun\UnityChanShader\Shader\Unitychan_chara_fuku.shader" />

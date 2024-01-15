@@ -6,9 +6,9 @@ using UnityEditor;
 public class AddVertexObjectEditor : Editor
 {
     #region Property members
-    SerializedProperty targetObject;        // 해당 오브젝트
-    SerializedProperty saveParent;          // 저장될 위치
-    SerializedProperty height;              // 예외 높이
+    SerializedProperty targetObject;                                // 해당 오브젝트
+    SerializedProperty saveParent;                                  // 저장될 위치
+    SerializedProperty height;                                      // 예외 높이
     #endregion
 
     #region private members
@@ -25,14 +25,14 @@ public class AddVertexObjectEditor : Editor
         targetObject = serializedObject.FindProperty("targetObject");
         saveParent = serializedObject.FindProperty("saveParent");
         height = serializedObject.FindProperty("height");
-    }       // OnEnable()
+    }
 
     public override void OnInspectorGUI()
     {
         // 인스펙터 창 업데이트
         serializedObject.Update();
 
-        // 인스펙터 창 업데이트
+        // 인스펙터에 변수를 편집 가능한 필드로 표시
         EditorGUILayout.PropertyField(targetObject, new GUIContent("해당 오브젝트"));
         EditorGUILayout.PropertyField(saveParent, new GUIContent("저장될 위치"));
         EditorGUILayout.PropertyField(height, new GUIContent("예외 높이"));
@@ -45,18 +45,20 @@ public class AddVertexObjectEditor : Editor
 
         // SerializedProperty 변경사항 적용
         serializedObject.ApplyModifiedProperties();
-    }       // OnInspectorGUI()
+    }
     #endregion
 
     #region Editor Initialization and Setup
+    // 초기 데이터 초기화 메서드
     private void EditorStart()
     {
-        InitializationComponents();             // 컴포넌트 초기화
-        if (HasNullReference()) { return; }     // Null 
+        InitializationComponents();
+        if (HasNullReference()) { return; }
 
-        AddObject();
+        EditorAddVertexObject();
     }
 
+    // 초기 컴포넌트 초기화 메서드
     private void InitializationComponents()
     {
         saveTransform = GFuncE.SetTransform(saveParent);
@@ -64,6 +66,7 @@ public class AddVertexObjectEditor : Editor
         targetMesh = targetMeshFilter.sharedMesh != null ? targetMeshFilter.sharedMesh : null;
     }
 
+    // Null 체크
     private bool HasNullReference()
     {
         if (saveTransform == null) { GFuncE.SubmitNonFindText(saveParent, typeof(Transform)); return true; }
@@ -75,7 +78,8 @@ public class AddVertexObjectEditor : Editor
     #endregion
 
     #region Editor function start
-    private void AddObject()
+    // 메쉬의 각 정점에 콜라이더가 있는 오브젝트를 배치하는 메서드
+    private void EditorAddVertexObject()
     {
         // 박스 콜라이더를 생성할 빈 GameObject 생성
         GameObject newObject = new GameObject("pointObject");
@@ -108,6 +112,6 @@ public class AddVertexObjectEditor : Editor
 
         // 빈 GameObject 제거
         DestroyImmediate(newObject);
-    }       // AddObject()
+    }
     #endregion
 }

@@ -172,4 +172,19 @@ public static partial class GFunc
     {
         Debug.Log($"{_object.name} not found {typeof(T).Name}");
     }
+
+    public static void SubmitNonFindText(this GameObject _object, System.Type _componentType)
+    {
+        Debug.Log($"{_object.name} not found {_componentType}");
+    }
+
+    public static GameObject GetGameObjectToList(List<GameObject> _list, string _objectName)
+    {
+        foreach (GameObject list in _list)
+        {
+            if (list.name == _objectName) { return list; }
+        }
+
+        return null;
+    }
 }

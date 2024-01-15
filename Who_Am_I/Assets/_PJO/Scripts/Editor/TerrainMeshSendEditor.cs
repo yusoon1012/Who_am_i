@@ -6,20 +6,26 @@ using UnityEngine;
 [CustomEditor(typeof(TerrainMeshSend))]
 public class TerrainMeshSendEditor : Editor
 {
-    // 정보를 보내는 오브젝트
-    SerializedProperty pushObject;
-    // 정보를 받을 오브젝트
-    SerializedProperty pullObject;
+    #region Property members
+    SerializedProperty pushObject;      // 정보를 보내는 오브젝트
+    SerializedProperty pullObject;      // 정보를 받을 오브젝트
+    #endregion
 
-    // 정보를 보낼 오브젝트의 Terrain
-    private Terrain pushTerrain;
+    #region private members
+    private Terrain pushTerrain;            // 정보를 보낼 오브젝트의 Terrain
+    private MeshFilter pullMeshFilter;      // 정보를 받을 오브젝트의 메쉬 필터
+    private Mesh pullMesh;                  // 정보를 받을 오브젝트의 메쉬
+    private Mesh copyMesh;                  // 정보를 받을 오브젝트의 메쉬 복사본
+    private List<Vector3> newVerties;       // 수정된 새로운 정점을 저장할 리스트
+    #endregion
 
+    #region Editor default
     private void OnEnable()
     {
         // 프로퍼티 초기화
         pushObject = serializedObject.FindProperty("pushObject");
         pullObject = serializedObject.FindProperty("pullObject");
-    }       // OnEnable()
+    }
 
     public override void OnInspectorGUI()
     {
@@ -33,70 +39,86 @@ public class TerrainMeshSendEditor : Editor
         // "Apply" 버튼 클릭시 매쉬 바꾸기
         if (GUILayout.Button("Apply"))
         {
-            SetMesh();
+            EditorStart();
         }
 
         // SerializedProperty 변경사항 적용
         serializedObject.ApplyModifiedProperties();
-    }       // OnInspectorGUI()
+    }
+    #endregion
 
-    private void SetMesh()
+    #region Editor Initialization and Setup
+    // 초기 데이터 초기화 메서드
+    private void EditorStart()
     {
-        // { 터레인 가져오기
+        InitializationComponents();
+        if (HasNullReference()) { return; }
+        InitializationNew();
+
+        EditorTerrainMeshSend();
+    }
+
+    // 초기 컴포넌트 초기화 메서드
+    private void InitializationComponents()
+    {
         pushTerrain = GFuncE.SetComponent<Terrain>(pushObject);
-        if (pushObject == null)
-        {
-            GFuncE.SubmitNonFindText(pushObject, typeof(Terrain));
-            return;
-        }
-        // } 터레인 가져오기
+        pullMeshFilter = GFuncE.SetComponent<MeshFilter>(pullObject);
+        pullMesh = pullMeshFilter.sharedMesh != null ? pullMeshFilter.sharedMesh : null;
+        copyMesh = GFuncE.CopyMesh(pullMesh);
+    }
 
-        // { 저장할 pullObject 메쉬 가져오기
-        MeshFilter pullMeshFilter = GFuncE.SetComponent<MeshFilter>(pullObject);
-        if (pullMeshFilter == null)
-        {
-            GFuncE.SubmitNonFindText(pullObject, typeof(MeshFilter));
-            return;
-        }
-        Mesh pullMesh = pullMeshFilter.sharedMesh != null ? pullMeshFilter.sharedMesh : null;
-        if (pullMeshFilter.sharedMesh == null)
-        {
-            GFuncE.SubmitNonFindText(pullObject, typeof(Mesh));
-            return;
-        }
-        // } 저장할 pullObject 메쉬 가져오기
+    // Null 체크
+    private bool HasNullReference()
+    {
+        if (pushObject == null) { GFuncE.SubmitNonFindText(pushObject, typeof(Terrain)); return true; }
+        if (pullMeshFilter == null) { GFuncE.SubmitNonFindText(pullObject, typeof(MeshFilter)); return true; }
+        if (pullMesh == null) { GFuncE.SubmitNonFindText(pullObject, typeof(Mesh)); return true; }
+       
+        return false;
+    }
 
-        // Unity에서 기본으로 제공하는 메쉬를 보호
-        Mesh copyMesh = GFuncE.CopyMesh(pullMesh);
+    // 초기 배열, 리스트, 딕션어리 생성
+    private void InitializationNew()
+    {
+        newVerties = new List<Vector3>();
+    }
+    #endregion
 
-        // 수정된 정점을 저장할 List
-        List<Vector3> newVectors = new List<Vector3>();
+    #region Editor function start
+    // 특정 오브젝트의 Terrain의 높이맵을 이용해 메쉬를 적용하는 메서드
+    private void EditorTerrainMeshSend()
+    {
+        copyMesh.vertices = SetVertices();
 
-        // 각 정점을 수정하여 newVectors리스트에 저장
+        SetMesh();
+    }
+
+    //새로운 Vertice의 위치를 설정하는 메서드
+    private Vector3[] SetVertices()
+    {
         foreach (Vector3 vertice in copyMesh.vertices)
         {
             // 월드 좌표로 변환된 정점 위치 계산
             Vector4 worldPos = pullMeshFilter.transform.localToWorldMatrix * vertice;
-
-            // 정점 복사본 생성
             Vector3 newVertices = vertice;
 
             // 복사본 정점의 y좌표를 해당 월드 좌표에서의 높이로 수정
             newVertices.y = pushTerrain.SampleHeight(worldPos);
 
-            // 수정된 정점을 newVectors리스트에 저장
-            newVectors.Add(newVertices);
+            newVerties.Add(newVertices);
         }
 
-        // targetObj 메쉬의 정점을 수정된 정점으로 설정
-        copyMesh.SetVertices(newVectors.ToArray());
+        return newVerties.ToArray();
+    }
 
-        // { targetObj 메쉬의 법선, 접선, 경계를 재계산
+    // Mesh의 데이터를 재계산하고 적용하는 메서드
+    private void SetMesh()
+    {
         copyMesh.RecalculateNormals();
         copyMesh.RecalculateTangents();
         copyMesh.RecalculateBounds();
-        // } targetObj 메쉬의 법선, 접선, 경계를 재계산
 
         pullMeshFilter.sharedMesh = copyMesh;
-    }       // CopyMesh()
+    }
+    #endregion
 }

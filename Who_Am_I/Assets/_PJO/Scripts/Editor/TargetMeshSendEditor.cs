@@ -1,25 +1,32 @@
 using UnityEngine;
 using UnityEditor;
-using static UnityEditor.Searcher.SearcherWindow.Alignment;
-using UnityEngine.ProBuilder;
 using System.Collections.Generic;
 
 [CustomEditor(typeof(TargetMeshSend))]
 public class TargetMeshSendEditor : Editor
 {
-    // 정보를 보내는 오브젝트
-    SerializedProperty pushObject;
-    // 정보를 받을 오브젝트
-    SerializedProperty pullObject;
+    #region Property members
+    SerializedProperty pushObject;      // 정보를 보내는 오브젝트
+    SerializedProperty pullObject;      // 정보를 받을 오브젝트
+    #endregion
 
-    private int floorMask;
+    #region private members
+    private MeshFilter pushMeshFilter;      // 정보를 보내는 오브젝트의 메쉬 필터
+    private Mesh pushMesh;                  // 정보를 보내는 오브젝트의 메쉬
+    private MeshFilter pullMeshFilter;      // 정보를 받을 오브젝트의 메쉬 필터
+    private Mesh pullMesh;                  // 정보를 받을 오브젝트의 메쉬
+    private Mesh copyMesh;                  // 정보를 받을 오브젝트의 메쉬 복사본
+    private List<Vector3> newVerties;       // 수정된 새로운 정점을 저장할 리스트
+    private float RAY_DISTANCE = 10f;       // 레이케스트 길이 상수
+    #endregion
 
+    #region Editor default
     private void OnEnable()
     {
         // 프로퍼티 초기화
         pushObject = serializedObject.FindProperty("pushObject");
         pullObject = serializedObject.FindProperty("pullObject");
-    }       // OnEnable()
+    }
 
     public override void OnInspectorGUI()
     {
@@ -33,72 +40,112 @@ public class TargetMeshSendEditor : Editor
         // "Apply" 버튼 클릭시 메쉬 바꾸기
         if (GUILayout.Button("Apply"))
         {
-            SetMesh();
+            EditorStart();
         }
 
         // SerializedProperty 변경사항 적용
         serializedObject.ApplyModifiedProperties();
-    }       // OnInspectorGUI()
+    }
+    #endregion
 
-    private void SetMesh()
+    #region Editor Initialization and Setup
+    // 초기 데이터 초기화 메서드
+    private void EditorStart()
     {
-        GameObject pushGameObject = GFuncE.SetGameObject(pushObject);
-        MeshFilter pushMeshFilter = GFuncE.SetComponent<MeshFilter>(pushObject);
-        if (pushMeshFilter == null) { GFuncE.SubmitNonFindText(pushObject, typeof(MeshFilter)); return; }
-        Mesh pushMesh = pushMeshFilter.sharedMesh != null ? pushMeshFilter.sharedMesh : null;
-        if (pushMesh == null) { GFuncE.SubmitNonFindText(pushObject, typeof(Mesh)); return; }
+        InitializationComponents();
+        if (HasNullReference()) { return; }
+        InitializationSetup();
 
-        MeshFilter pullMeshFilter = GFuncE.SetComponent<MeshFilter>(pullObject);
-        if (pullMeshFilter == null) { GFuncE.SubmitNonFindText(pullObject, typeof(MeshFilter)); return; }
-        Mesh pullMesh = pullMeshFilter.sharedMesh != null ? pullMeshFilter.sharedMesh : null;
-        if (pullMesh == null) { GFuncE.SubmitNonFindText(pullObject, typeof(Mesh)); return; }
+        EditorTargetMeshSend();
+    }
 
-        Mesh copyMesh = GFuncE.CopyMesh(pullMesh);
-        List<Vector3> modifiedVertices = new List<Vector3>(copyMesh.vertices);
+    // 초기 컴포넌트 초기화 메서드
+    private void InitializationComponents()
+    {
+        pushMeshFilter = GFuncE.SetComponent<MeshFilter>(pushObject);
+        pushMesh = pushMeshFilter.sharedMesh != null ? pushMeshFilter.sharedMesh : null;
+        pullMeshFilter = GFuncE.SetComponent<MeshFilter>(pullObject);
+        pullMesh = pullMeshFilter.sharedMesh != null ? pullMeshFilter.sharedMesh : null;
+        copyMesh = GFuncE.CopyMesh(pullMesh);
+    }
 
+    // Null 체크
+    private bool HasNullReference()
+    {
+        if (pushMeshFilter == null) { GFuncE.SubmitNonFindText(pushObject, typeof(MeshFilter)); return true; }
+        if (pushMesh == null) { GFuncE.SubmitNonFindText(pushObject, typeof(Mesh)); return true; }
+        if (pullMeshFilter == null) { GFuncE.SubmitNonFindText(pullObject, typeof(MeshFilter)); return true; }
+        if (pullMesh == null) { GFuncE.SubmitNonFindText(pullObject, typeof(Mesh)); return true; }
+
+        return false;
+    }
+
+    // 초기 값 설정 메서드
+    private void InitializationSetup()
+    {
+        newVerties = new List<Vector3>(copyMesh.vertices);
+    }
+    #endregion
+
+    #region Editor function start
+    // 특정 오브젝트의 메쉬를 적용하는 메서드
+    private void EditorTargetMeshSend()
+    {
+        SetVertices();
+
+        copyMesh.vertices = SetVertices();
+
+        SetMesh();
+    }
+
+    //새로운 Vertice의 위치를 설정하는 메서드
+    private Vector3[] SetVertices()
+    {
         for (int i = 0; i < copyMesh.vertices.Length; i++)
         {
             Vector3 worldPos = pullMeshFilter.transform.TransformPoint(copyMesh.vertices[i]);
-            float rayDistance = 10f;
-            RaycastHit[] hits = Physics.RaycastAll(worldPos, Vector3.down, rayDistance);
+
+            RaycastHit[] hits = Physics.RaycastAll(worldPos, Vector3.down, RAY_DISTANCE);
 
             foreach (RaycastHit hit in hits)
             {
-                if (hit.transform.name == pushGameObject.name)
+                if (hit.transform.name == pushObject.name)
                 {
-                    // 대신 수정된 데이터를 리스트에 추가
-                    Debug.Log(pushMeshFilter.transform.InverseTransformPoint(hit.point).y);
+                    // 수정된 정점 데이터를 리스트에 추가
+                    newVerties[i] = new Vector3(newVerties[i].x, pushMeshFilter.transform.InverseTransformPoint(hit.point).y, newVerties[i].z);
 
-                    // y값만 갱신
-                    modifiedVertices[i] = new Vector3(modifiedVertices[i].x, pushMeshFilter.transform.InverseTransformPoint(hit.point).y, modifiedVertices[i].z);
-
-                    Debug.Log(modifiedVertices[i].y);
                     break;
                 }
             }
         }
 
-        // SetVertices 메서드를 사용하여 수정된 데이터를 적용
-        copyMesh.SetVertices(modifiedVertices);
+        return newVerties.ToArray();
+    }
 
+    // 변경된 메쉬 적용
+    private void SetMesh()
+    {
         pullMeshFilter.sharedMesh = copyMesh;
     }
-        //foreach (Vector3 vertex in copyMesh.vertices)
-        //{
-        //    Vector3 worldPos = pullMeshFilter.transform.TransformPoint(vertex);
+    #endregion
 
-        //    float rayDistance = 10f;
-        //    RaycastHit[] hits = Physics.RaycastAll(worldPos, Vector3.up, rayDistance);
-        //    foreach (RaycastHit hit in hits)
-        //    {
-        //        if (hit.transform.name == pushGameObject.name)
-        //        {
-        //            vertex = hit.point;
+    #region Legacy
+    //foreach (Vector3 vertex in copyMesh.vertices)
+    //{
+    //    Vector3 worldPos = pullMeshFilter.transform.TransformPoint(vertex);
 
-        //            break;
-        //        }
-        //    }
-        //}
+    //    float rayDistance = 10f;
+    //    RaycastHit[] hits = Physics.RaycastAll(worldPos, Vector3.up, rayDistance);
+    //    foreach (RaycastHit hit in hits)
+    //    {
+    //        if (hit.transform.name == pushGameObject.name)
+    //        {
+    //            vertex = hit.point;
+
+    //            break;
+    //        }
+    //    }
+    //}
 
     //private void SetMesh()
     //{
@@ -167,4 +214,5 @@ public class TargetMeshSendEditor : Editor
 
     //    return setMesh;
     //}
+    #endregion
 }

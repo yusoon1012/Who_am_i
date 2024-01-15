@@ -5,54 +5,89 @@ using UnityEditor;
 [CustomEditor(typeof(InvertMesh))]
 public class InvertMeshEditor : Editor
 {
-    // 메쉬를 뒤집을 오브젝트
-    SerializedProperty targetObject;
+    #region Property members
+    SerializedProperty targetObject;            // 메쉬를 뒤집을 오브젝트
+    #endregion
 
+    #region private members
+    private MeshFilter targetMeshFilter;        // 해당 오브젝트의 메쉬 필터
+    private Mesh targetMesh;                    // 해당 오브젝트의 메쉬
+    private Mesh copyMesh;                      // targetObject의 메쉬 복사본
+    #endregion
+
+    #region Editor default
     private void OnEnable()
     {
         // 프로퍼티 초기화
         targetObject = serializedObject.FindProperty("targetObject");
-    }       // OnEnable()
+    }
 
     public override void OnInspectorGUI()
     {
         // 인스펙터 창 업데이트
         serializedObject.Update();
 
-        // 인스펙터에 targetObject변수를 편집 가능한 필드로 표시
+        // 인스펙터에 변수를 편집 가능한 필드로 표시
         EditorGUILayout.PropertyField(targetObject, new GUIContent("뒤집을 오브젝트"));
 
         // "Apply" 버튼 클릭시 메쉬를 뒤집음
         if (GUILayout.Button("Apply"))
         {
-            InvertMesh();
+            EditorStart();
         }
 
         // SerializedProperty 변경사항 적용
         serializedObject.ApplyModifiedProperties();
-    }       // OnInspectorGUI()
+    }
+    #endregion
 
-    private void InvertMesh()
+    #region Editor Initialization and Setup
+    // 초기 데이터 초기화 메서드
+    private void EditorStart()
     {
-        // { 타겟 오브젝트의 메쉬 가져오기
-        MeshFilter targetMeshFilter = GFuncE.SetComponent<MeshFilter>(targetObject);
-        if (targetMeshFilter == null)
-        {
-            GFuncE.SubmitNonFindText(targetObject, typeof(MeshFilter));
-            return;
-        }
-        Mesh targetMesh = targetMeshFilter.sharedMesh != null ? targetMeshFilter.sharedMesh : null;
-        if (targetMesh == null)
-        {
-            GFuncE.SubmitNonFindText(targetObject, typeof(Mesh));
-            return;
-        }
-        // } 타겟 오브젝트의 메쉬 가져오기
+        InitializationComponents();
+        if (HasNullReference()) { return; }
+        InitializationSetup();
 
-        // Unity에서 기본으로 제공하는 메쉬를 보호
-        Mesh copyMesh = GFuncE.CopyMesh(targetMesh);
+        EditorInvertMesh();
+    }
 
-        // { Mesh의 폴리곤 법선을 역으로 변경
+    // 초기 컴포넌트 초기화 메서드
+    private void InitializationComponents()
+    {
+        targetMeshFilter = GFuncE.SetComponent<MeshFilter>(targetObject);
+        targetMesh = targetMeshFilter.sharedMesh != null ? targetMeshFilter.sharedMesh : null;  
+    }
+
+    // Null 체크
+    private bool HasNullReference()
+    {
+        if (targetMeshFilter == null) { GFuncE.SubmitNonFindText(targetObject, typeof(MeshFilter)); return true; }
+        if (targetMesh == null) { GFuncE.SubmitNonFindText(targetObject, typeof(Mesh)); return true; }
+
+        return false;
+    }
+
+    // 초기 값 설정 메서드
+    private void InitializationSetup()
+    {
+        copyMesh = GFuncE.CopyMesh(targetMesh);
+    }
+    #endregion
+
+    #region Editor function start
+    // 메쉬를 뒤집는 메서드
+    private void EditorInvertMesh()
+    {
+        copyMesh.normals = InvertNormals();
+        copyMesh.triangles = SwapTriangles();
+
+        SetMesh();
+    }
+
+    // Mesh의 폴리곤 법선을 역으로 변경하는 메서드
+    private Vector3[] InvertNormals()
+    {
         Vector3[] normals = copyMesh.normals;
 
         for (int i = 0; i < normals.Length; i++)
@@ -60,13 +95,13 @@ public class InvertMeshEditor : Editor
             normals[i] = -normals[i];
         }
 
-        copyMesh.normals = normals;
-        // } Mesh의 폴리곤 법선을 역으로 변경
+        return normals;
+    }
 
-        // 변경된 Mesh의 triangles을 저장할 배열
+    // 폴리곤을 뒤집는 메서드
+    private int[] SwapTriangles()
+    {
         int[] triangles = copyMesh.triangles;
-        
-        // { triangle의 세 점 중 가운데를 제외한 나머지 두 점을 Swap하여 뒤집음
         int tempTriangle = default;
 
         for (int i = 0; i < triangles.Length; i++)
@@ -78,11 +113,14 @@ public class InvertMeshEditor : Editor
                 triangles[i + 2] = tempTriangle;
             }
         }
-        // } triangle의 세 점 중 가운데를 제외한 나머지 두 점을 Swap하여 뒤집음
 
-        // 변경된 삼각형을 Mesh에 적용
-        copyMesh.triangles = triangles;
+        return triangles;
+    }
 
+    // 변경된 메쉬 적용
+    private void SetMesh()
+    {
         targetMeshFilter.sharedMesh = copyMesh;
     }
+    #endregion
 }
