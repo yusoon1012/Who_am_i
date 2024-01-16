@@ -69,7 +69,7 @@ public class GameManager : MonoBehaviour
         animals = new Dictionary<AnimalsType, AnimalData>();
         animalsTable = new Dictionary<string, Dictionary<string, string>>();
 
-        animalsTable = CSVReader.instance.ReadCSVKeyDictionary("AnimalsTable");
+        animalsTable = CSVReader.ReadCSVKeyDictionary("AnimalsTable");
     }
 
     private void SetAnimals()

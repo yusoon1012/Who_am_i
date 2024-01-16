@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -19,11 +20,10 @@ public class Animal : MonoBehaviour
     private GameObject dropItem;
     private AnimalData data;
     private NavMeshAgent nav;
-    private Animator ani;
+    private List<Animator> anis;
     private AnimalsType? type;
     private Coroutine actionCoroutine;
     private Coroutine visibleCoroutine;
-    private Rigidbody rig;
     #endregion
 
     #endregion
@@ -54,15 +54,13 @@ public class Animal : MonoBehaviour
     private void InitializationComponents()
     {
         nav = gameObject.GetComponent<NavMeshAgent>() ? gameObject.GetComponent<NavMeshAgent>() : null;
-        ani = gameObject.GetComponent<Animator>() ? gameObject.GetComponent<Animator>() : null;
-        rig = gameObject.GetComponent<Rigidbody>() ? gameObject.GetComponent<Rigidbody>() : null;
+        anis = GFunc.GetChildComponentList<Animator>(this.gameObject);
     }
 
     private bool HasNullReference()
     {
         if (nav == null) { GFunc.SubmitNonFindText(this.gameObject, typeof(NavMeshAgent)); return true; }
-        if (ani == null) { GFunc.SubmitNonFindText(this.gameObject, typeof(Animator)); return true; }
-        if (rig == null) { GFunc.SubmitNonFindText(this.gameObject, typeof(Rigidbody)); return true; }
+        if (anis == null) { GFunc.SubmitNonFindText(this.gameObject, typeof(Animator)); return true; }
 
         return false;
     }
@@ -99,14 +97,14 @@ public class Animal : MonoBehaviour
     #endregion
 
     #region Animator and Coroutine and Movement
-    private void StopCoroutine()
+    private void StopTargetCoroutine(Coroutine _targetCoroutine)
     {
-        if (actionCoroutine != null) { StopCoroutine(actionCoroutine); }
+        if (_targetCoroutine != null) { _targetCoroutine = null; }
     }
 
     private void StartRandomCoroutine()
     {
-        if (actionCoroutine != null) { StopCoroutine(actionCoroutine); }
+        Debug.Log("하잇");
 
         switch (GFunc.RandomBool())
         {
@@ -117,7 +115,7 @@ public class Animal : MonoBehaviour
 
     private void StartDeathCoroutine()
     {
-        StopCoroutine();
+        StopCoroutine(actionCoroutine);
         actionCoroutine = StartCoroutine(Death());
     }
 
@@ -138,7 +136,8 @@ public class Animal : MonoBehaviour
 
     private IEnumerator Move()
     {
-        ani.SetBool("Move", true);
+        foreach (Animator ani in anis) { ani.SetBool("Move", true); }
+        transform.rotation = Quaternion.Euler(0, GFunc.RandomAngle(), 0);
 
         float timeElapsed = 0.0f;
         float duration = GFunc.RandomValueFloat(MIN_ACTION_VALUE, MAX_ACTION_VALUE);
@@ -147,12 +146,14 @@ public class Animal : MonoBehaviour
         {
             timeElapsed += Time.deltaTime;
 
-            rig.AddForce(Vector3.forward * data.speed);
+            transform.position += Vector3.forward * data.speed * Time.deltaTime;
 
             yield return null;
         }
 
-        ani.SetBool("Move", false);
+        foreach (Animator ani in anis) { ani.SetBool("Move", false); }
+        Debug.Log("여긴 들어오니 ?");
+        StopTargetCoroutine(actionCoroutine);
     }
 
     private IEnumerator Wait()
@@ -160,11 +161,13 @@ public class Animal : MonoBehaviour
         float time = GFunc.RandomValueFloat(MIN_ACTION_VALUE, MAX_ACTION_VALUE);
 
         yield return new WaitForSeconds(time);
+        Debug.Log("여긴 들어오니 ?");
+        StopTargetCoroutine(actionCoroutine);
     }
 
     private IEnumerator Death()
     {
-        ani.SetTrigger("Death");
+        foreach (Animator ani in anis) { ani.SetTrigger("Death"); }
 
         float timeElapsed = 0.0f;
         float duration = MAX_ACTION_VALUE;
@@ -194,7 +197,7 @@ public class Animal : MonoBehaviour
 
     private void Reset()
     {
-        ani.SetTrigger("Reset");
+        foreach (Animator ani in anis) { ani.SetTrigger("Reset"); }
         data.hp = 1;
     }
     #endregion
@@ -209,6 +212,7 @@ public class Animal : MonoBehaviour
     {
         while (true)
         {
+            Debug.Log(actionCoroutine == null);
             if (actionCoroutine == null) { StartRandomCoroutine(); }
             yield return null;
         }
@@ -216,7 +220,8 @@ public class Animal : MonoBehaviour
 
     private void OnBecameInvisible()
     {
-        if (visibleCoroutine != null) { StopCoroutine(visibleCoroutine); }
+        StopTargetCoroutine(visibleCoroutine);
+        StopTargetCoroutine(actionCoroutine);
     }
 
     private void OnBecameVisible()

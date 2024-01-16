@@ -1,26 +1,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CSVReader : MonoBehaviour
+public static class CSVReader
 {
-    #region  Singleton
-    public static CSVReader instance = null;
+    private const char DELIMITER = ',';      // CSV 파일에서 사용하는 구분자
+    private const char LINE = '\n';          // CSV 파일에서 사용하는 라인 구분자
 
-    private void Awake()
-    {
-        if (instance == null)
-        {
-            instance = this;
-        }
-
-        DontDestroyOnLoad(this.gameObject);
-    }
-    #endregion
-
-    private readonly char DELIMITER = ',';      // CSV 파일에서 사용하는 구분자
-    private readonly char LINE = '\n';          // CSV 파일에서 사용하는 라인 구분자
-
-    public Dictionary<string, string> ReadCSVKeyString(string _csvFileName)
+    public static Dictionary<string, string> ReadCSVKeyString(string _csvFileName)
     {
         Dictionary<string, string> dataDictionary = new Dictionary<string, string>();
 
@@ -60,7 +46,7 @@ public class CSVReader : MonoBehaviour
         return dataDictionary;
     }
 
-    public Dictionary<string, Dictionary<string, string>> ReadCSVKeyDictionary(string _csvFileName)
+    public static Dictionary<string, Dictionary<string, string>> ReadCSVKeyDictionary(string _csvFileName)
     {
         Dictionary<string, Dictionary<string, string>> dataDictionary = new Dictionary<string, Dictionary<string, string>>();
 
@@ -109,7 +95,7 @@ public class CSVReader : MonoBehaviour
         return dataDictionary;
     }
 
-    public Dictionary<string, List<string>> ReadCSVKeyList(string _csvFileName)
+    public static Dictionary<string, List<string>> ReadCSVKeyList(string _csvFileName)
     {
         Dictionary<string, List<string>> dataDictionary = new Dictionary<string, List<string>>();
 

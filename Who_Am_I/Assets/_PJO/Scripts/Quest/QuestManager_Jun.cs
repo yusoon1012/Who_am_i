@@ -50,10 +50,10 @@ public class QuestManager_Jun : MonoBehaviour
         questTable = new Dictionary<string, Dictionary<string, string>>();
         questProgressTable = new Dictionary<string, Dictionary<string, string>>();
 
-        stringTable = CSVReader.instance.ReadCSVKeyString("StringTable");
-        npcTable = CSVReader.instance.ReadCSVKeyDictionary("NpcTable");
-        questTable = CSVReader.instance.ReadCSVKeyDictionary("QuestTable");
-        questProgressTable = CSVReader.instance.ReadCSVKeyDictionary("QuestProgressTable");
+        stringTable = CSVReader.ReadCSVKeyString("StringTable");
+        npcTable = CSVReader.ReadCSVKeyDictionary("NpcTable");
+        questTable = CSVReader.ReadCSVKeyDictionary("QuestTable");
+        questProgressTable = CSVReader.ReadCSVKeyDictionary("QuestProgressTable");
     }
 
     private void InitializeQuests()

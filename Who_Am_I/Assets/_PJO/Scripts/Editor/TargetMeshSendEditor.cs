@@ -109,7 +109,7 @@ public class TargetMeshSendEditor : Editor
 
             foreach (RaycastHit hit in hits)
             {
-                if (hit.transform.name == pushObject.name)
+                if (hit.transform.name == pushObject.SetGameObject().name)
                 {
                     // 수정된 정점 데이터를 리스트에 추가
                     newVerties[i] = new Vector3(newVerties[i].x, pushMeshFilter.transform.InverseTransformPoint(hit.point).y, newVerties[i].z);

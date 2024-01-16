@@ -187,4 +187,22 @@ public static partial class GFunc
 
         return null;
     }
+
+    public static List<T> GetChildComponentList<T>(this GameObject _object) where T : Component
+    {
+        if (_object.GetChildCount() < 1) { return null; }
+
+        List<T> list = new List<T>();
+
+        foreach (Transform child in _object.transform)
+        {
+            T component = child.GetComponent<T>();
+            if (component != null)
+            {
+                list.Add(component);
+            }
+        }
+
+        return list;
+    }
 }

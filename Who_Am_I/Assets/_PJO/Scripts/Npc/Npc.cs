@@ -69,7 +69,7 @@ public class Npc : MonoBehaviour
     {
         while (player != null)
         {
-            if (Input.GetKeyDown(KeyCode.X))
+            if (Input.GetKeyDown(KeyCode.X))        // TODO: 대화시작
             {
                 transform.LookAt(player.transform);
                 StartTalkCoroutine();
@@ -129,7 +129,7 @@ public class Npc : MonoBehaviour
                 SetNpcTalk(talks[currentIndex]);
                 isTrigger = !isTrigger;
             }
-            else if (Input.GetKeyDown(KeyCode.Z) && isTrigger)
+            else if (Input.GetKeyDown(KeyCode.Z) && isTrigger)      // TODO: 대화 넘기기
             {
                 currentIndex += 1;
                 isTrigger = !isTrigger;
@@ -173,6 +173,9 @@ public class Npc : MonoBehaviour
 
     private void SetNpcTalk(string _text)
     {
+        // TODO 경민이형 과 상호작용해서 대화문 출력
+        // 이때 STRING 과 NPC 이름 보낸다.
+        // 잘생긴 준오가 요상한 경민이형의 스크립트 다이얼로그 꺼주는 스크립트 제작
         Debug.Log(_text);
     }
     #endregion

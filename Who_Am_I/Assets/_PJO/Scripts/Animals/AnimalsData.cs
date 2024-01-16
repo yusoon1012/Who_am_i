@@ -25,7 +25,7 @@ public class AnimalData
     public int respawn;
     public string drop;
     public int count;
-}       // AnimalData
+}
 
 [Serializable]
 public class AnimalBase
