@@ -92,7 +92,7 @@ public class ItemCrafting : MonoBehaviour
     // 제작 상세 목록에서의 현재 선택한 버튼 확인 값
     private int detailOrder = default;
     // 제작 가능 목록의 아이템 이름 값
-    private string[,] craftingStr = new string[10, 5];
+    private string[,] craftingStr = new string[5, 5];
     // 제작 가능 목록의 아이템 이미지 값
     private int[] craftingSlotImageNum = new int[5];
     // 제작 상세 창의 제작 후 완성되는 아이템의 제작 완료 갯수
@@ -128,19 +128,40 @@ public class ItemCrafting : MonoBehaviour
     {
         mainObjTf = GetComponent<Transform>().transform;
 
-        craftingStr[0, 0] = "딸기 우유";
-        craftingStr[0, 1] = "송이 불고기";
-        craftingStr[0, 2] = "Empty";
-        craftingStr[0, 3] = "Empty";
-        craftingStr[0, 4] = "Empty";
+        craftingStr[0, 0] = "고구마 라떼";
+        craftingStr[0, 1] = "대추차";
+        craftingStr[0, 2] = "딸기 우유";
+        craftingStr[0, 3] = "땅콩버터";
+        craftingStr[0, 4] = "마라탕";
+
+        craftingStr[1, 0] = "모듬 닭꼬치";
+        craftingStr[1, 1] = "미완성 불도장";
+        craftingStr[1, 2] = "불도장";
+        craftingStr[1, 3] = "블루베리 아이스크림";
+        craftingStr[1, 4] = "생선조림";
+
+        craftingStr[2, 0] = "스테이크";
+        craftingStr[2, 1] = "어묵";
+        craftingStr[2, 2] = "야자 주스";
+        craftingStr[2, 3] = "야채 샐러드";
+        craftingStr[2, 4] = "피쉬 앤 칩스";
+
+        craftingStr[3, 0] = "핫초코";
+        craftingStr[3, 1] = "토마토 소스";
+        craftingStr[3, 2] = "반죽";
+        craftingStr[3, 3] = "피자";
+        craftingStr[3, 4] = "유자차";
+
+        craftingStr[4, 0] = "송이 불고기";
 
         for (int i = 0; i < 5; i++)
         {
             craftingSlotColor[i] = craftingSlotObj[i].GetComponent<Image>();
-            craftingStr[1, i] = "Empty";
-            craftingStr[2, i] = "Empty";
-            craftingStr[3, i] = "Empty";
-            craftingStr[4, i] = "Empty";
+
+            if (i != 0)
+            {
+                craftingStr[4, i] = "Empty";
+            }
         }
 
         for (int j = 0; j < 4; j++)
@@ -699,6 +720,7 @@ public class ItemCrafting : MonoBehaviour
 
         ItemManager.instance.CraftingStack(craftingName, out craftingStack);
         craftingStackNum = craftingStack;
+
         //* 제작 될 최종 아이템 정보를 불러옴
 
         //* 제작에 필요한 재료들의 정보를 순차적으로 불러옴

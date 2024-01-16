@@ -88,7 +88,9 @@ public enum ItemType
     // 음식
     FOOD,
     // 재료
-    STUFF
+    STUFF,
+    // 컬렉션
+    COLLECT
 }     // enum ItemType
 
 ////////// 아이템 목록 //////////
