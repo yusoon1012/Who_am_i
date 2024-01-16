@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.IO;
 using UnityEngine.UI;
+using UnityEditor.Experimental.GraphView;
 
 public class VRIFTitleManager : MonoBehaviour
 {
@@ -18,7 +19,17 @@ public class VRIFTitleManager : MonoBehaviour
     [Header("이어하기 버튼")]
     public Button continueButton = default;
 
+    // 봄 씬 이름
     private string springSceneName = "M_Spring_Scene";
+
+    [Header("Black Image")]
+    [Tooltip("암전 효과를 위한 Dark Canvas - Black Image")]
+    [SerializeField] private Image blackImage = default;
+
+    private void Awake()
+    {
+        DontDestroyOnLoad(this);
+    }
 
     private void Start()
     {
@@ -92,6 +103,28 @@ public class VRIFTitleManager : MonoBehaviour
     }
 
     /// <summary>
+    /// 씬 로드를 가리기 위한 이펙트 
+    /// </summary>
+    private IEnumerator DarkEffect()
+    {
+        WaitForEndOfFrame endOfFrame = new WaitForEndOfFrame(); // 프레임 대기 
+
+        Color blackColor = blackImage.color;
+
+        while (blackColor.a < 1)
+        {
+            blackColor.a += 0.1f;
+
+            if (blackColor.a >= 1)
+            {
+                break;
+            }
+
+            yield return endOfFrame;
+        }
+    }
+
+    /// <summary>
     /// 저장된 json 로딩 후 세팅
     /// </summary>
     /// <param name="saveData_">저장된 json에서 읽어온 데이터</param>
@@ -115,6 +148,16 @@ public class VRIFTitleManager : MonoBehaviour
             yield return null;
         }
 
+        while (VRIFGameManager.Instance == null) // VRIFGameManager.Instance 할당까지 대기
+        {
+            if (VRIFGameManager.Instance != null)
+            {
+                break;
+            }
+
+            yield return null;
+        }
+
         // 플레이어 Position 세팅
         VRIFGameManager.Instance.playerPos = saveData_.playerPos;
         // 플레이어 Rotation 세팅
@@ -123,6 +166,8 @@ public class VRIFTitleManager : MonoBehaviour
         VRIFGameManager.Instance.PlayerSetting(); // 저장 정보 로드 후 세팅
 
         // loadingCanvas.SetActive(false); // 로딩 캔버스 비활성화
+
+        Destroy(gameObject);
     }
     #endregion
 
