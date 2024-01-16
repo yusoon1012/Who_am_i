@@ -41,8 +41,6 @@ public class Npc : MonoBehaviour
     #region Talks Update
     private void SetTalks(string _questId)
     {
-        Debug.Log("실행됨?");
-
         isInteraction = false;
         startTalks = null;
         progressTalks = null;

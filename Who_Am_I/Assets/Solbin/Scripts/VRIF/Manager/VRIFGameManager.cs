@@ -34,6 +34,11 @@ public class VRIFGameManager : MonoBehaviour
     // 현재 씬 
     public string currentScene = default;
 
+    // (QuestManager_Jun) 현재 진행 퀘스트 번호
+    public int currentQuest;
+    // (QuestManager_Jun) 현재 퀘스트 리스트
+    public List<Quest_Jun> questList;
+
     private void Awake()
     {
         if (Instance == null)
@@ -67,6 +72,12 @@ public class VRIFGameManager : MonoBehaviour
 
         playerPos = playerController.position;
         playerDir = playerController.rotation.eulerAngles;
+
+        currentQuest = QuestManager_Jun.instance.currentQuest;
+        questList = QuestManager_Jun.instance.questList;
+
+        //Debug.Log("원 리스트: " + QuestManager_Jun.instance.questList[0]);
+        //Debug.Log("temp 리스트: " + questList[0]);
 
         VRIFSaveManager.Instance.SaveFile(); // 정보를 최신화 해 전달 
     }

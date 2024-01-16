@@ -6,9 +6,16 @@ public class VRIFPlayerFishing : MonoBehaviour
 {
     public bool activateFishing { get; private set; } = false;
 
+    private int waterLayer = default;
+
+    private void Start()
+    {
+        waterLayer = LayerMask.NameToLayer("Water");
+    }
+
     private void OnTriggerEnter(Collider other)
     {
-        if (other.name.Contains("Water")) // TODO: 후에 레이어 등으로 변경
+        if (other.gameObject.layer == waterLayer)
         {
             activateFishing = true; // 낚시 가능 상태로 전환
         }
@@ -16,7 +23,7 @@ public class VRIFPlayerFishing : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.name.Contains("Water"))
+        if (other.gameObject.layer == waterLayer)
         {
             activateFishing = false; // 낚시 불가능 상태로 전환
         }

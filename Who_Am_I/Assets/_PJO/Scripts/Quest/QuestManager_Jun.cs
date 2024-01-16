@@ -488,11 +488,8 @@ public class QuestManager_Jun : MonoBehaviour
     public bool CheckQuestCompensation()
     {
         if (questList[currentQuest].currentProgress != QuestState_Jun.PROGRESSED) { return false; }
-        Debug.Log("0");
         if (questList[currentQuest].isMBTIConditions == default) { return false; }
-        Debug.Log("1");
         if (ItemCheck() == false) { return false; }
-        Debug.Log("2");
 
         return true;
     }
@@ -538,12 +535,12 @@ public class QuestManager_Jun : MonoBehaviour
         questList[currentQuest].currentValues[_index] += 1;
     }
 
-    public void Test(string _name)
-    { 
-        // 1. 수렵 동물 이름
-        // 2. 동물 오브젝트.GetComponent<Animal>().data.name 가져오기 (영어)
-        // 3. 낚시 int값에 1 더하기 (string으로 1 보내기)
-        // 4. 딸기를 인벤토리에 보냄 (한글)
+    public void CheckClear(string _name)
+    {
+        Debug.Log("받은 정보: " + _name);
+        // 1. 동물 오브젝트.GetComponent<Animal>().data.name 가져오기 (영어)
+        // 2. 낚시 int값에 1 더하기 (string으로 1 보내기)
+        // 3. 딸기를 인벤토리에 보냄 (한글)
     }
     #endregion
 }

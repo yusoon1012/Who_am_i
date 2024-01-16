@@ -24,17 +24,21 @@ public class VRIFTool_FishingBobber : MonoBehaviour
     // Audio Source 
     private AudioSource audioSource = default;
 
+    private int waterLayer = default;
+
     private void Start()
     {
         bobberRigid = transform.GetComponent<Rigidbody>();
         fishingRod = FindAnyObjectByType<VRIFTool_FishingRod>().transform;
 
         audioSource = GetComponent<AudioSource>();
+
+        waterLayer = LayerMask.NameToLayer("Water");
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.name.Contains("Water")) // TODO: 추후 레이어 등으로 변경.
+        if (other.gameObject.layer == waterLayer)
         {
             audioSource.PlayOneShot(audioSource.clip);
 
@@ -67,7 +71,7 @@ public class VRIFTool_FishingBobber : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.name.Contains("Water")) // 물 속에서 나간다면
+        if (other.gameObject.layer == waterLayer) // 물 속에서 나간다면
         {
             inWater = false;
         }
