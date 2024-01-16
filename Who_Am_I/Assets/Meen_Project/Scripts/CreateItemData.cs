@@ -6,6 +6,9 @@ using UnityEngine;
 public class CreateItemData : MonoBehaviour
 {
     ItemsMain itemsInfo = new ItemsMain();
+    CraftingMain craftingInfo = new CraftingMain();
+
+    SaveCollections saveCollections = new SaveCollections();
 
     public void AddItemData()
     {
@@ -84,11 +87,37 @@ public class CreateItemData : MonoBehaviour
 
         #region 제작 레시피 데이터 생성
 
+        ItemManager.instance.crafting.Add("고구마 라떼", new Crafting001());
+        ItemManager.instance.crafting.Add("대추차", new Crafting002());
+        ItemManager.instance.crafting.Add("딸기 우유", new Crafting003());
+        ItemManager.instance.crafting.Add("땅콩버터", new Crafting004());
+        ItemManager.instance.crafting.Add("마라탕", new Crafting005());
+        ItemManager.instance.crafting.Add("모듬 닭꼬치", new Crafting006());
+        ItemManager.instance.crafting.Add("미완성 불도장", new Crafting007());
+        ItemManager.instance.crafting.Add("불도장", new Crafting008());
+        ItemManager.instance.crafting.Add("블루베리 아이스크림", new Crafting009());
+        ItemManager.instance.crafting.Add("생선조림", new Crafting010());
+        ItemManager.instance.crafting.Add("스테이크", new Crafting011());
+        ItemManager.instance.crafting.Add("어묵", new Crafting012());
+        ItemManager.instance.crafting.Add("야자 주스", new Crafting013());
+        ItemManager.instance.crafting.Add("야채 샐러드", new Crafting014());
+        ItemManager.instance.crafting.Add("피쉬 앤 칩스", new Crafting015());
+        ItemManager.instance.crafting.Add("핫초코", new Crafting016());
+        ItemManager.instance.crafting.Add("토마토 소스", new Crafting017());
+        ItemManager.instance.crafting.Add("반죽", new Crafting018());
+        ItemManager.instance.crafting.Add("피자", new Crafting019());
+        ItemManager.instance.crafting.Add("유자차", new Crafting020());
+        ItemManager.instance.crafting.Add("송이 불고기", new Crafting021());
 
+        ReadCraftingCSVFiles();
+
+        //ReadCollectionCSVFiles();
 
         #endregion 제작 레시피 데이터 생성
 
     }     // AddItemData()
+
+    #region 재료 아이템 데이터 저장
 
     private void ReadStuffCSVFiles()
     {
@@ -128,6 +157,10 @@ public class CreateItemData : MonoBehaviour
             }
         }
     }     // ReadNameCSVFiles()
+
+    #endregion 재료 아이템 데이터 저장
+
+    #region 소비 아이템 데이터 저장
 
     private void ReadFoodCSVFiles()
     {
@@ -172,6 +205,10 @@ public class CreateItemData : MonoBehaviour
         }
     }     // ReadFoodCSVFiles()
 
+    #endregion 소비 아이템 데이터 저장
+
+    #region 도구 아이템 데이터 저장
+
     private void ReadEquipCSVFiles()
     {
         List<Dictionary<string, object>> equipsReadTable = LGM_CSVReader.Read("ItemEquipTable");
@@ -185,7 +222,7 @@ public class CreateItemData : MonoBehaviour
             string infinity_ = equipsReadTable[i]["Infinity"].ToString();
             string itemHint_ = equipsReadTable[i]["Note"].ToString();
             string englishName_ = equipsReadTable[i]["English"].ToString();
-            int imageNum_ = (int)equipsReadTable[i]["Image"];
+            //int imageNum_ = (int)equipsReadTable[i]["Image"];
 
             if (ItemManager.instance.itemDataBase.ContainsKey(name_))
             {
@@ -206,8 +243,94 @@ public class CreateItemData : MonoBehaviour
 
                 itemsInfo.itemHint = itemHint_;
                 itemsInfo.itemEnglishName = englishName_;
-                itemsInfo.itemImageNum = imageNum_;
+                //itemsInfo.itemImageNum = imageNum_;
             }
         }
     }     // ReadEquipCSVFiles()
+
+    #endregion 도구 아이템 데이터 저장
+
+    #region 크래프팅 레시피 데이터 저장
+
+    private void ReadCraftingCSVFiles()
+    {
+        List<Dictionary<string, object>> craftingsReadTable = LGM_CSVReader.Read("ItemCraftingTable");
+
+        for (int i = 0; i < craftingsReadTable.Count; i++)
+        {
+            int id_ = (int)craftingsReadTable[i]["ID"];
+            string name_ = craftingsReadTable[i]["Name"].ToString();
+            float coolTime_ = (int)craftingsReadTable[i]["CoolTime"];
+            string[] needItem_ = new string[2];
+            needItem_[0] = craftingsReadTable[i]["NeedItem1"].ToString();
+            needItem_[1] = craftingsReadTable[i]["NeedItem2"].ToString();
+            string produce_ = craftingsReadTable[i]["Produce"].ToString();
+            int utile_ = (int)craftingsReadTable[i]["Utile"];
+
+            if (ItemManager.instance.crafting.ContainsKey(name_))
+            {
+                craftingInfo = ItemManager.instance.crafting[name_];
+
+                craftingInfo.craftingID = id_;
+                craftingInfo.craftingName = name_;
+                craftingInfo.coolTime = coolTime_;
+                craftingInfo.stuffName[0] = needItem_[0];
+                craftingInfo.stuffName[1] = needItem_[1];
+                if (produce_ == "FALSE")
+                {
+                    craftingInfo.disposableType = false;
+                }
+                else if (produce_ == "TRUE")
+                {
+                    craftingInfo.disposableType = true;
+                }
+                
+                craftingInfo.utile = utile_;
+                craftingInfo.effectInfo = " ";
+                craftingInfo.craftingLength = 2;
+                craftingInfo.stuffStack[0] = 1;
+                craftingInfo.stuffStack[1] = 1;
+                craftingInfo.craftingStack = 1;
+                craftingInfo.disposable = false;
+            }
+        }
+    }     // ReadCraftingCSVFiles()
+
+    #endregion 크래프팅 레시피 데이터 저장
+
+    #region 컬렉션 정보 데이터 저장
+
+    //private void ReadCollectionCSVFiles()
+    //{
+    //    List<Dictionary<string, object>> collectionsReadTable = LGM_CSVReader.Read("ItemCollectionTable");
+
+    //    int checkCount = 0;
+
+    //    for (int i = 0; i < collectionsReadTable.Count; i++)
+    //    {
+    //        int count_ = (int)collectionsReadTable[i]["Count"];
+    //        int id_ = (int)collectionsReadTable[i]["ID"];
+    //        string name_ = collectionsReadTable[i]["Name"].ToString();
+    //        int type_ = (int)collectionsReadTable[i]["Type"];
+    //        string infinity_ = collectionsReadTable[i]["Infinity"].ToString();
+    //        bool boolInfinity = false;
+    //        if (infinity_ == "FALSE")
+    //        {
+    //            boolInfinity = false;
+    //        }
+    //        else if (infinity_ == "TRUE")
+    //        {
+    //            boolInfinity = true;
+    //        }
+
+    //        for (int j = checkCount; j < checkCount + count_; j++)
+    //        {
+
+    //        }
+    //    }
+
+    //    saveCollections.SettingCollectionInfo();
+    //}     // ReadCollectionCSVFiles()
+
+    #endregion 컬렉션 정보 데이터 저장
 }

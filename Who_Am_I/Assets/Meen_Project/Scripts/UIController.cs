@@ -210,19 +210,40 @@ public class UIController : MonoBehaviour
         //* Test : 아래의 해당 키를 누르면 인벤토리에 아이템 추가 기능
         else if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            mainObjTf.GetComponent<Inventory>().AddInventory("카카오", 1);
+            mainObjTf.GetComponent<Inventory>().AddInventory("딸기", 1);
+            mainObjTf.GetComponent<Inventory>().AddInventory("토마토", 1);
+            mainObjTf.GetComponent<Inventory>().AddInventory("옥수수", 1);
+            mainObjTf.GetComponent<Inventory>().AddInventory("블루베리", 1);
+            mainObjTf.GetComponent<Inventory>().AddInventory("우유", 1);
+            mainObjTf.GetComponent<Inventory>().AddInventory("딸기 우유", 1);
+            mainObjTf.GetComponent<Inventory>().AddInventory("블루베리 아이스크림", 1);
+            mainObjTf.GetComponent<Inventory>().AddInventory("생선조림", 1);
+            mainObjTf.GetComponent<Inventory>().AddInventory("스테이크", 1);
+            mainObjTf.GetComponent<Inventory>().AddInventory("고구마 라떼", 1);
+            mainObjTf.GetComponent<Inventory>().AddInventory("어묵", 1);
+            mainObjTf.GetComponent<Inventory>().AddInventory("피쉬 앤 칩스", 1);
+            mainObjTf.GetComponent<Inventory>().AddInventory("야채 샐러드", 1);
+            mainObjTf.GetComponent<Inventory>().AddInventory("야자 주스", 1);
+            mainObjTf.GetComponent<Inventory>().AddInventory("모듬 닭꼬치", 1);
+            mainObjTf.GetComponent<Inventory>().AddInventory("핫초코", 1);
+            mainObjTf.GetComponent<Inventory>().AddInventory("피자", 1);
+            mainObjTf.GetComponent<Inventory>().AddInventory("마라탕", 1);
+            mainObjTf.GetComponent<Inventory>().AddInventory("유자차", 1);
+            mainObjTf.GetComponent<Inventory>().AddInventory("대추차", 1);
+            mainObjTf.GetComponent<Inventory>().AddInventory("송이 불고기", 1);
+            mainObjTf.GetComponent<Inventory>().AddInventory("불도장", 1);
         }
         else if (Input.GetKeyDown(KeyCode.Alpha2))
         {
-            mainObjTf.GetComponent<Inventory>().AddInventory("고구마", 1);
+            mainObjTf.GetComponent<Inventory>().AddInventory("우유", 1);
         }
         else if (Input.GetKeyDown(KeyCode.Alpha3))
         {
-            mainObjTf.GetComponent<Inventory>().AddInventory("꿀", 1);
+            mainObjTf.GetComponent<Inventory>().AddInventory("대추", 1);
         }
         else if (Input.GetKeyDown(KeyCode.Alpha4))
         {
-            mainObjTf.GetComponent<Inventory>().AddInventory("미완성 불도장", 1);
+            mainObjTf.GetComponent<Inventory>().AddInventory("꿀", 1);
         }
 
 

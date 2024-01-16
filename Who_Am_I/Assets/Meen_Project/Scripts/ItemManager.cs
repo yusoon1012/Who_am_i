@@ -15,7 +15,7 @@ public class ItemManager : MonoBehaviour
     public Transform collectionInfoTf;
 
     // 아이템마다 등록된 아이콘 이미지 목록
-    public Image[] itemImages = new Image[30];
+    public Image[] itemImages = new Image[43];
 
     // 인벤토리에 저장되어 있는 모든 아이템 수
     private int itemCount = default;
@@ -37,9 +37,9 @@ public class ItemManager : MonoBehaviour
     // 재료 아이템 타입 인벤토리 데이터
     Dictionary<string, ItemsMain> stuffs = new Dictionary<string, ItemsMain>();
     // 제작 아이템 데이터 베이스
-    Dictionary<string, CraftingMain> crafting = new Dictionary<string, CraftingMain>();
+    public Dictionary<string, CraftingMain> crafting = new Dictionary<string, CraftingMain>();
     // 도감에 추가할 아이템 그룹 정보 데이터
-    Dictionary<string, int> collectionItems = new Dictionary<string, int>();
+    public Dictionary<string, int> collectionItems = new Dictionary<string, int>();
 
     //public Transform createItemData;
 
@@ -70,10 +70,6 @@ public class ItemManager : MonoBehaviour
         testDic.Add("고기", 1);
         testDic.Add("딸기", 1);
         testDic.Add("우유", 1);
-
-        //* 제작 데이터 베이스에 아이템 추가
-        crafting.Add("딸기 우유", new Crafting001());
-        //* 제작 데이터 베이스에 아이템 추가
 
         //* 컬렉션 그룹 전용 데이터 베이스에 아이템 추가
         collectionItems.Add("고기", 0);

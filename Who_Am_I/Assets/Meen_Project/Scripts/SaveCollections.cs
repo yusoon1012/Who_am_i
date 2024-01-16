@@ -41,6 +41,11 @@ public class SaveCollections : MonoBehaviour
         titleEffect[0] = "포만감 최대치 증가";
     }     // Start()
 
+    public void SettingCollectionInfo()
+    {
+
+    }     // SettingCollectionInfo()
+
     // 아이템을 획득할 때 마다 컬렉션을 목록을 체크하여 컬렉션에 등록되어 있지 않으면 등록하는 함수
     public void CheckCollection(string itemName, int itemNum)
     {
