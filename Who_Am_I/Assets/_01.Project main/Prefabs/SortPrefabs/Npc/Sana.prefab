@@ -266,6 +266,7 @@ GameObject:
   - component: {fileID: 1995315858347883375}
   - component: {fileID: 1512682835541718497}
   - component: {fileID: -3901402641092058573}
+  - component: {fileID: -7994670959974747025}
   m_Layer: 0
   m_Name: Sana
   m_TagString: Untagged
@@ -280,16 +281,16 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1995315858340448429}
-  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0.0000029504295}
-  m_LocalPosition: {x: 38.897, y: -0.774, z: -4.9734993}
-  m_LocalScale: {x: 3.6118007, y: 3.6118007, z: 3.6118007}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1995315858340156555}
   - {fileID: 1995315858340156565}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &1995315858347883375
 Animator:
   serializedVersion: 5
@@ -343,6 +344,19 @@ LODGroup:
     renderers:
     - renderer: {fileID: 1995315858352014767}
   m_Enabled: 1
+--- !u!65 &-7994670959974747025
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1995315858340448429}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1995315858340448431
 GameObject:
   m_ObjectHideFlags: 0

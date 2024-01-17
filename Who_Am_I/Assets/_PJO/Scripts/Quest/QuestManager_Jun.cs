@@ -18,6 +18,7 @@ public class QuestManager_Jun : MonoBehaviour
 
         InitializationTable();
         InitializeQuests();
+        IsNullInstance();
     }
     #endregion
 
@@ -399,9 +400,12 @@ public class QuestManager_Jun : MonoBehaviour
         questList.Add(quest_10018);
         questList.Add(quest_10019);
         questList.Add(quest_10020);
+    }
 
+    private void IsNullInstance()
+    {
         // <Solbin> '이어하기' 선택 여부 확인 후 퀘스트 진행 재세팅
-        VRIFTitleManager.Instance.QuestSetting();
+        if (VRIFTitleManager.Instance != null) { VRIFTitleManager.Instance.QuestSetting(); }
     }
 
     private Quest_Jun CreateQuest

@@ -231,6 +231,7 @@ GameObject:
   - component: {fileID: 8295359139627683953}
   - component: {fileID: 4440475030672382553}
   - component: {fileID: 3800035214457800266}
+  - component: {fileID: 4478661708982369442}
   m_Layer: 0
   m_Name: TamoWife
   m_TagString: Untagged
@@ -245,16 +246,16 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8295359139620397999}
-  m_LocalRotation: {x: -0, y: -1, z: -0, w: 0.0000012665986}
-  m_LocalPosition: {x: -1.5900002, y: -0.0452546, z: -0.26469994}
-  m_LocalScale: {x: 1.57573, y: 1.57573, z: 1.57573}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8295359139620241329}
   - {fileID: 8295359139620241331}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: -180, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &8295359139627683953
 Animator:
   serializedVersion: 5
@@ -308,6 +309,19 @@ LODGroup:
     renderers:
     - renderer: {fileID: 8295359139623579313}
   m_Enabled: 1
+--- !u!65 &4478661708982369442
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8295359139620397999}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2, y: 2, z: 2}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &8295359139620398001
 GameObject:
   m_ObjectHideFlags: 0

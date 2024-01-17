@@ -302,6 +302,7 @@ GameObject:
   - component: {fileID: 2280194569081902220}
   - component: {fileID: 8450143368264464696}
   - component: {fileID: 2839294602405899644}
+  - component: {fileID: -3984068257708954415}
   m_Layer: 0
   m_Name: Piribbo
   m_TagString: Untagged
@@ -316,16 +317,16 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2280194569074616142}
-  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0.0000028461216}
-  m_LocalPosition: {x: 36.836998, y: -0.844, z: -4.9739}
-  m_LocalScale: {x: 3.9463105, y: 3.9463105, z: 3.9463105}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2280194569074129768}
   - {fileID: 2280194569074129782}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &2280194569081902220
 Animator:
   serializedVersion: 5
@@ -379,6 +380,19 @@ LODGroup:
     renderers:
     - renderer: {fileID: 2280194569077729868}
   m_Enabled: 1
+--- !u!65 &-3984068257708954415
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2280194569074616142}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &2280194569074616148
 GameObject:
   m_ObjectHideFlags: 0

@@ -44,6 +44,7 @@ GameObject:
   - component: {fileID: 5182046287975289948}
   - component: {fileID: 1474710251255407515}
   - component: {fileID: -6387720626139397470}
+  - component: {fileID: -8424056045282136453}
   m_Layer: 0
   m_Name: Bertturu
   m_TagString: Untagged
@@ -58,16 +59,16 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5182046287984813964}
-  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0.0000029504295}
-  m_LocalPosition: {x: 40.68, y: -0.010254595, z: -5.7047}
-  m_LocalScale: {x: 5.4084396, y: 5.4084396, z: 5.4084396}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5182046287984393134}
   - {fileID: 5182046287984393128}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &5182046287975289948
 Animator:
   serializedVersion: 5
@@ -121,6 +122,19 @@ LODGroup:
     renderers:
     - renderer: {fileID: 5182046287971216028}
   m_Enabled: 1
+--- !u!65 &-8424056045282136453
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5182046287984813964}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &5182046287984813966
 GameObject:
   m_ObjectHideFlags: 0

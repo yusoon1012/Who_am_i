@@ -139,6 +139,7 @@ GameObject:
   - component: {fileID: 7354094447070716126}
   - component: {fileID: -3653569680814240737}
   - component: {fileID: -1424383766578739400}
+  - component: {fileID: -2971202401702558619}
   m_Layer: 0
   m_Name: Ricota
   m_TagString: Untagged
@@ -153,16 +154,16 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7354094447078134538}
-  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0.0000029504295}
-  m_LocalPosition: {x: 43.037003, y: -0.0122546, z: -6.3327003}
-  m_LocalScale: {x: 3.319948, y: 3.319948, z: 3.319948}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7354094447078166312}
   - {fileID: 7354094447078166310}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &7354094447070716126
 Animator:
   serializedVersion: 5
@@ -216,6 +217,19 @@ LODGroup:
     renderers:
     - renderer: {fileID: 7354094447066570270}
   m_Enabled: 1
+--- !u!65 &-2971202401702558619
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7354094447078134538}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &7354094447078134540
 GameObject:
   m_ObjectHideFlags: 0

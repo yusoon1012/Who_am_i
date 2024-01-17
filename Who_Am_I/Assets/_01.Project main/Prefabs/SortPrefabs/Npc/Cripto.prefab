@@ -76,6 +76,7 @@ GameObject:
   - component: {fileID: 5707477293029931645}
   - component: {fileID: 7063666282990162520}
   - component: {fileID: 7455122948533258138}
+  - component: {fileID: -4087930632790138229}
   m_Layer: 0
   m_Name: Cripto
   m_TagString: Untagged
@@ -90,16 +91,16 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5707477293022661029}
-  m_LocalRotation: {x: -0, y: -1, z: -0, w: -0.0000007301568}
-  m_LocalPosition: {x: 1.5009995, y: 0.14419001, z: 0.8800001}
-  m_LocalScale: {x: 2.3470361, y: 2.3470361, z: 2.3470361}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5707477293023024523}
   - {fileID: 5707477293023024605}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: -180, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &5707477293029931645
 Animator:
   serializedVersion: 5
@@ -153,6 +154,19 @@ LODGroup:
     renderers:
     - renderer: {fileID: 5707477293034226877}
   m_Enabled: 1
+--- !u!65 &-4087930632790138229
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5707477293022661029}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &5707477293022661031
 GameObject:
   m_ObjectHideFlags: 0

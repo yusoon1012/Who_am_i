@@ -300,6 +300,7 @@ GameObject:
   - component: {fileID: 6674588433873257413}
   - component: {fileID: -3445600190661567559}
   - component: {fileID: -6326213408293402737}
+  - component: {fileID: -8758999501180338896}
   m_Layer: 0
   m_Name: Pungdana
   m_TagString: Untagged
@@ -314,16 +315,16 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6674588433863880733}
-  m_LocalRotation: {x: -0, y: -1, z: -0, w: -0.00000035762784}
-  m_LocalPosition: {x: 1.3999996, y: -0.0109999925, z: 0.041000128}
-  m_LocalScale: {x: 0.7094525, y: 0.7094525, z: 0.7094525}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6674588433863978047}
   - {fileID: 6674588433863978035}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: -180, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &6674588433873257413
 Animator:
   serializedVersion: 5
@@ -377,6 +378,19 @@ LODGroup:
     renderers:
     - renderer: {fileID: 6674588433869159685}
   m_Enabled: 1
+--- !u!65 &-8758999501180338896
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6674588433863880733}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 4, y: 4, z: 4}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &6674588433863880735
 GameObject:
   m_ObjectHideFlags: 0

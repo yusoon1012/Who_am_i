@@ -107,6 +107,7 @@ GameObject:
   - component: {fileID: 1847778472268305690}
   - component: {fileID: -6397271490081423821}
   - component: {fileID: 4774193680033607862}
+  - component: {fileID: 7287109220973297826}
   m_Layer: 0
   m_Name: Moaong
   m_TagString: Untagged
@@ -121,16 +122,16 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1847778472277829320}
-  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0.0000029504295}
-  m_LocalPosition: {x: 45.171997, y: -0.268, z: -5.5769}
-  m_LocalScale: {x: 3.6676548, y: 3.6676548, z: 3.6676548}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1847778472277867246}
   - {fileID: 1847778472277867244}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &1847778472268305690
 Animator:
   serializedVersion: 5
@@ -184,6 +185,19 @@ LODGroup:
     renderers:
     - renderer: {fileID: 1847778472272554970}
   m_Enabled: 1
+--- !u!65 &7287109220973297826
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1847778472277829320}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1847778472277829324
 GameObject:
   m_ObjectHideFlags: 0

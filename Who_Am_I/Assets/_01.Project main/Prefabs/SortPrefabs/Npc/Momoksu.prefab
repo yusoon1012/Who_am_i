@@ -260,6 +260,7 @@ GameObject:
   - component: {fileID: 1420168732755013644}
   - component: {fileID: 2933005025957662578}
   - component: {fileID: 7352439560731715100}
+  - component: {fileID: -4225048158771700582}
   m_Layer: 0
   m_Name: Momoksu
   m_TagString: Untagged
@@ -274,16 +275,16 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1420168732745647054}
-  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0.0000029504295}
-  m_LocalPosition: {x: 44.882698, y: 0.05874541, z: -6.4576354}
-  m_LocalScale: {x: 0.97223, y: 0.97223, z: 0.97223}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1420168732745687016}
   - {fileID: 1420168732745687008}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &1420168732755013644
 Animator:
   serializedVersion: 5
@@ -337,3 +338,16 @@ LODGroup:
     renderers:
     - renderer: {fileID: 1420168732750859980}
   m_Enabled: 1
+--- !u!65 &-4225048158771700582
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1420168732745647054}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 4, y: 4, z: 4}
+  m_Center: {x: 0, y: 0, z: 0}

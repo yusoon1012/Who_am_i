@@ -297,6 +297,7 @@ GameObject:
   - component: {fileID: 76851946541145704}
   - component: {fileID: 2061988605879134229}
   - component: {fileID: -2883017080028725610}
+  - component: {fileID: -5085648848301823272}
   m_Layer: 0
   m_Name: Jirak
   m_TagString: Untagged
@@ -311,16 +312,16 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 76851946541145705}
-  m_LocalRotation: {x: -0, y: 0.9238793, z: -0, w: -0.3826841}
-  m_LocalPosition: {x: 42.129997, y: 0.74399996, z: -4.4539995}
-  m_LocalScale: {x: 1.6855507, y: 1.68555, z: 1.6855507}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 76851946288813930}
   - {fileID: 76851946250427902}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 225, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &76851946541145704
 Animator:
   serializedVersion: 5
@@ -374,6 +375,19 @@ LODGroup:
     renderers:
     - renderer: {fileID: 76851946288813933}
   m_Enabled: 1
+--- !u!65 &-5085648848301823272
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 76851946541145705}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &76851946717134210
 GameObject:
   m_ObjectHideFlags: 0

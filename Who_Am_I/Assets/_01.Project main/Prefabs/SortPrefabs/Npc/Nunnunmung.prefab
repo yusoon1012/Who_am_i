@@ -393,6 +393,7 @@ GameObject:
   - component: {fileID: 5828972617370880231}
   - component: {fileID: 184770721656190587}
   - component: {fileID: 1842564189901407055}
+  - component: {fileID: 515562833546340027}
   m_Layer: 0
   m_Name: Nunnunmung
   m_TagString: Untagged
@@ -407,16 +408,16 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5828972617361505079}
-  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0.0000029653306}
-  m_LocalPosition: {x: -0.52, y: 0, z: 0}
-  m_LocalScale: {x: 2.620121, y: 2.620121, z: 2.620121}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5828972617361008405}
   - {fileID: 5828972617361008403}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &5828972617370880231
 Animator:
   serializedVersion: 5
@@ -470,6 +471,19 @@ LODGroup:
     renderers:
     - renderer: {fileID: 5828972617366713895}
   m_Enabled: 1
+--- !u!65 &515562833546340027
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5828972617361505079}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2, y: 2, z: 2}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &5828972617361505087
 GameObject:
   m_ObjectHideFlags: 0

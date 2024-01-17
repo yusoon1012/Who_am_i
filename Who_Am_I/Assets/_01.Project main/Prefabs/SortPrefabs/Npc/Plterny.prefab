@@ -329,6 +329,7 @@ GameObject:
   - component: {fileID: 1594296857638063318}
   - component: {fileID: -7485698268737850481}
   - component: {fileID: -599451911999827061}
+  - component: {fileID: 494547716879003391}
   m_Layer: 0
   m_Name: Plterny
   m_TagString: Untagged
@@ -343,16 +344,16 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1594296857647431452}
-  m_LocalRotation: {x: -0, y: -1, z: -0, w: -0.00000035762784}
-  m_LocalPosition: {x: -4.6399994, y: -0.496, z: 0.53999996}
-  m_LocalScale: {x: 4.40316, y: 4.40316, z: 4.03623}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1594296857647850298}
   - {fileID: 1594296857647850296}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: -180, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &1594296857638063318
 Animator:
   serializedVersion: 5
@@ -406,6 +407,19 @@ LODGroup:
     renderers:
     - renderer: {fileID: 1594296857642152470}
   m_Enabled: 1
+--- !u!65 &494547716879003391
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1594296857647431452}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1594296857647431454
 GameObject:
   m_ObjectHideFlags: 0

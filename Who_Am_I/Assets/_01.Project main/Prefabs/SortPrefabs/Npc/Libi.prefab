@@ -264,6 +264,7 @@ GameObject:
   - component: {fileID: 1227404145166021904}
   - component: {fileID: 5622713217906055502}
   - component: {fileID: -6168319652279073880}
+  - component: {fileID: -8739482266385157101}
   m_Layer: 0
   m_Name: Libi
   m_TagString: Untagged
@@ -278,9 +279,9 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1227404145166021905}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.960001, y: 0.058000028, z: 0.38700008}
-  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1227404144944364562}
@@ -341,6 +342,19 @@ LODGroup:
     renderers:
     - renderer: {fileID: 1227404144944364565}
   m_Enabled: 1
+--- !u!65 &-8739482266385157101
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1227404145166021905}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1227404145306528414
 GameObject:
   m_ObjectHideFlags: 0

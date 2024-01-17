@@ -228,6 +228,7 @@ GameObject:
   - component: {fileID: 411323148312003695}
   - component: {fileID: -2797810700934577081}
   - component: {fileID: 8018836421109665378}
+  - component: {fileID: 4216882345873660733}
   m_Layer: 0
   m_Name: Broli
   m_TagString: Untagged
@@ -242,16 +243,16 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 411323148321503149}
-  m_LocalRotation: {x: -0, y: -1, z: -0, w: 0.00000044703478}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.6692144, y: 0.6692144, z: 0.6692144}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 411323148321860491}
   - {fileID: 411323148321860483}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: -180, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &411323148312003695
 Animator:
   serializedVersion: 5
@@ -305,6 +306,19 @@ LODGroup:
     renderers:
     - renderer: {fileID: 411323148316293807}
   m_Enabled: 1
+--- !u!65 &4216882345873660733
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 411323148321503149}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 4, y: 4, z: 4}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &411323148321503151
 GameObject:
   m_ObjectHideFlags: 0

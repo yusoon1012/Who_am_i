@@ -169,6 +169,7 @@ GameObject:
   - component: {fileID: 488874711248526359}
   - component: {fileID: -4026426902729305906}
   - component: {fileID: -740071903755196300}
+  - component: {fileID: -1955470959948095008}
   m_Layer: 0
   m_Name: Tatamu
   m_TagString: Untagged
@@ -183,16 +184,16 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 488874711241109447}
-  m_LocalRotation: {x: -0, y: -0.9998665, z: -0, w: -0.016343959}
-  m_LocalPosition: {x: 4.78265, y: 0.14000002, z: -0.5301199}
-  m_LocalScale: {x: 2.9113593, y: 2.9113593, z: 2.9113593}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 488874711241274341}
   - {fileID: 488874711241274339}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: -181.873, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &488874711248526359
 Animator:
   serializedVersion: 5
@@ -246,6 +247,19 @@ LODGroup:
     renderers:
     - renderer: {fileID: 488874711252607703}
   m_Enabled: 1
+--- !u!65 &-1955470959948095008
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 488874711241109447}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2, y: 2, z: 2}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &488874711241109455
 GameObject:
   m_ObjectHideFlags: 0

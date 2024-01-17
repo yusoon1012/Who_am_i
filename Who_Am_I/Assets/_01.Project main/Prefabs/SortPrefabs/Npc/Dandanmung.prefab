@@ -107,6 +107,7 @@ GameObject:
   - component: {fileID: 5418566728973778044}
   - component: {fileID: 2725676615031705172}
   - component: {fileID: 3177019940937239983}
+  - component: {fileID: -1589977609890465607}
   m_Layer: 0
   m_Name: Dandanmung
   m_TagString: Untagged
@@ -121,16 +122,16 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5418566728981024684}
-  m_LocalRotation: {x: -0, y: -1, z: -0, w: -0.00000035762784}
-  m_LocalPosition: {x: 6.089999, y: -0.13, z: -0.30999994}
-  m_LocalScale: {x: 2.5688396, y: 2.5688396, z: 2.5688396}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5418566728981255054}
   - {fileID: 5418566728981255048}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: -180, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &5418566728973778044
 Animator:
   serializedVersion: 5
@@ -184,6 +185,19 @@ LODGroup:
     renderers:
     - renderer: {fileID: 5418566728977908412}
   m_Enabled: 1
+--- !u!65 &-1589977609890465607
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5418566728981024684}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2, y: 2, z: 2}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &5418566728981024686
 GameObject:
   m_ObjectHideFlags: 0

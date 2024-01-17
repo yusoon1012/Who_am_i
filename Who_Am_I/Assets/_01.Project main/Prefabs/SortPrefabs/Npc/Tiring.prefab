@@ -48,6 +48,7 @@ GameObject:
   - component: {fileID: 4492206720050355873}
   - component: {fileID: -2924335804647798464}
   - component: {fileID: 4304396401180352676}
+  - component: {fileID: 7245858848843510046}
   m_Layer: 0
   m_Name: Tiring
   m_TagString: Untagged
@@ -62,16 +63,16 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4492206720057617763}
-  m_LocalRotation: {x: -0, y: -0.9976417, z: -0, w: -0.06863777}
-  m_LocalPosition: {x: -2.6429062, y: -0.341, z: 0.7145984}
-  m_LocalScale: {x: 3.339758, y: 3.3397582, z: 3.339758}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4492206720058110277}
   - {fileID: 4492206720058110299}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: -187.872, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &4492206720050355873
 Animator:
   serializedVersion: 5
@@ -125,6 +126,19 @@ LODGroup:
     renderers:
     - renderer: {fileID: 4492206720054501473}
   m_Enabled: 1
+--- !u!65 &7245858848843510046
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4492206720057617763}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &4492206720057617765
 GameObject:
   m_ObjectHideFlags: 0

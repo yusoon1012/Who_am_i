@@ -75,6 +75,7 @@ GameObject:
   - component: {fileID: 7571958183763707800}
   - component: {fileID: -9125731946204846606}
   - component: {fileID: -6299146297006075067}
+  - component: {fileID: -4674580706118277475}
   m_Layer: 0
   m_Name: Winterning
   m_TagString: Untagged
@@ -89,16 +90,16 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7571958183771010120}
-  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0.0000029504295}
-  m_LocalPosition: {x: -5.64, y: 0.35508, z: -0.021899939}
-  m_LocalScale: {x: 2.9050498, y: 2.9050498, z: 2.9050498}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7571958183771498602}
   - {fileID: 7571958183771498604}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &7571958183763707800
 Animator:
   serializedVersion: 5
@@ -152,6 +153,19 @@ LODGroup:
     renderers:
     - renderer: {fileID: 7571958183759509848}
   m_Enabled: 1
+--- !u!65 &-4674580706118277475
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7571958183771010120}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &7571958183771010122
 GameObject:
   m_ObjectHideFlags: 0

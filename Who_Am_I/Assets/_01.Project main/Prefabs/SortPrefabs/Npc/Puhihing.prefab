@@ -260,6 +260,7 @@ GameObject:
   - component: {fileID: 7615983403650321933}
   - component: {fileID: 4545015821118699187}
   - component: {fileID: 6265753024122686311}
+  - component: {fileID: 6567868995453413121}
   m_Layer: 0
   m_Name: Puhihing
   m_TagString: Untagged
@@ -274,16 +275,16 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7615983403640847823}
-  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0.0000029504295}
-  m_LocalPosition: {x: 41.50026, y: -0.191, z: -5.6559997}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7615983403641332201}
   - {fileID: 7615983403641332193}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &7615983403650321933
 Animator:
   serializedVersion: 5
@@ -337,3 +338,16 @@ LODGroup:
     renderers:
     - renderer: {fileID: 7615983403646120141}
   m_Enabled: 1
+--- !u!65 &6567868995453413121
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7615983403640847823}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 4, y: 4, z: 4}
+  m_Center: {x: 0, y: 0, z: 0}
