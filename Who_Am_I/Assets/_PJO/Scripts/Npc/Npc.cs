@@ -119,8 +119,8 @@ public class Npc : MonoBehaviour
 
     private IEnumerator Talks(QuestState_Jun _state)
     {
-        Debug.Log(QuestManager_Jun.instance.currentQuest);
-        Debug.Log(QuestManager_Jun.instance.questList[QuestManager_Jun.instance.currentQuest].currentProgress);
+        Debug.Log("진행 중인 퀘스트: " + QuestManager_Jun.instance.currentQuest);
+        Debug.Log("진행 상태: " + QuestManager_Jun.instance.questList[QuestManager_Jun.instance.currentQuest].currentProgress);
 
         int currentIndex = 0;
         bool isTrigger = false;
