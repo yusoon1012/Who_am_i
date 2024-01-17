@@ -11,19 +11,23 @@ public class Animal : MonoBehaviour
     #region readonly members
     private readonly string NAME_CLONE = "(Clone)";
     private readonly string NAME_NULL = "";
-    private readonly float MIN_ACTION_VALUE = 3f;
-    private readonly float MAX_ACTION_VALUE = 5f;
-    private readonly float DROP_FORCE = 10f;
+    private readonly float MIN_ACTION_VALUE = 1f;
+    private readonly float MAX_ACTION_VALUE = 3f;
+    private readonly float DROP_FORCE = 5f;
+    #endregion
+
+    #region public members
+    public AnimalData data;
     #endregion
 
     #region private members
     private GameObject dropItem;
-    private AnimalData data;
     private NavMeshAgent nav;
     private List<Animator> anis;
     private AnimalsType? type;
     private Coroutine actionCoroutine;
-    private Coroutine visibleCoroutine;
+    private Vector3 originScale;
+    private bool isVisible;
     #endregion
 
     #endregion
@@ -68,6 +72,8 @@ public class Animal : MonoBehaviour
     private void InitializationSetup()
     {
         nav.speed = data.speed;
+        originScale = this.gameObject.transform.localScale;
+        isVisible = false;
     }
 
     //! AnimalsType을 오브젝트 .name과 비교하여 설정
@@ -97,15 +103,17 @@ public class Animal : MonoBehaviour
     #endregion
 
     #region Animator and Coroutine and Movement
-    private void StopTargetCoroutine(Coroutine _targetCoroutine)
+    private void StopActionCoroutine()
     {
-        if (_targetCoroutine != null) { _targetCoroutine = null; }
+        if (actionCoroutine != null)
+        {
+            StopCoroutine(actionCoroutine);
+        }
     }
 
-    private void StartRandomCoroutine()
+    private void StartAliveCoroutine()
     {
-        Debug.Log("하잇");
-
+        StopActionCoroutine();
         switch (GFunc.RandomBool())
         {
             case true: actionCoroutine = StartCoroutine(Move()); break;
@@ -115,23 +123,14 @@ public class Animal : MonoBehaviour
 
     private void StartDeathCoroutine()
     {
-        StopCoroutine(actionCoroutine);
+        StopActionCoroutine();
         actionCoroutine = StartCoroutine(Death());
     }
 
-    private void SetGameObject()
+    private void ResetGameObject()
     {
-        StartCoroutine(SetCoroutine());
-    }
-
-    private IEnumerator SetCoroutine()
-    {
-        gameObject.SetActive(false);
-
-        yield return new WaitForSeconds(data.respawn);
-
-        gameObject.SetActive(true);
-        Reset();
+        foreach (Animator ani in anis) { ani.SetTrigger("Reset"); }
+        data.hp = 1;
     }
 
     private IEnumerator Move()
@@ -146,14 +145,14 @@ public class Animal : MonoBehaviour
         {
             timeElapsed += Time.deltaTime;
 
-            transform.position += Vector3.forward * data.speed * Time.deltaTime;
+            nav.SetDestination(transform.position + transform.forward);
 
             yield return null;
         }
 
         foreach (Animator ani in anis) { ani.SetBool("Move", false); }
-        Debug.Log("여긴 들어오니 ?");
-        StopTargetCoroutine(actionCoroutine);
+
+        StartAliveCoroutine();
     }
 
     private IEnumerator Wait()
@@ -161,25 +160,25 @@ public class Animal : MonoBehaviour
         float time = GFunc.RandomValueFloat(MIN_ACTION_VALUE, MAX_ACTION_VALUE);
 
         yield return new WaitForSeconds(time);
-        Debug.Log("여긴 들어오니 ?");
-        StopTargetCoroutine(actionCoroutine);
+
+        StartAliveCoroutine();
     }
 
     private IEnumerator Death()
     {
         foreach (Animator ani in anis) { ani.SetTrigger("Death"); }
 
-        float timeElapsed = 0.0f;
-        float duration = MAX_ACTION_VALUE;
+        yield return new WaitForSeconds(5f);
 
-        while (timeElapsed < duration)
-        {
-            timeElapsed += Time.deltaTime;
+        this.gameObject.transform.localScale = Vector3.one * 0.001f;
 
-            yield return null;
-        }
+        yield return new WaitForSeconds(data.respawn);
 
-        SetGameObject();
+        this.gameObject.transform.localScale = originScale;
+
+        ResetGameObject();
+
+        if (isVisible == true) { StartAliveCoroutine(); }
     }
 
     private void DropItem()
@@ -195,38 +194,30 @@ public class Animal : MonoBehaviour
         newRig.AddForce((Vector3.up + direction) * DROP_FORCE, ForceMode.Impulse);
     }
 
-    private void Reset()
+    private IEnumerator IsResurrection()
     {
-        foreach (Animator ani in anis) { ani.SetTrigger("Reset"); }
-        data.hp = 1;
+        while (data.hp == 0)
+        {
+            yield return null;
+        }
+
+        StartAliveCoroutine();
     }
     #endregion
 
     #region Visible
-    private void StartVisibleCoroutine()
-    {
-        visibleCoroutine = StartCoroutine(CoroutineUpdate());
-    }
-
-    private IEnumerator CoroutineUpdate()
-    {
-        while (true)
-        {
-            Debug.Log(actionCoroutine == null);
-            if (actionCoroutine == null) { StartRandomCoroutine(); }
-            yield return null;
-        }
-    }
-
     private void OnBecameInvisible()
     {
-        StopTargetCoroutine(visibleCoroutine);
-        StopTargetCoroutine(actionCoroutine);
+        isVisible = false;
+        foreach (Animator ani in anis) { ani.SetBool("Move", false); }
+        if (data.hp != 0) { StopActionCoroutine(); }
     }
 
     private void OnBecameVisible()
     {
-        StartVisibleCoroutine();
+        isVisible = true;
+        if (data.hp == 0) { StartCoroutine(IsResurrection()); }
+        else { StartAliveCoroutine(); }
     }
     #endregion
 
