@@ -399,6 +399,9 @@ public class QuestManager_Jun : MonoBehaviour
         questList.Add(quest_10018);
         questList.Add(quest_10019);
         questList.Add(quest_10020);
+
+        // <Solbin> '이어하기' 선택 여부 확인 후 퀘스트 진행 재세팅
+        VRIFTitleManager.Instance.QuestSetting();
     }
 
     private Quest_Jun CreateQuest
@@ -533,6 +536,14 @@ public class QuestManager_Jun : MonoBehaviour
     public void AddCurrentQuestValue(int _index)
     {
         questList[currentQuest].currentValues[_index] += 1;
+    }
+
+    public void CheckClear(string text)
+    {
+        Debug.Log("받은 정보: " + text);
+        // 1. 동물 오브젝트.GetComponent<Animal>().data.name 가져오기 (영어)
+        // 2. 낚시 int값에 1 더하기 (string으로 1 보내기)
+        // 3. 딸기를 인벤토리에 보냄 (한글)
     }
     #endregion
 }

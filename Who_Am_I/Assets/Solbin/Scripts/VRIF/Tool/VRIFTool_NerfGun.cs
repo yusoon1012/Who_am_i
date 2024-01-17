@@ -127,6 +127,8 @@ public class VRIFTool_NerfGun : MonoBehaviour
             {
                 _prey.GetComponent<Animal>().Hit(1); // 1만큼 데미지
 
+                //QuestManager_Jun.instance.CheckClear(_prey.GetComponent<Animal>().data.name); // TODO: 수정 후 오픈 (현재 private이라 접근 불가)
+
                 huntEvent?.Invoke(this, EventArgs.Empty); // 수렵 완료 이벤트 발생
             }
         }

@@ -178,6 +178,8 @@ public class VRIFPlayerItem : MonoBehaviour
 
         string name = default; // 아이템 이름
 
+        if (item_.name.Contains("Strawberry")) { QuestManager_Jun.instance.CheckClear("Strawberry"); }
+
         foreach (var itemKey in itemDic.Keys)
         {
             if (item_.name.Contains(itemKey)) // 위 아이템 딕셔너리의 키를 포함하면

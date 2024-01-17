@@ -226,18 +226,26 @@ public class VRIFTool_FishingRod : MonoBehaviour
 
         bobberRigid.AddForce(Vector3.up * 5.5f, ForceMode.Impulse);
 
+        bool checkOne = false; // 낚시 성공을 한 번만 체크하도록
+
         while(Vector3.Distance(bobberPos, bobber.transform.position) < 3.5f) // 찌가 일정 거리 이상 떠오르기 전까지 조건 체크 
         {
             if (_gotcha) // 낚시에 성공했다면 
             {
                 fish.transform.position = bobber.transform.position;
+
+                if (!checkOne)
+                {
+                    checkOne = true;
+                    QuestManager_Jun.instance.CheckClear("1"); // 낚시 성공 int값 보내기 
+                }
+
+                fishingEvent?.Invoke(this, EventArgs.Empty); // 낚시 완료 이벤트 발생
                 Invoke("ReturnFish", 3f);
             }
 
             yield return null;
         }
-
-        fishingEvent?.Invoke(this, EventArgs.Empty); // 낚시 완료 이벤트 발생
 
         drawing = false;
         StopCoroutine(DrawLine());

@@ -44,6 +44,21 @@ public class VRIFPlayerCheckPoint : MonoBehaviour
         }
     }
 
+    // 테스트 코드다. 
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.gameObject.layer == LayerMask.NameToLayer("CheckPoint"))
+        {
+            if (!other.GetComponent<VRIFMap_CheckPoint>().activated) // 아직 비활성화된 체크포인트라면 
+            {
+                if (Input.GetKeyDown(KeyCode.G))
+                {
+                    checkPoint.GetComponent<VRIFMap_CheckPoint>().Activated(); // 테스트 코드 
+                }
+            }
+        }
+    }
+
     private void OnTriggerExit(Collider other)
     {
         if (other.gameObject.layer == LayerMask.NameToLayer("CheckPoint"))

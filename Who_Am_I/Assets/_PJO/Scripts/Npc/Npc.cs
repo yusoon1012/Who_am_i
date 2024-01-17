@@ -51,6 +51,21 @@ public class Npc : MonoBehaviour
     }
     #endregion
 
+    #region Solbin: VRIF Input Action
+    private VRIFAction vrifAction = default;
+
+    private void OnEnable()
+    {
+        vrifAction = new VRIFAction();
+        vrifAction.Enable();
+    }
+
+    private void OnDisable()
+    {
+        vrifAction.Disable();
+    }
+    #endregion
+
     #region Coroutine and Check
     private void StopAllCoroutine()
     {
@@ -69,7 +84,7 @@ public class Npc : MonoBehaviour
     {
         while (player != null)
         {
-            if (Input.GetKeyDown(KeyCode.X))        // TODO: 대화시작
+            if (vrifAction.Player.Interaction.triggered || Input.GetKeyDown(KeyCode.J)) // 대화 시작
             {
                 transform.LookAt(player.transform);
                 StartTalkCoroutine();
@@ -104,6 +119,9 @@ public class Npc : MonoBehaviour
 
     private IEnumerator Talks(QuestState_Jun _state)
     {
+        Debug.Log("진행 중인 퀘스트: " + QuestManager_Jun.instance.currentQuest);
+        Debug.Log("진행 상태: " + QuestManager_Jun.instance.questList[QuestManager_Jun.instance.currentQuest].currentProgress);
+
         int currentIndex = 0;
         bool isTrigger = false;
         List<string> talks = new List<string>();
@@ -129,7 +147,7 @@ public class Npc : MonoBehaviour
                 SetNpcTalk(talks[currentIndex]);
                 isTrigger = !isTrigger;
             }
-            else if (Input.GetKeyDown(KeyCode.Z) && isTrigger)      // TODO: 대화 넘기기
+            else if ((vrifAction.Player.Interaction.triggered || Input.GetKeyDown(KeyCode.J)) && isTrigger) // 대화 넘기기
             {
                 currentIndex += 1;
                 isTrigger = !isTrigger;
@@ -168,6 +186,7 @@ public class Npc : MonoBehaviour
         QuestManager_Jun.instance.SetCurrentQuestState(QuestState_Jun.ACCEPTED);
         QuestManager_Jun.instance.SetCurrentQuestInterface();
         QuestManager_Jun.instance.QuestCompensation();
+        Debug.Log("부름");
         QuestManager_Jun.instance.CallEvent();
     }
 
@@ -212,9 +231,9 @@ public class Npc : MonoBehaviour
             case 0:
                 switch (id)
                 {
-                    case "NPC_002": CustomBool(0); isInteraction = true; break;
-                    case "NPC_003": CustomBool(0); isInteraction = true; break;
-                    case "NPC_004": CustomBool(0); isInteraction = true; break;
+                    case "NPC_002": CustomBool(0); CustomValue(0, 0, 1); isInteraction = true; break;
+                    case "NPC_003": CustomBool(0); CustomValue(0, 0, 1); isInteraction = true; break;
+                    case "NPC_004": CustomBool(0); CustomValue(0, 0, 1); isInteraction = true; break;
                 }
                 break;
             case 1: if (id == "NPC_021") { CustomBool(1, true); isInteraction = true; } break;
@@ -289,6 +308,11 @@ public class Npc : MonoBehaviour
     private void CustomBool(int _currentQuest, bool _setValue)
     {
         QuestManager_Jun.instance.questList[_currentQuest].isMBTIConditions = _setValue;
+    }
+
+    private void CustomValue(int _currentQuest, int _index, int _setValue)
+    {
+        QuestManager_Jun.instance.questList[_currentQuest].currentValues[_index] = _setValue;
     }
     #endregion
 }
