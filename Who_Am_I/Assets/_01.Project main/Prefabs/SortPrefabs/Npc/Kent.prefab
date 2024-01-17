@@ -330,7 +330,7 @@ GameObject:
   - component: {fileID: 3444358881298991384}
   - component: {fileID: 3444358881287788586}
   m_Layer: 0
-  m_Name: Rabby_Queen
+  m_Name: Kent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -425,6 +425,8 @@ GameObject:
   m_Component:
   - component: {fileID: 3444358881298991386}
   - component: {fileID: 3444358881292003050}
+  - component: {fileID: 2937425481422737069}
+  - component: {fileID: -603566695276323116}
   m_Layer: 0
   m_Name: Kent
   m_TagString: Untagged
@@ -470,6 +472,38 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &2937425481422737069
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3444358881299289402}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d21a84272d63e2e41ba65da7b20fff32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  id: 
+--- !u!205 &-603566695276323116
+LODGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3444358881299289402}
+  serializedVersion: 2
+  m_LocalReferencePoint: {x: 0, y: 0, z: 0}
+  m_Size: 1
+  m_FadeMode: 0
+  m_AnimateCrossFading: 0
+  m_LastLODIsBillboard: 0
+  m_LODs:
+  - screenRelativeHeight: 0.00866
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 3444358881287788586}
+  m_Enabled: 1
 --- !u!1 &3444358881299289404
 GameObject:
   m_ObjectHideFlags: 0

@@ -74,7 +74,7 @@ GameObject:
   - component: {fileID: 488874711241274341}
   - component: {fileID: 488874711252607703}
   m_Layer: 0
-  m_Name: Planta_Geezer
+  m_Name: Tatamu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -167,6 +167,8 @@ GameObject:
   m_Component:
   - component: {fileID: 488874711241274343}
   - component: {fileID: 488874711248526359}
+  - component: {fileID: -4026426902729305906}
+  - component: {fileID: -740071903755196300}
   m_Layer: 0
   m_Name: Tatamu
   m_TagString: Untagged
@@ -212,6 +214,38 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &-4026426902729305906
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 488874711241109447}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d21a84272d63e2e41ba65da7b20fff32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  id: 
+--- !u!205 &-740071903755196300
+LODGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 488874711241109447}
+  serializedVersion: 2
+  m_LocalReferencePoint: {x: 0, y: 0, z: 0}
+  m_Size: 1
+  m_FadeMode: 0
+  m_AnimateCrossFading: 0
+  m_LastLODIsBillboard: 0
+  m_LODs:
+  - screenRelativeHeight: 0.00866
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 488874711252607703}
+  m_Enabled: 1
 --- !u!1 &488874711241109455
 GameObject:
   m_ObjectHideFlags: 0

@@ -104,6 +104,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2238396026234380169}
   - component: {fileID: 2238396026242101355}
+  - component: {fileID: -5815913845094841672}
+  - component: {fileID: -9144101475922997414}
   m_Layer: 0
   m_Name: Mokgu
   m_TagString: Untagged
@@ -149,6 +151,38 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &-5815913845094841672
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2238396026234799017}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d21a84272d63e2e41ba65da7b20fff32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  id: 
+--- !u!205 &-9144101475922997414
+LODGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2238396026234799017}
+  serializedVersion: 2
+  m_LocalReferencePoint: {x: 0, y: 0, z: 0}
+  m_Size: 1
+  m_FadeMode: 0
+  m_AnimateCrossFading: 0
+  m_LastLODIsBillboard: 0
+  m_LODs:
+  - screenRelativeHeight: 0.00866
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 2238396026237980331}
+  m_Enabled: 1
 --- !u!1 &2238396026234799019
 GameObject:
   m_ObjectHideFlags: 0
@@ -225,7 +259,7 @@ GameObject:
   - component: {fileID: 2238396026234380175}
   - component: {fileID: 2238396026237980331}
   m_Layer: 0
-  m_Name: Devil_Tree
+  m_Name: Mokgu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

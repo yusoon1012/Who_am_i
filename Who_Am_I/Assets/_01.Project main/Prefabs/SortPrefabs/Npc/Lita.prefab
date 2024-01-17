@@ -42,6 +42,8 @@ GameObject:
   m_Component:
   - component: {fileID: 8620701258841071304}
   - component: {fileID: 8620701258831556924}
+  - component: {fileID: -5301826809673274526}
+  - component: {fileID: 4424564244990086645}
   m_Layer: 0
   m_Name: Lita
   m_TagString: Untagged
@@ -87,6 +89,38 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &-5301826809673274526
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8620701258841031400}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d21a84272d63e2e41ba65da7b20fff32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  id: 
+--- !u!205 &4424564244990086645
+LODGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8620701258841031400}
+  serializedVersion: 2
+  m_LocalReferencePoint: {x: 0, y: 0, z: 0}
+  m_Size: 1
+  m_FadeMode: 0
+  m_AnimateCrossFading: 0
+  m_LastLODIsBillboard: 0
+  m_LODs:
+  - screenRelativeHeight: 0.00866
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 8620701258827370492}
+  m_Enabled: 1
 --- !u!1 &8620701258841031402
 GameObject:
   m_ObjectHideFlags: 0
@@ -98,7 +132,7 @@ GameObject:
   - component: {fileID: 8620701258841071306}
   - component: {fileID: 8620701258827370492}
   m_Layer: 0
-  m_Name: Planta_Slave
+  m_Name: Lita
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

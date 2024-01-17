@@ -105,7 +105,7 @@ GameObject:
   - component: {fileID: 7615983403641332201}
   - component: {fileID: 7615983403646120141}
   m_Layer: 0
-  m_Name: Devil_Tree
+  m_Name: Puhihing
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -258,6 +258,8 @@ GameObject:
   m_Component:
   - component: {fileID: 7615983403641332207}
   - component: {fileID: 7615983403650321933}
+  - component: {fileID: 4545015821118699187}
+  - component: {fileID: 6265753024122686311}
   m_Layer: 0
   m_Name: Puhihing
   m_TagString: Untagged
@@ -303,3 +305,35 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &4545015821118699187
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7615983403640847823}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d21a84272d63e2e41ba65da7b20fff32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  id: 
+--- !u!205 &6265753024122686311
+LODGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7615983403640847823}
+  serializedVersion: 2
+  m_LocalReferencePoint: {x: 0, y: 0, z: 0}
+  m_Size: 1
+  m_FadeMode: 0
+  m_AnimateCrossFading: 0
+  m_LastLODIsBillboard: 0
+  m_LODs:
+  - screenRelativeHeight: 0.00866
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 7615983403646120141}
+  m_Enabled: 1

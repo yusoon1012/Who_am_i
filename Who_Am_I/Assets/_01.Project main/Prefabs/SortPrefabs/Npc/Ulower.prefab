@@ -30,7 +30,7 @@ Transform:
   m_Children:
   - {fileID: 2931530489562972214}
   m_Father: {fileID: 2931530489562972206}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2931530489563405320
 GameObject:
@@ -107,7 +107,7 @@ GameObject:
   - component: {fileID: 2931530489562972204}
   - component: {fileID: 2931530489560289558}
   m_Layer: 0
-  m_Name: Turnipa
+  m_Name: Ulower
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -121,12 +121,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2931530489563405324}
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2931530489562972206}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!137 &2931530489560289558
 SkinnedMeshRenderer:
@@ -202,6 +202,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2931530489562972206}
   - component: {fileID: 2931530489555988438}
+  - component: {fileID: -3299674508155172236}
+  - component: {fileID: -8790082157106515977}
   m_Layer: 0
   m_Name: Ulower
   m_TagString: Untagged
@@ -221,8 +223,8 @@ Transform:
   m_LocalScale: {x: 0.9114641, y: 0.9114641, z: 0.9114641}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 2931530489562972192}
   - {fileID: 2931530489562972204}
+  - {fileID: 2931530489562972192}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
@@ -247,6 +249,38 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &-3299674508155172236
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2931530489563405326}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d21a84272d63e2e41ba65da7b20fff32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  id: 
+--- !u!205 &-8790082157106515977
+LODGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2931530489563405326}
+  serializedVersion: 2
+  m_LocalReferencePoint: {x: 0, y: 0, z: 0}
+  m_Size: 1
+  m_FadeMode: 0
+  m_AnimateCrossFading: 0
+  m_LastLODIsBillboard: 0
+  m_LODs:
+  - screenRelativeHeight: 0.00866
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 2931530489560289558}
+  m_Enabled: 1
 --- !u!1 &2931530489563405328
 GameObject:
   m_ObjectHideFlags: 0

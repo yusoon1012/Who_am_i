@@ -156,7 +156,7 @@ Transform:
   m_Children:
   - {fileID: 76851945783334411}
   m_Father: {fileID: 76851946541145707}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &76851946288813931
 GameObject:
@@ -169,7 +169,7 @@ GameObject:
   - component: {fileID: 76851946288813930}
   - component: {fileID: 76851946288813933}
   m_Layer: 0
-  m_Name: Shellfish_B
+  m_Name: Jirak
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -183,12 +183,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 76851946288813931}
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 76851946541145707}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!137 &76851946288813933
 SkinnedMeshRenderer:
@@ -295,6 +295,8 @@ GameObject:
   m_Component:
   - component: {fileID: 76851946541145707}
   - component: {fileID: 76851946541145704}
+  - component: {fileID: 2061988605879134229}
+  - component: {fileID: -2883017080028725610}
   m_Layer: 0
   m_Name: Jirak
   m_TagString: Untagged
@@ -314,8 +316,8 @@ Transform:
   m_LocalScale: {x: 1.6855507, y: 1.68555, z: 1.6855507}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 76851946250427902}
   - {fileID: 76851946288813930}
+  - {fileID: 76851946250427902}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 225, z: 0}
@@ -340,6 +342,38 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &2061988605879134229
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 76851946541145705}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d21a84272d63e2e41ba65da7b20fff32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  id: 
+--- !u!205 &-2883017080028725610
+LODGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 76851946541145705}
+  serializedVersion: 2
+  m_LocalReferencePoint: {x: 0, y: 0, z: 0}
+  m_Size: 1
+  m_FadeMode: 0
+  m_AnimateCrossFading: 0
+  m_LastLODIsBillboard: 0
+  m_LODs:
+  - screenRelativeHeight: 0.00866
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 76851946288813933}
+  m_Enabled: 1
 --- !u!1 &76851946717134210
 GameObject:
   m_ObjectHideFlags: 0
