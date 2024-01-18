@@ -126,6 +126,7 @@ public class VRIFTool_NerfGun : MonoBehaviour
             if (_prey.GetComponent<Animal>())
             {
                 _prey.GetComponent<Animal>().Hit(1); // 1만큼 데미지
+                QuestManager_Jun.instance.CheckClear("Animal");
 
                 //QuestManager_Jun.instance.CheckClear(_prey.GetComponent<Animal>().data.name); // TODO: 수정 후 오픈 (현재 private이라 접근 불가)
 

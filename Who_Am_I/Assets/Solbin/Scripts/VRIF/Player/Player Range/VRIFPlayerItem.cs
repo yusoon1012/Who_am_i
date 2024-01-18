@@ -45,12 +45,27 @@ public class VRIFPlayerItem : MonoBehaviour
 
     private Dictionary<string, string> itemDic = new Dictionary<string, string>()
     {
-        { "Juksoon", "죽순" },
-        { "Peanut", "땅콩" },
-        { "Song_e", "송이 버섯" },
-        { "Coconut", "코코넛" },
-        { "Ginkgo", "은행" },
-        { "Kakao", "카카오" }
+        { "Egg", "달걀"},
+        { "Meat", "고기"},
+        { "BambooShoots", "죽순"},
+        { "Matsutake", "송이 버섯"},
+        { "Peantu", "땅콩"},
+        { "Coconut", "야자 열매"},
+        { "Ginkgo", "은행"},
+        { "Kakao", "카카오"},
+        { "Blueberry", "블루베리"},
+        { "Corn", "옥수수"},
+        { "Milk", "우유"},
+        { "Strawberry", "딸기"},
+        { "Tomato", "토마토"},
+        { "Cabbage", "양배추"},
+        { "Potato", "감자"},
+        { "Radish", "무"},
+        { "SweetPotato", "고구마"},
+        { "Citron", "유자"},
+        { "Honey", "꿀"},
+        { "Jujube", "대추"},
+
 
         // TODO: 추가 처리 필요 
     };
@@ -99,7 +114,7 @@ public class VRIFPlayerItem : MonoBehaviour
             {
                 other.transform.parent.GetComponent<Outline>().OutlineWidth = 10;
             }
-            else 
+            else
             {
                 Renderer renderer = other.transform.parent.GetComponent<Renderer>(); // 렌더러
 
@@ -170,21 +185,31 @@ public class VRIFPlayerItem : MonoBehaviour
             VRIFItem_RespawnHelper respawnHelper = item_.transform.GetComponentInChildren<VRIFItem_RespawnHelper>();
             StartCoroutine(respawnHelper.Respawn());
         }
-      
+
         for (int i = 0; i < grabbers.Length; i++)
         {
             grabbers[i].ReleaseGrab(); // 아이템 획득 전 먼저 손을 놓게 한다. 
         }
 
-        string name = default; // 아이템 이름
+        //string name = default; // 아이템 이름
+        //switch (item_.name)
+        //{
+        //    case var name when name.Contains("Strawberry"):
 
-        if (item_.name.Contains("Strawberry")) { QuestManager_Jun.instance.CheckClear("Strawberry"); }
+        //        break;
+        //}
+        //if (item_.name.Contains("Strawberry")) { QuestManager_Jun.instance.CheckClear("Strawberry"); }
+
+        // 퀘스트로 아이템 이름 보내기
+        QuestManager_Jun.instance.CheckClear(item_.name);
+
 
         foreach (var itemKey in itemDic.Keys)
         {
             if (item_.name.Contains(itemKey)) // 위 아이템 딕셔너리의 키를 포함하면
             {
                 name = itemDic[itemKey]; // 한글로 변환 (키에 해당하는 값)
+                Debug.Log("이름: " + name);
             }
         }
 

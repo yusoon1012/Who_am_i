@@ -545,6 +545,8 @@ public class QuestManager_Jun : MonoBehaviour
     public void CheckClear(string text)
     {
         Debug.Log("받은 정보: " + text);
+
+        //questList[currentQuest].
         // 1. 동물 오브젝트.GetComponent<Animal>().data.name 가져오기 (영어)
         // 2. 낚시 int값에 1 더하기 (string으로 1 보내기)
         // 3. 딸기를 인벤토리에 보냄 (한글)

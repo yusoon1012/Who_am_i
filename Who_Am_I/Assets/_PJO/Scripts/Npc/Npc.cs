@@ -147,7 +147,7 @@ public class Npc : MonoBehaviour
                 SetNpcTalk(talks[currentIndex]);
                 isTrigger = !isTrigger;
             }
-            else if ((vrifAction.Player.Interaction.triggered || Input.GetKeyDown(KeyCode.J)) && isTrigger) // 대화 넘기기
+            else if ((vrifAction.Player.Interaction.triggered || Input.GetKeyDown(KeyCode.Z)) && isTrigger) // 대화 넘기기
             {
                 currentIndex += 1;
                 isTrigger = !isTrigger;
@@ -192,6 +192,8 @@ public class Npc : MonoBehaviour
 
     private void SetNpcTalk(string _text)
     {
+        DialogManager.instance.PrintDialog(this.name, _text);
+        //GameManager.instance.player.GetComponent<Inventory>().AddInventory(_text,)
         // TODO 경민이형 과 상호작용해서 대화문 출력
         // 이때 STRING 과 NPC 이름 보낸다.
         // 잘생긴 준오가 요상한 경민이형의 스크립트 다이얼로그 꺼주는 스크립트 제작
