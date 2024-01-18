@@ -690,22 +690,24 @@ namespace BNG {
         {
             if (HoldingItem && other.GetComponent<Climbable>()) // 그랩 중인 등반 물체가 사다리인지 일반 등반 물체인지 판단함
             {
-                if (other.transform.parent.GetComponent<VRIFMap_ZipLine>() != null) // 짚라인이면 
-                {
-                    VRIFStateSystem.Instance.ChangeState(VRIFStateSystem.GameState.ZIPLINE);
-                }
-                else if (other.transform.parent.parent.GetComponent<VRIFTool_Ladder>() != null) // 접촉한 등반 물체 최상위 오브젝트가 사다리 
-                {
-                    VRIFStateSystem.Instance.ChangeState(VRIFStateSystem.GameState.LADDER);
-                }
-                else // 일반 등반 물체면 
-                {
-                    if (!oneGrabCheck) // 등반 각도 전환을 한 번만 실행하기 위함. 
-                    {
-                        oneGrabCheck = true;
-                        VRIFPlayerClimbingHelper.Instance.SetAnchor(other.gameObject);
-                    }
-                }
+                //if (other.transform.parent.GetComponent<VRIFMap_ZipLine>() != null) // 짚라인이면 
+                //{
+                //    VRIFStateSystem.Instance.ChangeState(VRIFStateSystem.GameState.ZIPLINE);
+                //}
+                //else if (other.transform.parent.parent.GetComponent<VRIFTool_Ladder>() != null) // 접촉한 등반 물체 최상위 오브젝트가 사다리 
+                //{
+                //    VRIFStateSystem.Instance.ChangeState(VRIFStateSystem.GameState.LADDER);
+                //}
+                //else // 일반 등반 물체면 
+                //{
+                //    if (!oneGrabCheck) // 등반 각도 전환을 한 번만 실행하기 위함. 
+                //    {
+                //        oneGrabCheck = true;
+                //        VRIFPlayerClimbingHelper.Instance.SetAnchor(other.gameObject);
+                //    }
+                //}
+
+                VRIFPlayerClimbingHelper.Instance.SetAnchor(other.gameObject);
             }
 
             if (HoldingItem && other.GetComponent<VRIFItem_CropGravity>()) // 나무에 달려있는 과일인지 판단
