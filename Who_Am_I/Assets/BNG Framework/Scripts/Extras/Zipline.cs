@@ -130,8 +130,6 @@ namespace BNG {
         {
             if (inTrigger)
             {
-                Debug.Log("짚라인 활성");
-
                 // 컨트롤러를 아래로 흔들면 (가속력 구분)
                 if (VRIFInputSystem.Instance.lVelocity.y <= -0.5f || VRIFInputSystem.Instance.rVelocity.y <= -0.5f)
                 {
@@ -159,7 +157,6 @@ namespace BNG {
                     }
                 }
             }
-            else { Debug.Log("짚라인 비활성"); }
         }
 
         /// <summary>

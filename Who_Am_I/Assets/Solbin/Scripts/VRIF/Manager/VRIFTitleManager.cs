@@ -180,6 +180,8 @@ public class VRIFTitleManager : MonoBehaviour
 
         VRIFGameManager.Instance.PlayerSetting(); // 저장 정보 로드 후 세팅
 
+        // TODO: AddInventory로 인벤토리 세팅, 
+
         // loadingCanvas.SetActive(false); // 로딩 캔버스 비활성화
     }
 
