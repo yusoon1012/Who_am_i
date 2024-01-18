@@ -316,7 +316,7 @@ public class MapControl : MonoBehaviour
     // 지도를 열 때 지도상의 카메라의 위치를 초기화 시키는 함수
     private void ResetCamera()
     {
-        //CheckMapType();
+        CheckMapType();
         // 지도상의 플레이어 표식 위치를 실제 플레이어 위치에 기반해 계산하여 위치를 변경하는 함수를 실행
         OnMapPlayerSetting();
 
