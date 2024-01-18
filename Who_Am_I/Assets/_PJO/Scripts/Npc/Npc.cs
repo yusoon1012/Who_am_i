@@ -14,7 +14,8 @@ public class Npc : MonoBehaviour
     private List<string> startTalks;        // 퀘스트 시작 대사
     private List<string> progressTalks;     // 퀘스트 진행 대사
     private List<string> completeTalks;     // 퀘스트 완료 대사
-    private bool isInteraction;             // 1번이라도 상호작용 하였는가?
+    private bool isDataInteraction;         // 1번이라도 상호작용 하였는가?
+    private bool isValueInteraction;        // 1번이라도 아이템 교환을 하였는가?
     #endregion
 
     #region Initialization and Setup
@@ -28,7 +29,8 @@ public class Npc : MonoBehaviour
     {
         id = QuestManager_Jun.instance.Return_Id(gameObject.name);
         defaultTalk = QuestManager_Jun.instance.Return_DefaultTalk(gameObject.name);
-        isInteraction = false;
+        isDataInteraction = false;
+        isValueInteraction = false;
     }
 
     private void AddEvent()
@@ -41,7 +43,8 @@ public class Npc : MonoBehaviour
     #region Talks Update
     private void SetTalks(string _questId)
     {
-        isInteraction = false;
+        isDataInteraction = false;
+        isValueInteraction = false;
         startTalks = null;
         progressTalks = null;
         completeTalks = null;
@@ -176,7 +179,8 @@ public class Npc : MonoBehaviour
 
     private void ProgressSetup()
     {
-        CustomCaseData(QuestManager_Jun.instance.currentQuest);
+        isValueInteraction = QuestManager_Jun.instance.CustomCaseValue(isValueInteraction, id);
+        isDataInteraction = QuestManager_Jun.instance.CustomCaseData(isDataInteraction, id);
     }
 
     private void CompleteSetup()
@@ -224,97 +228,6 @@ public class Npc : MonoBehaviour
     #endregion
 
     #region CustomSet
-    private void CustomCaseData(int _currentQuest)
-    {
-        if (isInteraction == true) { return; }
-
-        switch (_currentQuest)
-        {
-            case 0:
-                switch (id)
-                {
-                    case "NPC_002": CustomBool(0); CustomValue(0, 0, 1); isInteraction = true; break;
-                    case "NPC_003": CustomBool(0); CustomValue(0, 0, 1); isInteraction = true; break;
-                    case "NPC_004": CustomBool(0); CustomValue(0, 0, 1); isInteraction = true; break;
-                }
-                break;
-            case 1: if (id == "NPC_021") { CustomBool(1, true); isInteraction = true; } break;
-            case 2: if (id == "NPC_022") { CustomBool(2, true); isInteraction = true; } break;
-            case 3: if (id == "NPC_023") { CustomBool(3, true); isInteraction = true; } break;
-            case 4: break;
-            case 5:
-                switch (id)
-                {
-                    case "NPC_024": CustomBool(5, true); isInteraction = true; break;
-                    case "NPC_025": CustomBool(5, true); isInteraction = true; break;
-                }
-                break;
-            case 6:
-                switch (id)
-                {
-                    case "NPC_026": CustomBool(6, true); isInteraction = true; break;
-                    case "NPC_027": CustomBool(6, true); isInteraction = true; break;
-                }
-                break;
-            case 7: if (id == "NPC_029") { CustomBool(7, true); isInteraction = true; } break;
-            case 8:
-                switch (id)
-                {
-                    case "NPC_030": CustomBool(8, true); isInteraction = true; break;
-                    case "NPC_031": CustomBool(8, true); isInteraction = true; break;
-                }
-                break;
-            case 9: break;
-            case 10:
-                switch (id)
-                {
-                    case "NPC_032": CustomBool(10, true); isInteraction = true; break;
-                    case "NPC_033": CustomBool(10, true); isInteraction = true; break;
-                }
-                break;
-            case 11: if (id == "NPC_034") { CustomBool(11, true); isInteraction = true; } break;
-            case 12: if (id == "NPC_035") { CustomBool(11, true); isInteraction = true; } break;
-            case 13: if (id == "NPC_036") { CustomBool(11, true); isInteraction = true; } break;
-            case 14: break;
-            case 15: if (id == "NPC_037") { CustomBool(15, true); isInteraction = true; } break;
-            case 16:
-                switch (id)
-                {
-                    case "NPC_038": CustomBool(16, true); isInteraction = true; break;
-                    case "NPC_039": CustomBool(16, true); isInteraction = true; break;
-                    case "NPC_040": CustomBool(16, true); isInteraction = true; break;
-                }
-                break;
-            case 17: if (id == "NPC_041") { CustomBool(17, true); isInteraction = true; } break;
-            case 18:
-                switch (id)
-                {
-                    case "NPC_042": CustomBool(18, true); isInteraction = true; break;
-                    case "NPC_043": CustomBool(18, true); isInteraction = true; break;
-                }
-                break;
-            case 19: break;
-        }
-    }
-
-    private void CustomBool(int _currentQuest)
-    {
-        if (QuestManager_Jun.instance.questList[_currentQuest].isMBTIConditions == default)
-        { QuestManager_Jun.instance.questList[_currentQuest].isMBTIConditions = true; }
-        else if (QuestManager_Jun.instance.questList[_currentQuest].isMBTIConditions == true)
-        { QuestManager_Jun.instance.questList[_currentQuest].isMBTIConditions = false; }
-        else
-        { QuestManager_Jun.instance.questList[_currentQuest].isMBTIConditions = false; }
-    }
-
-    private void CustomBool(int _currentQuest, bool _setValue)
-    {
-        QuestManager_Jun.instance.questList[_currentQuest].isMBTIConditions = _setValue;
-    }
-
-    private void CustomValue(int _currentQuest, int _index, int _setValue)
-    {
-        QuestManager_Jun.instance.questList[_currentQuest].currentValues[_index] = _setValue;
-    }
+    
     #endregion
 }

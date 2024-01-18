@@ -1,4 +1,5 @@
 using Firebase.Auth;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -321,6 +322,64 @@ public class ItemManager : MonoBehaviour
         return itemInfomation;
     }     // ReturnItemInfomation()
 
+    // quickSlotTf.GetComponent<QuickSlot>().UseFoodsCheck(_name);
+
+    #region Junoh: 아이템 제거
+    // 현재 인벤토리에 _name 을 가진 오브젝트가 존재하면 제거하는 메서드
+    public bool FindRemoveItem(string _name)
+    {
+        switch (FindItemInfomation(_name))
+        {
+            case 0: RemoveItem(_name, equipments); return true;
+            case 1: RemoveItem(_name, foods); FindRemoveItemQuickSlot(_name); return true;
+            case 2: RemoveItem(_name, stuffs); return true;
+            case 3: return false;
+        }
+
+        return false;
+    }
+
+    // 아이템을 인벤토리 에서 제거하는 메서드
+    private void RemoveItem(string _name, Dictionary<string, ItemsMain> _item)
+    {
+        ItemsMain itemInfo = new ItemsMain();
+
+        itemInfo = _item[_name];
+        itemInfo.itemStack -= 1;
+
+        if (itemInfo.itemStack <= 0)
+        {
+            _item.Remove(_name);
+            itemInfo.itemStack = 0;
+        }
+    }
+
+    // 아이템을 퀵슬롯에서 제거하는 메서드
+    private void FindRemoveItemQuickSlot(string _name)
+    {
+        quickSlotTf.GetComponent<QuickSlot>().UseFoodsCheck(_name);
+    }
+
+    // 현재 인벤토리에 _name 을 가진 오브젝트가 존재하는지 체크하는 메서드
+    private int FindItemInfomation(string _name)
+    {
+        if (equipments.ContainsKey(_name)) { return 0; }
+        else if (foods.ContainsKey(_name)) { return 1; }
+        else if (stuffs.ContainsKey(_name)) { return 2; }
+        else { return 3; }
+    }
+
+    //음식이 있는지 체크하고 이를 이름으로 반환하는 메서드
+    public string FindFoodToInventory()
+    {
+        if (foods.Count < 1) { return null; }
+
+        List<string> itemString = new List<string>(foods.Keys);
+
+        return itemString[GFunc.RandomValueInt(0, itemString.Count)];
+    }
+    #endregion
+
     // 인벤토리에 저장된 아이템 정보를 삭제하는 함수
     public void DeleteItem(string itemName)
     {
@@ -530,7 +589,7 @@ public class ItemManager : MonoBehaviour
                 stack = 0;
                 break;
         }
-        
+
         return stack;
     }     // InventoryStack()
 
@@ -569,7 +628,7 @@ public class ItemManager : MonoBehaviour
                     imageNum = 0;
                 }
                 break;
-                // 3 의 아이템 타입은 소지중인 아이템이 아닌 아이템 전체로 아이템 이미지 넘버를 불러옴
+            // 3 의 아이템 타입은 소지중인 아이템이 아닌 아이템 전체로 아이템 이미지 넘버를 불러옴
             case 3:
                 if (itemDataBase.ContainsKey(itemName))
                 {
@@ -584,7 +643,7 @@ public class ItemManager : MonoBehaviour
                 imageNum = 0;
                 break;
         }
-        
+
         return imageNum;
     }     // ItemImage()
 

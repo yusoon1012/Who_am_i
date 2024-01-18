@@ -1,513 +1,488 @@
-ï»¿Quest_Main_Npc_Script_0001,ì•ˆë…•* ì´ë°©ì¸? ìš°ë¦¬ ê½ƒìƒ˜ ë§ˆì„ì— ì˜¨ ê²ƒì„ í™˜ì˜í•´!
-Quest_Main_Npc_Script_0002,ìš°ë¦¬ ë§ˆì„ì€ ì´ë°©ì¸ë“¤ì´ ì²˜ìŒ ê²½í—˜í•˜ê²Œ ë˜ëŠ” ë§ˆì„ì´ì•¼.
-Quest_Main_Npc_Script_0003,ê·¸ëŸ¬ë‹ˆ ë¨¼ì €* ìš°ë¦¬ ì›”ë“œì—ì„œ ì‚´ì•„ë‚¨ê¸° ìœ„í•œ ì—¬ëŸ¬ê°€ì§€ ë°©ë²•ë“¤ì„ ë°°ì›Œì•¼ê² ì§€?
-Quest_Main_Npc_Script_0004,ìš°ì„ * ìš°ë¦¬ ë§ˆì„ì„ í•œ ë²ˆ ë‘˜ëŸ¬ë³´ê³  ë§ˆì„ ì•„ì´ë“¤ê³¼ ì¸ì‚¬ë„ ë‚˜ëˆ„ê³  ì™€!
-Quest_Main_Npc_Script_0005,ì¸ì‚¬ë¥¼ í•´ì•¼ í•  ì¹œêµ¬ë“¤ ìœ„ì—ëŠ” ë§ˆí¬ê°€ ë–  ìžˆì„ í…Œë‹ˆ ì‰½ê²Œ í™•ì¸í•  ìˆ˜ ìžˆì„ê±°ì•¼.
-Quest_Main_Npc_Script_0006,ëª‡ ëª…ê³¼ ì¸ì‚¬ë¥¼ ë‚˜ëˆŒ ì§€ëŠ” ìžìœ ë‹ˆê¹Œ ë§ˆìŒëŒ€ë¡œ í•˜ë ´~
-Quest_Main_Npc_Script_0007,ì¡°ì‹¬ížˆ ë‹¤ë…€ì™€~
-Quest_Main_Npc_Script_0008,ì•„ì§ ì•„ë¬´ì™€ë„ ì¸ì‚¬í•˜ì§€ ì•Šì€ ê²ƒ ê°™ì€ë°?
-Quest_Main_Npc_Script_0009,ì•ˆë…•* ì´ë°©ì¸! ìš°ë¦¬ ê½ƒìƒ˜ ë§ˆì„ì— ì˜¨ ê±¸ í™˜ì˜í•´~
-Quest_Main_Npc_Script_0010,ì˜¤ëžœë§Œì˜ ì´ë°©ì¸ì´ë‹¤.. ë°˜ê°‘ë‹¤..
-Quest_Main_Npc_Script_0011,ì•ˆë…•~ ìž˜ ì ì‘í•´ì„œ  ì¦ê²ê²Œ ì§€ë‚´ë³´ìžêµ¬!
-Quest_Main_Npc_Script_0012,ì¸ì‚¬ëŠ” ìž˜ í•˜ê³  ì™”ì–´?
-Quest_Main_Npc_Script_0013,ë²„ë“¤ì´ ë„ˆì—ê²Œ ì•Œë ¤ì£¼ê³  ì‹¶ì€ ê²ƒì´ ìžˆë‹¤ë˜ë° í•œ ë²ˆ ê°€ë´!
-Quest_Main_Npc_Script_0014,ìš°ë¦¬ ì›”ë“œì—ì„œ ì‚´ì•„ë‚¨ëŠ” ë° ë„ì›€ì´ ë ë§Œí•œ ë„êµ¬ë“¤ì„ ì¸ë²¤í† ë¦¬ì— ë„£ì–´ë’€ì–´. ìž˜ ì“°ë ´!
-Quest_Main_Npc_Script_0015,ì™”êµ¬ë‚˜! ê¸°ë‹¤ë ¸ì–´.
-Quest_Main_Npc_Script_0016,ë‚˜ëŠ” ë„ˆì—ê²Œ ìš°ë¦¬ ì›”ë“œì—ì„œ ì‚´ê¸° ìœ„í•´ ê¼­ í•„ìš”í•œ 'ì±„ì§‘'ì— ëŒ€í•´ ì•Œë ¤ì£¼ë ¤ê³  í•´.
-Quest_Main_Npc_Script_0017,ìš°ì„  ë”¸ê¸°ë¥¼ Nê°œ ì±„ì§‘í•´ ì˜¬ëž˜?
-Quest_Main_Npc_Script_0018,ë”¸ê¸°ë¥¼ ì±„ì§‘í•˜ëŠ” ë°©ë²•ì´ ê¶ê¸ˆí•˜ë‹¤ë©´ ì € ë§žì€íŽ¸ì— ìžˆëŠ” ì¹œêµ¬ì—ê²Œ ë¬¼ì–´ë´!
-Quest_Main_Npc_Script_0019,ë¬¼ë¡ * ì§ì ‘ ëª¸ìœ¼ë¡œ ê²½í—˜í•˜ë©° ë°°ìš°ê³  ì‹¶ë‹¤ë©´ ë°”ë¡œ ê°€ë„ ì¢‹ì•„.
-Quest_Main_Npc_Script_0020,ì•„ ì°¸! ë”¸ê¸°ëŠ” ë°”ë¡œ ê·¼ì²˜ì— ë©ê·¸ëŸ¬ë‹ˆ ìžˆëŠ” ê±´ë¬¼ ê¼­ëŒ€ê¸°ì— ìžˆì„ ê±°ì•¼~
-Quest_Main_Npc_Script_0021,ê±´ë¬¼ ê¼­ëŒ€ê¸°ë¡œ ì˜¬ë¼ê°€ê¸° ìœ„í•´ì„œëŠ” ë“±ë°˜ì„ í•´ì•¼í•´.
-Quest_Main_Npc_Script_0022,ë“±ë°˜ì€ ë³¼ë¡ íŠ€ì–´ë‚˜ì™€ ìžˆëŠ” ë¬¼ì²´ë¥¼ ì§ì ‘ ì†ìœ¼ë¡œ ìž¡ìœ¼ë©´ì„œ ì˜¬ë¼ê°€ë©´ ë¼!
-Quest_Main_Npc_Script_0023,ë”¸ê¸°ë¥¼ ì±„ì§‘í•˜ê³  ì™€ì„œ ë‚˜í•œí…Œ ë‹¤ì‹œ ë§ì„ ê±¸ì–´ì¤˜!
-Quest_Main_Npc_Script_0024,ì•ˆë…•! ì±„ì§‘í•˜ëŠ” ë°©ë²•ì´ ê¶ê¸ˆí•˜ë‹¤ê³ ?
-Quest_Main_Npc_Script_0025,ì¹œì ˆí•˜ê²Œ ì„¤ëª…í•´ì£¼ì§€! ë‚˜ë§Œ ë¯¿ì–´~
-Quest_Main_Npc_Script_0026,ì±„ì§‘ì´ ê°€ëŠ¥í•œ ì•„ì´í…œ ì£¼ë³€ì— ê°€ë©´ ì•„ì´í…œì´ ë°˜ì§ë°˜ì§ ë¹›ë‚ ê±°ì•¼.
-Quest_Main_Npc_Script_0027,ê·¸ ì•„ì´í…œì„ ì–»ê³  ì‹¶ìœ¼ë©´ ê·¼ì²˜ì— ê°€ì„œ Aë²„íŠ¼ë§Œ ëˆŒëŸ¬ì£¼ë©´ ë¼.
-Quest_Main_Npc_Script_0028,ì–´ë•Œ* ê°„ë‹¨í•˜ì§€?
-Quest_Main_Npc_Script_0029,ë¬¼ë¡ * ë„êµ¬ê°€ ìžˆì–´ì•¼ë§Œ ì±„ì§‘í•  ìˆ˜ ìžˆëŠ” ì•„ì´í…œë„ ë§Žìœ¼ë‹ˆ ìžŠì§€ë§ê³ ~
-Quest_Main_Npc_Script_0030,ë¹¨ë¦¬ ì™”ë„¤? ë„ˆ ìž¬ëŠ¥ì´ ìžˆêµ¬ë‚˜?! ë³´ìƒìœ¼ë¡œ ìš°ìœ ë¥¼ ì¤„ê²Œ!
-Quest_Main_Npc_Script_0031,ë¦¬íƒ€ ì•„ì €ì”¨ê°€ ë„ˆë¥¼ ë¶€ë¥´ë”ë¼! ì–´ì„œ í•œ ë²ˆ ì•„ì €ì”¨ì—ê²Œ ê°€ë´!
-Quest_Main_Npc_Script_0032,ìˆ˜ë µì— ëŒ€í•´ì„œ ì•Œë ¤ì£¼ê² ë‹¤..
-Quest_Main_Npc_Script_0033,ê³ ê¸° ì¢‹ì•„í•˜ì§€? ë§›ìžˆë‹¤ ê³ ê¸°ëŠ”..
-Quest_Main_Npc_Script_0034,ìˆ˜ë µ êµ¬ì—­ìœ¼ë¡œ ê°€ì„œ ë„ˆí”„ê±´ì„ ì‚¬ìš©í•´ ì˜¤ë¦¬ë¥¼ ìž¡ì•„ì™€.
-Quest_Main_Npc_Script_0035,Oí‚¤ë¥¼ í†µí•´ ìŠ¬ë¡œìš° ëª¨ë“œë¥¼ ì‚¬ìš©í•˜ë©´ ë” ì‰½ê²Œ ìž¡ì„ ìˆ˜ ìžˆì„ ê±°ë‹¤..
-Quest_Main_Npc_Script_0036,ìˆ˜ë µ êµ¬ì—­ì€ OOì— ìžˆë„¤. ë„ˆí”„ê±´ì€ ì¸ë²¤í† ë¦¬ë¥¼ ì—´ì–´ë³´ë©´ í‚¤íŠ¸ ì•ˆì— ìžˆì„ê±°ì•¼.
-Quest_Main_Npc_Script_0037,ë‚´ ì´ì›ƒì´ ê³ ê¸°ë¥¼ ë¨¹ê³  ì‹¶ì–´ í•˜ë˜ë°..
-Quest_Main_Npc_Script_0038,ì—¬ìœ ê°€ ìžˆìœ¼ë©´ 2ë§ˆë¦¬ë§Œ ì „í•´ì¤˜. ë¬¼ë¡  ì „í•´ì£¼ì§€ ì•Šì•„ë„ ìƒê´€ ì—†ë‹¤..
-Quest_Main_Npc_Script_0039,ê³ ê¸° ì‹«ì–´í•˜ë‹ˆ? ì˜¤ë¦¬ë¥¼ ìž¡ê³  ë‚˜ì„œ ë‹¤ì‹œ ë§ì„ ê±¸ì–´..
-Quest_Main_Npc_Script_0040,ìš°ì™€! ê³ ë§ˆì›Œ~! ë„ˆ ì •ë§ ì°©í•˜êµ¬ë‚˜!
-Quest_Main_Npc_Script_0041,ë¦¬íƒ€ì—ê²Œ ë‹¤ì‹œ ê°€ë´! ì•„ì €ì”¨ê°€ ë„ˆì—ê²Œ ë­”ê°€ë¥¼ ì¤„ê±°ì•¼!
-Quest_Main_Npc_Script_0042,ìž¬ëŠ¥ì´ ìžˆëŠ” ì¹œêµ¬ì¸ ê²ƒ ê°™êµ°.
-Quest_Main_Npc_Script_0043,ì•žìœ¼ë¡œì˜ ëª¨í—˜ì—ì„œë„ ì‚¬ëƒ¥í•´ì•¼ í•  ì¼ì€ ë§Žì„í…Œë‹ˆ ì´ ê°ê°ì„ ìžŠì§€ ë§ê²Œ..
-Quest_Main_Npc_Script_0044,ëª©êµ¬ë¼ëŠ” ì¹œêµ¬ê°€ ê°€ë¥´ì³ì¤„ ê²ƒì´ ìžˆë‹¤ë‹ˆ í•œ ë²ˆ ê°€ë³´ê²Œë‚˜..ê»„ê»„
-Quest_Main_Npc_Script_0045,ì•ˆë…•! ì±„ì§‘ì´ëž‘ ìˆ˜ë µì€ ìž˜ ë°°ìš°ê³  ì™”ì–´?
-Quest_Main_Npc_Script_0046,ìš°ë¦¬ ì›”ë“œì—ì„œ ì‚´ì•„ë‚¨ê¸° ìœ„í•œ ë§ˆì§€ë§‰ ë°©ë²•! ê·¸ê±´ ë°”ë¡œ~
-Quest_Main_Npc_Script_0047,ì œìž‘ì´ì•¼! ì±„ì§‘ê³¼ ìˆ˜ë µì„ í†µí•´ ì–»ì€ ìž¬ë£Œë“¤ì„ ê°€ê³µí•˜ëŠ” ê²ƒì´ì§€!
-Quest_Main_Npc_Script_0048,ì•žì— ë‚˜ì™€ ë¹„ìŠ·í•˜ê²Œ ìƒê¸´ ì¹œêµ¬ê°€ ì œìž‘ ë°©ë²• ë° ê³„íš ìˆ˜ë¦½ ë°©ë²•ì— ëŒ€í•´ ì•Œë ¤ì¤„ê±°ì•¼.
-Quest_Main_Npc_Script_0049,ë“£ì§€ ì•Šê³  ë°”ë¡œ ì œìž‘í•˜ê³  ì‹¶ìœ¼ë©´ ë‚´ ì˜† ì œìž‘ëŒ€ë¡œ ê°€ì„œ ìƒí˜¸ìž‘ìš©ì„ í•´ ë´.
-Quest_Main_Npc_Script_0050,ë„ˆê°€ ì œìž‘í•´ì•¼ í•  ìŒì‹ì€ ì†¡ì´ ë¶ˆê³ ê¸°ì•¼. ì´ë¦„ë§Œ ë“¤ì–´ë„ ë§›ìžˆê² ì§€?
-Quest_Main_Npc_Script_0051,ì œìž‘ì€ ì¤‘ìš”í•´. ì†¡ì´ ë¶ˆê³ ê¸° ì œìž‘ í›„ì— ì°¾ì•„ì™€!
-Quest_Main_Npc_Script_0052,ë³¸ë¡ ìœ¼ë¡œ ë°”ë¡œ ê°€ì§€!
-Quest_Main_Npc_Script_0053,ì œìž‘ëŒ€ì— ê°€ì„œ ìƒí˜¸ìž‘ìš©ì„ í•˜ë©´ ì œìž‘ UIê°€ ì—´ë¦´ê±¸ì„¸!
-Quest_Main_Npc_Script_0054,ì›í•˜ëŠ” ë¬¼í’ˆì˜ ìž¬ë£Œë¥¼ í™•ì¸í•˜ê³  ì¡°ê±´ì„ ì¶©ì¡±í–ˆì„ ì‹œ ì œìž‘ ë²„íŠ¼ë§Œ ëˆ„ë¥´ë©´ ë!
-Quest_Main_Npc_Script_0055,ì•žìœ¼ë¡œ ìƒí™œí•˜ë‹¤ë³´ë©´ ë°°ë¶€ë¦„* ì‘ê°€ ê²Œì´ì§€ë¥¼ ê´€ë¦¬í•´ì•¼ í• ê±°ì•¼.
-Quest_Main_Npc_Script_0056,ê·¸ë•Œë§ˆë‹¤ ë¯¸ë¦¬ ì œìž‘í•  ìˆ˜ ìžˆëŠ” ë¬¼í’ˆë“¤ì„ í™•ì¸í•˜ê³  ê³„íšì„ ì„¸ìš°ë©´ ë„ì›€ì´ ë˜ê² ì§€?
-Quest_Main_Npc_Script_0057,ì–´ë•Œ* ê°„ë‹¨í•˜ì§€? ë°”ë¡œ ì‹¤ì „ìœ¼ë¡œ ê°€ë³´ë„ë¡!
-Quest_Main_Npc_Script_0058,í›Œë¥­í•´! ì¢‹ì€ ìŒì‹ì€ ì œìž‘ì„ í†µí•´ì„œë§Œ íšë“ ê°€ëŠ¥í•˜ë‹ˆ ìžŠì§€ ë§ˆ!
-Quest_Main_Npc_Script_0059,ë³´ìƒìœ¼ë¡œ ìš°ë¦¬ ê½ƒìƒ˜ ë§ˆì„ì—ì„œëŠ” íšë“ì´ ë¶ˆê°€ëŠ¥í•œ í† ë§ˆí† ë¥¼ ì¤„ê²Œ!
-Quest_Main_Npc_Script_0060,ì´Œìž¥ë‹˜ì´ ë„ˆì—ê²Œ ê¼­ ì „í•´ì£¼ê³  ì‹¶ì€ ì´ì•¼ê¸°ê°€ ìžˆìœ¼ì‹  ê°€ë´. í•œë²ˆ ê°€ë´.
-Quest_Main_Npc_Script_0061,ì™”ëŠ”ê°€. ë§ˆì„ ì‚¬ëžŒë“¤ì´ ëª¨ë‘ ìžë„¤ë¥¼ ë¬´ì²™ì´ë‚˜ ë§ˆìŒì— ë“¤ì–´ í•˜ë”êµ° í—ˆí—ˆ.
-Quest_Main_Npc_Script_0062,ìžë„¤ëŠ” ëª¨ë¥´ê² ì§€ë§Œ ìžë„¤ëŠ” í‰ë²”í•œ ì´ë°©ì¸ì´ ì•„ë‹ì„¸.
-Quest_Main_Npc_Script_0063,ë‚˜: ì œê°€ìš”?
-Quest_Main_Npc_Script_0064,ìš°ë¦¬ ì›”ë“œì— ë‚´ë ¤ì˜¤ëŠ” ì „ì„¤ì— ë”°ë¥´ë©´
-Quest_Main_Npc_Script_0065,300ë²ˆ ì§¸ë¡œ ìš°ë¦¬ ì›”ë“œì— ë‚˜íƒ€ë‚˜ëŠ” ì´ë°©ì¸ì´ êµ¬ì›ìžê°€ ë  ê±°ë¼ëŠ” ì´ì•¼ê¸°ê°€ ìžˆì—ˆë„¤.
-Quest_Main_Npc_Script_0066,ìžë„¤ê°€ ë°”ë¡œ ê·¸ ì´ë°©ì¸ì´ì§€.
-Quest_Main_Npc_Script_0067,ìž ì‹œë§Œ ê¸°ë‹¤ë ¤ë³´ê²Œë‚˜. ê³§ ìš°ë¦¬ ë§ˆì„ì— ë³€í™”ê°€ ìƒê¸¸ í„°ì´ë‹ˆ..
-Quest_Main_Npc_Script_0068,ì˜¤ì˜¤.. ì •ë§ ìžë„¤ê°€ ìš°ë¦¬ì˜ êµ¬ì›ìžì¸ê±¸ê¹Œ..
-Quest_Main_Npc_Script_0069,ë‚˜ë„ ìƒì„¸í•œ ê±´ ìž˜ ëª¨ë¥¸ë‹¤ë§Œ
-Quest_Main_Npc_Script_0070,ë‹¤ë¥¸ ì§€ì—­ ì£¼ë¯¼ë“¤ì˜ ë¶€íƒì„ ë“¤ì–´ì£¼ë‹¤ ë³´ë©´ í•´ë‹µì„ ì–»ì„ ìˆ˜ ìžˆì„ê±¸ì„¸.
-Quest_Main_Npc_Script_0071,ë¬¼ë¡ * ë¹ ë¥¸ ì‹œì¼ ë‚´ì— ì§‘ìœ¼ë¡œ ëŒì•„ê°€ëŠ” ê²ƒë„ ì¤‘ìš”í•˜ì§€.
-Quest_Main_Npc_Script_0072,ê·¸ë ‡ì§€ë§Œ ì§€ê¸ˆ ì´ ì‹œê°„ì´ í›—ë‚  ì¢‹ì€ ì¶”ì–µìœ¼ë¡œ ê¸°ì–µë  ìˆ˜ ìžˆê²Œ ì¦ê±°ìš´ ê²½í—˜ë“¤ë„ í•¨ê»˜ ëˆ„ë¦¬ê¸¸ ë°”ë¼ë„¤.
-Quest_Main_Npc_Script_0073,ì•žìœ¼ë¡œ ìž˜ ë¶€íƒí•˜ë„¤. êµ¬ì›ìžì—¬.
-Quest_Main_Npc_Script_0074,ì´ê²Œ ëˆ„êµ¬ì•¼~?
-Quest_Main_Npc_Script_0075,ìš°ë¦¬ êµ¬ì›ìžë‹˜ì´ì‹œìž–ì•„!
-Quest_Main_Npc_Script_0076,ì—°ë‘í•œí…Œ ë“£ìž í•˜ë‹ˆ ê³ ë¯¼ì´ ë§Žìœ¼ì‹œë‹¤ë˜ë°
-Quest_Main_Npc_Script_0077,ë‚šì‹œ ì¢€ í•˜ë©´ì„œ ë°”ëžŒì´ë‚˜ ì¬ê³  ì˜¬ëž˜?
-Quest_Main_Npc_Script_0078,ìš°ë¦¬ ë§ˆì„ì˜ ê²½ì¹˜ë„ êµ¬ê²½í•˜ê³  ì‚¬ëžŒë“¤ì—ê²Œ ì¡°ì–¸ë„ ì¢€ êµ¬í•´ë´!
-Quest_Main_Npc_Script_0079,ë¬¼ë¡ * ì‚¬ìƒ‰ì— ìž ê¸°ê³  ì‹¶ë‹¤ë©´ ê³§ìž¥ ë‚šì‹œí„°ë¡œ ê°€ë„ ì¢‹ì•„!
-Quest_Main_Npc_Script_0080,ë¬¼ê³ ê¸°ë¥¼ 15ë§ˆë¦¬ ì •ë„ ìž¡ìœ¼ë©´ ê³ ë¯¼ì´ í•´ê²°ë˜ì§€ ì•Šê² ì–´?
-Quest_Main_Npc_Script_0081,ë‚˜: ë­?! ë‚ ë„ ë”ìš´ë° 15ë§ˆë¦¬ë‚˜ ìž¡ìœ¼ë¼ê³ ?
-Quest_Main_Npc_Script_0082,í•˜í•˜* ë†ë‹´ì´ì•¼ ë†ë‹´. 5ë§ˆë¦¬ ì •ë„ë§Œ ìž¡ìœ¼ë©° í•œ ë²ˆ ê³ ë¯¼í•´ ë´!
-Quest_Main_Npc_Script_0083,5ë§ˆë¦¬ ìž¡ê¸°ë„ íž˜ë“  ê±°ì•¼? ë‹¤ ìž¡ê³  ì™€ì„œ ë§ì„ ê±¸ì–´ì¤˜!
-Quest_Main_Npc_Script_0084,ì•„ì§ ë­ê°€ ì •ë‹µì¸ ì§€ëŠ” ì•„ë¬´ë„ ëª¨ë¥´ìž–ì•„?
-Quest_Main_Npc_Script_0085,ì§€ë¦„ê¸¸ë¡œ ê°€ë ¤ê³  í•˜ì§€ëŠ” ë§ˆ.
-Quest_Main_Npc_Script_0086,ì§€ë¦„ê¸¸ë¡œ ê°€ë ¤ë‹¤ ê°€ëŠ” ì§„ì‹¤ì„ ë†“ì¹˜ê³  ì˜ìš•ì„ ìžƒì„ ìˆ˜ë„ ìžˆì–´.
-Quest_Main_Npc_Script_0087,ì•žìœ¼ë¡œë„ ì‘ì›í• ê²Œ.
-Quest_Main_Npc_Script_0088,í•œ ê°€ì§€ ì¤‘ìš”í•œ ížŒíŠ¸ë¥¼ ì£¼ìžë©´
-Quest_Main_Npc_Script_0089,ë­‰ë¹„íƒ€ì´ ì›”ë“œì—ëŠ” 4ê°œì˜ ë§ˆì„ì´ ìžˆì§€.
-Quest_Main_Npc_Script_0090,4ê°œ ë§ˆì„ì˜ ì¹œêµ¬ë“¤ì´ ì›í•˜ëŠ” ê²ƒë“¤ì„ í•˜ë‚˜í•˜ë‚˜ ì „ë¶€ ë“¤ì–´ì£¼ë©´
-Quest_Main_Npc_Script_0091,ì§‘ì— ê°ˆ ìˆ˜ë„ ìžˆë‹¤ëŠ” ë§ì„ ì–´ë””ì„œ ë“¤ì€ ê²ƒ ê°™ê¸°ë„~
-Quest_Main_Npc_Script_0092,ìž˜ ë‹¤ë…€ì™”ì–´? ìƒê° ì •ë¦¬ëŠ” ì¢€ ëë‹ˆ?
-Quest_Main_Npc_Script_0093,ì–´ë–¤ ì‹œë ¨ì´ë“  ë„ˆë¼ë©´ ìž˜ ê·¹ë³µí•  ê²ƒì´ë¼ ë¯¿ì–´.
-Quest_Main_Npc_Script_0094,ë„Œ ìš°ë¦¬ì˜ êµ¬ì›ìžë‹ˆê¹Œ!
-Quest_Main_Npc_Script_0095,ë¦¬ë¹„ì´ë¼ëŠ” ì¹œêµ¬ê°€ ê¸‰í•œ ì¼ì´ ìƒê²¼ë‚˜ ë³´ë˜ë° í•œ ë²ˆ ê°€ì¤„ëž˜?
-Quest_Main_Npc_Script_0096,ë¬¼ê³ ê¸° ìž¡ëŠë¼ ê³ ìƒí–ˆìœ¼ë‹ˆ ê°ìžë¥¼ ë³´ìƒìœ¼ë¡œ ì¤„ê²Œ! ì•ˆë…•~
-Quest_Main_Npc_Script_0097,í°ì¼ì´ì•¼!!
-Quest_Main_Npc_Script_0098,ë‚˜: ë¬´ìŠ¨ ì¼ì´ì•¼?
-Quest_Main_Npc_Script_0099,ì‚ë¦¬ë½€ê°€ ì‚¬ë¼ì¡Œì–´!
-Quest_Main_Npc_Script_0100,ë‚˜: ì‚ë¦¬ë½€ê°€ ëˆ„êµ°ë°..?
-Quest_Main_Npc_Script_0101,ë‚´ ë² ìŠ¤íŠ¸ í”„ë Œë“œì•¼! ë‚˜ëŠ” ì‚ë¦¬ë½€ ì—†ì´ ì‚´ ìˆ˜ ì—†ì–´.. í‘í‘
-Quest_Main_Npc_Script_0102,ìš°ë¦¬ëŠ” ë°”ë‹¤ ë§ˆì„ì—ì„œë§Œ ì˜¤ëž˜ ì§€ë‚¼ ìˆ˜ ìžˆì–´ì„œ ë©€ë¦¬ëŠ” ëª» ê°”ì„ ê±°ì•¼.
-Quest_Main_Npc_Script_0103,ë§ˆì„ ì‚¬ëžŒë“¤ì´ ì‚ë¦¬ë½€ë¥¼ ë´¤ì„ ìˆ˜ë„ ìžˆìœ¼ë‹ˆ ê°€ëŠ” ê¸¸ì— í•œ ë²ˆ ë¬¼ì–´ë´ ì¤„ëž˜?
-Quest_Main_Npc_Script_0104,ì•„ì§ ì–´ìƒ‰í•˜ê³  í˜¼ìž ì°¾ê³  ì‹¶ìœ¼ë©´ ë°”ë¡œ ì°¾ìœ¼ëŸ¬ ë– ë‚˜ë„ ì¢‹ì•„.
-Quest_Main_Npc_Script_0105,ì‚ë¦¬ë½€ë¥¼ ì°¾ì•„ì¤˜.. ë¶€íƒí• ê²Œ!!
-Quest_Main_Npc_Script_0106,ë­? ì‚ë¦¬ë½€ê°€ ì—†ì–´ì¡Œë‹¤ê³ ? ì•„ê¹Œ ëª¨ëž˜ì‚¬ìž¥ ê·¼ì²˜ë¡œ ê°€ëŠ” ê±¸ ë‚´ê°€ ë´¤ëŠ”ë°?
-Quest_Main_Npc_Script_0107,ì‚ë¦¬ë½€ëŠ” ì›ëž˜ ë§ë„ ì—†ì´ ì–´ë”œ ìž˜ ëŒì•„ë‹¤ë‹ˆê³¤ í•˜ì§€
-Quest_Main_Npc_Script_0108,ì•„ë§ˆ ì–´ë”” êµ¬ì„ì§„ ë°ì„œ ì‰¬ê±°ë‚˜ ë†€ê³  ìžˆì„ ê±°ì•¼
-Quest_Main_Npc_Script_0109,ì‘? ë‚˜ë¥¼ ì°¾ì•˜ë‹¤ê³ ? ì™œ??
-Quest_Main_Npc_Script_0110,ë‚˜: ë¦¬ë¹„ì´ë¼ëŠ” ì•„ì´ê°€ ë„ˆë¥¼ ê±±ì •í•˜ë˜ë°.
-Quest_Main_Npc_Script_0111,ì•„ìœ * ë¦¬ë¹„ëŠ” ê±±ì •ì´ ë„ˆ~ë¬´ ë§Žë‹¤ë‹ˆê¹Œ?
-Quest_Main_Npc_Script_0112,ë‚˜ëŠ” ê·¸ì € ìž ì‹œ í˜¼ìž ì‰¬ê³  ìžˆì—ˆì„ ë¿ì´ë¼ê³ !
-Quest_Main_Npc_Script_0113,ì•„ë¬´íŠ¼ ê³ ë§ˆì›Œ.
-Quest_Main_Npc_Script_0114,ë‚´ê°€ ë¨¼ì € ê°€ì„œ ë¦¬ë¹„ë¥¼ ë‹¬ëž˜ê³  ìžˆì„ í…Œë‹ˆ ì²œì²œížˆ ë’¤ë”°ë¼ì™€.
-Quest_Main_Npc_Script_0115,êµ¬ì›ìžë‹˜! ì‚ë¦¬ë½€ë¥¼ ì°¾ì•„ì¤˜ì„œ ê³ ë§ˆì›Œ!
-Quest_Main_Npc_Script_0116,ë³„ì¼ ì—†ì—ˆë‹¤ë‹ˆ ë‹¤í–‰ì´ì•¼ í—¤í—¤.
-Quest_Main_Npc_Script_0117,ë„ì™€ì¤€ ë³´ë‹µìœ¼ë¡œ ì•¼ìž ì£¼ìŠ¤ë¥¼ ì¤„ê²Œ! ë§›ìžˆê²Œ ë¨¹ì–´~
-Quest_Main_Npc_Script_0118,ë¦¬ë¹„ê°€ ë¶€íƒí•˜ê³  ì‹¶ì€ ì¼ì´ ìžˆëŒ€.
-Quest_Main_Npc_Script_0119,ë¬´ìŠ¨ ì¼ ìžˆë‚˜ ë³¸ë° í•œ ë²ˆ ê°€ì„œ í™•ì¸í•´ ì¤˜!
-Quest_Main_Npc_Script_0120,ì•ˆë…•í•˜ì„¸ìš” êµ¬ì›ìžë‹˜!
-Quest_Main_Npc_Script_0121,ì €ëŠ” ë¦¬ë¹„ë¼ê³  í•´ìš”!
-Quest_Main_Npc_Script_0122,ë‹¤ë¦„ì´ ì•„ë‹ˆë¼ ì œ ë™ìƒì¸ ì§€ë½ì´ê°€ ì•„íŒŒì„œ ë©°ì¹  ë‚´ë‚´ ëˆ„ì›Œìžˆì–´ìš”.
-Quest_Main_Npc_Script_0123,ì§€ë½ì´ë¥¼ ìœ„í•´ í”¼ì‰¬ì•¤ì¹©ìŠ¤ë¥¼ ë§Œë“¤ì–´ ì£¼ì‹¤ ìˆ˜ ìžˆì„ê¹Œìš”?
-Quest_Main_Npc_Script_0124,í”¼ì‰¬ì•¤ì¹©ìŠ¤ë¥¼ ì§€ë½ì´ì—ê²Œ ì§ì ‘ ì „í•´ì£¼ì…”ë„ ì¢‹ê³ 
-Quest_Main_Npc_Script_0125,ì €ë¥¼ í†µí•´ ì „ë‹¬ì„ ë¶€íƒí•´ ì£¼ì…”ë„ ì¢‹ì•„ìš”! ê¸°ë‹¤ë¦´ê²Œìš”~
-Quest_Main_Npc_Script_0126,ì•„ ì°¸! ìš°ë¦¬ ì§‘ì€ ë§ˆì„ ìž…êµ¬ ë°”ë¡œ ì™¼íŽ¸ì— ìžˆì–´ìš”!
-Quest_Main_Npc_Script_0127,ì§€ë½ì´ë‚˜ ì €ì—ê²Œ í”¼ì‰¬ì•¤ì¹©ìŠ¤ë¥¼ ê°€ì ¸ë‹¤ì£¼ì‹œê² ì–´ìš”?
-Quest_Main_Npc_Script_0128,ë‚˜: ì•„í”„ë‹¤ê³  í•´ì„œ ì§ì ‘ ì „í•´ì£¼ëŸ¬ ì™”ì–´ ì§€ë½ì•„.
-Quest_Main_Npc_Script_0129,ìš°ì™€! ì œê°€ ì¢‹ì•„í•˜ëŠ” ìŒì‹ì´ì—ìš”!
-Quest_Main_Npc_Script_0130,ì‹ ê²½ ì¨ì£¼ì…”ì„œ ê°ì‚¬í•´ìš”! ë§›ìžˆê²Œ ë¨¹ê³  ì–¼ë¥¸ ë‚˜ì„ê²Œìš”!
-Quest_Main_Npc_Script_0131,ë¦¬ë¹„ í˜•í•œí…Œ ë‹¤ì‹œ ê°€ë³´ì‹¤ëž˜ìš”? í˜•ì´ ë“œë¦¬ê³  ì‹¶ì€ ê²Œ ìžˆëŒ€ìš”!
-Quest_Main_Npc_Script_0132,ê°ì‚¬í•´ìš” êµ¬ì›ìžë‹˜!
-Quest_Main_Npc_Script_0133,ë•ë¶„ì— ìš°ë¦¬ ì§€ë½ì´ê°€ ê¸ˆë°© ë‚˜ì„ ìˆ˜ ìžˆì„ ê²ƒ ê°™ì•„ìš”
-Quest_Main_Npc_Script_0134,ì•žìœ¼ë¡œì˜ ì—¬ì •ë„ ì‘ì›í• ê²Œìš”!
-Quest_Main_Npc_Script_0135,í¬ë¦½í† ê°€ ìž¬ë°ŒëŠ” ë†€ì´ë¥¼ ê¸°íší–ˆë‹¤ëŠ”ë° í•œ ë²ˆ ê°€ë³´ì‹¤ëž˜ìš”?
-Quest_Main_Npc_Script_0136,ì•ˆë…•. í˜¹ì‹œ ë³´ë¬¼ ì°¾ê¸°ì— ê´€ì‹¬ ìžˆë‹ˆ?
-Quest_Main_Npc_Script_0137,ë‚´ê°€ ì¹œêµ¬ë“¤ê³¼ í•¨ê»˜ ë§ˆì„ ê³³ê³³ì— ë³´ë¬¼ì„ ìˆ¨ê²¨ ë†“ì•˜ê±°ë“ .
-Quest_Main_Npc_Script_0138,ì–´ë•Œ?! ìž¬ë°Œê² ì§€?? ë‹¹ìž¥ ì‹œìž‘í•´ ë³´ìž!
-Quest_Main_Npc_Script_0139,ë³´ë¬¼ ì°¾ê¸°ì— ê´€í•œ ìžì„¸í•œ ì„¤ëª…ì„ ë“£ê³  ì‹¶ìœ¼ë©´ ë§ˆì‹œí† ë¥¼ ì°¾ì•„ê°€ë´.
-Quest_Main_Npc_Script_0140,ë³´ë¬¼ ì°¾ê¸°ì˜ ì „ì²´ íë¦„ì— ê´€í•œ ì´ì•¼ê¸°ê°€ ê¶ê¸ˆí•˜ë©´ íŒŒì‹œí† ë¥¼ ì°¾ì•„ê°€ë´.
-Quest_Main_Npc_Script_0141,ë‘˜ ì¤‘ í•œ ëª…ì—ê²Œë§Œ ë³´ë¬¼ ì°¾ê¸°ì— ê´€í•œ ì„¤ëª…ì„ ë“¤ì„ ìˆ˜ ìžˆì–´.
-Quest_Main_Npc_Script_0142,ì•„ë¬´ì—ê²Œë„ ì„¤ëª…ì„ ë“£ì§€ ì•ŠëŠ”ë‹¤ë©´â€¦
-Quest_Main_Npc_Script_0143,ë³´ë¬¼ ì°¾ê¸°ê°€ ì‹œìž‘ë˜ì§€ ì•Šì„í…Œë‹ˆ ê¼­ ë‘˜ ì¤‘ í•œ ëª…ì—ê²Œ ë§ì„ ê±´ í›„ ì¶œë°œí•´!
-Quest_Main_Npc_Script_0144,ë³´ë¬¼ ì°¾ê¸° ì‰½ì§€ ì•Šì§€? 3ê°œë¥¼ ì°¾ì•„ì˜¤ë©´ ë³´ìƒì„ ì£¼ì§€!
-Quest_Main_Npc_Script_0145,ë³´ë¬¼ ì°¾ê¸°ì˜ ìžì„¸í•œ ë‚´ìš©ì´ ê¶ê¸ˆí•˜ì§€? ì‰½ê²Œ ìš”ì•½í•´ ì¤„ê²Œ.
-Quest_Main_Npc_Script_0146,ìš°ì„ * ë³´ë¬¼ì€ ì´ 3ê°œì•¼. ì œí•œ ì‹œê°„ë„ ì—†ì–´.
-Quest_Main_Npc_Script_0147,ë‘ ê°œì˜ ë³´ë¬¼ì€ ê±´ë¬¼ ë†’ì€ ê³³ì— ê°€ë©´ ë¹„êµì  ì‰½ê²Œ ì°¾ì„ ìˆ˜ ìžˆê² ì§€ë§Œ
-Quest_Main_Npc_Script_0148,ë‚˜ë¨¸ì§€ í•œ ê°œëŠ” ì¢€ ì–´ë ¤ìš¸ ê±°ì•¼.
-Quest_Main_Npc_Script_0149,ë³´ë¬¼ ê·¼ì²˜ì—ëŠ” ê·¸ê³³ì— ë³´ë¬¼ì„ ë°°ì¹˜í•œ ì¹œêµ¬ë“¤ì´ ìžˆì„ í…Œë‹ˆ í•œë²ˆ ìž˜ ì°¾ì•„ë´!
-Quest_Main_Npc_Script_0150,ë³´ë¬¼ì„ ì „ë¶€ ì°¾ìœ¼ë©´ ê·¼ì‚¬í•œ ë³´ìƒë„ ê¸°ë‹¤ë¦¬ê³  ìžˆìœ¼ë‹ˆ íŒŒì´íŒ…!
-Quest_Main_Npc_Script_0151,ë³´ë¬¼ ì°¾ê¸°ì˜ ì „ì²´ íë¦„ì´ ì–´ë–»ê²Œ í˜ëŸ¬ê°€ëŠ”ì§€ ê¶ê¸ˆí•´?
-Quest_Main_Npc_Script_0152,ì–´ë µê²Œ ìƒê°í•  ê±´ ì—†ì–´.
-Quest_Main_Npc_Script_0153,ì´ 3ê°œì˜ ë³´ë¬¼ì´ ìžˆëŠ”ë° ê·¸ì¤‘ í•˜ë‚˜ëŠ” ì•„ì£¼ ê·¼ì‚¬í•œ ë³´ë¬¼ì´ì§€!
-Quest_Main_Npc_Script_0154,ë„ˆëŠ” ë³´ë¬¼ ì°¾ê¸°ë¥¼ ì‹œìž‘í•˜ê³  ë³´ë¬¼ì„ ì „ë¶€ ì°¾ìœ¼ë©´ í¬ë¦½í† ì—ê²Œ ëŒì•„ê°€ë©´ ë¼.
-Quest_Main_Npc_Script_0155,ê¼­ê¼­ ìž˜ ìˆ¨ê²¨ ë†¨ìœ¼ë‹ˆ ìƒìƒë ¥ì„ ë§˜ê» ë°œíœ˜í•´ ë´!
-Quest_Main_Npc_Script_0156,í•œ ê°€ì§€ ížŒíŠ¸ë¥¼ ì£¼ìžë©´* ë³´ë¬¼ì€ ì „ë¶€ ê·¸ê±¸ ìˆ¨ê¸´ ì¹œêµ¬ë“¤ ê·¼ì²˜ì— ìžˆì§€!
-Quest_Main_Npc_Script_0157,ì´ì•¼~! ì •ë§ ì „ë¶€ ì°¾ì•„ì™”ìž–ì•„?
-Quest_Main_Npc_Script_0158,ë‚˜ì™€ ë‚´ ì¹œêµ¬ë“¤ë„ ì´ê±¸ ìˆ¨ê¸°ë©´ì„œ ì°¾ê¸° ì‰½ì§€ ì•Šì„ ê±°ë¼ ìƒê°í–ˆëŠ”ë° ë§ì´ì§€.
-Quest_Main_Npc_Script_0159,ê·¸ëŸ°ë° ë§ì•¼* ìš°ë¦¬ëŠ” ë¬´ìŠ¨ ì €ì£¼ë¥¼ ë°›ì•˜ê¸¸ëž˜ ë„ˆë¥¼ êµ¬ì›ìžë¼ê³  ë¶€ë¥´ëŠ” ê±¸ê¹Œ?
-Quest_Main_Npc_Script_0160,ì•„ë¬´íŠ¼! ì´ë ‡ê²Œ ìš°ë¦¬ ì›”ë“œì˜ ì‚¬ëžŒë“¤ì„ ë„ì™€ì£¼ê³  ì²™ì²™í•´ë‚´ëŠ” ê±¸ ë³´ë‹ˆ
-Quest_Main_Npc_Script_0161,ë­ê°€ ëë“  êµ¬ì›ìžë¼ëŠ” í˜¸ì¹­ì´ ìž˜ ì–´ìš¸ë¦¬ëŠ” ì¸ë¬¼ì´ë¼ëŠ” ìƒê°ì´ ë“¤ì–´.
-Quest_Main_Npc_Script_0162,ìš°ë¦¬ ì´Œìž¥ë‹˜ì´ ë„ˆë¥¼ ì°¾ìœ¼ì…”. ê°€ì„œ ì–˜ê¸° ë‚˜ëˆ„ì–´ ë´!
-Quest_Main_Npc_Script_0163,ê°™ì´ ë†€ì•„ì¤˜ì„œ ê³ ë§ˆì›Œ. ë³´ìƒìœ¼ë¡  ë‚´ê°€ ì•„ë¼ëŠ” ìœ ìžë¥¼ ì¤„ê²Œ!
-Quest_Main_Npc_Script_0164,ì˜¤ì…¨êµ°ìš” êµ¬ì›ìžë‹˜.
-Quest_Main_Npc_Script_0165,ë°”ë‹¤ ë§ˆì„ì—ì„œì˜ ìƒí™œì€ ì§€ë‚¼ ë§Œ í•˜ì…¨ë‚˜ìš”?
-Quest_Main_Npc_Script_0166,ë‚˜: ë„¤* ì•„ì§ê¹Œì§€ëŠ” ì¦ê²ê²Œ ìƒí™œí•˜ê³  ìžˆìŠµë‹ˆë‹¤.
-Quest_Main_Npc_Script_0167,ì˜¤ëŠ˜ êµ¬ì›ìžë‹˜ì„ ë¶€ë¥¸ ì´ìœ ëŠ” ë‹¤ë¦„ì´ ì•„ë‹ˆê³ â€¦
-Quest_Main_Npc_Script_0168,êµ¬ì›ìžë‹˜ì´ ì˜¤ì‹  ì´í›„ 1ë‹¬ì— í•œ ë²ˆ ì§„í–‰í•˜ë˜ ì´Œìž¥ íšŒì˜ë¥¼ ë§¤ì¼ í•˜ê³  ìžˆì–´ìš”.
-Quest_Main_Npc_Script_0169,ì €í¬ ì´Œìž¥ë“¤ì€ ì €í¬ê°€ ì´ì „ì— ì–´ë–¤ ì¡´ìž¬ì˜€ëŠ”ì§€ ì „ë¶€ ê¸°ì–µí•˜ê³  ìžˆë‹µë‹ˆë‹¤.
-Quest_Main_Npc_Script_0170,ê·¸ë ‡ì§€ë§Œ ë§ˆì„ ì‚¬ëžŒë“¤ì€ ê·¸ ì–´ë– í•œ ê¸°ì–µë„ ë‚¨ì•„ìžˆì§€ ì•Šë˜ ìƒíƒœì˜€ì–´ìš”.
-Quest_Main_Npc_Script_0171,ê·¸ëŸ°ë° ê½ƒìƒ˜ ë§ˆì„ì˜ ê¸°ë‘¥ì´ ì†Ÿì•„ì˜¤ë¥¸ ì´í›„ ëª¨ë“  ì›”ë“œ ì‚¬ëžŒë“¤ì˜ ê¸°ì–µì´ ì¼ë¶€ ëŒì•„ì™”ì–´ìš”.
-Quest_Main_Npc_Script_0172,ë¬¼ë¡ * ë³¸ëž˜ ì¸ê°„ì´ì—ˆë‹¤ê±°ë‚˜ ê·¸ëŸ° ê¸°ì–µê¹Œì§€ ëŒì•„ì˜¨ ê²ƒì€ ì•„ë‹™ë‹ˆë‹¤.
-Quest_Main_Npc_Script_0173,ë‚˜: ë­‰ë¹„íƒ€ì´ ì›”ë“œì˜ ëª¨ë“  ì¡´ìž¬ê°€ ì›ëž˜ ì¸ê°„ì´ì—ˆë‹¤ëŠ” ê²ƒ ì´êµ°ìš”..!
-Quest_Main_Npc_Script_0174,ë„¤. ê·¸ëŸ¬ë‚˜* ê³§ ìžˆìœ¼ë©´ ë°”ë‹¤ ë§ˆì„ì˜ ê¸°ë‘¥ë„ ì†Ÿì•„ì˜¤ë¥¼ í…Œê³  ê·¸ëŸ¼ ë” ë§Žì€ ê¸°ì–µì´ ëŒì•„ì˜¬ ìˆ˜ë„ ìžˆì§€ìš”.
-Quest_Main_Npc_Script_0175,êµ¬ì›ìžë‹˜ì˜ í–‰ë™ì´ ìš°ë¦¬ ì›”ë“œì˜ ìš´ëª…ì„ ê²°ì •í•  ê±°ì˜ˆìš”.
-Quest_Main_Npc_Script_0176,ì•žìœ¼ë¡œ ë” ë§Žì€ ì‹œë ¨ë“¤ë„ ìžˆì„ ìˆ˜ ìžˆê² ì£ .
-Quest_Main_Npc_Script_0177,ê·¸ëŸ¬ë‚˜* ë­‰ë¹„íƒ€ì´ ì›”ë“œì˜ ëª¨ë“  ì¡´ìž¬ê°€ êµ¬ì›ì„ ê¸°ë‹¤ë¦¬ê³  ìžˆë‹¤ëŠ” ê²ƒì„ ì•Œì•„ì£¼ì„¸ìš”.
-Quest_Main_Npc_Script_0178,ì•žìœ¼ë¡œì˜ ëª¨í—˜ë„* ì´ê³³ì—ì„œì˜ ì¶”ì–µë„ ì¦ê±°ì›€ì´ ê°€ë“í•˜ê¸¸ ë°”ëž˜ìš”.
-Quest_Main_Npc_Script_0179,ë‹¨í’ ë§ˆì„ì— ì˜¨ ê²ƒì„ í™˜ì˜í•´ êµ¬ì›ìžë‹˜.
-Quest_Main_Npc_Script_0180,ìš°ë¦¬ ë‹¨í’ ë§ˆì„ì€ ë‹¤ë¥¸ ë§ˆì„ì— ë¹„í•´ í¬ê¸°ê°€ í¬ê³  ë³¼ê±°ë¦¬ê°€ ë§Žì•„.
-Quest_Main_Npc_Script_0181,ì§€ë‚´ëŠ” ë™ì•ˆ ì¢‹ì€ ì¶”ì–µì„ ìŒ“ê³  ê°€ê¸¸ ë°”ëž„ê²Œ.
-Quest_Main_Npc_Script_0182,ê°€ì„! í•˜ë©´ ë“±ì‚°ì´ ë– ì˜¤ë¥´ì§€ ì•Šì•„?
-Quest_Main_Npc_Script_0183,ê½ƒìƒ˜ ë§ˆì„ì—ì„œ í˜¹ì‹œ ë“±ë°˜í•´ ë´¤ì–´?
-Quest_Main_Npc_Script_0184,ë‹¨í’ ë§ˆì„ì˜ ë“±ì‚° ì½”ìŠ¤ëŠ” ë”ìš± ì¢‹ë‹¤ê³  ìž¥ë‹´í•  ìˆ˜ ìžˆì§€!
-Quest_Main_Npc_Script_0185,ì–´ë•Œ? ì†”ê¹ƒí•˜ì§€ ì•Šì•„?
-Quest_Main_Npc_Script_0186,ë“±ë°˜ ì½”ìŠ¤ì˜ ë§¨ ê¼­ëŒ€ê¸°ì— ë„ë‹¬í•˜ê³  ë‹¤ì‹œ ë‚˜ì—ê²Œ ì˜¤ë©´ ë¯¸ì…˜ ì™„ë£Œ!
-Quest_Main_Npc_Script_0187,ë“±ë°˜í•˜ëŸ¬ ê°€ëŠ” ê¸¸ì— ë‹¨í’ ë§ˆì„ ì‚¬ëžŒë“¤ì´ êµ¬ì›ìžë‹˜ê³¼ ì¸ì‚¬ë¥¼ ë‚˜ëˆ„ê³  ì‹¶ëŒ€~
-Quest_Main_Npc_Script_0188,ë¬¼ë¡ * ì¸ì‚¬ë¥¼ í• ì§€ ë§ì§€ ì„ íƒì€ êµ¬ì›ìžë‹˜ì˜ ëª«! ìž˜ ë‹¤ë…€ì™€~
-Quest_Main_Npc_Script_0275,ê¼­ëŒ€ê¸°ì— ìžˆëŠ” ì•„ì´í…œì„ ê°€ì§€ê³  ì™€ì„œ ë§ì„ ê±¸ì–´ì¤˜!
-Quest_Main_Npc_Script_0189,ì¡°ì‹¬ížˆ ë‹¤ë…€ì™€! ë‹¨í’ ë§ˆì„ êµ¬ê²½ë„ ê¼­ í•˜êµ¬~!
-Quest_Main_Npc_Script_0190,ë“±ë°˜í•˜ë‹¤ ë„˜ì–´ì ¸ë„ ì•ˆ ë‹¤ì¹˜ë‹ˆê¹Œ ìžì‹  ìžˆê²Œ ë‹¤ë…€ì˜¤ë¼ê³ ~!.
-Quest_Main_Npc_Script_0191,ì´ì•¼! ë²Œì¨ ë‹¤ë…€ì™”ë‹¨ ë§ì´ì•¼?
-Quest_Main_Npc_Script_0192,ë“±ì‚°ì€ ì–´ë• ì–´? ë‚´ê°€ ìžëž‘í•˜ê³  ë‹¤ë‹ ë§Œ í•˜ë‹¤ê³  ìƒê°í•˜ì§€?
-Quest_Main_Npc_Script_0193,ë‚˜: ì‘* ê²½ì¹˜ë„ ì¢‹ê³  ìŠ¤ë¦´ë„ ìžˆì–´ì„œ ìž¬ë°Œë”ë¼!
-Quest_Main_Npc_Script_0194,í•˜í•˜í•˜! ë‹¤í–‰ì´ë‹¤. í˜¹ì‹œë¼ë„ ì§€ë£¨í•´ í•˜ë©´ ì–´ì©Œë‚˜ ê±±ì •í–ˆì§€ ë­ì•¼.
-Quest_Main_Npc_Script_0195,ì •ë§ ê³ ìƒ ë§Žì•˜ì–´.
-Quest_Main_Npc_Script_0196,ëŠ˜ ì†Œë¬¸ìœ¼ë¡œë§Œ ë“£ë˜ êµ¬ì›ìžë‹˜ì„ ì§ì ‘ ë³´ë‹ˆ ì™œ êµ¬ì›ìžë¼ê³  ë¶ˆë¦¬ëŠ”ì§€ ì•Œê² ì–´!
-Quest_Main_Npc_Script_0197,ë„ì™€ì¤˜ì„œ ê³ ë§ˆì›Œ. 
-Quest_Main_Npc_Script_0198,ì•žìœ¼ë¡œë„ ì§€ê¸ˆì²˜ëŸ¼ ì–´ë–¤ ì–´ë ¤ì›€ë„ ë‹¤ ìž˜ ê·¹ë³µí•˜ë©° ì¢‹ì€ ê²°ê³¼ê°€ ìžˆê¸¸ ë°”ëž„ê²Œ!
-Quest_Main_Npc_Script_0199,ì´ê±´ ë‚´ê°€ ì£¼ëŠ” ìž‘ì€ ì„ ë¬¼ì´ì•¼.
-Quest_Main_Npc_Script_0200,ìž˜ í—¤ì³ ë‚˜ê°€ì„œ ë§ˆì§€ë§‰ì— ê¼­ ì¢‹ì€ ê²°ê³¼ê°€ ìžˆê¸¸ ê¸°ëŒ€í•˜ê³  ìžˆì„ê²Œ!
-Quest_Main_Npc_Script_0201,í’ë‹¤ë‚˜ê°€ ë¶€íƒí•˜ê³  ì‹¶ì€ ì¼ì´ ìžˆë‚˜ ë³´ë˜ë° í•œ ë²ˆ ê°€ë´!
-Quest_Main_Npc_Script_0202,êµ¬ì›ìžë‹˜ ì•ˆë…•í•˜ì„¸ìš”~~
-Quest_Main_Npc_Script_0203,ë“±ë°˜ì€ ìž˜ ì¦ê¸°ì…¨ì–´ìš”?
-Quest_Main_Npc_Script_0204,ìš°ë¦¬ ë‹¨í’ ë§ˆì„ì€ ê²½ì¹˜ë„ ì¢‹ê³  ìŒì‹ë“¤ë„ í’ìš”ë¡œìš´ ê±¸ë¡œ ìœ ëª…í•´ìš”!
-Quest_Main_Npc_Script_0205,ì˜¬í•´ëŠ” ê³ êµ¬ë§ˆê°€ í’ë…„ì´ë¼ëŠ”ë° 3ê°œë§Œ ì±„ì§‘í•´ ì˜¤ì‹¤ëž˜ìš”?
-Quest_Main_Npc_Script_0206,ì•„ ì°¸! í˜¹ì‹œë¼ë„ ë§Žì´ ìºì‹œë©´ ì œ ë™ìƒí•œí…Œ 1ê°œë§Œ ê°€ì ¸ë‹¤ì£¼ì‹¤ ìˆ˜ ìžˆì„ê¹Œìš”?
-Quest_Main_Npc_Script_0207,ë¬¼ë¡  ì•ˆ ê°€ì ¸ë‹¤ì£¼ì…”ë„ ì œê°€ ê°–ë‹¤ì£¼ë©´ ë¼ì„œ ê´œì°®ì•„ìš”!
-Quest_Main_Npc_Script_0276,ê³ êµ¬ë§ˆë¥¼ 3ê°œ ì±„ì§‘í•œ í›„ì— ë§ì„ ê±¸ì–´ì£¼ì‹œê² ì–´ìš”?
-Quest_Main_Npc_Script_0208,í—‰ êµ¬ì›ìžë‹˜ ì•„ë‹ˆì„¸ìš”? ì €í¬ ì§‘ì—ëŠ” ë¬´ìŠ¨ ì¼ì´ì„¸ìš”?
-Quest_Main_Npc_Script_0209,ë‚˜: ì•„* í’ë‹¤ë‚˜ê°€ ì—¬ìœ  ìžˆìœ¼ë©´ ê³ êµ¬ë§ˆ 1ê°œë§Œ ê°€ì ¸ë‹¤ ë‹¬ë¼ ê¸¸ëž˜.
-Quest_Main_Npc_Script_0210,ë‚˜: ë™ìƒì´ ì¢‹ì•„í•  ê±°ë¼ê³  í•˜ë”ë¼ê³ . 
-Quest_Main_Npc_Script_0211,ìš°ì™€! ì € ê³ êµ¬ë§ˆ ì •ë§ ì¢‹ì•„í•´ìš”!
-Quest_Main_Npc_Script_0212,ê°ì‚¬í•©ë‹ˆë‹¤. ìž˜ ë¨¹ì„ê²Œìš”!
-Quest_Main_Npc_Script_0213,ë‹¤ì‹œ ì–¸ë‹ˆí•œí…Œ ê°€ì£¼ì‹¤ëž˜ìš”?
-Quest_Main_Npc_Script_0214,ê°ì‚¬í•©ë‹ˆë‹¤ êµ¬ì›ìžë‹˜!
-Quest_Main_Npc_Script_0215,ë‹¨í’ ë§ˆì„ì€ ë¨¹ê±°ë¦¬ê°€ ì •ë§ ë§Žìœ¼ë‹ˆê¹Œ ì§€ë‚´ì‹œëŠ” ë™ì•ˆ ë§Žì´ ë“œì…”ë³´ì„¸ìš”!
-Quest_Main_Npc_Script_0216,ì•½ì†Œí•œ ì„ ë¬¼ì„ ë“œë¦´ê²Œìš”. ì¢‹ì€ ì‹œê°„ ë³´ë‚´ì„¸ìš”!
-Quest_Main_Npc_Script_0217,ì˜¤ì…¨ì–´ìš” êµ¬ì›ìžë‹˜?
-Quest_Main_Npc_Script_0218,íë‹¹ì´ê°€ ì „í™”ë¡œ êµ¬ì›ìžë‹˜ ì¹­ì°¬ì„ ê·¸ë ‡ê²Œë‚˜ í•˜ë”ë¼ê³ ìš”~
-Quest_Main_Npc_Script_0219,ë„ì™€ì£¼ì…”ì„œ ê°ì‚¬í•´ìš”.
-Quest_Main_Npc_Script_0220,ì§€ë‚´ì‹œëŠ” ë™ì•ˆ ì¢‹ì€ ê²½í—˜ê³¼ ì¶”ì–µë“¤ ìŒ“ê³  ê°€ì‹œê¸¸ ë°”ëž„ê²Œìš”!
-Quest_Main_Npc_Script_0221,ì•½ì†Œí•œ ì„ ë¬¼ì„ ë“œë¦´ê²Œìš”. ì¢‹ì€ ì‹œê°„ ë³´ë‚´ì„¸ìš”!
-Quest_Main_Npc_Script_0222,ìœ¼ì‘? êµ¬ì›ìžë„¤. ì•ˆë…•?
-Quest_Main_Npc_Script_0223,ìš°ë¦¬ ë§ˆì„ì€ ìˆ˜ë µë„ ê°€ëŠ¥í•˜ê³  ë‚šì‹œë„ ê°€ëŠ¥í•œ ë§ˆì„ì´ì•¼.
-Quest_Main_Npc_Script_0224,ë™ë¬¼ì´ëž‘ ë¬¼ê³ ê¸°ë¥¼ ê°ê° 3ë§ˆë¦¬ì”© ìž¡ì•„ ì™€ì¤„ëž˜?
-Quest_Main_Npc_Script_0225,ëˆˆê½ƒ ë§ˆì„ì„ ê°€ê¸° ìœ„í•œ ì‚¬ì „ ì—°ìŠµì´ë¼ê³  ìƒê°í•˜ë©´ ì¢‹ì„ ê±°ì•¼.
-Quest_Main_Npc_Script_0226,ìš°ë¦¬ ë§ˆì„ì€ ê³³ê³³ì— ë‚šì‹œí„°ê°€ í©ë¿Œë ¤ì ¸ ìžˆì–´.
-Quest_Main_Npc_Script_0227,í˜¹ì‹œ ìžì„¸í•œ ì„¤ëª…ì„ ë“£ê³  ì‹¶ë‹¤ë©´ ë‚´ ë§žì€íŽ¸ ëª¨ì˜¹ì´ì—ê²Œ ê°€ë´.
-Quest_Main_Npc_Script_0228,ë¬¼ë¡  ìžì‹  ìžˆë‹¤ë©´ ë°”ë¡œ ê°€ë„ ë¼.
-Quest_Main_Npc_Script_0277,ë„ˆëŠ” ì•„ì§ ë‚´ê°€ ë¶€íƒí•œ ì¼ì„ ì™„ë£Œí•˜ì§€ ëª»í•œ ê²ƒ ê°™ì€ê±¸?
-Quest_Main_Npc_Script_0229,ì•ˆë…•? ìš°ë¦¬ ë§ˆì„ì—ì„œ ë‚šì‹œë¥¼ í•  ìˆ˜ ìžˆëŠ” ê³µê°„ì€ ì´ Nê°œì•¼.
-Quest_Main_Npc_Script_0230,í•˜ë‚˜ëŠ” ë§ˆì„ ê°€ìš´ë°ì— ìœ„ì¹˜í•œ ì•„ì¹˜ ìœ„ê°€ ìžˆì–´.
-Quest_Main_Npc_Script_0231,ë˜ ë‹¤ë¥¸ í•˜ë‚˜ëŠ” ì²˜ìŒì— ë“±ë°˜í–ˆë˜ ê³³ ë°”ë¡œ ì˜†ì— ë¬¼ê°€ì—ì„œ ë‚šì‹œê°€ ê°€ëŠ¥í•´.
-Quest_Main_Npc_Script_0232,ì´ê³³ì—ì„œ ìˆ˜ë µë„ ê°™ì´ ê°€ëŠ¥í•˜ì§€!
-Quest_Main_Npc_Script_0233,ë‚˜ë¨¸ì§€ í•˜ë‚˜ëŠ” OOOì•¼~
-Quest_Main_Npc_Script_0234,ì—­ì‹œ ì‹¤ë ¥ì´ ì¶œì¤‘í•˜êµ¬ë‚˜.
-Quest_Main_Npc_Script_0235,ì´ì œ ìš°ë¦¬ ì›”ë“œ ì‚¬ëžŒì´ë¼ê³  í•´ë„ ë¯¿ì„ ê²ƒ ê°™ì•„.
-Quest_Main_Npc_Script_0236,ê·¸ë§Œí¼ ë„¤ê°€ ì—¬ê¸°ì— ì˜¨ ì§€ë„ ì‹œê°„ì´ ê½¤ í˜ë €ë‹¤ëŠ” ê±°ê² ì§€.
-Quest_Main_Npc_Script_0237,ì´ì œ ì ì  ëª©í‘œì— ë„ë‹¬í•´ ê°€ê³  ìžˆë‹¤ëŠ” ëŠë‚Œì€ ë“¤ì–´?
-Quest_Main_Npc_Script_0238,ë“¤ì§€ ì•Šì•„ë„ ê´œì°®ì•„. ì§€ê¸ˆì²˜ëŸ¼ ë„ˆì˜ ê¸¸ì„ ë¬µë¬µížˆ ê°€ë‹¤ ë³´ë©´ ì¢‹ì€ ê²°ê³¼ê°€ ìžˆì„ í…Œë‹ˆ..
-Quest_Main_Npc_Script_0239,ë‚˜ëŠ” ì´ ìžë¦¬ì—ì„œ ê³„ì† ë„¤ê°€ ì•žìœ¼ë¡œ ë‚˜ì•„ê°€ëŠ” ê±¸ ì§€ì¼œë³´ë©° ì‘ì›í• ê²Œ.
-Quest_Main_Npc_Script_0240,ìžê·¸ë§ˆí•œ ë³´ìƒì´ì•¼. ìž˜ ê°€!
-Quest_Main_Npc_Script_0241,ì—‡* êµ¬ì›ìžë‹˜ ì•ˆë…•í•˜ì„¸ìš”!
-Quest_Main_Npc_Script_0242,ì´ì œ ë‹¨í’ ë§ˆì„ì— ë¨¸ë¬´ë¥¼ ì‹œê°„ì´ ì–¼ë§ˆ ì•ˆ ë‚¨ì•˜ë‹¤ëŠ” ê±¸ ì•Œê³  ê³„ì‹ ê°€ìš”?
-Quest_Main_Npc_Script_0243,ì´ì œ ê³§ ìžˆìœ¼ë©´ êµ¬ì›ìžë‹˜ì€ ëˆˆê½ƒ ë§ˆì„ì—ì„œ ëì— ê°€ê¹Œìš´ ëª¨í—˜ì„ í•˜ì…”ì•¼ í•´ìš”!
-Quest_Main_Npc_Script_0244,ëˆˆê½ƒ ë§ˆì„ì€ ë§ˆì„ ì´ë¦„ì€ ì´ì˜ì§€ë§Œ í™˜ê²½ì´ ì²™ë°•í•˜ê³  ë¨¹ì„ ê²ƒì´ ë§Žì´ ì—†ì–´ìš”.
-Quest_Main_Npc_Script_0245,ê·¸ëŸ¬ë‹ˆ* ìš°ë¦¬ ë‹¨í’ ë§ˆì„ì—ì„œ ì‹ëŸ‰ì„ ë§Žì´ ì¶•ì í•´ì„œ ê°€ë©´ ì¢‹ê² ì£ ?
-Quest_Main_Npc_Script_0246,ëˆˆê½ƒ ë§ˆì„ì— ê°€ê¸° ì „* ëŒ€ì¶”ë¥¼ êµ¬í•´ ì˜¤ì‹œë©´ ì œê°€ ì•„ì£¼ ì¢‹ì€ ìž¬ë£Œë¥¼ ë³´ìƒìœ¼ë¡œ ë“œë¦´ê²Œìš”!
-Quest_Main_Npc_Script_0247,ëŒ€ì¶”ëŠ” êµ‰ìž¥ížˆ êµ¬í•˜ê¸°ê°€ íž˜ë“¤ì–´ìš”. ê³ ì§€ëŒ€ë¥¼ ìž˜ ì°¾ì•„ë³´ì„¸ìš”!
-Quest_Main_Npc_Script_0248,ì•„ ì°¸* í˜¹ì‹œ ì‹ëŸ‰ì„ ì–¼ë§ˆë‚˜ ë¹„ì¶•í•´ì•¼ í• ì§€ ê³„íšì„ ì§œê³  ì‹¶ìœ¼ì‹œë©´ ì•žì— ë¼ì˜¤ë‹ˆí•œí…Œ ë§ì„ ê±¸ì–´ë³´ì„¸ìš”!
-Quest_Main_Npc_Script_0278,ëŒ€ì¶” ì°¾ê¸° íž˜ë“œì‹œì£ ? ê·¸ëž˜ë„ êµ¬í•´ì™€ ì£¼ì‹¤ëž˜ìš”?
-Quest_Main_Npc_Script_0249,êµ¬ì›ìžë‹˜ ì–´ì„œ ì˜¤ì„¸ìš”~
-Quest_Main_Npc_Script_0250,ëˆˆê½ƒ ë§ˆì„ì—ì„œ ìƒí™œí•˜ê¸° ìœ„í•´ ì‹ëŸ‰ì„ ì–¼ë§ˆë‚˜ ë¹„ì¶•í•´ì•¼ í• ì§€ ê¶ê¸ˆí•˜ì‹œì£ ?
-Quest_Main_Npc_Script_0251,ì‚¬ì‹¤ ì €ë„ ìžì„¸í•œ ìˆ˜ì¹˜ëŠ” ëª°ë¼ìš”!
-Quest_Main_Npc_Script_0252,ê·¸ë ‡ì§€ë§Œ ëˆˆê½ƒ ë§ˆì„ì—ì„œëŠ” ë°°ë¶€ë¦„ ê²Œì´ì§€ê°€ ë” ë¹¨ë¦¬ ê°ì†Œí•œë‹¤ëŠ” ì‚¬ì‹¤ì„ ì•Œê³  ê³„ì…¨ë‚˜ìš”?!
-Quest_Main_Npc_Script_0253,ë‚˜: ì•„ë‹ˆ* ëª°ëžì–´..
-Quest_Main_Npc_Script_0254,í‰ì†Œì—ëŠ” 5ë¶„ ë‹¹ ë°°ë¶€ë¦„ ê²Œì´ì§€ê°€ 10ë§Œí¼ ê°ì†Œí–ˆë‹¤ë©´
-Quest_Main_Npc_Script_0255,ëˆˆê½ƒ ë§ˆì„ì—ì„œëŠ” ë°°ë¶€ë¦„ ê²Œì´ì§€ê°€ 3ë¶„ ë‹¹ 10ë§Œí¼ ê°ì†Œí•´ìš”!
-Quest_Main_Npc_Script_0256,ê·¸ëŸ¼ ëˆˆê½ƒ ë§ˆì„ì—ì„œëŠ” ë°°ë¶€ë¦„ ê²Œì´ì§€ê°€ ê°€ë“ ì°¨ ìžˆì–´ë„ 30ë¶„ì´ë©´ 0ì´ ë˜ê² ì£ ?
-Quest_Main_Npc_Script_0257,ì´ ì ì— ìœ ì˜í•´ì„œ ì‹ëŸ‰ì„ ëª¨ì•„ ê°€ì‹œë©´ ë  ê²ƒ ê°™ì•„ìš”!
-Quest_Main_Npc_Script_0258,ì €ëŠ” ì–´ì©Œë©´ ì´ë²ˆ ìž„ë¬´ë¥¼ êµ¬ì›ìžë‹˜ê»˜ì„œ ì‹¤íŒ¨í•  ìˆ˜ë„ ìžˆë‹¤ê³  ìƒê°í–ˆì–´ìš”.
-Quest_Main_Npc_Script_0259,ëŒ€ì¶”ëŠ” ê·¸ë§Œí¼ ì°¾ê¸° ì–´ë ¤ìš´ ìž‘ë¬¼ì´ë‹ˆê¹Œ ë§ì´ì£ !
-Quest_Main_Npc_Script_0260,ì‚¬ì‹¤ ì–´ì©Œë©´ ì €ëŠ”* ëª¨ë‘ê°€ ë¯¿ëŠ” êµ¬ì›ìžë‹˜ì„ í•œ ë²ˆ ì‹œí—˜í•´ ë³´ê³  ì‹¶ì—ˆë˜ ê²ƒì¼ì§€ë„ ëª°ë¼ìš”.
-Quest_Main_Npc_Script_0261,ë§Žì´ íž˜ë“œì…¨ì„ í…ë° ì œ ë¶€íƒì„ ë“¤ì–´ì£¼ì…”ì„œ ê°ì‚¬í•´ìš”.
-Quest_Main_Npc_Script_0262,ì €í¬ ë§ˆì„ ì´Œìž¥ë‹˜ì¸ ë‹¨ë‹¨ë­‰ ì´Œìž¥ë‹˜ê»˜ì„œ êµ¬ì›ìžë‹˜ì„ ì°¾ìœ¼ì„¸ìš”..
-Quest_Main_Npc_Script_0263,ì–¼ë§ˆ ë‚¨ì§€ ì•Šì€ ì—¬ì • ìž˜ ë§ˆë¬´ë¦¬í•˜ì‹œê³  ì €í¬ì—ê²Œë„ ì¢‹ì€ ì†Œì‹ ê¼­ ë“¤ë ¤ì£¼ì„¸ìš”!
-Quest_Main_Npc_Script_0264,íž˜ë“  ë¶€íƒì„ ë“¤ì–´ì£¼ì‹  ë§Œí¼ ì¢‹ì€ ë³´ìƒì„ ë“œë¦´ê²Œìš” ì•ˆë…•~!
-Quest_Main_Npc_Script_0265,ì˜¤~ ì˜¤ì…¨êµ°ìš”
-Quest_Main_Npc_Script_0266,ë‹¨í’ ë§ˆì„ ì£¼ë¯¼ë“¤ì—ê²Œ ì†Œì‹ì„ ë“£ìž í•˜ë‹ˆ ì—­ì‹œ êµ¬ì›ìžë‹˜ì´ë¼ëŠ” ë§ì´ ìžìží•˜ë”êµ°ìš”.
-Quest_Main_Npc_Script_0267,ë‚˜: ì•„ë‹™ë‹ˆë‹¤. í•´ì•¼ í•  ì¼ì„ í–ˆì„ ë¿ì¸ê±¸ìš”.
-Quest_Main_Npc_Script_0268,í—ˆí—ˆí—ˆ.. ë‹¤ë¦„ì´ ì•„ë‹ˆê³  ê¼­ ì•Œì•„ë‘ì…”ì•¼ í•  ì‚¬ì‹¤ì´ ìžˆì–´ì„œ ì´ë ‡ê²Œ ìžë¦¬ë¥¼ ë§ˆë ¨í–ˆìŠµë‹ˆë‹¤.
-Quest_Main_Npc_Script_0269,ì´ì œ ë‹¨í’ ë§ˆì„ì—ì„œì˜ ì—¬ì •ì´ ëª¨ë‘ ëë‚˜ê³  ëˆˆê½ƒ ë§ˆì„ë¡œ í–¥í•˜ì…”ì•¼ í•©ë‹ˆë‹¤.
-Quest_Main_Npc_Script_0270,ëˆˆê½ƒ ë§ˆì„ì€ êµ¬ì›ìžë‹˜ì—ê²Œ ì‹œë ¨ì´ ê°€ë“í•œ ê³µê°„ì´ ë  ê±°ì˜ˆìš”.
-Quest_Main_Npc_Script_0271,êµ¬ì›ìžë‹˜ì´ ëˆˆê½ƒ ë§ˆì„ì— ë„ì°©í–ˆë‹¤ëŠ” ì†Œë¬¸ì´ í¼ì§€ë©´ ë§ˆì„ ì‚¬ëžŒë“¤ì˜ ì—¼ì›ë„ ë”ìš± ì»¤ì§€ê² ì£ .
-Quest_Main_Npc_Script_0272,ì œê°€ í•´ë“œë¦´ ìˆ˜ ìžˆëŠ” ì¡°ì–¸ì€ ê·¸ì € í•œ ê°€ì§€ë¿.
-Quest_Main_Npc_Script_0273,ìžì‹ ì„ ìžƒì§€ ì•Šê³  ë¬µë¬µí•˜ê²Œ ê±¸ì–´ë‚˜ê°€ê¸°ë¥¼ ë°”ëžë‹ˆë‹¤.
-Quest_Main_Npc_Script_0274,ì¡°ë§Œê°„ ë‹¤ì‹œ ë§Œë‚  ë‚ ì´ ìžˆê¸°ë¥¼ ë°”ë¼ê² ìŠµë‹ˆë‹¤.
-Quest_Main_Npc_Script_0279,ëˆˆê½ƒ ë§ˆì„ì— ì˜¨ ê²ƒì„ í™˜ì˜í•œë‹´!
-Quest_Main_Npc_Script_0280,ìš°ë¦¬ ë§ˆì„ì€ ë§ˆì„ ì´ë¦„ê³¼ëŠ” ë‹¬ë¦¬ ì²™ë°•í•œ ë§ˆì„ì´ë‹´.
-Quest_Main_Npc_Script_0281,ìš°ë¦¬ ë§ˆì„ì€ ì±„ì§‘ë¬¼ì´ ì ì€ ëŒ€ì‹  ìˆ˜ë µê³¼ ë‚šì‹œ êµ¬ì—­ì´ ìžˆì§•!
-Quest_Main_Npc_Script_0282,ì•„ ì°¸* ìš°ë¦¬ ë§ˆì„ì—ì„  ë°°ë¶€ë¦„ ê²Œì´ì§€ê°€ ë” ë¹¨ë¦¬ ì†Œëª¨ë˜ë‹ˆê¹Œ ì´ì  ìœ ì˜í•´ëžŒ!
-Quest_Main_Npc_Script_0283,ê°‘ìžê¸° ì¶”ì›Œì ¸ì„œ íž˜ë“¤ì§„ ì•Šëƒ ?
-Quest_Main_Npc_Script_0284,ëŒ€ì¶”ì°¨ë¥¼ 1ê°œ ì œìž‘í•´ ì˜¤ë©´ ì„ ë¬¼ì„ ì£¼ê² ë‹´!
-Quest_Main_Npc_Script_0285,ìš°ë¦¬ ë§ˆì„ì—ì„œ ë¬´ì—‡ì„ í•´ì•¼í•  ì§€ ê³„íšì„ ì„¸ìš°ê³  ìžˆë‹¤ë©´ ë§žì€íŽ¸ì— ìžˆëŠ” ì¹œêµ¬ì—ê²Œ ë§ì„ ê±¸ì–´ë´ëžŒ!
-Quest_Main_Npc_Script_0286,ê¶ê¸ˆí•˜ì§€ ì•Šìœ¼ë©´ ë°”ë¡œ ëŒ€ì¶”ì°¨ë¥¼ ì œìž‘í•˜ëŸ¬ ê°€ë„ ëœë‹´!
-Quest_Main_Npc_Script_0287,ì•„ì§ ëŒ€ì¶”ì°¨ë¥¼ ì œìž‘í•˜ì§€ ì•Šì•˜ë‹´! ë§Œë“¤ê³  ë§ì„ ê±¸ì–´ë‹¬ëžŒ!
-Quest_Main_Npc_Script_0288,êµ¬ì›ìžë‹˜ ë“œë””ì–´ ìš°ë¦¬ ë§ˆì„ì— ì˜¤ì…¨êµ°ìš”!
-Quest_Main_Npc_Script_0289,ì´ì œ ë­‰ë¹„íƒ€ì´ì—ì„œ ì§€ë‚¼ ì‹œê°„ë„ ì–¼ë§ˆ ë‚¨ì§€ ì•Šìœ¼ì…¨ëŠ”ë° ì¢‹ì€ ê¸°ì–µë“¤ë§Œ ë‚¨ì•„ìžˆìœ¼ë©´ ì¢‹ê² ì–´ìš”!
-Quest_Main_Npc_Script_0290,ëˆˆê½ƒ ë§ˆì„ì—ì„œëŠ” ì§€ë‚œ ì‹œê°„ ë™ì•ˆ êµ¬ì›ìžë‹˜ì´ í•´ì™”ë˜ ì¼ë“¤ì„ ë‹¤ì‹œ ë°˜ë³µí•´ìš”!
-Quest_Main_Npc_Script_0291,ê·¸ë ‡ì§€ë§Œ ë§ˆì§€ë§‰ì¸ë§Œí¼ ì¢€ ë” ë†’ì€ ë‚œì´ë„ì˜ ê²ƒë“¤ì´ ìš”êµ¬ë  ê±°ì—ìš”!
-Quest_Main_Npc_Script_0292,ì œê°€ ë“œë¦° ì–˜ê¸°ê°€ ë„ì›€ì´ ë˜ì…¨ê¸¸ ë°”ëž˜ìš”! ë§ˆì§€ë§‰ê¹Œì§€ ì‘ì›í• ê²Œìš”
-Quest_Main_Npc_Script_0293,í—‰! ë²Œì¨ ì™”ëŠ”ê°?
-Quest_Main_Npc_Script_0294,ì™œ êµ¬ì›ìžë¼ê³  ë¶ˆë¦¬ëŠ”ì§€ ì•Œê² ë‹´!
-Quest_Main_Npc_Script_0295,ë³´ìƒìœ¼ë¡œ ë‚´ê°€ ì¢‹ì•„í•˜ëŠ” ë§ˆë¼íƒ•ì„ ì£¼ê² ë‹´!
-Quest_Main_Npc_Script_0296,ë§ˆì§€ë§‰ê¹Œì§€ íŒŒì´íŒ…ì´ë‹´!
-Quest_Main_Npc_Script_0297,êµ¬ì›ìžë‹˜ ì˜¤ì…¨ì–´ìš”.
-Quest_Main_Npc_Script_0298,ëˆˆê½ƒ ë§ˆì„ì—ì„œì˜ ìƒí™œì€ ê´œì°®ìœ¼ì‹ ê°€ìš”?
-Quest_Main_Npc_Script_0299,ì¡°ê¸ˆ ë§ˆìŒì´ ë¬´ê±°ìš´ ë¶€íƒì„ ë“œë ¤ì•¼ í•  ê²ƒ ê°™ì•„ìš”..
-Quest_Main_Npc_Script_0300,ì˜¬í•´ ëˆˆê½ƒ ë§ˆì„ì€ ìœ ë… ë¨¹ì„ ê±°ë¦¬ê°€ í’ë¶€í•˜ì§€ ì•Šì•„ì„œ ë‹¤ë¥¸ ë§ˆì„ì—ì„œ ìŒì‹ì„ ë°›ê³  ìžˆì–´ìš”.
-Quest_Main_Npc_Script_0301,ê·¼ë° ë‹¨í’ ë§ˆì„ì—ì„œ ì‹ëŸ‰ ì¡°ë‹¬ì´ ì¡°ê¸ˆ ëŠ¦ì–´ì§„ë‹¤ê³  í•´ìš”.
-Quest_Main_Npc_Script_0302,í˜¹ì‹œ êµ¬ì›ìžë‹˜ì˜ ìŒì‹ì„ ì¡°ê¸ˆ ë‚˜ëˆ„ì–´ ì£¼ì‹¤ ìˆ˜ ìžˆì„ê¹Œìš”?
-Quest_Main_Npc_Script_0303,ì´ 3ëª…ì˜ ì¹œêµ¬ë“¤ì—ê²Œ ì „ë‹¬í•´ ì£¼ì‹œë©´ ë  ê²ƒ ê°™ì•„ìš”.
-Quest_Main_Npc_Script_0304,ì§ì ‘ ì „ë‹¬í•´ì£¼ì…”ë„ ë˜ê³  ì €í•œí…Œ ì£¼ì…”ë„ ì¢‹ì•„ìš”.
-Quest_Main_Npc_Script_0305,ì €í•œí…Œ ì£¼ì‹œë©´ ì œê°€ í•„ìš”í•œ ì¹œêµ¬ë“¤ì—ê²Œ ì „ë‹¬ì„ í• ê²Œìš”.
-Quest_Main_Npc_Script_0306,ì €í•œí…Œ ì£¼ì‹œë ¤ë©´ ë‹¤ì‹œ ë§ì„ ê±¸ì–´ì£¼ì„¸ìš”
-Quest_Main_Npc_Script_0307,ìš°ì™€ì•„ êµ¶ì–´ ì£½ëŠ” ì¤„ ì•Œì•˜ëŠ”ë°.. ê°ì‚¬í•´ìš” êµ¬ì›ìžë‹˜!
-Quest_Main_Npc_Script_0308,í–‰ë³µí•œ í•˜ë£¨ ë˜ì„¸ìš”!
-Quest_Main_Npc_Script_0309,ì–´ë¨¸~ ì–´ì©œ ì´ë ‡ê²Œ ë§ˆìŒì”¨ë„ ë”°ëœ»í•˜ì‹¤ê¹Œìš”?
-Quest_Main_Npc_Script_0310,ê°ì‚¬í•©ë‹ˆë‹¤. ë“œë¦´ê²Œ ì—†ì–´ì„œ ì£„ì†¡í•˜ë„¤ìš”.
-Quest_Main_Npc_Script_0311,ì¢‹ì€ í•˜ë£¨ ë˜ì„¸ìš” êµ¬ì›ìžë‹˜~
-Quest_Main_Npc_Script_0312,ìž˜ ë¨¹ì„ê²Œ êµ¬ì›ìžë‹˜! ê³ ë§ˆì›Œ!!
-Quest_Main_Npc_Script_0313,ì •ë§ ê°ì‚¬í•´ìš” êµ¬ì›ìžë‹˜.
-Quest_Main_Npc_Script_0314,êµ¬ì›ìžë‹˜ì´ ì£¼ì‹  ìŒì‹ë“¤ì€ ì €í¬ ë§ˆì„ ì¹œêµ¬ë“¤ê³¼ ê°ì‚¬ížˆ ë‚˜ëˆ„ì–´ ë¨¹ì„ê²Œìš”!
-Quest_Main_Npc_Script_0315,ì–¼ë§ˆ ë‚¨ì§€ ì•Šì€ ì—¬ì •* ê¼­ ì¢‹ì€ ì†Œì‹ ë“¤ë ¤ì£¼ì„¸ìš”. íŒŒì´íŒ…!
-Quest_Main_Npc_Script_0316,ì˜¤ì…¨êµ°ìš” êµ¬ì›ìžë‹˜!
-Quest_Main_Npc_Script_0317,ì •ì‹ ì—†ì´ ë°”ì˜ì‹¤ í…ë°ë„ ì €í¬ ë§ˆì„ ì¹œêµ¬ë“¤ì„ ìœ„í•´ ê¸°êº¼ì´ ë„ì™€ì£¼ì…”ì„œ ê°ì‚¬í•´ìš”!
-Quest_Main_Npc_Script_0318,ì–¼ë§ˆ ë‚¨ì§€ ì•Šì€ ì—¬ì •* ê¼­ ì¢‹ì€ ì†Œì‹ ë“¤ë ¤ì£¼ì„¸ìš”. íŒŒì´íŒ…!
-Quest_Main_Npc_Script_0319,ì˜¤.. êµ¬ì›ìžë‹˜ ì´ì‹œìž–ì•„? ì†Œë¬¸ìœ¼ë¡œë§Œ ë“¤ì—ˆì–´.
-Quest_Main_Npc_Script_0320,ëˆˆê½ƒ ë§ˆì„ì—ì„œì˜ ìƒí™œì€ ìž˜ ì ì‘í•˜ê³  ìžˆë‹ˆ?
-Quest_Main_Npc_Script_0321,ì´ë²ˆ ë¯¸ì…˜ì€ ìš°ë¦¬ ë§ˆì„ì—ì„œ ê°€ëŠ¥í•œ ëª¨ë“  í™œë™ì„ í•˜ê³  ëŒì•„ì˜¤ëŠ” ê²ƒì´ì•¼.
-Quest_Main_Npc_Script_0322,"ì±„ì§‘, ë‚šì‹œ, ìˆ˜ë µì„ ì „ë¶€ ì¦ê¸°ê³  ëŒì•„ì˜¤ë ´."
-Quest_Main_Npc_Script_0323,ëª©ì ì§€ì— ê´€í•œ ì„¤ëª…ì´ ë“£ê³  ì‹¶ìœ¼ë©´ í¬ë ˆë‹ˆ ì—ê²Œ
-Quest_Main_Npc_Script_0324,í˜¼ìž ì¦ê¸°ë©° ìƒìƒì˜ ë‚˜ëž˜ë¥¼ íŽ¼ì¹˜ê³  ì‹¶ìœ¼ë©´ ë°”ë¡œ í€˜ìŠ¤íŠ¸ë¥¼ ì§„í–‰í•˜ë ´.
-Quest_Main_Npc_Script_0325,ì•„ì§ ë‚´ê°€ ìš”êµ¬í•œ ì–‘ì„ ëª»ì±„ìš´ ê²ƒ ê°™ì•„.
-Quest_Main_Npc_Script_0326,ì•ˆë…•! 3ê°€ì§€ ë¯¸ì…˜ì´ë‚˜ ë™ì‹œì— ìˆ˜í–‰í•˜ë ¤ë‹ˆ ë¨¸ë¦¬ê°€ ì•„í”„ì§€?
-Quest_Main_Npc_Script_0327,ê±±ì •í•˜ì§€ ë§ë¼ê³ ! ê·¸ë ‡ê²Œ ì–´ë µì§„ ì•Šì„ í…Œë‹ˆ
-Quest_Main_Npc_Script_0328,ìš°ë¦¬ ë§ˆì„ì€ ë‚ ì”¨ê°€ ì¶”ì›Œì„œ ì±„ì§‘ë¬¼ì´ ë§Žì€ íŽ¸ì€ ì•„ëƒ. ëŒ€ì‹  ìˆ˜ë µì´ ë°œë‹¬ í–ˆì§€.
-Quest_Main_Npc_Script_0329,ìˆ˜ë µê³¼ ë‚šì‹œëŠ” êµ¬ì—­ì´ ì •í•´ì ¸ ìžˆê³  ë¸”ë£¨ë² ë¦¬ëŠ” ë§ˆì„ ê³³ê³³ì— ë„ì—„ë„ì—„ í¼ì ¸ ìžˆì–´.
-Quest_Main_Npc_Script_0330,ì´ ì •ë„ë©´ ì¶©ë¶„ížˆ ížŒíŠ¸ê°€ ëì§€? íŒŒì´íŒ…~
-Quest_Main_Npc_Script_0331,ë­ ì´ì •ë„ëŠ” ì´ì œ ì–´ë µì§€ë„ ì•Šì„ ê±°ë¼ ìƒê°í–ˆì–´.
-Quest_Main_Npc_Script_0332,ë‚´ ë¶€íƒì„ ë“¤ì–´ì¤˜ì„œ ê³ ë§ˆì›Œ.
-Quest_Main_Npc_Script_0333,ì´ì œ ì •ë§ ëì„ í–¥í•´ ê°€ê³  ìžˆë„¤.
-Quest_Main_Npc_Script_0334,ë§ˆì§€ë§‰ê¹Œì§€ íŒŒì´íŒ… í•´ë³´ë¼êµ¬. ë³´ìƒì„ ì¤„ê²Œ.
-Quest_Main_Npc_Script_0335,ì™”êµ¬ë‚˜..!
-Quest_Main_Npc_Script_0336,í˜¹ì‹œ ì € ë†’ì´ ë³´ì´ëŠ” ì‚° ì˜¬ë¼ë³¸ ì  ìžˆì–´?
-Quest_Main_Npc_Script_0337,ìžˆì–´ë„ ë†€ëžê³  ì—†ìœ¼ë©´ ë‹¹ì—°í•˜ë‹¨ ìƒê°ì´ ë“¤ì§€ë§Œ
-Quest_Main_Npc_Script_0338,ë§ˆì§€ë§‰ìœ¼ë¡œ êµ¬ì›ìžë‹˜ì—ê²Œ ë¶€íƒí•˜ëŠ” ê³¼ì œì¸ ë§Œí¼ ê¼­ ì„±ê³µí–ˆìœ¼ë©´ í•´.
-Quest_Main_Npc_Script_0339,ê·¸ë™ì•ˆ ë§Žì´ ì§€ì¹˜ê³  ê·€ì°®ê¸°ë„ í•˜ê³  íž˜ë“¤ì—ˆì§€?
-Quest_Main_Npc_Script_0340,ìš°ë¦¬ë¥¼ êµ¬ì›í•´ì£¼ê¸° ìœ„í•œ êµ¬ì›ìžë‹˜ì˜ ì—¬ì • ë©€ë¦¬ì„œë‚˜ë§ˆ í•­ìƒ ì‘ì›í–ˆì–´.
-Quest_Main_Npc_Script_0341,ë§ˆì§€ë§‰ ë¯¸ì…˜ì€ ì‚° ì •ìƒì„ ì°ê³  ë‹¤ì‹œ ë‚˜í•œí…Œ ì˜¤ëŠ” ê±°ì•¼.
-Quest_Main_Npc_Script_0342,ê°€ëŠ” ê¸¸ì— êµ¬ì›ìžë‹˜ì´ëž‘ ì¸ì‚¬ë¥¼ ë‚˜ëˆ„ê³  ì‹¶ì–´í•˜ëŠ” ì¹œêµ¬ë“¤ì´ ìžˆë˜ë°
-Quest_Main_Npc_Script_0343,ì„ íƒì€ êµ¬ì›ìžë‹˜ì˜ ë§ˆìŒì´ë‹ˆê¹Œ ì¸ì‚¬ë¥¼ í•˜ë˜ ë§ë˜ ë§ˆìŒëŒ€ë¡œ í•´~
-Quest_Main_Npc_Script_0344,ìš°ë¦¬ê°€ êµ¬ì›ìžë‹˜ê»˜ ë¶€íƒí•˜ëŠ” ë§ˆì§€ë§‰ ê³¼ì œ ëê¹Œì§€ íŒŒì´íŒ… í•´ì¤˜!
-Quest_Main_Npc_Script_0345,ì–¼ë¥¸ ë“±ë°˜ì„ í•˜ê³  ì™€ì•¼ í•˜ì§€ ì•Šì„ê¹Œ??
-Quest_Main_Npc_Script_0346,ìš¸ë¼ìš¸ë¼~
-Quest_Main_Npc_Script_0347,ë©‹ìžˆê²Œ ì™„ì£¼í•´ì¤˜! íŒŒì´íŒ…! ìš¸ë¼ìš¸ë¼~
-Quest_Main_Npc_Script_0348,ì–´ë ¤ìš¸ ìˆ˜ë„ ìžˆì–´ìš”!
-Quest_Main_Npc_Script_0349,ê·¸ëž˜ë„ ëê¹Œì§€ ì‘ì›í• ê²Œìš”. ì¡°ì‹¬ížˆ ë‹¤ë…€ì™€ìš”~
-Quest_Main_Npc_Script_0350,ì •ë§.. ì •ë§ë¡œ ì´ë²ˆì—ë„ ì„±ê³µí–ˆêµ¬ë‚˜!
-Quest_Main_Npc_Script_0351,ëˆˆê½ƒ ë§ˆì„ì˜ ë“±ë°˜ì€ ê³ ë‚œì´ë„ë¥¼ ìžëž‘í•˜ê¸° ë•Œë¬¸ì— 
-Quest_Main_Npc_Script_0352,ë§Žì€ ì–´ë ¤ì›€ì„ ê²ªì„ ìˆ˜ë„ ìžˆê² ë‹¤ê³  ìƒê°í•˜ê³  ìžˆì—ˆê±°ë“ .
-Quest_Main_Npc_Script_0353,êµ¬ì›ìžë‹˜ì€ ì‹¤íŒ¨ë¥¼ ëª¨ë¥´ëŠ” ì‚¬ëžŒì¸ ê²ƒ ê°™ì•„!
-Quest_Main_Npc_Script_0354,ì •ë§ ë©‹ìžˆì—ˆê³  ê³ ë§ˆì›Œ. 
-Quest_Main_Npc_Script_0355,ì´ë¡œì¨ ë­‰ë¹„íƒ€ì´ ì›”ë“œì—ì„œì˜ ëª¨ë“  ê³µì‹ í™œë™ì€ ì¢…ë£Œëì–´!
-Quest_Main_Npc_Script_0356,ê¸°ë¶„ì´ ì–´ë•Œ? ìš°ë¦¬ëŠ” êµ¬ì›ìžë‹˜ê³¼ í•¨ê»˜í•˜ëŠ” ë™ì•ˆ ì •ë§ ë§Žì´ í–‰ë³µí–ˆì–´!
-Quest_Main_Npc_Script_0357,ë‚˜: ë‚˜ë„ ë‚¯ì„  ê³µê°„ì´ì˜€ì§€ë§Œ ì§€ë‚´ëŠ” ë™ì•ˆ í–‰ë³µí–ˆì–´.
-Quest_Main_Npc_Script_0358,ì–´ëŠ ë‚  ê°‘ìžê¸° ë‚˜íƒ€ë‚˜ ìš°ë¦¬ì—ê²Œ í–‰ë³µì„ ì „í•´ ì¤˜ì„œ ê³ ë§ˆì›Œ.
-Quest_Main_Npc_Script_0359,ê·¸ë™ì•ˆ êµ¬ì›ìžë‹˜ì´ ë³´ì—¬ì¤€ ëª¨ìŠµë“¤ê³¼ í¬ë§ì°¬ ìžì‹ ê°ë“¤ì„ ê°„ì§í• ê²Œ!
-Quest_Main_Npc_Script_0360,ì´ì œ ë‹¤ì‹œ ë§Œë‚  ìˆ˜ ì—†ì„ ì§€ë„ ëª¨ë¥´ì§€ë§Œ
-Quest_Main_Npc_Script_0361,ìš°ë¦¬ê°€ í•¨ê»˜ ë³´ë‚¸ ê¸°ì–µë“¤ì´ ì†Œì¤‘í•œ ì¶”ì–µì´ ë˜ì–´ ì‚´ì•„ê°ˆ ìˆ˜ ìžˆê¸¸..!
-Quest_Main_Npc_Script_0362,ì´Œìž¥ë‹˜ê»˜ ê°€ë´. ê¸°ë‹¤ë¦¬ê³  ê³„ì‹¤ê±°ì•¼.
-Quest_Main_Npc_Script_0363,ì´ì œ ë³„ë¡œ í•„ìš” ì—†ì„ì§€ë„ ëª¨ë¥´ì§€ë§Œ ë³´ìƒì„ ì¤„ê²Œ. ìž˜ê°€!
-Quest_Main_Npc_Script_0364,ì–´ì„œì˜¤ì‹­ì‹œì˜¤ êµ¬ì›ìžë‹˜.
-Quest_Main_Npc_Script_0365,ëª¨ë“  ì—¬ì •ì´ ëë‚¬ëŠ”ë° ë§ˆìŒì´ ì–´ë– ì‹¤ ì§€ ê¶ê¸ˆí•˜ë„¤ìš” í—ˆí—ˆ.
-Quest_Main_Npc_Script_0366,ê·¸ë™ì•ˆ ë³´ì—¬ì£¼ì‹  ì—´ì •* ëˆê¸°* í¬ë§ ê·¸ ëª¨ë“  ê²ƒë“¤ì´ ìš°ë¦¬ë¥¼ í–‰ë³µí•˜ê²Œ í–ˆë‹µë‹ˆë‹¤.
-Quest_Main_Npc_Script_0367,êµ¬ì›ìžë‹˜ì´ ë§ˆì§€ë§‰ ë¯¸ì…˜ì„ ëë‚¸ ë°”ë¡œ ê·¸ ìˆœê°„
-Quest_Main_Npc_Script_0368,ìš°ë¦¬ ì›”ë“œì˜ ëª¨ë“  ì‚¬ëžŒë“¤ì€ êµ¬ì›ì„ ë°›ê²Œ ë˜ì—ˆì–´ìš”.
-Quest_Main_Npc_Script_0369,ì €í¬ì˜ ê¸°ë‚˜ê¸´ ì—¼ì›ì„ ì´ë£¨ì–´ ì£¼ì…”ì„œ ì •ë§ ê°ì‚¬í•©ë‹ˆë‹¤.
-Quest_Main_Npc_Script_0370,ì œ ë’¤ìª½ì— ìžˆëŠ” ë¬¸ì„ í†µí•´ ì‹ ì „ì— ê°™ì´ ìž…ìž¥í•˜ì‹œê² ì–´ìš”?
-Quest_Main_Npc_Script_0371,êµ¬ì›ì„ ë°›ê¸° ì „ êµ¬ì›ìžë‹˜ê»˜ ë§ˆì§€ë§‰ìœ¼ë¡œ ë“œë¦´ ë§ì”€ì´ ìžˆìŠµë‹ˆë‹¤.
-Quest_Main_Npc_Script_0372,ê·¸ëŸ¼ ìž ì‹œ í›„ì— ëµ™ì£ .
-Ending_Main_Npc_Script_0373,ë“œë””ì–´ ì‹ ì „ì— ë‹¹ë„í•˜ì…¨êµ°ìš”.
-Ending_Main_Npc_Script_0374,ì‹ ì „ì— ë“¤ì–´ì˜¤ì‹  ëŠë‚Œì€ ì–´ë– ì‹ ê°€ìš”?
-Ending_Main_Npc_Script_0375,ë‚˜: ì´ì „ê¹Œì§€ ëŠê»´ë³´ì§€ ëª»í•œ ìƒˆë¡œìš´ ê°ì •ì´ ë“œëŠ” ê²ƒ ê°™ì•„ìš”.
-Ending_Main_Npc_Script_0376,ê·¸ëŸ¬ì‹œêµ°ìš”.
-Ending_Main_Npc_Script_0377,êµ¬ì›ìžë‹˜ì€ ì €í¬ ë­‰ë¹„íƒ€ì´ ì›”ë“œì— ì˜¤ì‹  ì´í›„
-Ending_Main_Npc_Script_0378,"ê½ƒìƒ˜, ë°”ë‹¤, ë‹¨í’, ëˆˆê½ƒ ë§ˆì„ì„ ê±°ì¹˜ë©°"
-Ending_Main_Npc_Script_0379,ë§ˆì„ ì¹œêµ¬ë“¤ì„ ë•ê³  ëŠ˜ ê¸ì •ì ìœ¼ë¡œ ì €í¬ì˜ ë¶€íƒì„ ë“¤ì–´ì£¼ì…¨ìŠµë‹ˆë‹¤.
-Ending_Main_Npc_Script_0380,ëª¨ë“  ë§ˆì„ì— ìžˆëŠ” ì´ë“¤ì„ ëŒ€í‘œí•˜ì—¬ ì§„ì‹¬ìœ¼ë¡œ ê°ì‚¬ ì¸ì‚¬ ì˜¬ë¦½ë‹ˆë‹¤.
-Ending_Main_Npc_Script_0381,ë‚˜: ì•„ë‹™ë‹ˆë‹¤. í•´ì•¼ í•  ì¼ì„ í–ˆì„ ë¿ì´ì—ìš”.
-Ending_Main_Npc_Script_0382,ê·¸ê°„ êµ¬ì›ìžë‹˜ê»˜ì„œ ì§€ë‚´ì˜¨ ì‹œê°„ë“¤ì„ ë³´ì•„ì™”ìŠµë‹ˆë‹¤.
-Ending_Main_Npc_Script_0383,ì‚¬ì‹¤ ì €í¬ëŠ” ë‹¤ ì˜ë„ê°€ ìžˆì–´ì„œ êµ¬ì›ìžë‹˜ê»˜ ì§€ê¸ˆê¹Œì§€ ë¶€íƒì„ ë“œë ¤ì™”ë˜ ê²ƒìž…ë‹ˆë‹¤.
-Ending_Main_Npc_Script_0384,â€˜ëª¨ë“  ë§ˆì„ ì¹œêµ¬ë“¤ì„ ë•ê³  ì‹ ì „ì— ë“¤ì–´ê°ˆ ìžê²©ì„ ì–»ëŠ” ìžë§Œì´ êµ¬ì›ìžê°€ ë  ìˆ˜ ìžˆë‹¤.â€™
-Ending_Main_Npc_Script_0385,ë¼ëŠ” ì „ì„¤ì´ ëŒ€ëŒ€ë¡œ ì „í•´ì¡Œê¸° ë•Œë¬¸ì´ì£ .
-Ending_Main_Npc_Script_0386,ê·¸ëž˜ì„œ ì €í¬ì˜ ë¶€íƒì„ ë§ˆë‹¤í•˜ì§€ ì•Šê³  ë“¤ì–´ì£¼ì‹œëŠ” ëª¨ìŠµì— ë§ˆì„ ì‚¬ëžŒë“¤ ëª¨ë‘ ê°ëª…ë°›ì•„
-Ending_Main_Npc_Script_0387,êµ¬ì›ìžì˜ ìžê²©ì„ ì–»ì§€ ëª»í–ˆìŒì—ë„ â€˜êµ¬ì›ìžë‹˜â€™ì´ë¼ëŠ” í˜¸ì¹­ì„ ì“°ê²Œ ëœ ê²ƒì´ì£ .
-Ending_Main_Npc_Script_0388,ê½ƒìƒ˜ ë§ˆì„ í€˜ìŠ¤íŠ¸ë¥¼ í´ë¦¬ì–´ í•œ ì´í›„ MBTI ê²°ê³¼ë¥¼ ë°›ìœ¼ì…¨ë˜ ê²ƒ ê¸°ì–µí•˜ì‹œì£ ?
-Ending_Main_Npc_Script_0389,ì‚¬ì‹¤ ì €í¬ëŠ” êµ¬ì›ìžë‹˜ì´ ë­‰ë¹„íƒ€ì´ ì›”ë“œì—ì„œ í–‰í•œ ëª¨ë“  í–‰ë™ë“¤ì„ ê¸°ë¡í•´ ì™”ìŠµë‹ˆë‹¤.
-Ending_Main_Npc_Script_0390,ê·¸ë¦¬ê³  ê½ƒìƒ˜ ë§ˆì„ í€˜ìŠ¤íŠ¸ê°€ ëë‚œ ì´í›„ ê·¸ ê²°ê³¼ë¥¼ í•œë²ˆ ì•Œë ¤ë“œë¦° ì´í›„ 
-Ending_Main_Npc_Script_0391,ë˜ë‹¤ì‹œ ê³„ì†í•´ì„œ ê¸°ë¡í•´ ì™”ì£ .
-Ending_Main_Npc_Script_0392,ê·¸ëž˜ì„œ ì´ì œì„œì•¼ êµ¬ì›ìžë‹˜ì˜ ìµœì¢… MBTIë¥¼ ì•Œë ¤ë“œë¦´ ìˆ˜ ìžˆê²Œ ë˜ì—ˆìŠµë‹ˆë‹¤.
-Ending_Main_Npc_Script_0393,êµ¬ì›ìžë‹˜ì˜ ìµœì¢… MBTIëŠ” OOOO ìž…ë‹ˆë‹¤.
-Ending_Main_Npc_Script_0394,ì§€ê¸ˆê¹Œì§€ ë­‰ë¹„íƒ€ì´ ì›”ë“œì—ì„œ ëª¨í—˜ì„ í•´ì£¼ì…”ì„œ ê°ì‚¬í•©ë‹ˆë‹¤.
-Ending_Main_Npc_Script_0395,ì €í¬ ì—­ì‹œ êµ¬ì›ìžë‹˜ì´ ëˆˆê½ƒ ë§ˆì„ì—ì„œì˜ ì—¬ì •ì„ ë§ˆì¹˜ê³  ì‹ ì „ìœ¼ë¡œ ë“¤ì–´ì˜¤ì‹  ìˆœê°„
-Ending_Main_Npc_Script_0396,ê³¼ê±°ì˜ ê¸°ì–µë“¤ì´ ëª¨ë‘ ëŒì•„ì™”ìŠµë‹ˆë‹¤.
-Ending_Main_Npc_Script_0397,ì •ë§ë¡œ ê°ì‚¬í•©ë‹ˆë‹¤. ì§€ê¸ˆì€ ì™¸í˜•ì´ ë§Žì´ ë³€í–ˆì§€ë§Œ ê·¸ë“¤ì€ ì›ëž˜ ëª¨ë‘ ì¸ê°„ì´ì—ˆìŠµë‹ˆë‹¤.
-Ending_Main_Npc_Script_0398,êµ¬ì›ìžë‹˜ê»˜ì„œ ì—¬ê¸°ë¥¼ ë‚˜ê°€ ì§€êµ¬ë¡œ ëŒì•„ê°€ì‹  ì§í›„ ì €í¬ ì—­ì‹œ ë‹¤ í•¨ê»˜ ì§€êµ¬ë¡œ ëŒì•„ê°‘ë‹ˆë‹¤.
-Ending_Main_Npc_Script_0399,ì§€êµ¬ë¡œ ê°€ëŠ” ì¦‰ì‹œ ë­‰ë¹„íƒ€ì´ ì›”ë“œì—ì„œ ìžˆì—ˆë˜ ëª¨ë“  ê¸°ì–µë“¤ì´ ì‚¬ë¼ì§€ê² ì§€ë§Œ
-Ending_Main_Npc_Script_0400,ì €í¬ëŠ” í•­ìƒ ë§ˆìŒ ê¹Šì€ ê³³ì— êµ¬ì›ìžë‹˜ì„ ì¶”ì–µí•˜ê³  ê°ì‚¬í•´í•˜ë©° ì‚´ì•„ê°€ê² ìŠµë‹ˆë‹¤.
-Ending_Main_Npc_Script_0401,ë•ë¶„ì— í–‰ë³µí–ˆìŠµë‹ˆë‹¤. ë¶€ë”” ì§€ê¸ˆì²˜ëŸ¼ ì˜ì›ížˆ ëª¨ë‘ì—ê²Œ ì¢‹ì€ ì‚¬ëžŒìœ¼ë¡œ ê¸°ì–µë˜ì‹œê¸¸â€¦
-Ending_Main_Npc_Script_0402,ì•ˆë…•ížˆ ê°€ì‹­ì‹œì˜¤ êµ¬ì›ìžë‹˜.
-Title_Main_Quest_0001,ë­‰ë¹„íƒ€ì´ì— ì˜¨ ê±¸ í™˜ì˜í•´
-Title_Main_Quest_0002,ë­‰ë¹„íƒ€ì´ì—ì„œ ì‚´ì•„ë‚¨ëŠ” ë°©ë²•
-Title_Main_Quest_0003,ì´ë²ˆì—” ê³ ê¸° ì•žìœ¼ë¡œ!
-Title_Main_Quest_0004,ì˜¤ëŠ˜ì€ ë‚´ê°€ ë­‰ë¹„íƒ€ì´ ìš”ë¦¬ì‚¬~
-Title_Main_Quest_0005,êµ¬ì›ì˜ ì‹œìž‘
-Title_Main_Quest_0006,ë‚´ê°€ êµ¬ì›ìžë¼ê³ ?
-Title_Main_Quest_0007,ì‚ë¦¬ë½€ê°€ ì‚¬ë¼ì¡Œë‹¤!
-Title_Main_Quest_0008,ì‹¤ê±´ì‹¤ì œ
-Title_Main_Quest_0009,ìž¡ìƒê°ì€ ë†€ë©´ì„œ ë‚ ë¦¬ëŠ”ê±°ëž˜
-Title_Main_Quest_0010,ë°í˜€ì§„ ì§„ì‹¤
-Title_Main_Quest_0011,ê°€ì„ íƒ€ë‚˜ë´
-Title_Main_Quest_0012,ê³ êµ¬ë§ˆë¥¼ ë½‘ì•„ë³´ìž!
-Title_Main_Quest_0013,í’ìš”ë¡œìš´ ë‹¨í’ ë§ˆì„
-Title_Main_Quest_0014,ê²¨ìš¸ì„ ì±…ìž„ ì§ˆê²Œ
-Title_Main_Quest_0015,ì§‘ìœ¼ë¡œ ê°€ëŠ” ê¸¸
-Title_Main_Quest_0016,ê±´ê°•ì´ ìµœê³ !
-Title_Main_Quest_0017,ë‚˜ëˆ”ì€ ì˜ì›…ì˜ ë•ëª©
-Title_Main_Quest_0018,ë­‰ë¹„íƒ€ì´ ì›”ë“œ ë§ˆìŠ¤í„°
-Title_Main_Quest_0019,ë§ˆì§€ë§‰ ì‹œë ¨
-Title_Main_Quest_0020,ì´ë£¨ì–´ì§„ ì—¼ì›
-Goal_Main_Quest_0001,ìµœì†Œ 1ëª…ì˜ ë§ˆì„ ì‚¬ëžŒê³¼ ì¸ì‚¬í•˜ê¸°
-Goal_Main_Quest_0002,ë”¸ê¸° 0/5ê°œ ì±„ì§‘í•˜ê¸°
-Goal_Main_Quest_0003,ì˜¤ë¦¬ 0/5ë§ˆë¦¬ ì‚¬ëƒ¥í•˜ê¸°
-Goal_Main_Quest_0004,ì†¡ì´ ë¶ˆê³ ê¸° 1ê°œ ì œìž‘í•´ì˜¤ê¸°
-Goal_Main_Quest_0005,íƒ€íƒ€ë¬´ ì´Œìž¥ê³¼ ëŒ€í™”í•˜ê¸°
-Goal_Main_Quest_0006,ë¬¼ê³ ê¸° 0/5ë§ˆë¦¬ ë‚šì‹œí•˜ê¸°
-Goal_Main_Quest_0007,ëª¨ëž˜ì— ë®ížŒ ì‚ë¦¬ë½€ ì°¾ì•„ì˜¤ê¸°
-Goal_Main_Quest_0008,í”¼ì‰¬ì•¤ì¹©ìŠ¤ 0/1ê°œ ì „ë‹¬í•˜ê¸°
-Goal_Main_Quest_0009,ë³´ë¬¼ 3ê°œ ì°¾ì•„ì˜¤ê¸°
-Goal_Main_Quest_0010,íŠ¸ë¦¬í…Œ ì´Œìž¥ê³¼ ëŒ€í™”í•˜ê¸°
-Goal_Main_Quest_0011,10ë¶„ ì•ˆì— ì •ìƒì— ìžˆëŠ” ë•…ì½© ê°€ì ¸ì˜¤ê¸°
-Goal_Main_Quest_0012,ê³ êµ¬ë§ˆ 0/3ê°œ ì±„ì§‘í•˜ê¸°
-Goal_Main_Quest_0013,"ë™ë¬¼ 0/3ë§ˆë¦¬ ì‚¬ëƒ¥, ë¬¼ê³ ê¸° 0/3ë§ˆë¦¬ ë‚šì‹œ"
-Goal_Main_Quest_0014,ëŒ€ì¶” 0/1ê°œ ì±„ì§‘í•˜ê¸°
-Goal_Main_Quest_0015,ë‹¨ë‹¨ë­‰ ì´Œìž¥ê³¼ ëŒ€í™”í•˜ê¸°
-Goal_Main_Quest_0016,ëŒ€ì¶”ì°¨ 0/1ê°œ ì œìž‘í•´ì˜¤ê¸°
-Goal_Main_Quest_0017,ì¸ë²¤í† ë¦¬ì— ìžˆëŠ” ìŒì‹ 0/3ê°œ ê¸°ë¶€í•˜ê¸°
-Goal_Main_Quest_0018,"ë¸”ë£¨ë² ë¦¬ 0/1ê°œ, ë¬¼ê³ ê¸° 0/2ë§ˆë¦¬, ë™ë¬¼ 0/3ë§ˆë¦¬ ì‚¬ëƒ¥í•˜ê¸°"
-Goal_Main_Quest_0019,10ë¶„ ì•ˆì— ì •ìƒì— ìžˆëŠ” ì£½ìˆœ ê°€ì ¸ì˜¤ê¸°
-Goal_Main_Quest_0020,ëˆˆëˆˆë­‰ ì´Œìž¥ê³¼ ëŒ€í™”í•˜ê¸°
-Npc_Default_Talk_0001,ê½ƒìƒ˜ ë§ˆì„ì— ì˜¨ ê±¸ í™˜ì˜í•´ìš”. 
-Npc_Default_Talk_0002,ë‚˜ëŠ”ì•¼ ì±„ì§‘ì™• ë²„ë“¤!
-Npc_Default_Talk_0003,ì†¡ì´ ë¶ˆê³ ê¸°ëŠ” ë§›ìžˆëŠ” ìŒì‹ì´ë‹¤..
-Npc_Default_Talk_0004,ë‚˜ë¬´ê°€ ë§ì„ í•˜ëŠ”ê²Œ ì‹ ê¸°í•´?
-Npc_Default_Talk_0005,ë­‰ë¹„íƒ€ì´ ì›”ë“œì— ì˜¨ê²ƒì„ í™˜ì˜í•˜ì˜¤.
-Npc_Default_Talk_0006,ë°”ë‹¤ ë§ˆì„ì— ì˜¨ ê±¸ í™˜ì˜í•´!
-Npc_Default_Talk_0007,ì‚ë¦¬ë½€ëŠ” ë‚˜ì˜ ë² ìŠ¤íŠ¸ í”„ë Œë“œì•¼!
-Npc_Default_Talk_0008,ë‚˜ëŠ” ë¦¬ë¹„ë¼ê³  í•´! ê°€ë¦¬ë¹„ê°€ ì•„ë‹ˆì•¼!
-Npc_Default_Talk_0009,ì‹ ë‚œë‹¤ ì‹ ë‚˜~ ì˜¤ëŠ˜ì€ ì–´ë–¤ ë†€ì´ë¥¼ í•´ë³¼ê¹Œ?
-Npc_Default_Talk_0010,ì˜¤ëŠ˜ í•˜ë£¨ëŠ” í–‰ë³µí•˜ì…¨ëŠ”ì§€ìš”?
-Npc_Default_Talk_0011,ëª©êµ¬ì™€ ëª¨ëª©ìˆ˜ëŠ” ë‚´ ì†Œì¤‘í•œ ì¹œêµ¬ë“¤ì´ì•¼.
-Npc_Default_Talk_0012,ì•ˆë…•í•˜ì„¸ìš”! í’ë‹¤ë‚˜ë¼ê³  í•´ìš”!
-Npc_Default_Talk_0013,ë‚œ ì‹¸ì›€ì„ ìž˜í•´! ì´ë¦„ë¶€í„° ê·¸ëŸ´ê±° ê°™ì§€ ì•Šì•„?
-Npc_Default_Talk_0014,ë¸Œë¼ìš°ë‹ˆ ì¢‹ì•„í•˜ëƒê³ ìš”? ì•„ë‹ˆìš”! ì‹«ì–´í•´ìš”!
-Npc_Default_Talk_0015,ìžì‹ ì„ ë˜ëŒì•„ë³´ëŠ” ì¼ì€ ê½¤ ì–´ë ¤ìš´ ì¼ì´ì£ .
-Npc_Default_Talk_0016,ê¿€ë²Œì´ ì™œ ë§ì„ í•˜ëƒê³ ? ì™œ ë‚˜í•œí…Œë§Œ ê·¸ëž˜?
-Npc_Default_Talk_0017,ëˆˆê½ƒ ë§ˆì„ë„ í’ìš”ë¡œì›Œ ì§€ë©´ ì¢‹ê² ì–´ìš”!
-Npc_Default_Talk_0018,í¬ë ˆë‹ˆëŠ” ì°¸ ë˜‘ë˜‘í•´.
-Npc_Default_Talk_0019,ê²¨ìš¸ì—ë„ ì´ìœ ê½ƒì´ í”¼ë©´ ì¢‹ê² ë‹¤..
-Npc_Default_Talk_0020,ì•žìœ¼ë¡œ íŽ¼ì³ì§ˆ ë‹¹ì‹ ì˜ ë¯¸ëž˜ë¥¼ ì‘ì›í•©ë‹ˆë‹¤.
-Npc_Default_Talk_0021,ë²„ë“¤ ë³´ë‹¤ëŠ” ë‚´ê°€ ì¢€ ë” ë˜‘ë˜‘í•˜ì§€ í•˜í•˜í•˜
-Npc_Default_Talk_0022,ì €ë„ ë¦¬íƒ€ ë§Œí¼ì´ë‚˜ ê³ ê¸°ë¥¼ ì¢‹ì•„í•´ìš”!
-Npc_Default_Talk_0023,ì œìž‘ì˜ ì¦ê±°ì›€ì„ ì•Œê³  ìžˆë‹ˆ?
-Npc_Default_Talk_0024,ì‚¶ì˜ ì§„ë¦¬ëž€ ë­˜ê¹Œ..
-Npc_Default_Talk_0025,í”¼ì—˜ì€ ë„ˆë¬´ ì‹¬ì˜¤í•´!
-Npc_Default_Talk_0026,í‹°ë§ê³¼ ì‚ë¦¬ë½€ëŠ” ìš°ë¦¬ ë§ˆì„ì˜ ë§ˆìŠ¤ì½”íŠ¸ì§€~
-Npc_Default_Talk_0027,ì‹¬ì‹¬í•´! ë‚˜ëž‘ ë†€ëž˜?
-Npc_Default_Talk_0028,í‹°ë§ì€ ê·€ì°®ì€ ì¡´ìž¬ì•¼..
-Npc_Default_Talk_0029,ë‚´ ì´ë¦„ì€ ì§€ë½. ë°”ì§€ë½ì´ ì•„ë‹ˆì•¼!
-Npc_Default_Talk_0030,í¬ë¦½í† ëŠ” ëŠ˜ ë‚˜ì—ê²Œ ìž¡ë¬´ ì²˜ë¦¬ë¥¼ ë§¡ê¸´ë‹¨ ë§ì´ì§€..
-Npc_Default_Talk_0031,ì•ˆë…•~ ìš°ë¦¬ëž‘ ê°™ì´ ë†€ëž˜?
-Npc_Default_Talk_0032,ë¡¤ë¦¬ë¡¤ë¦¬~
-Npc_Default_Talk_0033,í‘¸ížˆíž~!
-Npc_Default_Talk_0034,íë‹¹íë‹¹ ëŒì„ ë˜ì§€ìž~
-Npc_Default_Talk_0035,ë‚œ ë© ë•Œë¦¬ëŠ” ì·¨ë¯¸ê°€ ìžˆì–´. ë¨¸ì—‰
-Npc_Default_Talk_0036,ëˆˆê½ƒ ë§ˆì„ì— ê°€ë³´ê³  ì‹¶ì–´!
-Npc_Default_Talk_0037,ê¿€ë¹„ëŠ” ìžì¡´ê°ì´ ë‚®ì•„. ì´í•´í•´ì¤˜
-Npc_Default_Talk_0038,ì¶¥ë‹¤ ì¶”ì›Œ~ ê·¸ì¹˜?
-Npc_Default_Talk_0039,ì €ì˜ ë”°ëœ»í•¨ìœ¼ë¡œ ë…¹ì—¬ë“œë¦´ê²Œìš”.
-Npc_Default_Talk_0040,ë‚˜ëŠ” ê¸ì •ì˜ íž˜ì„ ë¯¿ì–´!
-Npc_Default_Talk_0041,ëˆˆê½ƒ ë§ˆì„ë„ ì¢‹ì€ ë§ˆì„ì´ì•¼.
-Npc_Default_Talk_0042,ìš¸ë¼ìš¸ë¼~
-Npc_Default_Talk_0043,ë‚œ ê²¨ìš¸ì— íƒœì–´ë‚˜ì„œ ê·¸ëŸ°ì§€ ìš°ë¦¬ ë§ˆì„ì´ ë„ˆë¬´ ì¢‹ì•„.
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
+Quest_Main_Npc_Script_0001,¾È³ç* ÀÌ¹æÀÎ? ¿ì¸® ²É»ù ¸¶À»¿¡ ¿Â °ÍÀ» È¯¿µÇØ!,,
+Quest_Main_Npc_Script_0002,¿ì¸® ¸¶À»Àº ÀÌ¹æÀÎµéÀÌ Ã³À½ °æÇèÇÏ°Ô µÇ´Â ¸¶À»ÀÌ¾ß.,,
+Quest_Main_Npc_Script_0003,±×·¯´Ï ¸ÕÀú* ¿ì¸® ¿ùµå¿¡¼­ »ì¾Æ³²±â À§ÇÑ ¿©·¯°¡Áö ¹æ¹ýµéÀ» ¹è¿ö¾ß°ÚÁö?,,
+Quest_Main_Npc_Script_0004,¿ì¼±* ¿ì¸® ¸¶À»À» ÇÑ ¹ø µÑ·¯º¸°í ¸¶À» ¾ÆÀÌµé°ú ÀÎ»çµµ ³ª´©°í ¿Í!,,
+Quest_Main_Npc_Script_0005,ÀÎ»ç¸¦ ÇØ¾ß ÇÒ Ä£±¸µé À§¿¡´Â ¸¶Å©°¡ ¶° ÀÖÀ» Å×´Ï ½±°Ô È®ÀÎÇÒ ¼ö ÀÖÀ»°Å¾ß.,,
+Quest_Main_Npc_Script_0006,¸î ¸í°ú ÀÎ»ç¸¦ ³ª´­ Áö´Â ÀÚÀ¯´Ï±î ¸¶À½´ë·Î ÇÏ·Å~,,
+Quest_Main_Npc_Script_0007,Á¶½ÉÈ÷ ´Ù³à¿Í~,,
+Quest_Main_Npc_Script_0008,¾ÆÁ÷ ¾Æ¹«¿Íµµ ÀÎ»çÇÏÁö ¾ÊÀº °Í °°Àºµ¥?,,
+Quest_Main_Npc_Script_0009,¾È³ç* ÀÌ¹æÀÎ! ¿ì¸® ²É»ù ¸¶À»¿¡ ¿Â °É È¯¿µÇØ~,,
+Quest_Main_Npc_Script_0010,¿À·£¸¸ÀÇ ÀÌ¹æÀÎÀÌ´Ù.. ¹Ý°©´Ù..,,
+Quest_Main_Npc_Script_0011,¾È³ç~ Àß ÀûÀÀÇØ¼­  Áñ°Ì°Ô Áö³»º¸ÀÚ±¸!,,
+Quest_Main_Npc_Script_0012,ÀÎ»ç´Â Àß ÇÏ°í ¿Ô¾î?,,
+Quest_Main_Npc_Script_0013,¹öµéÀÌ ³Ê¿¡°Ô ¾Ë·ÁÁÖ°í ½ÍÀº °ÍÀÌ ÀÖ´Ù´øµ¥ ÇÑ ¹ø °¡ºÁ!,,
+Quest_Main_Npc_Script_0014,¿ì¸® ¿ùµå¿¡¼­ »ì¾Æ³²´Â µ¥ µµ¿òÀÌ µÉ¸¸ÇÑ µµ±¸µéÀ» ÀÎº¥Åä¸®¿¡ ³Ö¾îµ×¾î. Àß ¾²·Å!,,
+Quest_Main_Npc_Script_0015,¿Ô±¸³ª! ±â´Ù·È¾î.,,
+Quest_Main_Npc_Script_0016,³ª´Â ³Ê¿¡°Ô ¿ì¸® ¿ùµå¿¡¼­ »ì±â À§ÇØ ²À ÇÊ¿äÇÑ 'Ã¤Áý'¿¡ ´ëÇØ ¾Ë·ÁÁÖ·Á°í ÇØ.,,
+Quest_Main_Npc_Script_0017,¿ì¼± µþ±â¸¦ 2°³ Ã¤ÁýÇØ ¿Ã·¡?,,
+Quest_Main_Npc_Script_0018,µþ±â¸¦ Ã¤ÁýÇÏ´Â ¹æ¹ýÀÌ ±Ã±ÝÇÏ´Ù¸é Àú ¸ÂÀºÆí¿¡ ÀÖ´Â Ä£±¸¿¡°Ô ¹°¾îºÁ!,,
+Quest_Main_Npc_Script_0019,¹°·Ð* Á÷Á¢ ¸öÀ¸·Î °æÇèÇÏ¸ç ¹è¿ì°í ½Í´Ù¸é ¹Ù·Î °¡µµ ÁÁ¾Æ.,,
+Quest_Main_Npc_Script_0020,¾Æ Âü! µþ±â´Â ¹Ù·Î ±ÙÃ³¿¡ µ¢±×·¯´Ï ÀÖ´Â °Ç¹° ²À´ë±â¿¡ ÀÖÀ» °Å¾ß~,,
+Quest_Main_Npc_Script_0021,°Ç¹° ²À´ë±â·Î ¿Ã¶ó°¡±â À§ÇØ¼­´Â µî¹ÝÀ» ÇØ¾ßÇØ.,,
+Quest_Main_Npc_Script_0022,µî¹ÝÀº º¼·Ï Æ¢¾î³ª¿Í ÀÖ´Â ¹°Ã¼¸¦ Á÷Á¢ ¼ÕÀ¸·Î ÀâÀ¸¸é¼­ ¿Ã¶ó°¡¸é µÅ!,,
+Quest_Main_Npc_Script_0023,µþ±â¸¦ Ã¤ÁýÇÏ°í ¿Í¼­ ³ªÇÑÅ× ´Ù½Ã ¸»À» °É¾îÁà!,,
+Quest_Main_Npc_Script_0024,¾È³ç! Ã¤ÁýÇÏ´Â ¹æ¹ýÀÌ ±Ã±ÝÇÏ´Ù°í?,,
+Quest_Main_Npc_Script_0025,Ä£ÀýÇÏ°Ô ¼³¸íÇØÁÖÁö! ³ª¸¸ ¹Ï¾î~,,
+Quest_Main_Npc_Script_0026,Ã¤ÁýÀÌ °¡´ÉÇÑ ¾ÆÀÌÅÛ ÁÖº¯¿¡ °¡¸é ¾ÆÀÌÅÛÀÌ ¹ÝÂ¦¹ÝÂ¦ ºû³¯°Å¾ß.,,
+Quest_Main_Npc_Script_0027,±× ¾ÆÀÌÅÛÀ» ¾ò°í ½ÍÀ¸¸é ±ÙÃ³¿¡ °¡¼­ Y¹öÆ°¸¸ ´­·¯ÁÖ¸é µÅ.,,
+Quest_Main_Npc_Script_0028,¾î¶§* °£´ÜÇÏÁö?,,
+Quest_Main_Npc_Script_0029,¹°·Ð* µµ±¸°¡ ÀÖ¾î¾ß¸¸ Ã¤ÁýÇÒ ¼ö ÀÖ´Â ¾ÆÀÌÅÛµµ ¸¹À¸´Ï ÀØÁö¸»°í~,,
+Quest_Main_Npc_Script_0030,»¡¸® ¿Ô³×? ³Ê Àç´ÉÀÌ ÀÖ±¸³ª?! º¸»óÀ¸·Î ¿ìÀ¯¸¦ ÁÙ°Ô!,,
+Quest_Main_Npc_Script_0031,¸®Å¸ ¾ÆÀú¾¾°¡ ³Ê¸¦ ºÎ¸£´õ¶ó! ¾î¼­ ÇÑ ¹ø ¾ÆÀú¾¾¿¡°Ô °¡ºÁ!,,
+Quest_Main_Npc_Script_0032,¼ö·Æ¿¡ ´ëÇØ¼­ ¾Ë·ÁÁÖ°Ú´Ù..,,
+Quest_Main_Npc_Script_0033,°í±â ÁÁ¾ÆÇÏÁö? ¸ÀÀÖ´Ù °í±â´Â..,,
+Quest_Main_Npc_Script_0034,¼ö·Æ ±¸¿ªÀ¸·Î °¡¼­ ³ÊÇÁ°ÇÀ» »ç¿ëÇØ ¿À¸®¸¦ Àâ¾Æ¿Í.,,
+Quest_Main_Npc_Script_0035,BÅ°¸¦ ÅëÇØ ½½·Î¿ì ¸ðµå¸¦ »ç¿ëÇÏ¸é ´õ ½±°Ô ÀâÀ» ¼ö ÀÖÀ» °Å´Ù..,,
+Quest_Main_Npc_Script_0036,¼ö·Æ ±¸¿ªÀº ±ÙÃ³¿¡ ÀÖ³×. ¸Þ´º¸¦ ¿­¾îº¸¸é °¡¹æ ¾È¿¡ ³ÊÇÁ°ÇÀÌ ÀÖÀ»°Å¾ß.,,
+Quest_Main_Npc_Script_0037,³» ÀÌ¿ôÀÌ °í±â¸¦ ¸Ô°í ½Í¾î ÇÏ´øµ¥..,,
+Quest_Main_Npc_Script_0038,¿©À¯°¡ ÀÖÀ¸¸é 2°³¸¸ ÀüÇØÁà. ¹°·Ð ÀüÇØÁÖÁö ¾Ê¾Æµµ »ó°ü ¾ø´Ù..,,
+Quest_Main_Npc_Script_0039,°í±â ½È¾îÇÏ´Ï? ¿À¸®¸¦ Àâ°í ³ª¼­ ´Ù½Ã ¸»À» °É¾î..,,
+Quest_Main_Npc_Script_0040,¿ì¿Í! °í¸¶¿ö~! ³Ê Á¤¸» ÂøÇÏ±¸³ª!,,
+Quest_Main_Npc_Script_0041,¸®Å¸¿¡°Ô ´Ù½Ã °¡ºÁ! ¾ÆÀú¾¾°¡ ³Ê¿¡°Ô ¹º°¡¸¦ ÁÙ°Å¾ß!,,
+Quest_Main_Npc_Script_0042,Àç´ÉÀÌ ÀÖ´Â Ä£±¸ÀÎ °Í °°±º.,,
+Quest_Main_Npc_Script_0043,¾ÕÀ¸·ÎÀÇ ¸ðÇè¿¡¼­µµ »ç³ÉÇØ¾ß ÇÒ ÀÏÀº ¸¹À»Å×´Ï ÀÌ °¨°¢À» ÀØÁö ¸»°Ô..,,
+Quest_Main_Npc_Script_0044,¸ñ±¸¶ó´Â Ä£±¸°¡ °¡¸£ÃÄÁÙ °ÍÀÌ ÀÖ´Ù´Ï ÇÑ ¹ø °¡º¸°Ô³ª..²¬²¬,,
+Quest_Main_Npc_Script_0045,¾È³ç! Ã¤ÁýÀÌ¶û ¼ö·ÆÀº Àß ¹è¿ì°í ¿Ô¾î?,,
+Quest_Main_Npc_Script_0046,¿ì¸® ¿ùµå¿¡¼­ »ì¾Æ³²±â À§ÇÑ ¸¶Áö¸· ¹æ¹ý! ±×°Ç ¹Ù·Î~,,
+Quest_Main_Npc_Script_0047,Á¦ÀÛÀÌ¾ß! Ã¤Áý°ú ¼ö·ÆÀ» ÅëÇØ ¾òÀº Àç·áµéÀ» °¡°øÇÏ´Â °ÍÀÌÁö!,,
+Quest_Main_Npc_Script_0048,¾Õ¿¡ ³ª¿Í ºñ½ÁÇÏ°Ô »ý±ä Ä£±¸°¡ Á¦ÀÛ ¹æ¹ý ¹× °èÈ¹ ¼ö¸³ ¹æ¹ý¿¡ ´ëÇØ ¾Ë·ÁÁÙ°Å¾ß.,,
+Quest_Main_Npc_Script_0049,µèÁö ¾Ê°í ¹Ù·Î Á¦ÀÛÇÏ°í ½ÍÀ¸¸é ³» ¿· Á¦ÀÛ´ë·Î °¡¼­ Y¹öÆ°À» ´­·¯ºÁ.,,
+Quest_Main_Npc_Script_0050,³Ê°¡ Á¦ÀÛÇØ¾ß ÇÒ À½½ÄÀº ¼ÛÀÌ ºÒ°í±â¾ß. ÀÌ¸§¸¸ µé¾îµµ ¸ÀÀÖ°ÚÁö?,,
+Quest_Main_Npc_Script_0051,Á¦ÀÛÀº Áß¿äÇØ. ¼ÛÀÌ ºÒ°í±â Á¦ÀÛ ÈÄ¿¡ Ã£¾Æ¿Í!,,
+Quest_Main_Npc_Script_0052,º»·ÐÀ¸·Î ¹Ù·Î °¡Áö!,,
+Quest_Main_Npc_Script_0053,Á¦ÀÛ´ë¿¡ °¡¼­ »óÈ£ÀÛ¿ëÀ» ÇÏ¸é Á¦ÀÛ Ã¢ÀÌ ¿­¸±°É¼¼!,,
+Quest_Main_Npc_Script_0054,¿øÇÏ´Â ¹°Ç°ÀÇ Àç·á¸¦ È®ÀÎÇÏ°í Á¶°ÇÀ» ÃæÁ·ÇßÀ» ½Ã Á¦ÀÛ ¹öÆ°¸¸ ´©¸£¸é ³¡!,,
+Quest_Main_Npc_Script_0055,¾ÕÀ¸·Î »ýÈ°ÇÏ´Ùº¸¸é ¹èºÎ¸§* ÀÀ°¡ °ÔÀÌÁö¸¦ °ü¸®ÇØ¾ß ÇÒ°Å¾ß.,,
+Quest_Main_Npc_Script_0056,±×¶§¸¶´Ù ¹Ì¸® Á¦ÀÛÇÒ ¼ö ÀÖ´Â ¹°Ç°µéÀ» È®ÀÎÇÏ°í °èÈ¹À» ¼¼¿ì¸é µµ¿òÀÌ µÇ°ÚÁö?,,
+Quest_Main_Npc_Script_0057,¾î¶§* °£´ÜÇÏÁö? ¹Ù·Î ½ÇÀüÀ¸·Î °¡º¸µµ·Ï!,,
+Quest_Main_Npc_Script_0058,ÈÇ¸¢ÇØ! ÁÁÀº À½½ÄÀº Á¦ÀÛÀ» ÅëÇØ¼­¸¸ È¹µæ °¡´ÉÇÏ´Ï ÀØÁö ¸¶!,,
+Quest_Main_Npc_Script_0059,º¸»óÀ¸·Î ¿ì¸® ²É»ù ¸¶À»¿¡¼­´Â È¹µæÀÌ ºÒ°¡´ÉÇÑ Åä¸¶Åä¸¦ ÁÙ°Ô!,,
+Quest_Main_Npc_Script_0060,ÃÌÀå´ÔÀÌ ³Ê¿¡°Ô ²À ÀüÇØÁÖ°í ½ÍÀº ÀÌ¾ß±â°¡ ÀÖÀ¸½Å °¡ºÁ. ÇÑ¹ø °¡ºÁ.,,
+Quest_Main_Npc_Script_0061,¿Ô´Â°¡. ¸¶À» »ç¶÷µéÀÌ ¸ðµÎ ÀÚ³×¸¦ ¹«Ã´ÀÌ³ª ¸¶À½¿¡ µé¾î ÇÏ´õ±º ÇãÇã.,,
+Quest_Main_Npc_Script_0062,ÀÚ³×´Â ¸ð¸£°ÚÁö¸¸ ÀÚ³×´Â Æò¹üÇÑ ÀÌ¹æÀÎÀÌ ¾Æ´Ò¼¼.,,
+Quest_Main_Npc_Script_0063,³ª: Á¦°¡¿ä?,,
+Quest_Main_Npc_Script_0064,¿ì¸® ¿ùµå¿¡ ³»·Á¿À´Â Àü¼³¿¡ µû¸£¸é,,
+Quest_Main_Npc_Script_0065,300¹ø Â°·Î ¿ì¸® ¿ùµå¿¡ ³ªÅ¸³ª´Â ÀÌ¹æÀÎÀÌ ±¸¿øÀÚ°¡ µÉ °Å¶ó´Â ÀÌ¾ß±â°¡ ÀÖ¾ú³×.,,
+Quest_Main_Npc_Script_0066,ÀÚ³×°¡ ¹Ù·Î ±× ÀÌ¹æÀÎÀÌÁö.,,
+Quest_Main_Npc_Script_0067,Àá½Ã¸¸ ±â´Ù·Áº¸°Ô³ª. °ð ¿ì¸® ¸¶À»¿¡ º¯È­°¡ »ý±æ ÅÍÀÌ´Ï..,,
+Quest_Main_Npc_Script_0068,¿À¿À.. Á¤¸» ÀÚ³×°¡ ¿ì¸®ÀÇ ±¸¿øÀÚÀÎ°É±î..,,
+Quest_Main_Npc_Script_0069,³ªµµ »ó¼¼ÇÑ °Ç Àß ¸ð¸¥´Ù¸¸,,
+Quest_Main_Npc_Script_0070,´Ù¸¥ Áö¿ª ÁÖ¹ÎµéÀÇ ºÎÅ¹À» µé¾îÁÖ´Ù º¸¸é ÇØ´äÀ» ¾òÀ» ¼ö ÀÖÀ»°É¼¼.,,
+Quest_Main_Npc_Script_0071,¹°·Ð* ºü¸¥ ½ÃÀÏ ³»¿¡ ÁýÀ¸·Î µ¹¾Æ°¡´Â °Íµµ Áß¿äÇÏÁö.,,
+Quest_Main_Npc_Script_0072,±×·¸Áö¸¸ Áö±Ý ÀÌ ½Ã°£ÀÌ ÈÊ³¯ ÁÁÀº Ãß¾ïÀ¸·Î ±â¾ïµÉ ¼ö ÀÖ°Ô Áñ°Å¿î °æÇèµéµµ ÇÔ²² ´©¸®±æ ¹Ù¶ó³×.,,
+Quest_Main_Npc_Script_0073,¾ÕÀ¸·Î Àß ºÎÅ¹ÇÏ³×. ±¸¿øÀÚ¿©.,,
+Quest_Main_Npc_Script_0074,ÀÌ°Ô ´©±¸¾ß~?,,
+Quest_Main_Npc_Script_0075,¿ì¸® ±¸¿øÀÚ´ÔÀÌ½ÃÀÝ¾Æ!,,
+Quest_Main_Npc_Script_0076,¿¬µÎÇÑÅ× µèÀÚ ÇÏ´Ï °í¹ÎÀÌ ¸¹À¸½Ã´Ù´øµ¥,,
+Quest_Main_Npc_Script_0077,³¬½Ã Á» ÇÏ¸é¼­ ¹Ù¶÷ÀÌ³ª ½ý°í ¿Ã·¡?,,
+Quest_Main_Npc_Script_0078,¿ì¸® ¸¶À»ÀÇ °æÄ¡µµ ±¸°æÇÏ°í »ç¶÷µé¿¡°Ô Á¶¾ðµµ Á» ±¸ÇØºÁ!,,
+Quest_Main_Npc_Script_0079,¹°·Ð* »ç»ö¿¡ Àá±â°í ½Í´Ù¸é °ðÀå ³¬½ÃÅÍ·Î °¡µµ ÁÁ¾Æ!,,
+Quest_Main_Npc_Script_0080,¹°°í±â¸¦ 15¸¶¸® Á¤µµ ÀâÀ¸¸é °í¹ÎÀÌ ÇØ°áµÇÁö ¾Ê°Ú¾î?,,
+Quest_Main_Npc_Script_0081,³ª: ¹¹?! ³¯µµ ´õ¿îµ¥ 15¸¶¸®³ª ÀâÀ¸¶ó°í?,,
+Quest_Main_Npc_Script_0082,ÇÏÇÏ* ³ó´ãÀÌ¾ß ³ó´ã. 5¸¶¸® Á¤µµ¸¸ ÀâÀ¸¸ç ÇÑ ¹ø °í¹ÎÇØ ºÁ!,,
+Quest_Main_Npc_Script_0083,5¸¶¸® Àâ±âµµ Èûµç °Å¾ß? ´Ù Àâ°í ¿Í¼­ ¸»À» °É¾îÁà!,,
+Quest_Main_Npc_Script_0084,¾ÆÁ÷ ¹¹°¡ Á¤´äÀÎ Áö´Â ¾Æ¹«µµ ¸ð¸£ÀÝ¾Æ?,,
+Quest_Main_Npc_Script_0085,Áö¸§±æ·Î °¡·Á°í ÇÏÁö´Â ¸¶.,,
+Quest_Main_Npc_Script_0086,Áö¸§±æ·Î °¡·Á´Ù °¡´Â Áø½ÇÀ» ³õÄ¡°í ÀÇ¿åÀ» ÀÒÀ» ¼öµµ ÀÖ¾î.,,
+Quest_Main_Npc_Script_0087,¾ÕÀ¸·Îµµ ÀÀ¿øÇÒ°Ô.,,
+Quest_Main_Npc_Script_0088,ÇÑ °¡Áö Áß¿äÇÑ ÈùÆ®¸¦ ÁÖÀÚ¸é,,
+Quest_Main_Npc_Script_0089,¹¶ºñÅ¸ÀÌ ¿ùµå¿¡´Â 4°³ÀÇ ¸¶À»ÀÌ ÀÖÁö.,,
+Quest_Main_Npc_Script_0090,4°³ ¸¶À»ÀÇ Ä£±¸µéÀÌ ¿øÇÏ´Â °ÍµéÀ» ÇÏ³ªÇÏ³ª ÀüºÎ µé¾îÁÖ¸é,,
+Quest_Main_Npc_Script_0091,Áý¿¡ °¥ ¼öµµ ÀÖ´Ù´Â ¸»À» ¾îµð¼­ µéÀº °Í °°±âµµ~,,
+Quest_Main_Npc_Script_0092,Àß ´Ù³à¿Ô¾î? »ý°¢ Á¤¸®´Â Á» µÆ´Ï?,,
+Quest_Main_Npc_Script_0093,¾î¶² ½Ã·ÃÀÌµç ³Ê¶ó¸é Àß ±Øº¹ÇÒ °ÍÀÌ¶ó ¹Ï¾î.,,
+Quest_Main_Npc_Script_0094,³Í ¿ì¸®ÀÇ ±¸¿øÀÚ´Ï±î!,,
+Quest_Main_Npc_Script_0095,¸®ºñÀÌ¶ó´Â Ä£±¸°¡ ±ÞÇÑ ÀÏÀÌ »ý°å³ª º¸´øµ¥ ÇÑ ¹ø °¡ÁÙ·¡?,,
+Quest_Main_Npc_Script_0096,¹°°í±â Àâ´À¶ó °í»ýÇßÀ¸´Ï °¨ÀÚ¸¦ º¸»óÀ¸·Î ÁÙ°Ô! ¾È³ç~,,
+Quest_Main_Npc_Script_0097,Å«ÀÏÀÌ¾ß!!,,
+Quest_Main_Npc_Script_0098,³ª: ¹«½¼ ÀÏÀÌ¾ß?,,
+Quest_Main_Npc_Script_0099,»ß¸®»Ç°¡ »ç¶óÁ³¾î!,,
+Quest_Main_Npc_Script_0100,³ª: »ß¸®»Ç°¡ ´©±ºµ¥..?,,
+Quest_Main_Npc_Script_0101,³» º£½ºÆ® ÇÁ·»µå¾ß! ³ª´Â »ß¸®»Ç ¾øÀÌ »ì ¼ö ¾ø¾î.. ÈæÈæ,,
+Quest_Main_Npc_Script_0102,¿ì¸®´Â ¹Ù´Ù ¸¶À»¿¡¼­¸¸ ¿À·¡ Áö³¾ ¼ö ÀÖ¾î¼­ ¸Ö¸®´Â ¸ø °¬À» °Å¾ß.,,
+Quest_Main_Npc_Script_0103,¸¶À» »ç¶÷µéÀÌ »ß¸®»Ç¸¦ ºÃÀ» ¼öµµ ÀÖÀ¸´Ï °¡´Â ±æ¿¡ ÇÑ ¹ø ¹°¾îºÁ ÁÙ·¡?,,
+Quest_Main_Npc_Script_0104,¾ÆÁ÷ ¾î»öÇÏ°í È¥ÀÚ Ã£°í ½ÍÀ¸¸é ¹Ù·Î Ã£À¸·¯ ¶°³ªµµ ÁÁ¾Æ.,,
+Quest_Main_Npc_Script_0105,»ß¸®»Ç¸¦ Ã£¾ÆÁà.. ºÎÅ¹ÇÒ°Ô!!,,
+Quest_Main_Npc_Script_0106,¹¹? »ß¸®»Ç°¡ ¾ø¾îÁ³´Ù°í? ¾Æ±î ¸ð·¡»çÀå ±ÙÃ³·Î °¡´Â °É ³»°¡ ºÃ´Âµ¥?,,
+Quest_Main_Npc_Script_0107,»ß¸®»Ç´Â ¿ø·¡ ¸»µµ ¾øÀÌ ¾îµô Àß µ¹¾Æ´Ù´Ï°ï ÇÏÁö,,
+Quest_Main_Npc_Script_0108,¾Æ¸¶ ¾îµð ±¸¼®Áø µ¥¼­ ½¬°Å³ª ³î°í ÀÖÀ» °Å¾ß,,
+Quest_Main_Npc_Script_0109,ÀÀ? ³ª¸¦ Ã£¾Ò´Ù°í? ¿Ö??,,
+Quest_Main_Npc_Script_0110,³ª: ¸®ºñÀÌ¶ó´Â ¾ÆÀÌ°¡ ³Ê¸¦ °ÆÁ¤ÇÏ´øµ¥.,,
+Quest_Main_Npc_Script_0111,¾ÆÀ¯* ¸®ºñ´Â °ÆÁ¤ÀÌ ³Ê~¹« ¸¹´Ù´Ï±î?,,
+Quest_Main_Npc_Script_0112,³ª´Â ±×Àú Àá½Ã È¥ÀÚ ½¬°í ÀÖ¾úÀ» »ÓÀÌ¶ó°í!,,
+Quest_Main_Npc_Script_0113,¾Æ¹«Æ° °í¸¶¿ö.,,
+Quest_Main_Npc_Script_0114,³»°¡ ¸ÕÀú °¡¼­ ¸®ºñ¸¦ ´Þ·¡°í ÀÖÀ» Å×´Ï ÃµÃµÈ÷ µÚµû¶ó¿Í.,,
+Quest_Main_Npc_Script_0115,±¸¿øÀÚ´Ô! »ß¸®»Ç¸¦ Ã£¾ÆÁà¼­ °í¸¶¿ö!,,
+Quest_Main_Npc_Script_0116,º°ÀÏ ¾ø¾ú´Ù´Ï ´ÙÇàÀÌ¾ß ÇìÇì.,,
+Quest_Main_Npc_Script_0117,µµ¿ÍÁØ º¸´äÀ¸·Î ¾ßÀÚ ÁÖ½º¸¦ ÁÙ°Ô! ¸ÀÀÖ°Ô ¸Ô¾î~,,
+Quest_Main_Npc_Script_0118,¸®ºñ°¡ ºÎÅ¹ÇÏ°í ½ÍÀº ÀÏÀÌ ÀÖ´ë.,,
+Quest_Main_Npc_Script_0119,¹«½¼ ÀÏ ÀÖ³ª º»µ¥ ÇÑ ¹ø °¡¼­ È®ÀÎÇØ Áà!,,
+Quest_Main_Npc_Script_0120,¾È³çÇÏ¼¼¿ä ±¸¿øÀÚ´Ô!,,
+Quest_Main_Npc_Script_0121,Àú´Â ¸®ºñ¶ó°í ÇØ¿ä!,,
+Quest_Main_Npc_Script_0122,´Ù¸§ÀÌ ¾Æ´Ï¶ó Á¦ µ¿»ýÀÎ Áö¶ôÀÌ°¡ ¾ÆÆÄ¼­ ¸çÄ¥ ³»³» ´©¿öÀÖ¾î¿ä.,,
+Quest_Main_Npc_Script_0123,Áö¶ôÀÌ¸¦ À§ÇØ ÇÇ½¬¾ØÄ¨½º¸¦ ¸¸µé¾î ÁÖ½Ç ¼ö ÀÖÀ»±î¿ä?,,
+Quest_Main_Npc_Script_0124,ÇÇ½¬¾ØÄ¨½º¸¦ Áö¶ôÀÌ¿¡°Ô Á÷Á¢ ÀüÇØÁÖ¼Åµµ ÁÁ°í,,
+Quest_Main_Npc_Script_0125,Àú¸¦ ÅëÇØ Àü´ÞÀ» ºÎÅ¹ÇØ ÁÖ¼Åµµ ÁÁ¾Æ¿ä! ±â´Ù¸±°Ô¿ä~,,
+Quest_Main_Npc_Script_0126,¾Æ Âü! ¿ì¸® ÁýÀº ¸¶À» ÀÔ±¸ ¹Ù·Î ¿ÞÆí¿¡ ÀÖ¾î¿ä!,,
+Quest_Main_Npc_Script_0127,Áö¶ôÀÌ³ª Àú¿¡°Ô ÇÇ½¬¾ØÄ¨½º¸¦ °¡Á®´ÙÁÖ½Ã°Ú¾î¿ä?,,
+Quest_Main_Npc_Script_0128,³ª: ¾ÆÇÁ´Ù°í ÇØ¼­ Á÷Á¢ ÀüÇØÁÖ·¯ ¿Ô¾î Áö¶ô¾Æ.,,
+Quest_Main_Npc_Script_0129,¿ì¿Í! Á¦°¡ ÁÁ¾ÆÇÏ´Â À½½ÄÀÌ¿¡¿ä!,,
+Quest_Main_Npc_Script_0130,½Å°æ ½áÁÖ¼Å¼­ °¨»çÇØ¿ä! ¸ÀÀÖ°Ô ¸Ô°í ¾ó¸¥ ³ªÀ»°Ô¿ä!,,
+Quest_Main_Npc_Script_0131,¸®ºñ ÇüÇÑÅ× ´Ù½Ã °¡º¸½Ç·¡¿ä? ÇüÀÌ µå¸®°í ½ÍÀº °Ô ÀÖ´ë¿ä!,,
+Quest_Main_Npc_Script_0132,°¨»çÇØ¿ä ±¸¿øÀÚ´Ô!,,
+Quest_Main_Npc_Script_0133,´öºÐ¿¡ ¿ì¸® Áö¶ôÀÌ°¡ ±Ý¹æ ³ªÀ» ¼ö ÀÖÀ» °Í °°¾Æ¿ä,,
+Quest_Main_Npc_Script_0134,¾ÕÀ¸·ÎÀÇ ¿©Á¤µµ ÀÀ¿øÇÒ°Ô¿ä!,,
+Quest_Main_Npc_Script_0135,Å©¸³Åä°¡ Àç¹Õ´Â ³îÀÌ¸¦ ±âÈ¹Çß´Ù´Âµ¥ ÇÑ ¹ø °¡º¸½Ç·¡¿ä?,,
+Quest_Main_Npc_Script_0136,¾È³ç. È¤½Ã º¸¹° Ã£±â¿¡ °ü½É ÀÖ´Ï?,,
+Quest_Main_Npc_Script_0137,³»°¡ Ä£±¸µé°ú ÇÔ²² ¸¶À» °÷°÷¿¡ º¸¹°À» ¼û°Ü ³õ¾Ò°Åµç.,,
+Quest_Main_Npc_Script_0138,¾î¶§?! Àç¹Õ°ÚÁö?? ´çÀå ½ÃÀÛÇØ º¸ÀÚ!,,
+Quest_Main_Npc_Script_0139,º¸¹° Ã£±â¿¡ °üÇÑ ÀÚ¼¼ÇÑ ¼³¸íÀ» µè°í ½ÍÀ¸¸é ¸¶½ÃÅä¸¦ Ã£¾Æ°¡ºÁ.,,
+Quest_Main_Npc_Script_0140,º¸¹° Ã£±âÀÇ ÀüÃ¼ Èå¸§¿¡ °üÇÑ ÀÌ¾ß±â°¡ ±Ã±ÝÇÏ¸é ÆÄ½ÃÅä¸¦ Ã£¾Æ°¡ºÁ.,,
+Quest_Main_Npc_Script_0141,µÑ Áß ÇÑ ¸í¿¡°Ô¸¸ º¸¹° Ã£±â¿¡ °üÇÑ ¼³¸íÀ» µéÀ» ¼ö ÀÖ¾î.,,
+Quest_Main_Npc_Script_0142,¾Æ¹«¿¡°Ôµµ ¼³¸íÀ» µèÁö ¾Ê´Â´Ù¸é¡¦,,
+Quest_Main_Npc_Script_0143,º¸¹° Ã£±â°¡ ½ÃÀÛµÇÁö ¾ÊÀ»Å×´Ï ²À µÑ Áß ÇÑ ¸í¿¡°Ô ¸»À» °Ç ÈÄ Ãâ¹ßÇØ!,,
+Quest_Main_Npc_Script_0144,º¸¹° Ã£±â ½±Áö ¾ÊÁö? 3°³¸¦ Ã£¾Æ¿À¸é º¸»óÀ» ÁÖÁö!,,
+Quest_Main_Npc_Script_0145,º¸¹° Ã£±âÀÇ ÀÚ¼¼ÇÑ ³»¿ëÀÌ ±Ã±ÝÇÏÁö? ½±°Ô ¿ä¾àÇØ ÁÙ°Ô.,,
+Quest_Main_Npc_Script_0146,¿ì¼±* º¸¹°Àº ÃÑ 3°³¾ß. Á¦ÇÑ ½Ã°£µµ ¾ø¾î.,,
+Quest_Main_Npc_Script_0147,µÎ °³ÀÇ º¸¹°Àº °Ç¹° ³ôÀº °÷¿¡ °¡¸é ºñ±³Àû ½±°Ô Ã£À» ¼ö ÀÖ°ÚÁö¸¸,,
+Quest_Main_Npc_Script_0148,³ª¸ÓÁö ÇÑ °³´Â Á» ¾î·Á¿ï °Å¾ß.,,
+Quest_Main_Npc_Script_0149,º¸¹° ±ÙÃ³¿¡´Â ±×°÷¿¡ º¸¹°À» ¹èÄ¡ÇÑ Ä£±¸µéÀÌ ÀÖÀ» Å×´Ï ÇÑ¹ø Àß Ã£¾ÆºÁ!,,
+Quest_Main_Npc_Script_0150,º¸¹°À» ÀüºÎ Ã£À¸¸é ±Ù»çÇÑ º¸»óµµ ±â´Ù¸®°í ÀÖÀ¸´Ï ÆÄÀÌÆÃ!,,
+Quest_Main_Npc_Script_0151,º¸¹° Ã£±âÀÇ ÀüÃ¼ Èå¸§ÀÌ ¾î¶»°Ô Èê·¯°¡´ÂÁö ±Ã±ÝÇØ?,,
+Quest_Main_Npc_Script_0152,¾î·Æ°Ô »ý°¢ÇÒ °Ç ¾ø¾î.,,
+Quest_Main_Npc_Script_0153,ÃÑ 3°³ÀÇ º¸¹°ÀÌ ÀÖ´Âµ¥ ±×Áß ÇÏ³ª´Â ¾ÆÁÖ ±Ù»çÇÑ º¸¹°ÀÌÁö!,,
+Quest_Main_Npc_Script_0154,³Ê´Â º¸¹° Ã£±â¸¦ ½ÃÀÛÇÏ°í º¸¹°À» ÀüºÎ Ã£À¸¸é Å©¸³Åä¿¡°Ô µ¹¾Æ°¡¸é µÅ.,,
+Quest_Main_Npc_Script_0155,²À²À Àß ¼û°Ü ³ùÀ¸´Ï »ó»ó·ÂÀ» ¸¾²¯ ¹ßÈÖÇØ ºÁ!,,
+Quest_Main_Npc_Script_0156,ÇÑ °¡Áö ÈùÆ®¸¦ ÁÖÀÚ¸é* º¸¹°Àº ÀüºÎ ±×°É ¼û±ä Ä£±¸µé ±ÙÃ³¿¡ ÀÖÁö!,,
+Quest_Main_Npc_Script_0157,ÀÌ¾ß~! Á¤¸» ÀüºÎ Ã£¾Æ¿ÔÀÝ¾Æ?,,
+Quest_Main_Npc_Script_0158,³ª¿Í ³» Ä£±¸µéµµ ÀÌ°É ¼û±â¸é¼­ Ã£±â ½±Áö ¾ÊÀ» °Å¶ó »ý°¢Çß´Âµ¥ ¸»ÀÌÁö.,,
+Quest_Main_Npc_Script_0159,±×·±µ¥ ¸»¾ß* ¿ì¸®´Â ¹«½¼ ÀúÁÖ¸¦ ¹Þ¾Ò±æ·¡ ³Ê¸¦ ±¸¿øÀÚ¶ó°í ºÎ¸£´Â °É±î?,,
+Quest_Main_Npc_Script_0160,¾Æ¹«Æ°! ÀÌ·¸°Ô ¿ì¸® ¿ùµåÀÇ »ç¶÷µéÀ» µµ¿ÍÁÖ°í Ã´Ã´ÇØ³»´Â °É º¸´Ï,,
+Quest_Main_Npc_Script_0161,¹¹°¡ µÆµç ±¸¿øÀÚ¶ó´Â È£ÄªÀÌ Àß ¾î¿ï¸®´Â ÀÎ¹°ÀÌ¶ó´Â »ý°¢ÀÌ µé¾î.,,
+Quest_Main_Npc_Script_0162,¿ì¸® ÃÌÀå´ÔÀÌ ³Ê¸¦ Ã£À¸¼Å. °¡¼­ ¾ê±â ³ª´©¾î ºÁ!,,
+Quest_Main_Npc_Script_0163,°°ÀÌ ³î¾ÆÁà¼­ °í¸¶¿ö. º¸»óÀ¸·Ð ³»°¡ ¾Æ³¢´Â À¯ÀÚ¸¦ ÁÙ°Ô!,,
+Quest_Main_Npc_Script_0164,¿À¼Ì±º¿ä ±¸¿øÀÚ´Ô.,,
+Quest_Main_Npc_Script_0165,¹Ù´Ù ¸¶À»¿¡¼­ÀÇ »ýÈ°Àº Áö³¾ ¸¸ ÇÏ¼Ì³ª¿ä?,,
+Quest_Main_Npc_Script_0166,³ª: ³×* ¾ÆÁ÷±îÁö´Â Áñ°Ì°Ô »ýÈ°ÇÏ°í ÀÖ½À´Ï´Ù.,,
+Quest_Main_Npc_Script_0167,¿À´Ã ±¸¿øÀÚ´ÔÀ» ºÎ¸¥ ÀÌÀ¯´Â ´Ù¸§ÀÌ ¾Æ´Ï°í¡¦,,
+Quest_Main_Npc_Script_0168,±¸¿øÀÚ´ÔÀÌ ¿À½Å ÀÌÈÄ 1´Þ¿¡ ÇÑ ¹ø ÁøÇàÇÏ´ø ÃÌÀå È¸ÀÇ¸¦ ¸ÅÀÏ ÇÏ°í ÀÖ¾î¿ä.,,
+Quest_Main_Npc_Script_0169,ÀúÈñ ÃÌÀåµéÀº ÀúÈñ°¡ ÀÌÀü¿¡ ¾î¶² Á¸Àç¿´´ÂÁö ÀüºÎ ±â¾ïÇÏ°í ÀÖ´ä´Ï´Ù.,,
+Quest_Main_Npc_Script_0170,±×·¸Áö¸¸ ¸¶À» »ç¶÷µéÀº ±× ¾î¶°ÇÑ ±â¾ïµµ ³²¾ÆÀÖÁö ¾Ê´ø »óÅÂ¿´¾î¿ä.,,
+Quest_Main_Npc_Script_0171,±×·±µ¥ ²É»ù ¸¶À»ÀÇ ±âµÕÀÌ ¼Ú¾Æ¿À¸¥ ÀÌÈÄ ¸ðµç ¿ùµå »ç¶÷µéÀÇ ±â¾ïÀÌ ÀÏºÎ µ¹¾Æ¿Ô¾î¿ä.,,
+Quest_Main_Npc_Script_0172,¹°·Ð* º»·¡ ÀÎ°£ÀÌ¾ú´Ù°Å³ª ±×·± ±â¾ï±îÁö µ¹¾Æ¿Â °ÍÀº ¾Æ´Õ´Ï´Ù.,,
+Quest_Main_Npc_Script_0173,³ª: ¹¶ºñÅ¸ÀÌ ¿ùµåÀÇ ¸ðµç Á¸Àç°¡ ¿ø·¡ ÀÎ°£ÀÌ¾ú´Ù´Â °Í ÀÌ±º¿ä..!,,
+Quest_Main_Npc_Script_0174,³×. ±×·¯³ª* °ð ÀÖÀ¸¸é ¹Ù´Ù ¸¶À»ÀÇ ±âµÕµµ ¼Ú¾Æ¿À¸¦ Å×°í ±×·³ ´õ ¸¹Àº ±â¾ïÀÌ µ¹¾Æ¿Ã ¼öµµ ÀÖÁö¿ä.,,
+Quest_Main_Npc_Script_0175,±¸¿øÀÚ´ÔÀÇ Çàµ¿ÀÌ ¿ì¸® ¿ùµåÀÇ ¿î¸íÀ» °áÁ¤ÇÒ °Å¿¹¿ä.,,
+Quest_Main_Npc_Script_0176,¾ÕÀ¸·Î ´õ ¸¹Àº ½Ã·Ãµéµµ ÀÖÀ» ¼ö ÀÖ°ÚÁÒ.,,
+Quest_Main_Npc_Script_0177,±×·¯³ª* ¹¶ºñÅ¸ÀÌ ¿ùµåÀÇ ¸ðµç Á¸Àç°¡ ±¸¿øÀ» ±â´Ù¸®°í ÀÖ´Ù´Â °ÍÀ» ¾Ë¾ÆÁÖ¼¼¿ä.,,
+Quest_Main_Npc_Script_0178,¾ÕÀ¸·ÎÀÇ ¸ðÇèµµ* ÀÌ°÷¿¡¼­ÀÇ Ãß¾ïµµ Áñ°Å¿òÀÌ °¡µæÇÏ±æ ¹Ù·¡¿ä.,,
+Quest_Main_Npc_Script_0179,´ÜÇ³ ¸¶À»¿¡ ¿Â °ÍÀ» È¯¿µÇØ ±¸¿øÀÚ´Ô.,,
+Quest_Main_Npc_Script_0180,¿ì¸® ´ÜÇ³ ¸¶À»Àº ´Ù¸¥ ¸¶À»¿¡ ºñÇØ Å©±â°¡ Å©°í º¼°Å¸®°¡ ¸¹¾Æ.,,
+Quest_Main_Npc_Script_0181,Áö³»´Â µ¿¾È ÁÁÀº Ãß¾ïÀ» ½×°í °¡±æ ¹Ù¶ö°Ô.,,
+Quest_Main_Npc_Script_0182,°¡À»! ÇÏ¸é µî»êÀÌ ¶°¿À¸£Áö ¾Ê¾Æ?,,
+Quest_Main_Npc_Script_0183,²É»ù ¸¶À»¿¡¼­ È¤½Ã µî¹ÝÇØ ºÃ¾î?,,
+Quest_Main_Npc_Script_0184,´ÜÇ³ ¸¶À»ÀÇ µî»ê ÄÚ½º´Â ´õ¿í ÁÁ´Ù°í Àå´ãÇÒ ¼ö ÀÖÁö!,,
+Quest_Main_Npc_Script_0185,¾î¶§? ¼Ö±êÇÏÁö ¾Ê¾Æ?,,
+Quest_Main_Npc_Script_0186,µî¹Ý ÄÚ½ºÀÇ ¸Ç ²À´ë±â¿¡ µµ´ÞÇÏ°í ´Ù½Ã ³ª¿¡°Ô ¿À¸é ¹Ì¼Ç ¿Ï·á!,,
+Quest_Main_Npc_Script_0187,µî¹ÝÇÏ·¯ °¡´Â ±æ¿¡ ´ÜÇ³ ¸¶À» »ç¶÷µéÀÌ ±¸¿øÀÚ´Ô°ú ÀÎ»ç¸¦ ³ª´©°í ½Í´ë~,,
+Quest_Main_Npc_Script_0188,¹°·Ð* ÀÎ»ç¸¦ ÇÒÁö ¸»Áö ¼±ÅÃÀº ±¸¿øÀÚ´ÔÀÇ ¸ò! Àß ´Ù³à¿Í~,,
+Quest_Main_Npc_Script_0275,²À´ë±â¿¡ ´Ù³à¿Â ÈÄ ¸»À» °É¾îÁà!,,
+Quest_Main_Npc_Script_0189,Á¶½ÉÈ÷ ´Ù³à¿Í! ´ÜÇ³ ¸¶À» ±¸°æµµ ²À ÇÏ±¸~!,,
+Quest_Main_Npc_Script_0190,µî¹ÝÇÏ´Ù ³Ñ¾îÁ®µµ ¾È ´ÙÄ¡´Ï±î ÀÚ½Å ÀÖ°Ô ´Ù³à¿À¶ó°í~!.,,
+Quest_Main_Npc_Script_0191,ÀÌ¾ß! ¹ú½á ´Ù³à¿Ô´Ü ¸»ÀÌ¾ß?,,
+Quest_Main_Npc_Script_0192,µî»êÀº ¾î¶®¾î? ³»°¡ ÀÚ¶ûÇÏ°í ´Ù´Ò ¸¸ ÇÏ´Ù°í »ý°¢ÇÏÁö?,,
+Quest_Main_Npc_Script_0193,³ª: ÀÀ* °æÄ¡µµ ÁÁ°í ½º¸±µµ ÀÖ¾î¼­ Àç¹Õ´õ¶ó!,,
+Quest_Main_Npc_Script_0194,ÇÏÇÏÇÏ! ´ÙÇàÀÌ´Ù. È¤½Ã¶óµµ Áö·çÇØ ÇÏ¸é ¾îÂ¼³ª °ÆÁ¤ÇßÁö ¹¹¾ß.,,
+Quest_Main_Npc_Script_0195,Á¤¸» °í»ý ¸¹¾Ò¾î.,,
+Quest_Main_Npc_Script_0196,´Ã ¼Ò¹®À¸·Î¸¸ µè´ø ±¸¿øÀÚ´ÔÀ» Á÷Á¢ º¸´Ï ¿Ö ±¸¿øÀÚ¶ó°í ºÒ¸®´ÂÁö ¾Ë°Ú¾î!,,
+Quest_Main_Npc_Script_0197,µµ¿ÍÁà¼­ °í¸¶¿ö. ,,
+Quest_Main_Npc_Script_0198,¾ÕÀ¸·Îµµ Áö±ÝÃ³·³ ¾î¶² ¾î·Á¿òµµ ´Ù Àß ±Øº¹ÇÏ¸ç ÁÁÀº °á°ú°¡ ÀÖ±æ ¹Ù¶ö°Ô!,,
+Quest_Main_Npc_Script_0199,ÀÌ°Ç ³»°¡ ÁÖ´Â ÀÛÀº ¼±¹°ÀÌ¾ß.,,
+Quest_Main_Npc_Script_0200,Àß ÇìÃÄ ³ª°¡¼­ ¸¶Áö¸·¿¡ ²À ÁÁÀº °á°ú°¡ ÀÖ±æ ±â´ëÇÏ°í ÀÖÀ»°Ô!,,
+Quest_Main_Npc_Script_0201,Ç³´Ù³ª°¡ ºÎÅ¹ÇÏ°í ½ÍÀº ÀÏÀÌ ÀÖ³ª º¸´øµ¥ ÇÑ ¹ø °¡ºÁ!,,
+Quest_Main_Npc_Script_0202,±¸¿øÀÚ´Ô ¾È³çÇÏ¼¼¿ä~~,,
+Quest_Main_Npc_Script_0203,µî¹ÝÀº Àß Áñ±â¼Ì¾î¿ä?,,
+Quest_Main_Npc_Script_0204,¿ì¸® ´ÜÇ³ ¸¶À»Àº °æÄ¡µµ ÁÁ°í À½½Äµéµµ Ç³¿ä·Î¿î °É·Î À¯¸íÇØ¿ä!,,
+Quest_Main_Npc_Script_0205,¿ÃÇØ´Â °í±¸¸¶°¡ Ç³³âÀÌ¶ó´Âµ¥ 3°³¸¸ Ã¤ÁýÇØ ¿À½Ç·¡¿ä?,,
+Quest_Main_Npc_Script_0206,¾Æ Âü! È¤½Ã¶óµµ ¸¹ÀÌ Ä³½Ã¸é Á¦ µ¿»ýÇÑÅ× 1°³¸¸ °¡Á®´ÙÁÖ½Ç ¼ö ÀÖÀ»±î¿ä?,,
+Quest_Main_Npc_Script_0207,¹°·Ð ¾È °¡Á®´ÙÁÖ¼Åµµ Á¦°¡ °®´ÙÁÖ¸é µÅ¼­ ±¦Âú¾Æ¿ä!,,
+Quest_Main_Npc_Script_0276,°í±¸¸¶¸¦ 3°³ Ã¤ÁýÇÑ ÈÄ¿¡ ¸»À» °É¾îÁÖ½Ã°Ú¾î¿ä?,,
+Quest_Main_Npc_Script_0208,Çä ±¸¿øÀÚ´Ô ¾Æ´Ï¼¼¿ä? ÀúÈñ Áý¿¡´Â ¹«½¼ ÀÏÀÌ¼¼¿ä?,,
+Quest_Main_Npc_Script_0209,³ª: ¾Æ* Ç³´Ù³ª°¡ ¿©À¯ ÀÖÀ¸¸é °í±¸¸¶ 1°³¸¸ °¡Á®´Ù ´Þ¶ó ±æ·¡.,,
+Quest_Main_Npc_Script_0210,³ª: µ¿»ýÀÌ ÁÁ¾ÆÇÒ °Å¶ó°í ÇÏ´õ¶ó°í. ,,
+Quest_Main_Npc_Script_0211,¿ì¿Í! Àú °í±¸¸¶ Á¤¸» ÁÁ¾ÆÇØ¿ä!,,
+Quest_Main_Npc_Script_0212,°¨»çÇÕ´Ï´Ù. Àß ¸ÔÀ»°Ô¿ä!,,
+Quest_Main_Npc_Script_0213,´Ù½Ã ¾ð´ÏÇÑÅ× °¡ÁÖ½Ç·¡¿ä?,,
+Quest_Main_Npc_Script_0214,°¨»çÇÕ´Ï´Ù ±¸¿øÀÚ´Ô!,,
+Quest_Main_Npc_Script_0215,´ÜÇ³ ¸¶À»Àº ¸Ô°Å¸®°¡ Á¤¸» ¸¹À¸´Ï±î Áö³»½Ã´Â µ¿¾È ¸¹ÀÌ µå¼Åº¸¼¼¿ä!,,
+Quest_Main_Npc_Script_0216,¾à¼ÒÇÑ ¼±¹°À» µå¸±°Ô¿ä. ÁÁÀº ½Ã°£ º¸³»¼¼¿ä!,,
+Quest_Main_Npc_Script_0217,¿À¼Ì¾î¿ä ±¸¿øÀÚ´Ô?,,
+Quest_Main_Npc_Script_0218,Æþ´çÀÌ°¡ ÀüÈ­·Î ±¸¿øÀÚ´Ô ÄªÂùÀ» ±×·¸°Ô³ª ÇÏ´õ¶ó°í¿ä~,,
+Quest_Main_Npc_Script_0219,µµ¿ÍÁÖ¼Å¼­ °¨»çÇØ¿ä.,,
+Quest_Main_Npc_Script_0220,Áö³»½Ã´Â µ¿¾È ÁÁÀº °æÇè°ú Ãß¾ïµé ½×°í °¡½Ã±æ ¹Ù¶ö°Ô¿ä!,,
+Quest_Main_Npc_Script_0221,¾à¼ÒÇÑ ¼±¹°À» µå¸±°Ô¿ä. ÁÁÀº ½Ã°£ º¸³»¼¼¿ä!,,
+Quest_Main_Npc_Script_0222,À¸ÀÀ? ±¸¿øÀÚ³×. ¾È³ç?,,
+Quest_Main_Npc_Script_0223,¿ì¸® ¸¶À»Àº ¼ö·Æµµ °¡´ÉÇÏ°í ³¬½Ãµµ °¡´ÉÇÑ ¸¶À»ÀÌ¾ß.,,
+Quest_Main_Npc_Script_0224,µ¿¹°ÀÌ¶û ¹°°í±â¸¦ °¢°¢ 3¸¶¸®¾¿ Àâ¾Æ º¼·¡?,,
+Quest_Main_Npc_Script_0225,´«²É ¸¶À»À» °¡±â À§ÇÑ »çÀü ¿¬½ÀÀÌ¶ó°í »ý°¢ÇÏ¸é ÁÁÀ» °Å¾ß.,,
+Quest_Main_Npc_Script_0226,¿ì¸® ¸¶À»Àº °÷°÷¿¡ ³¬½ÃÅÍ°¡ Èð»Ñ·ÁÁ® ÀÖ¾î.,,
+Quest_Main_Npc_Script_0227,È¤½Ã ÀÚ¼¼ÇÑ ¼³¸íÀ» µè°í ½Í´Ù¸é ³» ¸ÂÀºÆí ¸ð¿ËÀÌ¿¡°Ô °¡ºÁ.,,
+Quest_Main_Npc_Script_0228,¹°·Ð ÀÚ½Å ÀÖ´Ù¸é ¹Ù·Î °¡µµ µÅ.,,
+Quest_Main_Npc_Script_0277,³Ê´Â ¾ÆÁ÷ ³»°¡ ºÎÅ¹ÇÑ ÀÏÀ» ¿Ï·áÇÏÁö ¸øÇÑ °Í °°Àº°É?,,
+Quest_Main_Npc_Script_0229,¾È³ç? ¿ì¸® ¸¶À»¿¡¼­ ³¬½Ã¸¦ ÇÒ ¼ö ÀÖ´Â °ø°£Àº ÃÑ 2°³¾ß.,,
+Quest_Main_Npc_Script_0230,ÇÏ³ª´Â ¸¶À» ¼º ÀÔ±¸ ¿ÞÆí È£¼ö¿¡ ÀÖ¾î.,,
+Quest_Main_Npc_Script_0231,¶Ç ´Ù¸¥ ÇÏ³ª´Â Ã³À½¿¡ µî¹ÝÇß´ø °÷ ¹Ù·Î ¿·¿¡ ¹°°¡¿¡¼­ ³¬½Ã°¡ °¡´ÉÇØ.,,
+Quest_Main_Npc_Script_0232,ÀÌ°÷¿¡¼­ ¼ö·Æµµ °°ÀÌ °¡´ÉÇÏÁö!,,
+Quest_Main_Npc_Script_0233,Ç¥ÁöÆÇÀ» º¸¸é ¾Ë ¼ö ÀÖÀ»°Å¾ß~,,
+Quest_Main_Npc_Script_0234,¿ª½Ã ½Ç·ÂÀÌ ÃâÁßÇÏ±¸³ª.,,
+Quest_Main_Npc_Script_0235,ÀÌÁ¦ ¿ì¸® ¿ùµå »ç¶÷ÀÌ¶ó°í ÇØµµ ¹ÏÀ» °Í °°¾Æ.,,
+Quest_Main_Npc_Script_0236,±×¸¸Å­ ³×°¡ ¿©±â¿¡ ¿Â Áöµµ ½Ã°£ÀÌ ²Ï Èê·¶´Ù´Â °Å°ÚÁö.,,
+Quest_Main_Npc_Script_0237,ÀÌÁ¦ Á¡Á¡ ¸ñÇ¥¿¡ µµ´ÞÇØ °¡°í ÀÖ´Ù´Â ´À³¦Àº µé¾î?,,
+Quest_Main_Npc_Script_0238,µéÁö ¾Ê¾Æµµ ±¦Âú¾Æ. Áö±ÝÃ³·³ ³ÊÀÇ ±æÀ» ¹¬¹¬È÷ °¡´Ù º¸¸é ÁÁÀº °á°ú°¡ ÀÖÀ» Å×´Ï..,,
+Quest_Main_Npc_Script_0239,³ª´Â ÀÌ ÀÚ¸®¿¡¼­ °è¼Ó ³×°¡ ¾ÕÀ¸·Î ³ª¾Æ°¡´Â °É ÁöÄÑº¸¸ç ÀÀ¿øÇÒ°Ô.,,
+Quest_Main_Npc_Script_0240,ÀÚ±×¸¶ÇÑ º¸»óÀÌ¾ß. Àß °¡!,,
+Quest_Main_Npc_Script_0241,¾ù* ±¸¿øÀÚ´Ô ¾È³çÇÏ¼¼¿ä!,,
+Quest_Main_Npc_Script_0242,ÀÌÁ¦ ´ÜÇ³ ¸¶À»¿¡ ¸Ó¹«¸¦ ½Ã°£ÀÌ ¾ó¸¶ ¾È ³²¾Ò´Ù´Â °É ¾Ë°í °è½Å°¡¿ä?,,
+Quest_Main_Npc_Script_0243,ÀÌÁ¦ °ð ÀÖÀ¸¸é ±¸¿øÀÚ´ÔÀº ´«²É ¸¶À»¿¡¼­ ³¡¿¡ °¡±î¿î ¸ðÇèÀ» ÇÏ¼Å¾ß ÇØ¿ä!,,
+Quest_Main_Npc_Script_0244,´«²É ¸¶À»Àº ¸¶À» ÀÌ¸§Àº ÀÌ»ÚÁö¸¸ È¯°æÀÌ Ã´¹ÚÇÏ°í ¸ÔÀ» °ÍÀÌ ¸¹ÀÌ ¾ø¾î¿ä.,,
+Quest_Main_Npc_Script_0245,±×·¯´Ï* ¿ì¸® ´ÜÇ³ ¸¶À»¿¡¼­ ½Ä·®À» ¸¹ÀÌ ÃàÀûÇØ¼­ °¡¸é ÁÁ°ÚÁÒ?,,
+Quest_Main_Npc_Script_0246,´«²É ¸¶À»¿¡ °¡±â Àü* ´ëÃß¸¦ ±¸ÇØ ¿À½Ã¸é Á¦°¡ ¾ÆÁÖ ÁÁÀº Àç·á¸¦ º¸»óÀ¸·Î µå¸±°Ô¿ä!,,
+Quest_Main_Npc_Script_0247,´ëÃß´Â ±²ÀåÈ÷ ±¸ÇÏ±â°¡ Èûµé¾î¿ä. ³ôÀº °÷À» Àß Ã£¾Æº¸¼¼¿ä!,,
+Quest_Main_Npc_Script_0248,¾Æ Âü* È¤½Ã ½Ä·®À» ¾ó¸¶³ª ºñÃàÇØ¾ß ÇÒÁö °èÈ¹À» Â¥°í ½ÍÀ¸½Ã¸é ¾Õ¿¡ ¶ó¿À´ÏÇÑÅ× ¸»À» °É¾îº¸¼¼¿ä!,,
+Quest_Main_Npc_Script_0278,´ëÃß Ã£±â Èûµå½ÃÁÒ? ±×·¡µµ ±¸ÇØ¿Í ÁÖ½Ç·¡¿ä?,,
+Quest_Main_Npc_Script_0249,±¸¿øÀÚ´Ô ¾î¼­ ¿À¼¼¿ä~,,
+Quest_Main_Npc_Script_0250,´«²É ¸¶À»¿¡¼­ »ýÈ°ÇÏ±â À§ÇØ ½Ä·®À» ¾ó¸¶³ª ºñÃàÇØ¾ß ÇÒÁö ±Ã±ÝÇÏ½ÃÁÒ?,,
+Quest_Main_Npc_Script_0251,»ç½Ç Àúµµ ÀÚ¼¼ÇÑ ¼öÄ¡´Â ¸ô¶ó¿ä!,,
+Quest_Main_Npc_Script_0252,±×·¸Áö¸¸ ´«²É ¸¶À»¿¡¼­´Â ¹èºÎ¸§ °ÔÀÌÁö°¡ ´õ »¡¸® °¨¼ÒÇÑ´Ù´Â »ç½ÇÀ» ¾Ë°í °è¼Ì³ª¿ä?!,,
+Quest_Main_Npc_Script_0253,³ª: ¾Æ´Ï* ¸ô¶ú¾î..,,
+Quest_Main_Npc_Script_0254,Æò¼Ò¿¡´Â 5ºÐ ´ç ¹èºÎ¸§ °ÔÀÌÁö°¡ 10¸¸Å­ °¨¼ÒÇß´Ù¸é,,
+Quest_Main_Npc_Script_0255,´«²É ¸¶À»¿¡¼­´Â ¹èºÎ¸§ °ÔÀÌÁö°¡ 3ºÐ ´ç 10¸¸Å­ °¨¼ÒÇØ¿ä!,,
+Quest_Main_Npc_Script_0256,±×·³ ´«²É ¸¶À»¿¡¼­´Â ¹èºÎ¸§ °ÔÀÌÁö°¡ °¡µæ Â÷ ÀÖ¾îµµ 30ºÐÀÌ¸é 0ÀÌ µÇ°ÚÁÒ?,,
+Quest_Main_Npc_Script_0257,ÀÌ Á¡¿¡ À¯ÀÇÇØ¼­ ½Ä·®À» ¸ð¾Æ °¡½Ã¸é µÉ °Í °°¾Æ¿ä!,,
+Quest_Main_Npc_Script_0258,Àú´Â ¾îÂ¼¸é ÀÌ¹ø ÀÓ¹«¸¦ ±¸¿øÀÚ´Ô²²¼­ ½ÇÆÐÇÒ ¼öµµ ÀÖ´Ù°í »ý°¢Çß¾î¿ä.,,
+Quest_Main_Npc_Script_0259,´ëÃß´Â ±×¸¸Å­ Ã£±â ¾î·Á¿î ÀÛ¹°ÀÌ´Ï±î ¸»ÀÌÁÒ!,,
+Quest_Main_Npc_Script_0260,»ç½Ç ¾îÂ¼¸é Àú´Â* ¸ðµÎ°¡ ¹Ï´Â ±¸¿øÀÚ´ÔÀ» ÇÑ ¹ø ½ÃÇèÇØ º¸°í ½Í¾ú´ø °ÍÀÏÁöµµ ¸ô¶ó¿ä.,,
+Quest_Main_Npc_Script_0261,¸¹ÀÌ Èûµå¼ÌÀ» ÅÙµ¥ Á¦ ºÎÅ¹À» µé¾îÁÖ¼Å¼­ °¨»çÇØ¿ä.,,
+Quest_Main_Npc_Script_0262,ÀúÈñ ¸¶À» ÃÌÀå´ÔÀÎ ´Ü´Ü¹¶ ÃÌÀå´Ô²²¼­ ±¸¿øÀÚ´ÔÀ» Ã£À¸¼¼¿ä..,,
+Quest_Main_Npc_Script_0263,¾ó¸¶ ³²Áö ¾ÊÀº ¿©Á¤ Àß ¸¶¹«¸®ÇÏ½Ã°í ÀúÈñ¿¡°Ôµµ ÁÁÀº ¼Ò½Ä ²À µé·ÁÁÖ¼¼¿ä!,,
+Quest_Main_Npc_Script_0264,Èûµç ºÎÅ¹À» µé¾îÁÖ½Å ¸¸Å­ ÁÁÀº º¸»óÀ» µå¸±°Ô¿ä ¾È³ç~!,,
+Quest_Main_Npc_Script_0265,¿À~ ¿À¼Ì±º¿ä,,
+Quest_Main_Npc_Script_0266,´ÜÇ³ ¸¶À» ÁÖ¹Îµé¿¡°Ô ¼Ò½ÄÀ» µèÀÚ ÇÏ´Ï ¿ª½Ã ±¸¿øÀÚ´ÔÀÌ¶ó´Â ¸»ÀÌ ÀÚÀÚÇÏ´õ±º¿ä.,,
+Quest_Main_Npc_Script_0267,³ª: ¾Æ´Õ´Ï´Ù. ÇØ¾ß ÇÒ ÀÏÀ» ÇßÀ» »ÓÀÎ°É¿ä.,,
+Quest_Main_Npc_Script_0268,ÇãÇãÇã.. ´Ù¸§ÀÌ ¾Æ´Ï°í ²À ¾Ë¾ÆµÎ¼Å¾ß ÇÒ »ç½ÇÀÌ ÀÖ¾î¼­ ÀÌ·¸°Ô ÀÚ¸®¸¦ ¸¶·ÃÇß½À´Ï´Ù.,,
+Quest_Main_Npc_Script_0269,ÀÌÁ¦ ´ÜÇ³ ¸¶À»¿¡¼­ÀÇ ¿©Á¤ÀÌ ¸ðµÎ ³¡³ª°í ´«²É ¸¶À»·Î ÇâÇÏ¼Å¾ß ÇÕ´Ï´Ù.,,
+Quest_Main_Npc_Script_0270,´«²É ¸¶À»Àº ±¸¿øÀÚ´Ô¿¡°Ô ½Ã·ÃÀÌ °¡µæÇÑ °ø°£ÀÌ µÉ °Å¿¹¿ä.,,
+Quest_Main_Npc_Script_0271,±¸¿øÀÚ´ÔÀÌ ´«²É ¸¶À»¿¡ µµÂøÇß´Ù´Â ¼Ò¹®ÀÌ ÆÛÁö¸é ¸¶À» »ç¶÷µéÀÇ ¿°¿øµµ ´õ¿í Ä¿Áö°ÚÁÒ.,,
+Quest_Main_Npc_Script_0272,Á¦°¡ ÇØµå¸± ¼ö ÀÖ´Â Á¶¾ðÀº ±×Àú ÇÑ °¡Áö»Ó.,,
+Quest_Main_Npc_Script_0273,ÀÚ½ÅÀ» ÀÒÁö ¾Ê°í ¹¬¹¬ÇÏ°Ô °É¾î³ª°¡±â¸¦ ¹Ù¶ø´Ï´Ù.,,
+Quest_Main_Npc_Script_0274,Á¶¸¸°£ ´Ù½Ã ¸¸³¯ ³¯ÀÌ ÀÖ±â¸¦ ¹Ù¶ó°Ú½À´Ï´Ù.,,
+Quest_Main_Npc_Script_0279,´«²É ¸¶À»¿¡ ¿Â °ÍÀ» È¯¿µÇÑ´ã!,,
+Quest_Main_Npc_Script_0280,¿ì¸® ¸¶À»Àº ¸¶À» ÀÌ¸§°ú´Â ´Þ¸® Ã´¹ÚÇÑ ¸¶À»ÀÌ´ã.,,
+Quest_Main_Npc_Script_0281,¿ì¸® ¸¶À»Àº Ã¤Áý¹°ÀÌ ÀûÀº ´ë½Å ¼ö·Æ°ú ³¬½Ã ±¸¿ªÀÌ ÀÖÂ¡!,,
+Quest_Main_Npc_Script_0282,¾Æ Âü* ¿ì¸® ¸¶À»¿¡¼± ¹èºÎ¸§ °ÔÀÌÁö°¡ ´õ »¡¸® ¼Ò¸ðµÇ´Ï±î ÀÌÁ¡ À¯ÀÇÇØ¶÷!,,
+Quest_Main_Npc_Script_0283,°©ÀÚ±â Ãß¿öÁ®¼­ ÈûµéÁø ¾Ê³È?,,
+Quest_Main_Npc_Script_0284,´ëÃßÂ÷¸¦ 1°³ Á¦ÀÛÇØ ¿À¸é ¼±¹°À» ÁÖ°Ú´ã!,,
+Quest_Main_Npc_Script_0285,¿ì¸® ¸¶À»¿¡¼­ ¹«¾ùÀ» ÇØ¾ßÇÒ Áö °èÈ¹À» ¼¼¿ì°í ÀÖ´Ù¸é ¸ÂÀºÆí¿¡ ÀÖ´Â Ä£±¸¿¡°Ô ¸»À» °É¾îºÁ¶÷!,,
+Quest_Main_Npc_Script_0286,±Ã±ÝÇÏÁö ¾ÊÀ¸¸é ¹Ù·Î ´ëÃßÂ÷¸¦ Á¦ÀÛÇÏ·¯ °¡µµ µÈ´ã!,,
+Quest_Main_Npc_Script_0287,¾ÆÁ÷ ´ëÃßÂ÷¸¦ Á¦ÀÛÇÏÁö ¾Ê¾Ò´ã! ¸¸µé°í ¸»À» °É¾î´Þ¶÷!,,
+Quest_Main_Npc_Script_0288,±¸¿øÀÚ´Ô µåµð¾î ¿ì¸® ¸¶À»¿¡ ¿À¼Ì±º¿ä!,,
+Quest_Main_Npc_Script_0289,ÀÌÁ¦ ¹¶ºñÅ¸ÀÌ¿¡¼­ Áö³¾ ½Ã°£µµ ¾ó¸¶ ³²Áö ¾ÊÀ¸¼Ì´Âµ¥ ÁÁÀº ±â¾ïµé¸¸ ³²¾ÆÀÖÀ¸¸é ÁÁ°Ú¾î¿ä!,,
+Quest_Main_Npc_Script_0290,´«²É ¸¶À»¿¡¼­´Â Áö³­ ½Ã°£ µ¿¾È ±¸¿øÀÚ´ÔÀÌ ÇØ¿Ô´ø ÀÏµéÀ» ´Ù½Ã ¹Ýº¹ÇØ¿ä!,,
+Quest_Main_Npc_Script_0291,±×·¸Áö¸¸ ¸¶Áö¸·ÀÎ¸¸Å­ Á» ´õ ³ôÀº ³­ÀÌµµÀÇ °ÍµéÀÌ ¿ä±¸µÉ °Å¿¡¿ä!,,
+Quest_Main_Npc_Script_0292,Á¦°¡ µå¸° ¾ê±â°¡ µµ¿òÀÌ µÇ¼Ì±æ ¹Ù·¡¿ä! ¸¶Áö¸·±îÁö ÀÀ¿øÇÒ°Ô¿ä,,
+Quest_Main_Npc_Script_0293,Çä! ¹ú½á ¿Ô´Â°¨?,,
+Quest_Main_Npc_Script_0294,¿Ö ±¸¿øÀÚ¶ó°í ºÒ¸®´ÂÁö ¾Ë°Ú´ã!,,
+Quest_Main_Npc_Script_0295,º¸»óÀ¸·Î ³»°¡ ÁÁ¾ÆÇÏ´Â ¸¶¶óÅÁÀ» ÁÖ°Ú´ã!,,
+Quest_Main_Npc_Script_0296,¸¶Áö¸·±îÁö ÆÄÀÌÆÃÀÌ´ã!,,
+Quest_Main_Npc_Script_0297,±¸¿øÀÚ´Ô ¿À¼Ì¾î¿ä.,,
+Quest_Main_Npc_Script_0298,´«²É ¸¶À»¿¡¼­ÀÇ »ýÈ°Àº ±¦ÂúÀ¸½Å°¡¿ä?,,
+Quest_Main_Npc_Script_0299,Á¶±Ý ¸¶À½ÀÌ ¹«°Å¿î ºÎÅ¹À» µå·Á¾ß ÇÒ °Í °°¾Æ¿ä..,,
+Quest_Main_Npc_Script_0300,¿ÃÇØ ´«²É ¸¶À»Àº À¯µ¶ ¸ÔÀ» °Å¸®°¡ Ç³ºÎÇÏÁö ¾Ê¾Æ¼­ ´Ù¸¥ ¸¶À»¿¡¼­ À½½ÄÀ» ¹Þ°í ÀÖ¾î¿ä.,,
+Quest_Main_Npc_Script_0301,±Ùµ¥ ´ÜÇ³ ¸¶À»¿¡¼­ ½Ä·® Á¶´ÞÀÌ Á¶±Ý ´Ê¾îÁø´Ù°í ÇØ¿ä.,,
+Quest_Main_Npc_Script_0302,È¤½Ã ±¸¿øÀÚ´ÔÀÇ À½½ÄÀ» Á¶±Ý ³ª´©¾î ÁÖ½Ç ¼ö ÀÖÀ»±î¿ä?,,
+Quest_Main_Npc_Script_0303,ÃÑ 3¸íÀÇ Ä£±¸µé¿¡°Ô Àü´ÞÇØ ÁÖ½Ã¸é µÉ °Í °°¾Æ¿ä.,,
+Quest_Main_Npc_Script_0304,Á÷Á¢ Àü´ÞÇØÁÖ¼Åµµ µÇ°í ÀúÇÑÅ× ÁÖ¼Åµµ ÁÁ¾Æ¿ä.,,
+Quest_Main_Npc_Script_0305,ÀúÇÑÅ× ÁÖ½Ã¸é Á¦°¡ ÇÊ¿äÇÑ Ä£±¸µé¿¡°Ô Àü´ÞÀ» ÇÒ°Ô¿ä.,,
+Quest_Main_Npc_Script_0306,ÀúÇÑÅ× ÁÖ½Ã·Á¸é ´Ù½Ã ¸»À» °É¾îÁÖ¼¼¿ä,,
+Quest_Main_Npc_Script_0307,¿ì¿Í¾Æ ±¾¾î Á×´Â ÁÙ ¾Ë¾Ò´Âµ¥.. °¨»çÇØ¿ä ±¸¿øÀÚ´Ô!,,
+Quest_Main_Npc_Script_0308,Çàº¹ÇÑ ÇÏ·ç µÇ¼¼¿ä!,,
+Quest_Main_Npc_Script_0309,¾î¸Ó~ ¾îÂÀ ÀÌ·¸°Ô ¸¶À½¾¾µµ µû¶æÇÏ½Ç±î¿ä?,,
+Quest_Main_Npc_Script_0310,°¨»çÇÕ´Ï´Ù. µå¸±°Ô ¾ø¾î¼­ ÁË¼ÛÇÏ³×¿ä.,,
+Quest_Main_Npc_Script_0311,ÁÁÀº ÇÏ·ç µÇ¼¼¿ä ±¸¿øÀÚ´Ô~,,
+Quest_Main_Npc_Script_0312,Àß ¸ÔÀ»°Ô ±¸¿øÀÚ´Ô! °í¸¶¿ö!!,,
+Quest_Main_Npc_Script_0313,Á¤¸» °¨»çÇØ¿ä ±¸¿øÀÚ´Ô.,,
+Quest_Main_Npc_Script_0314,±¸¿øÀÚ´ÔÀÌ ÁÖ½Å À½½ÄµéÀº ÀúÈñ ¸¶À» Ä£±¸µé°ú °¨»çÈ÷ ³ª´©¾î ¸ÔÀ»°Ô¿ä!,,
+Quest_Main_Npc_Script_0315,¾ó¸¶ ³²Áö ¾ÊÀº ¿©Á¤* ²À ÁÁÀº ¼Ò½Ä µé·ÁÁÖ¼¼¿ä. ÆÄÀÌÆÃ!,,
+Quest_Main_Npc_Script_0316,¿À¼Ì±º¿ä ±¸¿øÀÚ´Ô!,,
+Quest_Main_Npc_Script_0317,Á¤½Å¾øÀÌ ¹Ù»Ú½Ç ÅÙµ¥µµ ÀúÈñ ¸¶À» Ä£±¸µéÀ» À§ÇØ ±â²¨ÀÌ µµ¿ÍÁÖ¼Å¼­ °¨»çÇØ¿ä!,,
+Quest_Main_Npc_Script_0318,¾ó¸¶ ³²Áö ¾ÊÀº ¿©Á¤* ²À ÁÁÀº ¼Ò½Ä µé·ÁÁÖ¼¼¿ä. ÆÄÀÌÆÃ!,,
+Quest_Main_Npc_Script_0319,¿À.. ±¸¿øÀÚ´Ô ÀÌ½ÃÀÝ¾Æ? ¼Ò¹®À¸·Î¸¸ µé¾ú¾î.,,
+Quest_Main_Npc_Script_0320,´«²É ¸¶À»¿¡¼­ÀÇ »ýÈ°Àº Àß ÀûÀÀÇÏ°í ÀÖ´Ï?,,
+Quest_Main_Npc_Script_0321,ÀÌ¹ø ¹Ì¼ÇÀº ¿ì¸® ¸¶À»¿¡¼­ °¡´ÉÇÑ ¸ðµç È°µ¿À» ÇÏ°í µ¹¾Æ¿À´Â °ÍÀÌ¾ß.,,
+Quest_Main_Npc_Script_0322,"Ã¤Áý, ³¬½Ã, ¼ö·ÆÀ» ÀüºÎ Áñ±â°í µ¹¾Æ¿À·Å."," ¼ö·ÆÀ» ÀüºÎ Áñ±â°í µ¹¾Æ¿À·Å.""",
+Quest_Main_Npc_Script_0323,¸ñÀûÁö¿¡ °üÇÑ ¼³¸íÀÌ µè°í ½ÍÀ¸¸é Å©·¹´Ï ¿¡°Ô,,
+Quest_Main_Npc_Script_0324,È¥ÀÚ Áñ±â¸ç »ó»óÀÇ ³ª·¡¸¦ ÆîÄ¡°í ½ÍÀ¸¸é ¹Ù·Î Äù½ºÆ®¸¦ ÁøÇàÇÏ·Å.,,
+Quest_Main_Npc_Script_0325,¾ÆÁ÷ ³»°¡ ¿ä±¸ÇÑ ¾çÀ» ¸øÃ¤¿î °Í °°¾Æ.,,
+Quest_Main_Npc_Script_0326,¾È³ç! 3°¡Áö ¹Ì¼ÇÀÌ³ª µ¿½Ã¿¡ ¼öÇàÇÏ·Á´Ï ¸Ó¸®°¡ ¾ÆÇÁÁö?,,
+Quest_Main_Npc_Script_0327,°ÆÁ¤ÇÏÁö ¸»¶ó°í! ±×·¸°Ô ¾î·ÆÁø ¾ÊÀ» Å×´Ï,,
+Quest_Main_Npc_Script_0328,¿ì¸® ¸¶À»Àº ³¯¾¾°¡ Ãß¿ö¼­ Ã¤Áý¹°ÀÌ ¸¹Àº ÆíÀº ¾Æ³Ä. ´ë½Å ¼ö·ÆÀÌ ¹ß´Þ ÇßÁö.,,
+Quest_Main_Npc_Script_0329,¼ö·Æ°ú ³¬½Ã´Â ±¸¿ªÀÌ Á¤ÇØÁ® ÀÖ°í ºí·çº£¸®´Â ¸¶À» °÷°÷¿¡ ¶ç¾ö¶ç¾ö ÆÛÁ® ÀÖ¾î.,,
+Quest_Main_Npc_Script_0330,ÀÌ Á¤µµ¸é ÃæºÐÈ÷ ÈùÆ®°¡ µÆÁö? ÆÄÀÌÆÃ~,,
+Quest_Main_Npc_Script_0331,¹¹ ÀÌÁ¤µµ´Â ÀÌÁ¦ ¾î·ÆÁöµµ ¾ÊÀ» °Å¶ó »ý°¢Çß¾î.,,
+Quest_Main_Npc_Script_0332,³» ºÎÅ¹À» µé¾îÁà¼­ °í¸¶¿ö.,,
+Quest_Main_Npc_Script_0333,ÀÌÁ¦ Á¤¸» ³¡À» ÇâÇØ °¡°í ÀÖ³×.,,
+Quest_Main_Npc_Script_0334,¸¶Áö¸·±îÁö ÆÄÀÌÆÃ ÇØº¸¶ó±¸. º¸»óÀ» ÁÙ°Ô.,,
+Quest_Main_Npc_Script_0335,¿Ô±¸³ª..!,,
+Quest_Main_Npc_Script_0336,È¤½Ã Àú ³ôÀÌ º¸ÀÌ´Â »ê ¿Ã¶óº» Àû ÀÖ¾î?,,
+Quest_Main_Npc_Script_0337,ÀÖ¾îµµ ³î¶ø°í ¾øÀ¸¸é ´ç¿¬ÇÏ´Ü »ý°¢ÀÌ µéÁö¸¸,,
+Quest_Main_Npc_Script_0338,¸¶Áö¸·À¸·Î ±¸¿øÀÚ´Ô¿¡°Ô ºÎÅ¹ÇÏ´Â °úÁ¦ÀÎ ¸¸Å­ ²À ¼º°øÇßÀ¸¸é ÇØ.,,
+Quest_Main_Npc_Script_0339,±×µ¿¾È ¸¹ÀÌ ÁöÄ¡°í ±ÍÂú±âµµ ÇÏ°í Èûµé¾úÁö?,,
+Quest_Main_Npc_Script_0340,¿ì¸®¸¦ ±¸¿øÇØÁÖ±â À§ÇÑ ±¸¿øÀÚ´ÔÀÇ ¿©Á¤ ¸Ö¸®¼­³ª¸¶ Ç×»ó ÀÀ¿øÇß¾î.,,
+Quest_Main_Npc_Script_0341,¸¶Áö¸· ¹Ì¼ÇÀº »ê Á¤»óÀ» Âï°í ´Ù½Ã ³ªÇÑÅ× ¿À´Â °Å¾ß.,,
+Quest_Main_Npc_Script_0342,°¡´Â ±æ¿¡ ±¸¿øÀÚ´ÔÀÌ¶û ÀÎ»ç¸¦ ³ª´©°í ½Í¾îÇÏ´Â Ä£±¸µéÀÌ ÀÖ´øµ¥,,
+Quest_Main_Npc_Script_0343,¼±ÅÃÀº ±¸¿øÀÚ´ÔÀÇ ¸¶À½ÀÌ´Ï±î ÀÎ»ç¸¦ ÇÏ´ø ¸»´ø ¸¶À½´ë·Î ÇØ~,,
+Quest_Main_Npc_Script_0344,¿ì¸®°¡ ±¸¿øÀÚ´Ô²² ºÎÅ¹ÇÏ´Â ¸¶Áö¸· °úÁ¦ ³¡±îÁö ÆÄÀÌÆÃ ÇØÁà!,,
+Quest_Main_Npc_Script_0345,¾ó¸¥ µî¹ÝÀ» ÇÏ°í ¿Í¾ß ÇÏÁö ¾ÊÀ»±î??,,
+Quest_Main_Npc_Script_0346,¿ï¶ó¿ï¶ó~,,
+Quest_Main_Npc_Script_0347,¸ÚÀÖ°Ô ¿ÏÁÖÇØÁà! ÆÄÀÌÆÃ! ¿ï¶ó¿ï¶ó~,,
+Quest_Main_Npc_Script_0348,¾î·Á¿ï ¼öµµ ÀÖ¾î¿ä!,,
+Quest_Main_Npc_Script_0349,±×·¡µµ ³¡±îÁö ÀÀ¿øÇÒ°Ô¿ä. Á¶½ÉÈ÷ ´Ù³à¿Í¿ä~,,
+Quest_Main_Npc_Script_0350,Á¤¸».. Á¤¸»·Î ÀÌ¹ø¿¡µµ ¼º°øÇß±¸³ª!,,
+Quest_Main_Npc_Script_0351,´«²É ¸¶À»ÀÇ µî¹ÝÀº °í³­ÀÌµµ¸¦ ÀÚ¶ûÇÏ±â ¶§¹®¿¡ ,,
+Quest_Main_Npc_Script_0352,¸¹Àº ¾î·Á¿òÀ» °ÞÀ» ¼öµµ ÀÖ°Ú´Ù°í »ý°¢ÇÏ°í ÀÖ¾ú°Åµç.,,
+Quest_Main_Npc_Script_0353,±¸¿øÀÚ´ÔÀº ½ÇÆÐ¸¦ ¸ð¸£´Â »ç¶÷ÀÎ °Í °°¾Æ!,,
+Quest_Main_Npc_Script_0354,Á¤¸» ¸ÚÀÖ¾ú°í °í¸¶¿ö. ,,
+Quest_Main_Npc_Script_0355,ÀÌ·Î½á ¹¶ºñÅ¸ÀÌ ¿ùµå¿¡¼­ÀÇ ¸ðµç °ø½Ä È°µ¿Àº Á¾·áµÆ¾î!,,
+Quest_Main_Npc_Script_0356,±âºÐÀÌ ¾î¶§? ¿ì¸®´Â ±¸¿øÀÚ´Ô°ú ÇÔ²²ÇÏ´Â µ¿¾È Á¤¸» ¸¹ÀÌ Çàº¹Çß¾î!,,
+Quest_Main_Npc_Script_0357,³ª: ³ªµµ ³¸¼± °ø°£ÀÌ¿´Áö¸¸ Áö³»´Â µ¿¾È Çàº¹Çß¾î.,,
+Quest_Main_Npc_Script_0358,¾î´À ³¯ °©ÀÚ±â ³ªÅ¸³ª ¿ì¸®¿¡°Ô Çàº¹À» ÀüÇØ Áà¼­ °í¸¶¿ö.,,
+Quest_Main_Npc_Script_0359,±×µ¿¾È ±¸¿øÀÚ´ÔÀÌ º¸¿©ÁØ ¸ð½Àµé°ú Èñ¸ÁÂù ÀÚ½Å°¨µéÀ» °£Á÷ÇÒ°Ô!,,
+Quest_Main_Npc_Script_0360,ÀÌÁ¦ ´Ù½Ã ¸¸³¯ ¼ö ¾øÀ» Áöµµ ¸ð¸£Áö¸¸,,
+Quest_Main_Npc_Script_0361,¿ì¸®°¡ ÇÔ²² º¸³½ ±â¾ïµéÀÌ ¼ÒÁßÇÑ Ãß¾ïÀÌ µÇ¾î »ì¾Æ°¥ ¼ö ÀÖ±æ..!,,
+Quest_Main_Npc_Script_0362,ÃÌÀå´Ô²² °¡ºÁ. ±â´Ù¸®°í °è½Ç°Å¾ß.,,
+Quest_Main_Npc_Script_0363,ÀÌÁ¦ º°·Î ÇÊ¿ä ¾øÀ»Áöµµ ¸ð¸£Áö¸¸ º¸»óÀ» ÁÙ°Ô. Àß°¡!,,
+Quest_Main_Npc_Script_0364,¾î¼­¿À½Ê½Ã¿À ±¸¿øÀÚ´Ô.,,
+Quest_Main_Npc_Script_0365,¸ðµç ¿©Á¤ÀÌ ³¡³µ´Âµ¥ ¸¶À½ÀÌ ¾î¶°½Ç Áö ±Ã±ÝÇÏ³×¿ä ÇãÇã.,,
+Quest_Main_Npc_Script_0366,±×µ¿¾È º¸¿©ÁÖ½Å ¿­Á¤* ²ö±â* Èñ¸Á ±× ¸ðµç °ÍµéÀÌ ¿ì¸®¸¦ Çàº¹ÇÏ°Ô Çß´ä´Ï´Ù.,,
+Quest_Main_Npc_Script_0367,±¸¿øÀÚ´ÔÀÌ ¸¶Áö¸· ¹Ì¼ÇÀ» ³¡³½ ¹Ù·Î ±× ¼ø°£,,
+Quest_Main_Npc_Script_0368,¿ì¸® ¿ùµåÀÇ ¸ðµç »ç¶÷µéÀº ±¸¿øÀ» ¹Þ°Ô µÇ¾ú¾î¿ä.,,
+Quest_Main_Npc_Script_0369,ÀúÈñÀÇ ±â³ª±ä ¿°¿øÀ» ÀÌ·ç¾î ÁÖ¼Å¼­ Á¤¸» °¨»çÇÕ´Ï´Ù.,,
+Quest_Main_Npc_Script_0370,¸¶À» Áß¾Ó¿¡ ÀÖ´Â µ¹¿¡¼­ Y¹öÆ°À» ´­·¯ ½ÅÀü¿¡ °°ÀÌ ÀÔÀåÇÏ½Ã°Ú¾î¿ä?,,
+Quest_Main_Npc_Script_0371,±¸¿øÀ» ¹Þ±â Àü ±¸¿øÀÚ´Ô²² ¸¶Áö¸·À¸·Î µå¸± ¸»¾¸ÀÌ ÀÖ½À´Ï´Ù.,,
+Quest_Main_Npc_Script_0372,±×·³ Àá½Ã ÈÄ¿¡ ºËÁÒ.,,
+Quest_Main_Npc_Script_0373,µåµð¾î ½ÅÀü¿¡ ´çµµÇÏ¼Ì±º¿ä.,,
+Quest_Main_Npc_Script_0374,½ÅÀü¿¡ µé¾î¿À½Å ´À³¦Àº ¾î¶°½Å°¡¿ä?,,
+Quest_Main_Npc_Script_0375,³ª: ÀÌÀü±îÁö ´À²¸º¸Áö ¸øÇÑ »õ·Î¿î °¨Á¤ÀÌ µå´Â °Í °°¾Æ¿ä.,,
+Quest_Main_Npc_Script_0376,±×·¯½Ã±º¿ä.,,
+Quest_Main_Npc_Script_0377,±¸¿øÀÚ´ÔÀº ÀúÈñ ¹¶ºñÅ¸ÀÌ ¿ùµå¿¡ ¿À½Å ÀÌÈÄ,,
+Quest_Main_Npc_Script_0378,"²É»ù, ¹Ù´Ù, ´ÜÇ³, ´«²É ¸¶À»À» °ÅÄ¡¸ç", ´ÜÇ³," ´«²É ¸¶À»À» °ÅÄ¡¸ç"""
+Quest_Main_Npc_Script_0379,¸¶À» Ä£±¸µéÀ» µ½°í ´Ã ±àÁ¤ÀûÀ¸·Î ÀúÈñÀÇ ºÎÅ¹À» µé¾îÁÖ¼Ì½À´Ï´Ù.,,
+Quest_Main_Npc_Script_0380,¸ðµç ¸¶À»¿¡ ÀÖ´Â ÀÌµéÀ» ´ëÇ¥ÇÏ¿© Áø½ÉÀ¸·Î °¨»ç ÀÎ»ç ¿Ã¸³´Ï´Ù.,,
+Quest_Main_Npc_Script_0381,³ª: ¾Æ´Õ´Ï´Ù. ÇØ¾ß ÇÒ ÀÏÀ» ÇßÀ» »ÓÀÌ¿¡¿ä.,,
+Quest_Main_Npc_Script_0382,±×°£ ±¸¿øÀÚ´Ô²²¼­ Áö³»¿Â ½Ã°£µéÀ» º¸¾Æ¿Ô½À´Ï´Ù.,,
+Quest_Main_Npc_Script_0383,»ç½Ç ÀúÈñ´Â ´Ù ÀÇµµ°¡ ÀÖ¾î¼­ ±¸¿øÀÚ´Ô²² Áö±Ý±îÁö ºÎÅ¹À» µå·Á¿Ô´ø °ÍÀÔ´Ï´Ù.,,
+Quest_Main_Npc_Script_0384,¡®¸ðµç ¸¶À» Ä£±¸µéÀ» µ½°í ½ÅÀü¿¡ µé¾î°¥ ÀÚ°ÝÀ» ¾ò´Â ÀÚ¸¸ÀÌ ±¸¿øÀÚ°¡ µÉ ¼ö ÀÖ´Ù.¡¯,,
+Quest_Main_Npc_Script_0385,¶ó´Â Àü¼³ÀÌ ´ë´ë·Î ÀüÇØÁ³±â ¶§¹®ÀÌÁÒ.,,
+Quest_Main_Npc_Script_0386,±×·¡¼­ ÀúÈñÀÇ ºÎÅ¹À» ¸¶´ÙÇÏÁö ¾Ê°í µé¾îÁÖ½Ã´Â ¸ð½À¿¡ ¸¶À» »ç¶÷µé ¸ðµÎ °¨¸í¹Þ¾Æ,,
+Quest_Main_Npc_Script_0387,±¸¿øÀÚÀÇ ÀÚ°ÝÀ» ¾òÁö ¸øÇßÀ½¿¡µµ ¡®±¸¿øÀÚ´Ô¡¯ÀÌ¶ó´Â È£ÄªÀ» ¾²°Ô µÈ °ÍÀÌÁÒ.,,
+Quest_Main_Npc_Script_0388,È¤½Ã ±×°Å ¾Æ½Ã³ª¿ä?,,
+Quest_Main_Npc_Script_0389,»ç½Ç ÀúÈñ´Â ±¸¿øÀÚ´ÔÀÌ ¹¶ºñÅ¸ÀÌ ¿ùµå¿¡¼­ ÇàÇÑ ¸ðµç Çàµ¿µéÀ» ±â·ÏÇØ ¿Ô½À´Ï´Ù.,,
+Quest_Main_Npc_Script_0390,"²É»ù ¸¶À»À» ½ÃÀÛÀ¸·Î ¹Ù´Ù, ´ÜÇ³, ´«²É ¸¶À»±îÁö ¸ðµç Çàµ¿À» ¸»ÀÌÁÒ.",,
+Quest_Main_Npc_Script_0391,±× °á°ú ±¸¿øÀÚ´ÔÀÇ ¼º°ÝÀ» ºÐ¼®ÇÑ MBTI¸¦ ¾Ë·Áµå¸± ¼ö ÀÖ°Ô µÇ¾ú½À´Ï´Ù.,,
+Quest_Main_Npc_Script_0392,±¸¿øÀÚ´ÔÀÇ MBTI´Â ¹Ù·Î!,,
+Quest_Main_Npc_Script_0393,OOOO,,
+Quest_Main_Npc_Script_0394,Áö±Ý±îÁö ¹¶ºñÅ¸ÀÌ ¿ùµå¿¡¼­ ¸ðÇèÀ» ÇØÁÖ¼Å¼­ °¨»çÇÕ´Ï´Ù.,,
+Quest_Main_Npc_Script_0395,ÀúÈñ ¿ª½Ã ±¸¿øÀÚ´ÔÀÌ ´«²É ¸¶À»¿¡¼­ÀÇ ¿©Á¤À» ¸¶Ä¡°í ½ÅÀüÀ¸·Î µé¾î¿À½Å ¼ø°£,,
+Quest_Main_Npc_Script_0396,°ú°ÅÀÇ ±â¾ïµéÀÌ ¸ðµÎ µ¹¾Æ¿Ô½À´Ï´Ù.,,
+Quest_Main_Npc_Script_0397,Á¤¸»·Î °¨»çÇÕ´Ï´Ù. Áö±ÝÀº ¿ÜÇüÀÌ ¸¹ÀÌ º¯ÇßÁö¸¸ ±×µéÀº ¿ø·¡ ¸ðµÎ ÀÎ°£ÀÌ¾ú½À´Ï´Ù.,,
+Quest_Main_Npc_Script_0398,±¸¿øÀÚ´Ô²²¼­ ¿©±â¸¦ ³ª°¡ Áö±¸·Î µ¹¾Æ°¡½Å Á÷ÈÄ ÀúÈñ ¿ª½Ã ´Ù ÇÔ²² Áö±¸·Î µ¹¾Æ°©´Ï´Ù.,,
+Quest_Main_Npc_Script_0399,Áö±¸·Î °¡´Â Áï½Ã ¹¶ºñÅ¸ÀÌ ¿ùµå¿¡¼­ ÀÖ¾ú´ø ¸ðµç ±â¾ïµéÀÌ »ç¶óÁö°ÚÁö¸¸,,
+Quest_Main_Npc_Script_0400,ÀúÈñ´Â Ç×»ó ¸¶À½ ±íÀº °÷¿¡ ±¸¿øÀÚ´ÔÀ» Ãß¾ïÇÏ°í °¨»çÇØÇÏ¸ç »ì¾Æ°¡°Ú½À´Ï´Ù.,,
+Quest_Main_Npc_Script_0401,´öºÐ¿¡ Çàº¹Çß½À´Ï´Ù. ºÎµð Áö±ÝÃ³·³ ¿µ¿øÈ÷ ¸ðµÎ¿¡°Ô ÁÁÀº »ç¶÷À¸·Î ±â¾ïµÇ½Ã±æ¡¦,,
+Quest_Main_Npc_Script_0402,¾È³çÈ÷ °¡½Ê½Ã¿À ±¸¿øÀÚ´Ô.,,
+Title_Main_Quest_0001,¹¶ºñÅ¸ÀÌ¿¡ ¿Â °É È¯¿µÇØ,,
+Title_Main_Quest_0002,¹¶ºñÅ¸ÀÌ¿¡¼­ »ì¾Æ³²´Â ¹æ¹ý,,
+Title_Main_Quest_0003,ÀÌ¹ø¿£ °í±â ¾ÕÀ¸·Î!,,
+Title_Main_Quest_0004,¿À´ÃÀº ³»°¡ ¹¶ºñÅ¸ÀÌ ¿ä¸®»ç~,,
+Title_Main_Quest_0005,±¸¿øÀÇ ½ÃÀÛ,,
+Title_Main_Quest_0006,³»°¡ ±¸¿øÀÚ¶ó°í?,,
+Title_Main_Quest_0007,»ß¸®»Ç°¡ »ç¶óÁ³´Ù!,,
+Title_Main_Quest_0008,½Ç°Ç½ÇÁ¦,,
+Title_Main_Quest_0009,Àâ»ý°¢Àº ³î¸é¼­ ³¯¸®´Â°Å·¡,,
+Title_Main_Quest_0010,¹àÇôÁø Áø½Ç,,
+Title_Main_Quest_0011,°¡À» Å¸³ªºÁ,,
+Title_Main_Quest_0012,°í±¸¸¶¸¦ »Ì¾Æº¸ÀÚ!,,
+Title_Main_Quest_0013,Ç³¿ä·Î¿î ´ÜÇ³ ¸¶À»,,
+Title_Main_Quest_0014,°Ü¿ïÀ» Ã¥ÀÓ Áú°Ô,,
+Title_Main_Quest_0015,ÁýÀ¸·Î °¡´Â ±æ,,
+Title_Main_Quest_0016,°Ç°­ÀÌ ÃÖ°í!,,
+Title_Main_Quest_0017,³ª´®Àº ¿µ¿õÀÇ ´ö¸ñ,,
+Title_Main_Quest_0018,¹¶ºñÅ¸ÀÌ ¿ùµå ¸¶½ºÅÍ,,
+Title_Main_Quest_0019,¸¶Áö¸· ½Ã·Ã,,
+Title_Main_Quest_0020,ÀÌ·ç¾îÁø ¿°¿ø,,
+Title_Main_Quest_0021,¸ðÇèÀÇ ³¡,,
+Goal_Main_Quest_0001,ÃÖ¼Ò 1¸íÀÇ ¸¶À» »ç¶÷°ú ÀÎ»çÇÏ±â,,
+Goal_Main_Quest_0002,µþ±â 0/5°³ Ã¤ÁýÇÏ±â,,
+Goal_Main_Quest_0003,¿À¸® 0/5¸¶¸® »ç³ÉÇÏ±â,,
+Goal_Main_Quest_0004,¼ÛÀÌ ºÒ°í±â 1°³ Á¦ÀÛÇØ¿À±â,,
+Goal_Main_Quest_0005,Å¸Å¸¹« ÃÌÀå°ú ´ëÈ­ÇÏ±â,,
+Goal_Main_Quest_0006,¹°°í±â 0/5¸¶¸® ³¬½ÃÇÏ±â,,
+Goal_Main_Quest_0007,¸ð·¡¿¡ µ¤Èù »ß¸®»Ç Ã£¾Æ¿À±â,,
+Goal_Main_Quest_0008,ÇÇ½¬¾ØÄ¨½º 0/1°³ Àü´ÞÇÏ±â,,
+Goal_Main_Quest_0009,º¸¹° 3°³ Ã£¾Æ¿À±â,,
+Goal_Main_Quest_0010,Æ®¸®Å× ÃÌÀå°ú ´ëÈ­ÇÏ±â,,
+Goal_Main_Quest_0011,10ºÐ ¾È¿¡ Á¤»ó¿¡ ÀÖ´Â ¶¥Äá °¡Á®¿À±â,,
+Goal_Main_Quest_0012,°í±¸¸¶ 0/3°³ Ã¤ÁýÇÏ±â,,
+Goal_Main_Quest_0013,"µ¿¹° 0/3¸¶¸® »ç³É, ¹°°í±â 0/3¸¶¸® ³¬½Ã",,
+Goal_Main_Quest_0014,´ëÃß 0/1°³ Ã¤ÁýÇÏ±â,,
+Goal_Main_Quest_0015,´Ü´Ü¹¶ ÃÌÀå°ú ´ëÈ­ÇÏ±â,,
+Goal_Main_Quest_0016,´ëÃßÂ÷ 0/1°³ Á¦ÀÛÇØ¿À±â,,
+Goal_Main_Quest_0017,ÀÎº¥Åä¸®¿¡ ÀÖ´Â À½½Ä 0/3°³ ±âºÎÇÏ±â,,
+Goal_Main_Quest_0018,"ºí·çº£¸® 0/1°³, ¹°°í±â 0/2¸¶¸®, µ¿¹° 0/3¸¶¸® »ç³ÉÇÏ±â"," µ¿¹° 0/3¸¶¸® »ç³ÉÇÏ±â""",
+Goal_Main_Quest_0019,10ºÐ ¾È¿¡ Á¤»ó¿¡ ÀÖ´Â Á×¼ø °¡Á®¿À±â,,
+Goal_Main_Quest_0020,´«´«¹¶ ÃÌÀå°ú ´ëÈ­ÇÏ±â,,
+Goal_Main_Quest_0021,°¶·°½Ã¿Í ´ëÈ­ÇÏ±â,,
+Npc_Default_Talk_0001,²É»ù ¸¶À»¿¡ ¿Â °É È¯¿µÇØ¿ä. ,,
+Npc_Default_Talk_0002,³ª´Â¾ß Ã¤Áý¿Õ ¹öµé!,,
+Npc_Default_Talk_0003,¼ÛÀÌ ºÒ°í±â´Â ¸ÀÀÖ´Â À½½ÄÀÌ´Ù..,,
+Npc_Default_Talk_0004,³ª¹«°¡ ¸»À» ÇÏ´Â°Ô ½Å±âÇØ?,,
+Npc_Default_Talk_0005,¹¶ºñÅ¸ÀÌ ¿ùµå¿¡ ¿Â°ÍÀ» È¯¿µÇÏ¿À.,,
+Npc_Default_Talk_0006,¹Ù´Ù ¸¶À»¿¡ ¿Â °É È¯¿µÇØ!,,
+Npc_Default_Talk_0007,»ß¸®»Ç´Â ³ªÀÇ º£½ºÆ® ÇÁ·»µå¾ß!,,
+Npc_Default_Talk_0008,³ª´Â ¸®ºñ¶ó°í ÇØ! °¡¸®ºñ°¡ ¾Æ´Ï¾ß!,,
+Npc_Default_Talk_0009,½Å³­´Ù ½Å³ª~ ¿À´ÃÀº ¾î¶² ³îÀÌ¸¦ ÇØº¼±î?,,
+Npc_Default_Talk_0010,¿À´Ã ÇÏ·ç´Â Çàº¹ÇÏ¼Ì´ÂÁö¿ä?,,
+Npc_Default_Talk_0011,¸ñ±¸¿Í ¸ð¸ñ¼ö´Â ³» ¼ÒÁßÇÑ Ä£±¸µéÀÌ¾ß.,,
+Npc_Default_Talk_0012,¾È³çÇÏ¼¼¿ä! Ç³´Ù³ª¶ó°í ÇØ¿ä!,,
+Npc_Default_Talk_0013,³­ ½Î¿òÀ» ÀßÇØ! ÀÌ¸§ºÎÅÍ ±×·²°Å °°Áö ¾Ê¾Æ?,,
+Npc_Default_Talk_0014,ºê¶ó¿ì´Ï ÁÁ¾ÆÇÏ³Ä°í¿ä? ¾Æ´Ï¿ä! ½È¾îÇØ¿ä!,,
+Npc_Default_Talk_0015,ÀÚ½ÅÀ» µÇµ¹¾Æº¸´Â ÀÏÀº ²Ï ¾î·Á¿î ÀÏÀÌÁÒ.,,
+Npc_Default_Talk_0016,²Ü¹úÀÌ ¿Ö ¸»À» ÇÏ³Ä°í? ¿Ö ³ªÇÑÅ×¸¸ ±×·¡?,,
+Npc_Default_Talk_0017,´«²É ¸¶À»µµ Ç³¿ä·Î¿ö Áö¸é ÁÁ°Ú¾î¿ä!,,
+Npc_Default_Talk_0018,Å©·¹´Ï´Â Âü ¶È¶ÈÇØ.,,
+Npc_Default_Talk_0019,°Ü¿ï¿¡µµ ÀÌ»Û ²ÉÀÌ ÇÇ¸é ÁÁ°Ú´Ù..,,
+Npc_Default_Talk_0020,¾ÕÀ¸·Î ÆîÃÄÁú ´ç½ÅÀÇ ¹Ì·¡¸¦ ÀÀ¿øÇÕ´Ï´Ù.,,
+Npc_Default_Talk_0021,¹öµé º¸´Ù´Â ³»°¡ Á» ´õ ¶È¶ÈÇÏÁö ÇÏÇÏÇÏ,,
+Npc_Default_Talk_0022,Àúµµ ¸®Å¸ ¸¸Å­ÀÌ³ª °í±â¸¦ ÁÁ¾ÆÇØ¿ä!,,
+Npc_Default_Talk_0023,Á¦ÀÛÀÇ Áñ°Å¿òÀ» ¾Ë°í ÀÖ´Ï?,,
+Npc_Default_Talk_0024,»îÀÇ Áø¸®¶õ ¹»±î..,,
+Npc_Default_Talk_0025,ÇÇ¿¤Àº ³Ê¹« ½É¿ÀÇØ!,,
+Npc_Default_Talk_0026,Æ¼¸µ°ú »ß¸®»Ç´Â ¿ì¸® ¸¶À»ÀÇ ¸¶½ºÄÚÆ®Áö~,,
+Npc_Default_Talk_0027,½É½ÉÇØ! ³ª¶û ³î·¡?,,
+Npc_Default_Talk_0028,Æ¼¸µÀº ±ÍÂúÀº Á¸Àç¾ß..,,
+Npc_Default_Talk_0029,³» ÀÌ¸§Àº Áö¶ô. ¹ÙÁö¶ôÀÌ ¾Æ´Ï¾ß!,,
+Npc_Default_Talk_0030,Å©¸³Åä´Â ´Ã ³ª¿¡°Ô Àâ¹« Ã³¸®¸¦ ¸Ã±ä´Ü ¸»ÀÌÁö..,,
+Npc_Default_Talk_0031,¾È³ç~ ¿ì¸®¶û °°ÀÌ ³î·¡?,,
+Npc_Default_Talk_0032,·Ñ¸®·Ñ¸®~,,
+Npc_Default_Talk_0033,ÇªÈ÷Èþ~!,,
+Npc_Default_Talk_0034,Æþ´çÆþ´ç µ¹À» ´øÁöÀÚ~,,
+Npc_Default_Talk_0035,³­ ¸Û ¶§¸®´Â Ãë¹Ì°¡ ÀÖ¾î. ¸Ó¾û,,
+Npc_Default_Talk_0036,´«²É ¸¶À»¿¡ °¡º¸°í ½Í¾î!,,
+Npc_Default_Talk_0037,²Üºñ´Â ÀÚÁ¸°¨ÀÌ ³·¾Æ. ÀÌÇØÇØÁà,,
+Npc_Default_Talk_0038,Ãä´Ù Ãß¿ö~ ±×Ä¡?,,
+Npc_Default_Talk_0039,ÀúÀÇ µû¶æÇÔÀ¸·Î ³ì¿©µå¸±°Ô¿ä.,,
+Npc_Default_Talk_0040,³ª´Â ±àÁ¤ÀÇ ÈûÀ» ¹Ï¾î!,,
+Npc_Default_Talk_0041,´«²É ¸¶À»µµ ÁÁÀº ¸¶À»ÀÌ¾ß.,,
+Npc_Default_Talk_0042,¿ï¶ó¿ï¶ó~,,
+Npc_Default_Talk_0043,³­ °Ü¿ï¿¡ ÅÂ¾î³ª¼­ ±×·±Áö ¿ì¸® ¸¶À»ÀÌ ³Ê¹« ÁÁ¾Æ.,,
+Npc_Default_Talk_0044,¡¦.,,

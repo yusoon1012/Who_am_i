@@ -379,6 +379,22 @@ public class QuestManager_Jun : MonoBehaviour
             null,
             new List<string> { "NPC_020" }
             );
+        /*  isItemConditions             갤럭시와 대화
+        *   isMBTIConditions             default
+        */
+        Quest_Jun quest_10021 = CreateQuest
+            (
+            QuestState_Jun.NOTACCEPTED,
+            stringTable["Title_Main_Quest_0021"],
+            stringTable["Goal_Main_Quest_0021"],
+            new List<int> { 1 },
+            new List<int> { 0 },
+            default,
+            questTable["10021"]["REWARD"],
+            null,
+            null,
+            new List<string> { "NPC_044" }
+            );
 
         questList.Add(quest_10001);
         questList.Add(quest_10002);
@@ -400,6 +416,7 @@ public class QuestManager_Jun : MonoBehaviour
         questList.Add(quest_10018);
         questList.Add(quest_10019);
         questList.Add(quest_10020);
+        questList.Add(quest_10021);
     }
 
     private void IsNullInstance()
@@ -489,6 +506,19 @@ public class QuestManager_Jun : MonoBehaviour
         GameManager.instance.player.GetComponent<Inventory>().AddInventory(questList[currentQuest].compensationItem, 1);
         GameManager.instance.AddMBTI(questList[currentQuest].isMBTIConditions ?
             questList[currentQuest].trueMBTI : questList[currentQuest].falseMBTI);
+
+        switch (currentQuest)
+        {
+            case 4: ActiveObject(Define.SPRING_STONE); break;
+            case 9: ActiveObject(Define.SUMMER_STONE); break;
+            case 14: ActiveObject(Define.AUTUMN_STONE); break;
+            case 19: ActiveObject(Define.WINTER_STONE);  stringTable["Quest_Main_Npc_Script_0393"] = GameManager.instance.SetMBTI(); break;
+        }
+    }
+
+    private void ActiveObject(string _name)
+    {
+        GameObject.Find(_name).SetActive(true);
     }
 
     // 현재 진행중인 퀘스트가 완료 가능한지 체크
@@ -542,14 +572,173 @@ public class QuestManager_Jun : MonoBehaviour
         questList[currentQuest].currentValues[_index] += 1;
     }
 
-    public void CheckClear(string text)
+    public void CheckClear(string _text)
     {
-        Debug.Log("받은 정보: " + text);
+        Debug.Log("받은 정보: " + _text);
 
-        //questList[currentQuest].
-        // 1. 동물 오브젝트.GetComponent<Animal>().data.name 가져오기 (영어)
-        // 2. 낚시 int값에 1 더하기 (string으로 1 보내기)
-        // 3. 딸기를 인벤토리에 보냄 (한글)
+        switch (currentQuest)
+        {
+            case 1: if (_text == "딸기") { CustomValue(0, 5); } break;
+            case 2: if (_text == "오리") { CustomValue(0, 5); } break;
+            case 3: if (_text == "송이 불고기") { CustomValue(0, 1); } break;
+            case 5: if (_text == "물고기") { CustomValue(0, 5); } break;
+            case 6: if (_text == "삽") { CustomValue(0, 1); } break;
+            case 8: if (_text == "보물") { CustomValue(0, 5); } break;
+            case 10: if (_text == "등반") { CustomValue(0, 1); } break;
+            case 11: if (_text == "고구마") { CustomValue(0, 3); } break;
+            case 12:
+                switch (_text)
+                {
+                    case "버팔로": CustomValue(0, 3); break;
+                    case "곰": CustomValue(0, 3); break;
+                    case "물고기": CustomValue(1, 3); break;
+                }
+                break;
+            case 13: if (_text == "대추") { CustomValue(0, 1); } break;
+            case 15: if (_text == "대추차") { CustomValue(0, 1); } break;
+            case 17:
+                switch (_text)
+                {
+                    case "블루 베리": CustomValue(0, 1); break;
+                    case "대추": CustomValue(0, 1); break;
+                    case "무": CustomValue(0, 1); break;
+                    case "꿀": CustomValue(0, 1); break;
+                    case "물고기": CustomValue(1, 2); break;
+                    case "순록": CustomValue(2, 3); break;
+                    case "염소": CustomValue(2, 3); break;
+                }
+                break;
+            case 18: if (_text == "등반") { CustomValue(0, 1); } break;
+        }
+    }
+
+    public bool CustomCaseValue(bool _isValueInteraction, string _id)
+    {
+        if (_isValueInteraction == true) { return true; }
+
+        switch (currentQuest)
+        {
+            case 0:
+                switch (_id)
+                {
+                    case "NPC_002": CustomValue(0, 1); return true;
+                    case "NPC_003": CustomValue(0, 1); return true;
+                    case "NPC_004": CustomValue(0, 1); return true;
+                }
+                return false;
+            case 4: if (_id == "NPC_005") { CustomValue(0, 1); return true; } return false;
+            case 7:
+                switch (_id)
+                {
+                    case "NPC_008": if (ItemManager.instance.FindRemoveItem("고구마")) { CustomValue(0, 1); return true; } return false;
+                    case "NPC_029": if (ItemManager.instance.FindRemoveItem("고구마")) { CustomValue(0, 1); return true; } return false;
+                }
+                return false;
+            case 9: if (_id == "NPC_010") { CustomValue(0, 1); return true; } return false;
+            case 14: if (_id == "NPC_015") { CustomValue(0, 1); return true; } return false;
+            case 16:
+                switch (_id)
+                {
+                    case "NPC_038": if (ItemManager.instance.FindRemoveItem(ItemManager.instance.FindFoodToInventory())) { CustomValue(0, 3); return true; } return false;
+                    case "NPC_039": if (ItemManager.instance.FindRemoveItem(ItemManager.instance.FindFoodToInventory())) { CustomValue(0, 3); return true; } return false;
+                    case "NPC_040": if (ItemManager.instance.FindRemoveItem(ItemManager.instance.FindFoodToInventory())) { CustomValue(0, 3); return true; } return false;
+                }
+                return false;
+            case 19: if (_id == "NPC_020") { CustomValue(0, 1); return true; } return false;
+            case 20: if (_id == "NPC_044") { CustomValue(0, 1); return true; } return false;
+        }
+        return false;
+    }
+
+    public bool CustomCaseData(bool _isDataInteraction, string _id)
+    {
+        if (_isDataInteraction == true) { return true; }
+
+        switch (currentQuest)
+        {
+            case 0:
+                switch (_id)
+                {
+                    case "NPC_002": CustomBool(); return true;
+                    case "NPC_003": CustomBool(); return true;
+                    case "NPC_004": CustomBool(); return true;
+                }
+                return false;
+            case 1: if (_id == "NPC_021") { CustomBool(true); return true; } return false;
+            case 2: if (_id == "NPC_022") { CustomBool(true); return true; } return false;
+            case 3: if (_id == "NPC_023") { CustomBool(true); return true; } return false;
+            case 5:
+                switch (_id)
+                {
+                    case "NPC_024": CustomBool(true); return true;
+                    case "NPC_025": CustomBool(true); return true;
+                }
+                return false;
+            case 6:
+                switch (_id)
+                {
+                    case "NPC_026": CustomBool(true); return true;
+                    case "NPC_027": CustomBool(true); return true;
+                }
+                return false;
+            case 7: if (_id == "NPC_029") { CustomBool(true); return true; } return false;
+            case 8:
+                switch (_id)
+                {
+                    case "NPC_030": CustomBool(true); return true;
+                    case "NPC_031": CustomBool(true); return true;
+                }
+                return false;
+            case 10:
+                switch (_id)
+                {
+                    case "NPC_032": CustomBool(true); return true;
+                    case "NPC_033": CustomBool(true); return true;
+                }
+                return false;
+            case 11: if (_id == "NPC_034") { CustomBool(true); return true; } return false;
+            case 12: if (_id == "NPC_035") { CustomBool(true); return true; } return false;
+            case 13: if (_id == "NPC_036") { CustomBool(true); return true; } return false;
+            case 15: if (_id == "NPC_037") { CustomBool(true); return true; } return false;
+            case 16:
+                switch (_id)
+                {
+                    case "NPC_038": CustomBool(true); return true;
+                    case "NPC_039": CustomBool(true); return true;
+                    case "NPC_040": CustomBool(true); return true;
+                }
+                return false;
+            case 17: if (_id == "NPC_041") { CustomBool(true); return true; } return false;
+            case 18:
+                switch (_id)
+                {
+                    case "NPC_042": CustomBool(true); return true;
+                    case "NPC_043": CustomBool(true); return true;
+                }
+                return false;
+        }
+        return false;
+    }
+
+    private void CustomBool()
+    {
+        if (questList[currentQuest].isMBTIConditions == default)
+        { questList[currentQuest].isMBTIConditions = true; }
+        else if (questList[currentQuest].isMBTIConditions == true)
+        { questList[currentQuest].isMBTIConditions = false; }
+        else
+        { questList[currentQuest].isMBTIConditions = false; }
+    }
+
+    private void CustomBool(bool _setValue)
+    {
+        questList[currentQuest].isMBTIConditions = _setValue;
+    }
+
+    private void CustomValue(int _index, int _exception)
+    {
+        if (questList[currentQuest].currentValues[_index] == _exception) { return; }
+        questList[currentQuest].currentValues[_index] += 1;
     }
     #endregion
 }
