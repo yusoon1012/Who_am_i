@@ -70,56 +70,149 @@ public class Dictionary : MonoBehaviour
     void Start()
     {
         mainObjTf = GetComponent<Transform>().transform;
-
-        SettingDictionary();
     }     // Start()
+
+    public void SettingStuffDict(string name, int count)
+    {
+        if (count <= 17)
+        {
+            stuffPageItems[0, count] = name;
+        }
+        else
+        {
+            stuffPageItems[1, count - 18] = name;
+        }
+    }     // SettingStuffDict()
+
+    public void SettingFoodDict(string name, int count)
+    {
+        if (count <= 17)
+        {
+            foodPageItems[0, count] = name;
+        }
+        else
+        {
+            foodPageItems[1, count - 18] = name;
+        }
+    }     // SettingFoodDict()
+
+    public void SettingEquipDict(string name, int count)
+    {
+        equipmentPageItems[0, count] = name;
+    }     // SettingEquipDict()
 
     // 미리 저장하는 도감의 아이템 이름 배열
     public void SettingDictionary()
     {
-        stuffPageItems[0, 0] = "고기";
-        stuffPageItems[0, 1] = "송이 버섯";
-
-        foodPageItems[0, 0] = "딸기";
-        foodPageItems[0, 1] = "우유";
-        foodPageItems[0, 2] = "딸기 우유";
-        foodPageItems[0, 3] = "송이 불고기";
-
-        collectionPageItems[0, 2] = "고기";
-        collectionPageItems[0, 3] = "딸기";
-        collectionPageItems[0, 4] = "우유";
-
-        equipmentPageItems[0, 0] = "너프건";
-
-        for (int l = 1; l < 18; l++)
+        for (int i = 2; i < 18; i++)
         {
-            equipmentPageItems[0, l] = "Empty";
+            stuffPageItems[1, i] = "Empty";
         }
 
-        for (int i = 4; i < 18; i++)
+        for (int j = 4; j < 18; j++)
         {
-            foodPageItems[0, i] = "Empty";
-        }
-
-        for (int k = 2; k < 18; k++)
-        {
-            stuffPageItems[0, k] = "Empty";
-        }
-
-        for (int k = 5; k < 18; k++)
-        {
-            collectionPageItems[0, k] = "Empty";
-        }
-
-        for (int j = 0; j < 18; j++)
-        {
-            stuffPageItems[1, j] = "Empty";
             foodPageItems[1, j] = "Empty";
-            //collectionPageItems[0, j] = "Empty";
-            collectionPageItems[1, j] = "Empty";
-            collectionPageItems[2, j] = "Empty";
-            collectionPageItems[3, j] = "Empty";
         }
+
+        for (int k = 10; k < 18; k++)
+        {
+            equipmentPageItems[0, k] = "Empty";
+        }
+
+        #region 컬렉션 정보 저장
+
+        collectionPageItems[0, 1] = "Empty";
+        collectionPageItems[0, 2] = "피자";
+        collectionPageItems[0, 3] = "Empty";
+        collectionPageItems[0, 4] = "Empty";
+        collectionPageItems[0, 5] = "Empty";
+        collectionPageItems[0, 7] = "Empty";
+        collectionPageItems[0, 8] = "유자차";
+        collectionPageItems[0, 9] = "Empty";
+        collectionPageItems[0, 10] = "Empty";
+        collectionPageItems[0, 11] = "Empty";
+        collectionPageItems[0, 13] = "Empty";
+        collectionPageItems[0, 14] = "송이 불고기";
+        collectionPageItems[0, 15] = "Empty";
+        collectionPageItems[0, 16] = "Empty";
+        collectionPageItems[0, 17] = "Empty";
+
+        collectionPageItems[1, 1] = "Empty";
+        collectionPageItems[1, 2] = "꼬치 고기";
+        collectionPageItems[1, 3] = "학꽁치";
+        collectionPageItems[1, 4] = "조개";
+        collectionPageItems[1, 5] = "Empty";
+        collectionPageItems[1, 7] = "Empty";
+        collectionPageItems[1, 8] = "빙어";
+        collectionPageItems[1, 9] = "민어";
+        collectionPageItems[1, 10] = "소금쟁이";
+        collectionPageItems[1, 11] = "Empty";
+        collectionPageItems[1, 13] = "Empty";
+        collectionPageItems[1, 14] = "메기";
+        collectionPageItems[1, 15] = "산천어";
+        collectionPageItems[1, 16] = "가재";
+        collectionPageItems[1, 17] = "Empty";
+
+        collectionPageItems[2, 1] = "Empty";
+        collectionPageItems[2, 2] = "나리 나비";
+        collectionPageItems[2, 3] = "달래 나비";
+        collectionPageItems[2, 4] = "Empty";
+        collectionPageItems[2, 5] = "Empty";
+        collectionPageItems[2, 7] = "Empty";
+        collectionPageItems[2, 8] = "하늘 개구리";
+        collectionPageItems[2, 9] = "들판 개구리";
+        collectionPageItems[2, 10] = "Empty";
+        collectionPageItems[2, 11] = "Empty";
+        collectionPageItems[2, 13] = "Empty";
+        collectionPageItems[2, 14] = "이삭 거미";
+        collectionPageItems[2, 15] = "낙엽 거미";
+        collectionPageItems[2, 16] = "Empty";
+        collectionPageItems[2, 17] = "Empty";
+
+        collectionPageItems[3, 1] = "Empty";
+        collectionPageItems[3, 2] = "싸락 사슴벌레";
+        collectionPageItems[3, 3] = "어스름 사슴벌레";
+        collectionPageItems[3, 4] = "Empty";
+        collectionPageItems[3, 5] = "Empty";
+        collectionPageItems[3, 7] = "Empty";
+        collectionPageItems[3, 8] = "Empty";
+        collectionPageItems[3, 9] = "Empty";
+        collectionPageItems[3, 10] = "Empty";
+        collectionPageItems[3, 11] = "Empty";
+        collectionPageItems[3, 13] = "Empty";
+        collectionPageItems[3, 14] = "Empty";
+        collectionPageItems[3, 15] = "Empty";
+        collectionPageItems[3, 16] = "Empty";
+        collectionPageItems[3, 17] = "Empty";
+
+        #endregion 컬렉션 정보 저장
+
+        //stuffPageItems[0, 0] = "고기";
+        //stuffPageItems[0, 1] = "송이 버섯";
+        //foodPageItems[0, 0] = "딸기";
+        //foodPageItems[0, 1] = "우유";
+        //foodPageItems[0, 2] = "딸기 우유";
+        //foodPageItems[0, 3] = "송이 불고기";
+        //equipmentPageItems[0, 0] = "너프건";
+
+        //collectionPageItems[0, 2] = "고기";
+        //collectionPageItems[0, 3] = "딸기";
+        //collectionPageItems[0, 4] = "우유";
+
+        //for (int k = 5; k < 18; k++)
+        //{
+        //    collectionPageItems[0, k] = "Empty";
+        //}
+
+        //for (int j = 0; j < 18; j++)
+        //{
+        //    //stuffPageItems[1, j] = "Empty";
+        //    //foodPageItems[1, j] = "Empty";
+        //    //collectionPageItems[0, j] = "Empty";
+        //    collectionPageItems[1, j] = "Empty";
+        //    collectionPageItems[2, j] = "Empty";
+        //    collectionPageItems[3, j] = "Empty";
+        //}
     }     // SettingDictionary()
 
     // 도감 창을 초기화 시키는 함수
@@ -146,6 +239,8 @@ public class Dictionary : MonoBehaviour
                 // 아이템 저장 정보가 "Empty" 가 아닐 경우
                 if (stuffPageItems[orderPage, i] != "Empty")
                 {
+                    Debug.LogFormat("{0} 번째 아이콘 저장 값 : {1}", i, stuffPageItems[orderPage, i]);
+
                     // 아이템 매니저에서 아이템 마다 이미지 번호를 가져옴
                     ItemManager.instance.DictionaryItemImage(stuffPageItems[orderPage, i], out itemInfo);
                     // 도감 아이콘마다 불러온 아이템 이미지로 교체
@@ -293,7 +388,7 @@ public class Dictionary : MonoBehaviour
         if (titleCount < maxTitleCollection)
         {
             // 컬렉션 타이틀 전용 이미지를 출력
-            dicInImage[count].sprite = ItemManager.instance.itemImages[5].sprite;
+            dicInImage[count].sprite = ItemManager.instance.itemImages[62].sprite;
             // 컬렉션 타이틀 달성 여부값을 가져옴
             collectionInfoTf.GetComponent<SaveCollections>().ReturnTitleCollections(titleCount, out titleCheck);
 
@@ -317,7 +412,10 @@ public class Dictionary : MonoBehaviour
     // 컬렉션에서 출력할 칸의 정보가 타이틀 달성에 필요한 아이템 칸일 경우에 해당 칸의 정보를 출력하는 함수
     private void PrintCollectionItem(int count)
     {
-        ItemsMain itemInfo = new ItemsMain();
+        //ItemsMain itemInfo = new ItemsMain();
+
+        CollectionsMain collectionInfo = new CollectionsMain();
+
         // 타이틀 컬렉션 달성에 필요한 아이템의 달성 여부 체크 변수
         bool collectionCheck = false;
 
@@ -325,12 +423,15 @@ public class Dictionary : MonoBehaviour
         if (collectionPageItems[orderPage, count] != "Empty")
         {
             // 아이템 매니저에서 아이템 마다 이미지 번호를 가져옴
-            ItemManager.instance.DictionaryItemImage(collectionPageItems[orderPage, count], out itemInfo);
+            //ItemManager.instance.DictionaryItemImage(collectionPageItems[orderPage, count], out itemInfo);
+
+            ItemManager.instance.ReturnCollectionInfo(collectionPageItems[orderPage, count], out collectionInfo);
+
             // 도감 아이콘마다 불러온 아이템 이미지로 교체
-            dicInImage[count].sprite = ItemManager.instance.itemImages[itemInfo.itemImageNum].sprite;
+            dicInImage[count].sprite = ItemManager.instance.itemImages[collectionInfo.imageNum].sprite;
 
             // 해당 아이템의 이름을 저장 후 사용
-            string itemName = itemInfo.itemName;
+            string itemName = collectionInfo.name;
             // 컬렉션 타이틀 달성에 필요한 아이템의 달성 여부값을 가져옴
             collectionInfoTf.GetComponent<SaveCollections>().ReturnCollectionItems(itemName, out collectionCheck);
 
@@ -636,6 +737,8 @@ public class Dictionary : MonoBehaviour
     {
         ItemsMain itemInfo = new ItemsMain();
 
+        CollectionsMain collectionInfo = new CollectionsMain();
+
         switch (orderType)
         {
             // 도감의 재료 탭을 보고있는 상태면 재료에 관련된 도감 정보를 출력함
@@ -712,12 +815,16 @@ public class Dictionary : MonoBehaviour
                     }
                     else
                     {
-                        dicInfoObj.SetActive(true);
-                        ItemManager.instance.DictionaryItemImage(collectionPageItems[orderPage, order], out itemInfo);
+                        // This Fix
+                        //ItemManager.instance.DictionaryItemImage(collectionPageItems[orderPage, order], out itemInfo);
 
-                        itemNameText.text = string.Format("{0}", itemInfo.itemName);
-                        itemInfoText[0].text = string.Format("{0}", itemInfo.itemInfo);
-                        itemInfoText[1].text = string.Format("{0}", itemInfo.itemHint);
+                        dicInfoObj.SetActive(true);
+
+                        ItemManager.instance.ReturnCollectionInfo(collectionPageItems[orderPage, order], out collectionInfo);
+
+                        itemNameText.text = string.Format("{0}", collectionInfo.name);
+                        itemInfoText[0].text = string.Format("{0}", collectionInfo.info);
+                        itemInfoText[1].text = string.Format("{0}", collectionInfo.hint);
                     }
                 }
                 else
@@ -754,7 +861,7 @@ public class Dictionary : MonoBehaviour
                 break;
         }
 
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < 2; i++)
         {
             // 컬렉션 타이틀의 정보를 0 (이름), 1 (정보), 2 (효과) 순서대로 불러옴
             collectionInfoTf.GetComponent<SaveCollections>().ReturnTitleInfo(titleCount, i, out string titleInfo);
@@ -762,17 +869,31 @@ public class Dictionary : MonoBehaviour
             switch (i)
             {
                 case 0:
-                    // i 값이 0 이면 타이틀 이름 정보를 출력함
-                    itemNameText.text = string.Format("{0}", titleInfo);
+                    if (titleInfo != "Empty")
+                    {
+                        // i 값이 0 이면 타이틀 이름 정보를 출력함
+                        itemNameText.text = string.Format("{0}", titleInfo);
+                    }
+                    else
+                    {
+                        itemNameText.text = string.Format(" ");
+                    }
                     break;
                 case 1:
-                    // i 값이 1 이면 타이틀 정보를 출력함
-                    itemInfoText[0].text = string.Format("{0}", titleInfo);
+                    if (titleInfo != "Empty")
+                    {
+                        // i 값이 1 이면 타이틀 정보를 출력함
+                        itemInfoText[0].text = string.Format("{0}", titleInfo);
+                    }
+                    else
+                    {
+                        itemInfoText[0].text = string.Format(" ");
+                    }
                     break;
-                case 2:
-                    // i 값이 2 면 타이틀 효과 정보를 출력함
-                    itemInfoText[1].text = string.Format("{0}", titleInfo);
-                    break;
+                //case 2:
+                //    // i 값이 2 면 타이틀 효과 정보를 출력함
+                //    itemInfoText[1].text = string.Format("{0}", titleInfo);
+                //    break;
                 default:
                     break;
             }

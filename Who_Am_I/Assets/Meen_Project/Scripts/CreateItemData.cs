@@ -5,10 +5,12 @@ using UnityEngine;
 
 public class CreateItemData : MonoBehaviour
 {
+    public Transform mainObjTf;
+    public Transform saveCollectionsTf;
+
     ItemsMain itemsInfo = new ItemsMain();
     CraftingMain craftingInfo = new CraftingMain();
-
-    SaveCollections saveCollections = new SaveCollections();
+    CollectionsMain collectionInfo = new CollectionsMain();
 
     public void AddItemData()
     {
@@ -111,10 +113,36 @@ public class CreateItemData : MonoBehaviour
 
         ReadCraftingCSVFiles();
 
-        //ReadCollectionCSVFiles();
-
         #endregion 제작 레시피 데이터 생성
 
+        #region 컬렉션 데이터 생성
+
+        ItemManager.instance.collections.Add("피자", new Collections001());
+        ItemManager.instance.collections.Add("유자차", new Collections002());
+        ItemManager.instance.collections.Add("송이 불고기", new Collections003());
+        ItemManager.instance.collections.Add("꼬치 고기", new Collections004());
+        ItemManager.instance.collections.Add("학꽁치", new Collections005());
+        ItemManager.instance.collections.Add("조개", new Collections006());
+        ItemManager.instance.collections.Add("빙어", new Collections007());
+        ItemManager.instance.collections.Add("민어", new Collections008());
+        ItemManager.instance.collections.Add("소금쟁이", new Collections009());
+        ItemManager.instance.collections.Add("메기", new Collections010());
+        ItemManager.instance.collections.Add("산천어", new Collections011());
+        ItemManager.instance.collections.Add("가재", new Collections012());
+        ItemManager.instance.collections.Add("나리 나비", new Collections013());
+        ItemManager.instance.collections.Add("달래 나비", new Collections014());
+        ItemManager.instance.collections.Add("하늘 개구리", new Collections015());
+        ItemManager.instance.collections.Add("들판 개구리", new Collections016());
+        ItemManager.instance.collections.Add("이삭 거미", new Collections017());
+        ItemManager.instance.collections.Add("낙엽 거미", new Collections018());
+        ItemManager.instance.collections.Add("싸락 사슴벌레", new Collections019());
+        ItemManager.instance.collections.Add("어스름 사슴벌레", new Collections020());
+
+        ReadCollectionCSVFiles();
+
+        mainObjTf.GetComponent<Dictionary>().SettingDictionary();
+
+        #endregion 컬렉션 데이터 생성
     }     // AddItemData()
 
     #region 재료 아이템 데이터 저장
@@ -155,6 +183,8 @@ public class CreateItemData : MonoBehaviour
                 itemsInfo.itemImageNum = imageNum_;
                 itemsInfo.itemEnglishName = englishName_;
             }
+
+            mainObjTf.GetComponent<Dictionary>().SettingStuffDict(name_, i);
         }
     }     // ReadNameCSVFiles()
 
@@ -202,6 +232,8 @@ public class CreateItemData : MonoBehaviour
                 itemsInfo.utile = utile_;
                 itemsInfo.itemEnglishName = englishName_;
             }
+
+            mainObjTf.GetComponent<Dictionary>().SettingFoodDict(name_, i);
         }
     }     // ReadFoodCSVFiles()
 
@@ -222,7 +254,7 @@ public class CreateItemData : MonoBehaviour
             string infinity_ = equipsReadTable[i]["Infinity"].ToString();
             string itemHint_ = equipsReadTable[i]["Note"].ToString();
             string englishName_ = equipsReadTable[i]["English"].ToString();
-            //int imageNum_ = (int)equipsReadTable[i]["Image"];
+            int imageNum_ = (int)equipsReadTable[i]["Image"];
 
             if (ItemManager.instance.itemDataBase.ContainsKey(name_))
             {
@@ -243,8 +275,10 @@ public class CreateItemData : MonoBehaviour
 
                 itemsInfo.itemHint = itemHint_;
                 itemsInfo.itemEnglishName = englishName_;
-                //itemsInfo.itemImageNum = imageNum_;
+                itemsInfo.itemImageNum = imageNum_;
             }
+
+            mainObjTf.GetComponent<Dictionary>().SettingEquipDict(name_, i);
         }
     }     // ReadEquipCSVFiles()
 
@@ -300,37 +334,48 @@ public class CreateItemData : MonoBehaviour
 
     #region 컬렉션 정보 데이터 저장
 
-    //private void ReadCollectionCSVFiles()
-    //{
-    //    List<Dictionary<string, object>> collectionsReadTable = LGM_CSVReader.Read("ItemCollectionTable");
+    private void ReadCollectionCSVFiles()
+    {
+        List<Dictionary<string, object>> collectionsReadTable = LGM_CSVReader.Read("ItemCollectionTable");
 
-    //    int checkCount = 0;
+        int checkCount = -1;
 
-    //    for (int i = 0; i < collectionsReadTable.Count; i++)
-    //    {
-    //        int count_ = (int)collectionsReadTable[i]["Count"];
-    //        int id_ = (int)collectionsReadTable[i]["ID"];
-    //        string name_ = collectionsReadTable[i]["Name"].ToString();
-    //        int type_ = (int)collectionsReadTable[i]["Type"];
-    //        string infinity_ = collectionsReadTable[i]["Infinity"].ToString();
-    //        bool boolInfinity = false;
-    //        if (infinity_ == "FALSE")
-    //        {
-    //            boolInfinity = false;
-    //        }
-    //        else if (infinity_ == "TRUE")
-    //        {
-    //            boolInfinity = true;
-    //        }
+        for (int i = 0; i < collectionsReadTable.Count; i++)
+        {
+            int id_ = (int)collectionsReadTable[i]["ID"];
+            string name_ = collectionsReadTable[i]["Name"].ToString();
+            int downCount_ = (int)collectionsReadTable[i]["DownCount"];
+            int downImage_ = (int)collectionsReadTable[i]["DownImage"];
+            string note_ = collectionsReadTable[i]["Note"].ToString();
+            string hint_ = collectionsReadTable[i]["Hint"].ToString();
+            string downName_ = collectionsReadTable[i]["DownName"].ToString();
+            int groupCount_ = (int)collectionsReadTable[i]["GroupCount"];
+            int downNum_ = (int)collectionsReadTable[i]["DownNum"];
+            int itemType_ = (int)collectionsReadTable[i]["ItemType"];
+            string info_ = collectionsReadTable[i]["Description"].ToString();
 
-    //        for (int j = checkCount; j < checkCount + count_; j++)
-    //        {
+            if (ItemManager.instance.collections.ContainsKey(downName_))
+            {
+                collectionInfo = ItemManager.instance.collections[downName_];
 
-    //        }
-    //    }
+                collectionInfo.name = downName_;
+                collectionInfo.info = info_;
+                collectionInfo.hint = hint_;
+                collectionInfo.imageNum = downImage_;
 
-    //    saveCollections.SettingCollectionInfo();
-    //}     // ReadCollectionCSVFiles()
+                saveCollectionsTf.GetComponent<SaveCollections>().SettingCollectionInfo(downName_, groupCount_, downNum_);
+            }
+
+            if (downNum_ == 0 && checkCount < groupCount_)
+            {
+                checkCount += 1;
+
+                saveCollectionsTf.GetComponent<SaveCollections>().SettingTitleInfo(name_, note_, downCount_, checkCount);
+            }
+
+            ItemManager.instance.collectionItems.Add(downName_, checkCount);
+        }
+    }     // ReadCollectionCSVFiles()
 
     #endregion 컬렉션 정보 데이터 저장
 }

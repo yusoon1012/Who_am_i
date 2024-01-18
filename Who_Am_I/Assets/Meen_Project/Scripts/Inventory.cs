@@ -417,7 +417,7 @@ public class Inventory : MonoBehaviour
         ResetVariable();
         CountInventory(inventoryPage);
         CountGroupInventory();
-        TotalInventory(itemCount, inventoryPage);
+        TotalInventory(inventoryPage);
         StackInventory(itemCount, inventoryPage);
         ImageItems(itemCount, inventoryPage);
         ResultInventory(inventoryPage);
@@ -504,9 +504,9 @@ public class Inventory : MonoBehaviour
     }     // CountGroupInventory()
 
     // 아이템 매니저의 인벤토리 안에 모든 아이템의 이름을 순차적으로 불러오는 함수
-    public void TotalInventory(int count, int page)
+    public void TotalInventory(int page)
     {
-        ItemManager.instance.InventoryTotal(count, page, out itemNames);
+        ItemManager.instance.InventoryTotal(page, out itemNames);
     }     // TotalInventory()
 
     // 아이템 매니저의 인벤토리 안에 모든 아이템의 중첩 갯수를 불러오는 함수

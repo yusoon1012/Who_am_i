@@ -3,6 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+[System.Serializable]
+public class InventorySendData
+{
+    // 재료 아이템 이름 목록
+    public string[] stuffsItems;
+    // 음식 아이템 이름 목록
+    public string[] foodsItems;
+    // 도감 저장 이름 목록
+    public string[] encyclopediaCheck;
+
+    // 재료 아이템 수량 목록
+    public int[] stuffStacks;
+    // 음식 아이템 수량 목록
+    public int[] foodStacks;
+}
+
 public class ItemManager : MonoBehaviour
 {
     #region 변수 설정
@@ -14,8 +30,10 @@ public class ItemManager : MonoBehaviour
     // 컬렉션 정보 트랜스폼
     public Transform collectionInfoTf;
 
+    public Transform createItemDataTf;
+
     // 아이템마다 등록된 아이콘 이미지 목록
-    public Image[] itemImages = new Image[43];
+    public Image[] itemImages = new Image[63];
 
     // 인벤토리에 저장되어 있는 모든 아이템 수
     private int itemCount = default;
@@ -41,9 +59,7 @@ public class ItemManager : MonoBehaviour
     // 도감에 추가할 아이템 그룹 정보 데이터
     public Dictionary<string, int> collectionItems = new Dictionary<string, int>();
 
-    //public Transform createItemData;
-
-    private CreateItemData createItemData = new CreateItemData();
+    public Dictionary<string, CollectionsMain> collections = new Dictionary<string, CollectionsMain>();
 
     #endregion 변수 설정
 
@@ -64,21 +80,69 @@ public class ItemManager : MonoBehaviour
 
     void Start()
     {
-        createItemData.AddItemData();
+        createItemDataTf.GetComponent<CreateItemData>().AddItemData();
 
-        // 게임 이어하기 클릭 시 저장된 아이템 로드 테스트
-        testDic.Add("고기", 1);
-        testDic.Add("딸기", 1);
-        testDic.Add("우유", 1);
+        //// 게임 이어하기 클릭 시 저장된 아이템 로드 테스트
+        //testDic.Add("고기", 1);
+        //testDic.Add("딸기", 1);
+        //testDic.Add("우유", 1);
 
-        //* 컬렉션 그룹 전용 데이터 베이스에 아이템 추가
-        collectionItems.Add("고기", 0);
-        collectionItems.Add("딸기", 0);
-        collectionItems.Add("우유", 0);
-        //* 컬렉션 그룹 전용 데이터 베이스에 아이템 추가
+        ////* 컬렉션 그룹 전용 데이터 베이스에 아이템 추가
+        //collectionItems.Add("피자", 0);
+        //collectionItems.Add("유자차", 1);
+        //collectionItems.Add("송이 불고기", 2);
+        //collectionItems.Add("꼬치 고기", 3);
+        //collectionItems.Add("학꽁치", 3);
+        //collectionItems.Add("조개", 3);
+        //collectionItems.Add("빙어", 4);
+        //collectionItems.Add("민어", 4);
+        //collectionItems.Add("소금쟁이", 4);
+        //collectionItems.Add("메기", 5);
+        //collectionItems.Add("산천어", 5);
+        //collectionItems.Add("가재", 5);
+        //collectionItems.Add("나래 나비", 6);
+        //collectionItems.Add("달래 나비", 6);
+        //collectionItems.Add("하늘 개구리", 7);
+        //collectionItems.Add("들판 개구리", 7);
+        //collectionItems.Add("이삭 거미", 8);
+        //collectionItems.Add("낙엽 거미", 8);
+        //collectionItems.Add("싸락 사슴벌레", 9);
+        //collectionItems.Add("어스름 사슴벌레", 9);
+        ////* 컬렉션 그룹 전용 데이터 베이스에 아이템 추가
     }     // Start()
 
     #region 아이템 타입 체크 기능
+
+    public void ReadInventory()
+    {
+        InventorySendData inventorySendData = new InventorySendData();
+
+        inventorySendData.stuffsItems = new string[30];
+        inventorySendData.foodsItems = new string[30];
+        inventorySendData.encyclopediaCheck = new string[60];
+
+        inventorySendData.stuffStacks = new int[30];
+        inventorySendData.foodStacks = new int[30];
+
+        // 음식 아이템 목록을 불러옴
+        InventoryTotal(1, out inventorySendData.foodsItems);
+
+        for (int i = 0; i < inventorySendData.foodsItems.Length; i++)
+        {
+            InventoryStack(inventorySendData.foodsItems[i], 1, out inventorySendData.foodStacks[i]);
+        }
+
+        // 재료 아이템 목록을 불러옴
+        InventoryTotal(2, out inventorySendData.stuffsItems);
+
+        for (int j = 0; j < inventorySendData.stuffsItems.Length; j++)
+        {
+            InventoryStack(inventorySendData.stuffsItems[j], 2, out inventorySendData.stuffStacks[j]);
+        }
+
+        // 도감 등록 아이템 목록을 불러옴
+        CheckEncyclopedia(out inventorySendData.encyclopediaCheck);
+    }     // ReadInventory()
 
     // 아이템의 타입을 찾아 내보내는 함수
     public int ItemTypeCheck(string itemName, out int itemType)
@@ -371,8 +435,22 @@ public class ItemManager : MonoBehaviour
         return checkNum;
     }     // InventoryCountCheck()
 
+    public string[] CheckEncyclopedia(out string[] encyclopediaNames)
+    {
+        int count = 0;
+        encyclopediaNames = new string[60];
+
+        foreach (KeyValuePair<string, ItemsMain> encyclopediaInfos in Encyclopedia)
+        {
+            encyclopediaNames[count] = encyclopediaInfos.Key;
+            count += 1;
+        }
+
+        return encyclopediaNames;
+    }     // CheckEncyclopedia()
+
     // 인벤토리 안에 모든 아이템의 이름을 순차적으로 불러오는 함수
-    public string[] InventoryTotal(int num, int page, out string[] itemNames)
+    public string[] InventoryTotal(int page, out string[] itemNames)
     {
         itemCount = 0;
         itemNames = new string[30];
@@ -955,4 +1033,18 @@ public class ItemManager : MonoBehaviour
 
         return lootCheck;
     }
+
+    public CollectionsMain ReturnCollectionInfo(string collectionName, out CollectionsMain collectionInfo)
+    {
+        if (collections.ContainsKey(collectionName))
+        {
+            collectionInfo = collections[collectionName];
+        }
+        else
+        {
+            collectionInfo = null;
+        }
+
+        return collectionInfo;
+    }     // ReturnCollectionInfo()
 }

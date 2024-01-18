@@ -56,7 +56,12 @@ public class UIController : MonoBehaviour
     {
         mainObjTf = GetComponent<Transform>().transform;
 
-        //mainObjTf.GetComponent<Inventory>().AddInventory("너프건", 1);
+        mainObjTf.GetComponent<Inventory>().AddInventory("사다리", 1);
+        mainObjTf.GetComponent<Inventory>().AddInventory("장갑", 1);
+        mainObjTf.GetComponent<Inventory>().AddInventory("삽", 1);
+        mainObjTf.GetComponent<Inventory>().AddInventory("너프건", 1);
+        mainObjTf.GetComponent<Inventory>().AddInventory("곤충 채집망", 1);
+        mainObjTf.GetComponent<Inventory>().AddInventory("낚시대", 1);
     }     // Start()
 
     void Update()
@@ -423,6 +428,9 @@ public class UIController : MonoBehaviour
                     break;
                 case 11:
                     mapCameraTf.GetComponent<CameraControl>().SelectCheckPointButton();
+                    break;
+                case 12:
+                    DialogManager.instance.InputDialog();
                     break;
                 case 13:
                     uiController = 4;

@@ -68,24 +68,26 @@ public class VRIFSceneManager : MonoBehaviour
         smoothLocomotion = playerController.GetComponent<SmoothLocomotion>();
         playerRotation = playerController.GetComponent<PlayerRotation>();
 
-        TestSetting();
+        // <Meen Change>
+        //TestSetting();
         
         /// <Point> SceneManager를 통한 씬 오픈이라면 일단 작동한다. 
         SceneManager.sceneLoaded += PlayerSetting; // 씬 전환이 완벽히 이뤄지면 해당 이벤트가 발생한다. 
     }
 
-    /// <summary>
-    /// 타이틀씬 연결 전에 쓸 임시 세팅 메서드
-    /// </summary>
-    private void TestSetting()
-    {
-        Transform birthPos = GameObject.FindGameObjectWithTag("BirthPos").transform;
+    // <Meen Change>
+    ///// <summary>
+    ///// 타이틀씬 연결 전에 쓸 임시 세팅 메서드
+    ///// </summary>
+    //private void TestSetting()
+    //{ 
+    //    Transform birthPos = GameObject.FindGameObjectWithTag("BirthPos").transform;
 
-        characterController.enabled = false;
-        playerController.position = birthPos.position;
-        playerController.rotation = birthPos.rotation;
-        characterController.enabled = true;
-    }
+    //    characterController.enabled = false;
+    //    playerController.position = birthPos.position;
+    //    playerController.rotation = birthPos.rotation;
+    //    characterController.enabled = true;
+    //}
 
     // if (Input.GetKeyDown(KeyCode.R)) { LoadCheckPoint("Summer", 2); } // 체크포인트를 이용한 이동 예시 
     // if (Input.GetKeyDown(KeyCode.L)) { StartCoroutine(LoadHallScene("Summer")); } // 로딩통로를 이용한 이동 예시 
