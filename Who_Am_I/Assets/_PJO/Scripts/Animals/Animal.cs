@@ -111,20 +111,19 @@ public class Animal : MonoBehaviour
         }
     }
 
-    private void StartAliveCoroutine()
+    private void StartAliveCoroutine(bool _isAllive)
     {
         StopActionCoroutine();
-        switch (GFunc.RandomBool())
-        {
-            case true: actionCoroutine = StartCoroutine(Move()); break;
-            case false: actionCoroutine = StartCoroutine(Wait()); break;
-        }
-    }
 
-    private void StartDeathCoroutine()
-    {
-        StopActionCoroutine();
-        actionCoroutine = StartCoroutine(Death());
+        if (_isAllive)
+        {
+            switch (GFunc.RandomBool())
+            {
+                case true: actionCoroutine = StartCoroutine(Move()); break;
+                case false: actionCoroutine = StartCoroutine(Wait()); break;
+            }
+        }
+        else { actionCoroutine = StartCoroutine(Death()); }
     }
 
     private void ResetGameObject()
@@ -152,7 +151,7 @@ public class Animal : MonoBehaviour
 
         foreach (Animator ani in anis) { ani.SetBool("Move", false); }
 
-        StartAliveCoroutine();
+        StartAliveCoroutine(true);
     }
 
     private IEnumerator Wait()
@@ -161,7 +160,7 @@ public class Animal : MonoBehaviour
 
         yield return new WaitForSeconds(time);
 
-        StartAliveCoroutine();
+        StartAliveCoroutine(true);
     }
 
     private IEnumerator Death()
@@ -178,7 +177,7 @@ public class Animal : MonoBehaviour
 
         ResetGameObject();
 
-        if (isVisible == true) { StartAliveCoroutine(); }
+        if (isVisible == true) { StartAliveCoroutine(true); }
     }
 
     private void DropItem()
@@ -201,7 +200,7 @@ public class Animal : MonoBehaviour
             yield return null;
         }
 
-        StartAliveCoroutine();
+        StartAliveCoroutine(true);
     }
     #endregion
 
@@ -217,18 +216,20 @@ public class Animal : MonoBehaviour
     {
         isVisible = true;
         if (data.hp == 0) { StartCoroutine(IsResurrection()); }
-        else { StartAliveCoroutine(); }
+        else { StartAliveCoroutine(true); }
     }
     #endregion
 
     #region reference
     public void Hit(int _damage)
     {
+        if (data.hp == 0) { return; }
+
         data.hp = data.hp - _damage;
 
         if (data.hp == 0) { DropItem(); }
 
-        StartDeathCoroutine();
+        StartAliveCoroutine(false);
     }
     #endregion
 }
