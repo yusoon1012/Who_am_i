@@ -65,6 +65,18 @@ public class MapControl : MonoBehaviour
 
     #endregion 가을 지도 초기 설정
 
+    #region 겨울 지도 초기 설정
+
+    private float[] dragMap_winter = new float[2];
+
+    private float[] multipleMapSize_winter = new float[2];
+
+    private float[] distanceMapSize_winter = new float[2];
+
+    private float[] pivotWinterSize = new float[2];
+
+    #endregion 겨울 지도 초기 설정
+
     // 미리 지정한 체크 포인트 위치 값 배열 (X, Z)
     private float[] checkPointPosX = new float[16];
     private float[] checkPointPosZ = new float[16];
@@ -80,11 +92,14 @@ public class MapControl : MonoBehaviour
 
     void Awake()
     {
+        // 봄 맵 체크포인트
         checkPointPosX[0] = 23.31f;
         checkPointPosX[1] = -34.68f;
+        // 여름 맵 체크포인트
         checkPointPosX[2] = -47.4f;
         checkPointPosX[3] = -15.24f;
         checkPointPosX[4] = 65.64f;
+        // 가을 맵 체크포인트
         checkPointPosX[5] = 3399.905f;
         checkPointPosX[6] = 3237.66f;
         checkPointPosX[7] = 3366.08f;
@@ -92,12 +107,20 @@ public class MapControl : MonoBehaviour
         checkPointPosX[9] = 3438f;
         checkPointPosX[10] = 3373.37f;
         checkPointPosX[11] = 3360.22f;
+        // 겨울 맵 체크포인트
+        checkPointPosX[12] = -50.7f;
+        checkPointPosX[13] = 8.97f;
+        checkPointPosX[14] = 67.61f;
+        checkPointPosX[15] = 53.29f;
 
+        // 봄 맵 체크포인트
         checkPointPosZ[0] = -15.27f;
         checkPointPosZ[1] = 13.08f;
+        // 여름 맵 체크포인트
         checkPointPosZ[2] = 11.8f;
         checkPointPosZ[3] = 78.45f;
         checkPointPosZ[4] = 28.918f;
+        // 가을 맵 체크포인트
         checkPointPosZ[5] = 1900.497f;
         checkPointPosZ[6] = 1897.05f;
         checkPointPosZ[7] = 1855.31f;
@@ -105,6 +128,11 @@ public class MapControl : MonoBehaviour
         checkPointPosZ[9] = 1887.455f;
         checkPointPosZ[10] = 1794.83f;
         checkPointPosZ[11] = 1713.06f;
+        // 겨울 맵 체크포인트
+        checkPointPosZ[12] = 39.25f;
+        checkPointPosZ[13] = 6.172f;
+        checkPointPosZ[14] = 40.05f;
+        checkPointPosZ[15] = 112.76f;
 
         moveCheck = 0;
         moveMapCheck = 0;
@@ -154,40 +182,70 @@ public class MapControl : MonoBehaviour
         //pivotAutumnSize[1] = 1850f;
 
         #endregion 가을 지도 초기 설정
+
+        #region 겨울 지도 초기 설정
+
+        // 실제 지형과 지도 이미지의 실제 거리 차이
+        dragMap_winter[0] = 2000f;
+        dragMap_winter[1] = 2500f;
+        // 실제 지형과 지도 이미지의 축적 배율
+        multipleMapSize_winter[0] = 2.39f;
+        multipleMapSize_winter[1] = 4.07f;
+        // 실제 지형과 지도 이미지의 중심 축 이동 배율 값 (x 축 양수, z 축 양수)
+        distanceMapSize_winter[0] = 0f;
+        distanceMapSize_winter[1] = 0f;
+        // 겨울 지도에서만 실제 맵에서 중심축이 14 / 82
+        pivotWinterSize[0] = 14f;
+        pivotWinterSize[1] = 82f;
+
+        #endregion 겨울 지도 초기 설정
+
     }     // Awake()
 
     void Start()
     {
-        //// 현재 플레이어 위치와 진행 가능한 퀘스트 표식들의 정보를 저장
-        //onMapPlayerTf.GetComponent<MapMarkInfo>().StartInfoSetting("현재 위치", false, 0);
-        //onMapQuestTf.GetComponent<MapMarkInfo>().StartInfoSetting("진행 가능한 퀘스트", false, 0);
+        // 현재 플레이어 위치와 진행 가능한 퀘스트 표식들의 정보를 저장
+        onMapPlayerTf.GetComponent<MapMarkInfo>().StartInfoSetting("현재 위치", false, 0);
+        onMapQuestTf.GetComponent<MapMarkInfo>().StartInfoSetting("진행 가능한 퀘스트", false, 0);
 
-        //// 체크포인트들의 정보를 저장하고, 맵 상의 체크포인트 위치값을 계산하여 배치하는 함수를 실행
-        //for (int i = 0; i < 2; i++)
-        //{
-        //    Vector3 saveCheckPointPos = new Vector3(checkPointPosX[i], 5f, checkPointPosZ[i]);
+        // 체크포인트들의 정보를 저장하고, 맵 상의 체크포인트 위치값을 계산하여 배치하는 함수를 실행
+        for (int i = 0; i < 2; i++)
+        {
+            Vector3 saveCheckPointPos = new Vector3(checkPointPosX[i], 5f, checkPointPosZ[i]);
 
-        //    onMapWarpTf[i].GetComponent<MapMarkInfo>().StartInfoSetting("활성화된 체크 포인트", true, i);
-        //    SettingOnMapCheckPoint(i, saveCheckPointPos, 0);
+            onMapWarpTf[i].GetComponent<MapMarkInfo>().StartInfoSetting("활성화된 체크 포인트", true, i);
+            SettingOnMapCheckPoint(i, saveCheckPointPos, 0);
 
-        //    //checkPointDic.Add(i + 1, saveCheckPointPos);
-        //}
+            //checkPointDic.Add(i + 1, saveCheckPointPos);
+        }
 
-        //for (int j = 2; j < 5; j++)
-        //{
-        //    Vector3 saveCheckPointPos2 = new Vector3(checkPointPosX[j], 5f, checkPointPosZ[j]);
+        for (int j = 2; j < 5; j++)
+        {
+            Vector3 saveCheckPointPos2 = new Vector3(checkPointPosX[j], 5f, checkPointPosZ[j]);
 
-        //    onMapWarpTf[j].GetComponent<MapMarkInfo>().StartInfoSetting("활성화된 체크 포인트", true, j);
-        //    SettingOnMapCheckPoint(j, saveCheckPointPos2, 1);
-        //}
+            onMapWarpTf[j].GetComponent<MapMarkInfo>().StartInfoSetting("활성화된 체크 포인트", true, j);
+            SettingOnMapCheckPoint(j, saveCheckPointPos2, 1);
+        }
 
-        //for (int n = 5; n < 12; n++)
-        //{
-        //    Vector3 saveCheckPointPos3 = new Vector3(checkPointPosX[n], 5f, checkPointPosZ[n]);
+        for (int n = 5; n < 12; n++)
+        {
+            Vector3 saveCheckPointPos3 = new Vector3(checkPointPosX[n], 5f, checkPointPosZ[n]);
 
-        //    onMapWarpTf[n].GetComponent<MapMarkInfo>().StartInfoSetting("활성화된 체크 포인트", true, n);
-        //    SettingOnMapCheckPoint(n, saveCheckPointPos3, 2);
-        //}
+            onMapWarpTf[n].GetComponent<MapMarkInfo>().StartInfoSetting("활성화된 체크 포인트", true, n);
+            SettingOnMapCheckPoint(n, saveCheckPointPos3, 2);
+        }
+
+        for (int m = 12; m < 16; m++)
+        {
+            Vector3 saveCheckPointPos4 = new Vector3(checkPointPosX[m], 5f, checkPointPosZ[m]);
+
+            onMapWarpTf[m].GetComponent<MapMarkInfo>().StartInfoSetting("활성화된 체크 포인트", true, m);
+            SettingOnMapCheckPoint(m, saveCheckPointPos4, 3);
+        }
+
+        moveMapCheck = 1;
+        mapCameraTf.GetComponent<CameraControl>().CheckMapType(moveMapCheck);
+
         //AccountMapSize();
     }     // Start()
 
@@ -225,6 +283,15 @@ public class MapControl : MonoBehaviour
                 // 지도상의 체크포인트 위치를 실제 맵의 체크포인트 위치와 동기화
                 onMapWarpTf[count].position = new Vector3(countPos[0], 50f, countPos[1]);
                 break;
+            case 3:
+                // 실제 지형과 지도상의 배율, 거리값을 계산하여 실제 위치값을 계산하여 값을 내보내는 함수에 X 축 위치값을 계산하여 가져옴
+                CountDistanceMap(checkPointPos.x, 0, 3, out countPos[0]);
+                // 실제 지형과 지도상의 배율, 거리값을 계산하여 실제 위치값을 계산하여 값을 내보내는 함수에 Z 축 위치값을 계산하여 가져옴
+                CountDistanceMap(checkPointPos.z, 1, 3, out countPos[1]);
+
+                // 지도상의 체크포인트 위치를 실제 맵의 체크포인트 위치와 동기화
+                onMapWarpTf[count].position = new Vector3(countPos[0], 50f, countPos[1]);
+                break;
             default:
                 break;
         }
@@ -249,12 +316,13 @@ public class MapControl : MonoBehaviour
     // 지도를 열 때 지도상의 카메라의 위치를 초기화 시키는 함수
     private void ResetCamera()
     {
-        CheckMapType();
+        //CheckMapType();
         // 지도상의 플레이어 표식 위치를 실제 플레이어 위치에 기반해 계산하여 위치를 변경하는 함수를 실행
         OnMapPlayerSetting();
 
         // 지도 카메라의 위치를 지도상의 플레이어 위치로 이동
         mapCameraTf.position = new Vector3(onMapPlayerTf.position.x, mapCameraTf.position.y, onMapPlayerTf.position.z);
+        //mapCameraTf.position = new Vector3(2000f, mapCameraTf.position.y, 1000f);
 
         mapCameraTf.GetComponent<Rigidbody>().velocity = Vector3.zero;
     }     // ResetCamera()
@@ -263,15 +331,29 @@ public class MapControl : MonoBehaviour
     {
         string sceneName = SceneManager.GetActiveScene().name;
 
-        if (sceneName == "Meen_SpringScene")
-        {
-            moveMapCheck = 1;
-        }
-        else
+        if (sceneName.Contains("Spring"))
         {
             moveMapCheck = 0;
         }
-    }
+        else if (sceneName.Contains("Summer"))
+        {
+            moveMapCheck = 1;
+        }
+        else if (sceneName.Contains("Autumn"))
+        {
+            moveMapCheck = 2;
+        }
+        else if (sceneName.Contains("Winter"))
+        {
+            moveMapCheck = 3;
+        }
+        else
+        {
+            moveMapCheck = 4;
+        }
+
+        mapCameraTf.GetComponent<CameraControl>().CheckMapType(moveMapCheck);
+    }     // CheckMapType()
 
     // 지도를 활성화할 때 지도상의 플레이어 표식 위치를 실제 플레이어 위치에 기반해 계산하여 위치를 변경하는 함수
     private void OnMapPlayerSetting()
@@ -411,6 +493,46 @@ public class MapControl : MonoBehaviour
 
             // 계산된 결과에 실제 맵과 지도맵의 거리 차이값을 더해줌
             countPos = dragMap_autumn[dir] + count;
+        }
+        else if (mapType == 3)
+        {
+            float disPos = pos - pivotWinterSize[dir];
+            // X 축, Z 축 계산 구분
+            switch (dir)
+            {
+                // X 축
+                case 0:
+                    // 실제 맵상에 X 축 위치값이 양수 일 때
+                    if (disPos >= 0)
+                    {
+                        count = (disPos * multipleMapSize_winter[dir]) + distanceMapSize_winter[dir];
+                    }
+                    // 실제 맵상에 X 축 위치값이 음수 일 때
+                    else
+                    {
+                        count = (disPos * multipleMapSize_winter[dir]) + distanceMapSize_winter[dir];
+                    }
+                    break;
+                // Z 축
+                case 1:
+                    // 실제 맵상에 Z 축 위치값이 양수 일 때
+                    if (pos >= 0)
+                    {
+                        count = (disPos * multipleMapSize_winter[dir]) + distanceMapSize_winter[dir];
+                    }
+                    // 실제 맵상에 Z 축 위치값이 음수 일 때
+                    else
+                    {
+                        count = (disPos * multipleMapSize_winter[dir]) + distanceMapSize_winter[dir];
+                    }
+                    break;
+                default:
+                    count = 0f;
+                    break;
+            }
+
+            // 계산된 결과에 실제 맵과 지도맵의 거리 차이값을 더해줌
+            countPos = dragMap_winter[dir] + count;
         }
         else
         {
