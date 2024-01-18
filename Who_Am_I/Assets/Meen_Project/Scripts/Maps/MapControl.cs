@@ -158,36 +158,36 @@ public class MapControl : MonoBehaviour
 
     void Start()
     {
-        // 현재 플레이어 위치와 진행 가능한 퀘스트 표식들의 정보를 저장
-        onMapPlayerTf.GetComponent<MapMarkInfo>().StartInfoSetting("현재 위치", false, 0);
-        onMapQuestTf.GetComponent<MapMarkInfo>().StartInfoSetting("진행 가능한 퀘스트", false, 0);
+        //// 현재 플레이어 위치와 진행 가능한 퀘스트 표식들의 정보를 저장
+        //onMapPlayerTf.GetComponent<MapMarkInfo>().StartInfoSetting("현재 위치", false, 0);
+        //onMapQuestTf.GetComponent<MapMarkInfo>().StartInfoSetting("진행 가능한 퀘스트", false, 0);
 
-        // 체크포인트들의 정보를 저장하고, 맵 상의 체크포인트 위치값을 계산하여 배치하는 함수를 실행
-        for (int i = 0; i < 2; i++)
-        {
-            Vector3 saveCheckPointPos = new Vector3(checkPointPosX[i], 5f, checkPointPosZ[i]);
+        //// 체크포인트들의 정보를 저장하고, 맵 상의 체크포인트 위치값을 계산하여 배치하는 함수를 실행
+        //for (int i = 0; i < 2; i++)
+        //{
+        //    Vector3 saveCheckPointPos = new Vector3(checkPointPosX[i], 5f, checkPointPosZ[i]);
 
-            onMapWarpTf[i].GetComponent<MapMarkInfo>().StartInfoSetting("활성화된 체크 포인트", true, i);
-            SettingOnMapCheckPoint(i, saveCheckPointPos, 0);
+        //    onMapWarpTf[i].GetComponent<MapMarkInfo>().StartInfoSetting("활성화된 체크 포인트", true, i);
+        //    SettingOnMapCheckPoint(i, saveCheckPointPos, 0);
 
-            //checkPointDic.Add(i + 1, saveCheckPointPos);
-        }
+        //    //checkPointDic.Add(i + 1, saveCheckPointPos);
+        //}
 
-        for (int j = 2; j < 5; j++)
-        {
-            Vector3 saveCheckPointPos2 = new Vector3(checkPointPosX[j], 5f, checkPointPosZ[j]);
+        //for (int j = 2; j < 5; j++)
+        //{
+        //    Vector3 saveCheckPointPos2 = new Vector3(checkPointPosX[j], 5f, checkPointPosZ[j]);
 
-            onMapWarpTf[j].GetComponent<MapMarkInfo>().StartInfoSetting("활성화된 체크 포인트", true, j);
-            SettingOnMapCheckPoint(j, saveCheckPointPos2, 1);
-        }
+        //    onMapWarpTf[j].GetComponent<MapMarkInfo>().StartInfoSetting("활성화된 체크 포인트", true, j);
+        //    SettingOnMapCheckPoint(j, saveCheckPointPos2, 1);
+        //}
 
-        for (int n = 5; n < 12; n++)
-        {
-            Vector3 saveCheckPointPos3 = new Vector3(checkPointPosX[n], 5f, checkPointPosZ[n]);
+        //for (int n = 5; n < 12; n++)
+        //{
+        //    Vector3 saveCheckPointPos3 = new Vector3(checkPointPosX[n], 5f, checkPointPosZ[n]);
 
-            onMapWarpTf[n].GetComponent<MapMarkInfo>().StartInfoSetting("활성화된 체크 포인트", true, n);
-            SettingOnMapCheckPoint(n, saveCheckPointPos3, 2);
-        }
+        //    onMapWarpTf[n].GetComponent<MapMarkInfo>().StartInfoSetting("활성화된 체크 포인트", true, n);
+        //    SettingOnMapCheckPoint(n, saveCheckPointPos3, 2);
+        //}
         //AccountMapSize();
     }     // Start()
 
