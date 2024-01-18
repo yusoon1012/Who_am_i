@@ -39,6 +39,9 @@ public class SerializableQuestJun
     public List<string> npc;                
 }
 
+
+// TODO: 인벤토리에 아이템이 저장되는 형태
+
 public class VRIFSaveManager : MonoBehaviour
 {
     public static VRIFSaveManager Instance;

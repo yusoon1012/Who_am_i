@@ -1,4 +1,5 @@
 using BNG;
+using Meta.WitAi;
 using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -9,6 +10,8 @@ using UnityEngine;
 
 public class VRIFStatusSystem : MonoBehaviour
 {
+    public static VRIFStatusSystem Instance;
+
     #region 필드
     [Header("게이지 트랜스폼")]
     [SerializeField] Transform fullnessGage = default;
@@ -58,6 +61,14 @@ public class VRIFStatusSystem : MonoBehaviour
     private GameObject[] halfPooArray;
     private GameObject[] fullPooArray;
     #endregion
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+    }
 
     private void Start()
     {
@@ -256,6 +267,7 @@ public class VRIFStatusSystem : MonoBehaviour
     }
     #endregion
 
+    #region 일반 음식 섭취
     /// <summary>
     /// 음식 섭취 메소드
     /// </summary>
@@ -271,6 +283,33 @@ public class VRIFStatusSystem : MonoBehaviour
         FullnessCheck();
         PooCheck();
     }
+    #endregion
+
+    #region 특수 음식 섭취
+    /// <summary>
+    /// 피자 추가 시 HP 최대치 증가
+    /// </summary>
+    public void GetPizza()
+    {
+
+    }
+
+    /// <summary>
+    /// 유자차 추가 시 겨울지역 패널티 감소
+    /// </summary>
+    public void GetYuja()
+    {
+
+    }
+
+    /// <summary>
+    /// 송이 불고기 추가 시 응가 게이지 최대치 증가 
+    /// </summary>
+    public void GetMushroomBulgogi()
+    {
+
+    }
+    #endregion
 
     /// <summary>
     /// 배출 이벤트

@@ -16,6 +16,7 @@ public class VRIFItem_CropGravity : MonoBehaviour
         cropCollider = transform.GetComponent<Collider>();
 
         cropRigid.useGravity = false; // Start 시점에 중력 비활성화
+        cropCollider.isTrigger = true; // 충돌 방지
     }
 
     /// <summary>

@@ -25,6 +25,8 @@ public class VRIFItem_Butterfly : MonoBehaviour
 
     private void Catch(object sender, EventArgs e)
     {
+        if (gameObject == null) { return; }
+
         foreach (var grabber in VRIFGameManager.Instance.grabberArray)
         {
             if (grabber.HoldingItem) // 물체를 잡은 Grabber가 있다면 

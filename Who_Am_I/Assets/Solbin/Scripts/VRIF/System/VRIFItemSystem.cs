@@ -55,9 +55,6 @@ public class VRIFItemSystem : MonoBehaviour
 
     public ItemType itemType { get; private set; }
 
-    // TestAction
-    private TestAction testAction = default;
-
     private void Awake()
     {
         if (Instance == null)
@@ -94,17 +91,6 @@ public class VRIFItemSystem : MonoBehaviour
         }
     }
 
-    private void OnEnable()
-    {
-        testAction = new TestAction();
-        testAction.Enable();
-    }
-
-    private void OnDisable()
-    {
-        testAction?.Disable();
-    }
-
     /// <summary>
     /// 딕셔너리 세팅
     /// </summary>
@@ -119,25 +105,6 @@ public class VRIFItemSystem : MonoBehaviour
         mountingItem[4] = dragonflyNet;
     }
     #endregion
-
-#if UNITY_EDITOR
-    private void Update()
-    {
-        if (testAction.Test.NerfGun.triggered)
-        {
-            if (!nerfGun.activeSelf)
-            {
-                MountingItem("NerfGun");
-            }
-            else { ReleaseItem(); }
-        }
-
-        if (Input.GetKeyDown(KeyCode.L)) // 테스트용 코드 
-        {
-            MountingItem("FishingRod");
-        }
-    }
-#endif // UNITY_EDITOR
 
     public void InputItem(string name) // 현재는 Test UI의 버튼과 연결
     {
@@ -221,8 +188,6 @@ public class VRIFItemSystem : MonoBehaviour
         modelsRight.SetActive(false); // 기존 손 모델 OFF (임시방편)
 
         item.SetActive(true); // 지정 아이템만 활성화
-
-        Debug.LogFormat("{0} 아이템 장착 완료", name);
     }
 
     /// <summary>
@@ -271,9 +236,3 @@ public class VRIFItemSystem : MonoBehaviour
     }
     #endregion
 }
-
-/// <Point> 아이템을 장착한 상태로 UI를 ON/OFF하면 오류가 발생하기 때문에 임시방편 조치로
-/// NORMAL 상태로 돌아가기 전 모든 아이템을 손에서 놓도록 했다. 
-/// 이후 아이템 장착 상태를 임시로 저장해놨다가 다시 NORMAL 상태 전환 이후 다시 활성화시키는 코드 작성 요망.
-
-// TODO: 위 문제 수리하기

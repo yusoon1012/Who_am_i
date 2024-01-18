@@ -30,12 +30,16 @@ public class VRIFPlayerCheckPoint : MonoBehaviour
         {
             if (!other.GetComponent<VRIFMap_CheckPoint>().activated) // 아직 비활성화된 체크포인트라면 
             {
-                Renderer renderer = other.GetComponent<Renderer>(); // 렌더러
-                Material[] materials = renderer.materials;
+                Renderer[] renderers = other.GetComponentsInChildren<Renderer>(); // 렌더러 찾기
 
-                for (int i = 0; i < materials.Length; i++)
+                foreach (var renderer in renderers)
                 {
-                    materials[materials.Length - 1].SetFloat("_Scale", shiningInitialValue); // Material Scale Up 
+                    Material[] materials = renderer.materials;
+
+                    for (int i = 0; i < materials.Length; i++)
+                    {
+                        materials[materials.Length - 1].SetFloat("_Scale", shiningInitialValue); // Material Scale Up 
+                    }
                 }
 
                 checkPoint = other.gameObject.transform;
@@ -44,38 +48,24 @@ public class VRIFPlayerCheckPoint : MonoBehaviour
         }
     }
 
-    // 테스트 코드다. 
-    private void OnTriggerStay(Collider other)
-    {
-        if (other.gameObject.layer == LayerMask.NameToLayer("CheckPoint"))
-        {
-            if (!other.GetComponent<VRIFMap_CheckPoint>().activated) // 아직 비활성화된 체크포인트라면 
-            {
-                if (Input.GetKeyDown(KeyCode.G))
-                {
-                    checkPoint.GetComponent<VRIFMap_CheckPoint>().Activated(); // 테스트 코드 
-                }
-            }
-        }
-    }
-
     private void OnTriggerExit(Collider other)
     {
         if (other.gameObject.layer == LayerMask.NameToLayer("CheckPoint"))
         {
-            if (!other.GetComponent<VRIFMap_CheckPoint>().activated) // 비활성화 체크포인트일때
+            Renderer[] renderers = other.GetComponentsInChildren<Renderer>(); // 렌더러 찾기
+
+            foreach (var renderer in renderers)
             {
-                Renderer renderer = other.GetComponent<Renderer>(); // 렌더러
                 Material[] materials = renderer.materials;
 
                 for (int i = 0; i < materials.Length; i++)
                 {
                     materials[materials.Length - 1].SetFloat("_Scale", 0); // Material Scale Down
                 }
-
-                inTrigger = false;
-                checkPoint = null;
             }
+
+            inTrigger = false;
+            checkPoint = null;
         }
     }
 

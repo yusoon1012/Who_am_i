@@ -690,11 +690,11 @@ namespace BNG {
         {
             if (HoldingItem && other.GetComponent<Climbable>()) // 그랩 중인 등반 물체가 사다리인지 일반 등반 물체인지 판단함
             {
-                if (other.transform.parent.GetComponent<VRIFMap_ZipLine>() != null) // 짚라인이면 
+                if (other.transform.GetComponent<Zipline>() != null) // 짚라인이면 
                 {
                     VRIFStateSystem.Instance.ChangeState(VRIFStateSystem.GameState.ZIPLINE);
                 }
-                else if (other.transform.parent.parent.GetComponent<VRIFTool_Ladder>() != null) // 접촉한 등반 물체 최상위 오브젝트가 사다리 
+                else if (other.transform.root.GetComponentInChildren<VRIFTool_Ladder>() != null) // 접촉한 등반 물체 최상위 오브젝트가 사다리 
                 {
                     VRIFStateSystem.Instance.ChangeState(VRIFStateSystem.GameState.LADDER);
                 }
