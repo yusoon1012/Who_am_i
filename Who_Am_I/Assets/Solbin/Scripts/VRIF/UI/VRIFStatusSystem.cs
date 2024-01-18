@@ -25,13 +25,15 @@ public class VRIFStatusSystem : MonoBehaviour
     [SerializeField] private Transform player = default; // 플레이어 트랜스폼 
 
     [Header("포만감 하락 타이머")]
-    public int hungerTimer = 60; // 소화기 타이머
+    public int hungerTimer = 300; // 소화기 타이머
+    public int climbingHungerTimer { get; private set; } = 240; // 등반 중 소화기 타이머
+    public int winterHungerTimer { get; private set; } = 180; // 겨울 지역 소화기 타이머
     public int hungerTimer_Origin { get; private set; } // 타이머의 원래 값
 
     [Header("시간당 수치 조절값")]
-    [SerializeField] private int getHunger = 5; // 분당 떨어지는 포만감
+    [SerializeField] private int getHunger = 10; // 분당 떨어지는 포만감
     [SerializeField] private int getPoo = 1; // 분당 얻는 배출값
-
+    
     [Header("손")]
     [SerializeField] private Grabber leftGrabber = default; // 왼쪽 손 
     [SerializeField] private Grabber rightGrabber = default; // 오른쪽 손 
@@ -60,6 +62,11 @@ public class VRIFStatusSystem : MonoBehaviour
     // 배출도 게이지 배열 
     private GameObject[] halfPooArray;
     private GameObject[] fullPooArray;
+
+    // 피자를 얻었을때 영구 효과 
+    public bool getPizza = false; // TODO: 혹시라도 저장을 여기까지 구현한다면 추가해야 함. 
+    // 송이버섯 불고기를 얻었을 때 영구 효과
+    public bool getMushroomBulgogi = false;
     #endregion
 
     private void Awake()
@@ -155,13 +162,27 @@ public class VRIFStatusSystem : MonoBehaviour
             if (m_Fullness <= 70) { FullnessUpdate(4, "half"); }
             else { FullnessUpdate(4, "full"); }
         }
-        else if (81 <= m_Fullness)
+        else if (81 <= m_Fullness && m_Fullness <= 100)
         {
             if (m_Fullness <= 90) { FullnessUpdate(5, "half"); }
             else { FullnessUpdate(5, "full"); }
         }
+        else if (101 <= m_Fullness)
+        {
+            if (m_Fullness <= 110) { FullnessUpdate(6, "half"); }
+            else { FullnessUpdate(6, "full"); }
+        }
 
-        if (m_Fullness >= 100) { m_Fullness = 100; } // 포만감 초과시 100으로 보정
+        if (m_Fullness <= 0) { StartCoroutine(DieEvent()); } // 포만감 0이하시 죽음
+
+        if (!getPizza) // 피자가 컬렉션에 없을때
+        {
+            if (m_Fullness >= 100) { m_Fullness = 100; } // 포만감 초과시 100으로 보정
+        }
+        else if (getPizza) // 피자가 컬렉션에 있을떄
+        {
+            if (m_Fullness >= 120) { m_Fullness = 120; }
+        }
     }
 
     private void FullnessUpdate(int _num, string _percent) // 48이면 4, half
@@ -229,10 +250,23 @@ public class VRIFStatusSystem : MonoBehaviour
         }
         else if (91 <= m_Poo && m_Poo < 100)
         {
-            PooUpdate(5, "half");
+            if (m_Poo <= 100) { PooUpdate(5, "half"); }
+            else { PooUpdate(5, "full"); }
+        }
+        else if (101 <= m_Poo)
+        {
+            if (m_Poo <= 110) { PooUpdate(6, "half"); }
+            else { PooUpdate(6, "full"); }
         }
 
-        if (m_Poo >= 100) { PooUpdate(5, "full"); Invoke("PooEvent", 3); } // 5개, 배출도 초과시 배출 이벤트 발생 
+        if (!getMushroomBulgogi) // 송이버섯 불고기를 얻지 못했을 때
+        {
+            if (m_Poo >= 100) { Invoke("PooEvent", 3); } // 배출 이벤트 발생 
+        }
+        else if (getMushroomBulgogi) // 송이버섯 불고기를 얻었을 때
+        {
+            if (m_Poo >= 120) { Invoke("PooEvent", 3); } // 배출 이벤트 발생 
+        }
     }
 
     private void PooUpdate(int _num, string _percent)
@@ -287,11 +321,12 @@ public class VRIFStatusSystem : MonoBehaviour
 
     #region 특수 음식 섭취
     /// <summary>
-    /// 피자 추가 시 HP 최대치 증가
+    /// 피자 추가 시 최대치 HP 증가
     /// </summary>
     public void GetPizza()
     {
-
+        getPizza = true;
+        FullnessCheck();
     }
 
     /// <summary>
@@ -299,18 +334,21 @@ public class VRIFStatusSystem : MonoBehaviour
     /// </summary>
     public void GetYuja()
     {
-
+        hungerTimer = hungerTimer_Origin;
     }
 
     /// <summary>
-    /// 송이 불고기 추가 시 응가 게이지 최대치 증가 
+    /// 송이 불고기 추가시 응가 게이지 최대치 증가 
     /// </summary>
     public void GetMushroomBulgogi()
     {
-
+        getMushroomBulgogi = true;
+        PooCheck();
     }
+
     #endregion
 
+    #region 배출 이벤트
     /// <summary>
     /// 배출 이벤트
     /// </summary>
@@ -347,16 +385,28 @@ public class VRIFStatusSystem : MonoBehaviour
     /// 등반 중 배출 이벤트로 인해 손을 놓게 되었을 때 Grabber를 다시 ON
     /// </summary>
     private void ClearGrabbers() { leftGrabber.enabled = true; rightGrabber.enabled = true; }
-    
+    #endregion
+
+    #region 사망 이벤트
     /// <summary>
     /// 사망 이벤트
     /// </summary>
-    private void DieEvent()
+    private IEnumerator DieEvent()
     {
         audioSource.Stop();
         audioSource.clip = dieClip;
         audioSource.Play();
 
+        VRIFStateSystem.Instance.ChangeState(VRIFStateSystem.GameState.DIE);
+
         dieCanvas.SetActive(true);
+        yield return new WaitForSeconds(3);
+        dieCanvas.SetActive(false);
+
+        VRIFStateSystem.Instance.ChangeState(VRIFStateSystem.GameState.NORMAL);
+
+        m_Fullness = 30;
+        FullnessCheck(); // 포만감 수치 갱신 
     }
+    #endregion
 }

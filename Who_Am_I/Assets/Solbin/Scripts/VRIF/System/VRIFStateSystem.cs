@@ -17,7 +17,8 @@ namespace BNG
             UI,
             POO,
             ZIPLINE,
-            FISHING
+            FISHING,
+            DIE
         }
 
         // 현재 게임 상태 
@@ -109,6 +110,10 @@ namespace BNG
                 case GameState.FISHING: // FISHINF 상태 (낚시 상태)
                     FishingState();
                     break;
+
+                case GameState.DIE: // DIE 상태 (사망 상태)
+                    DieState();
+                    break;
             }
         }
 
@@ -180,7 +185,7 @@ namespace BNG
 
             climbingEvent?.Invoke(this, EventArgs.Empty); // 등반 중 이벤트 발생 
 
-            vrifStatusSystem.hungerTimer = 30;
+            vrifStatusSystem.hungerTimer = vrifStatusSystem.climbingHungerTimer;
 
             quickSlot.enabled = false; // UI 열기 불가
             uiController.enabled = false;
@@ -219,6 +224,19 @@ namespace BNG
         private void FishingState()
         {
             gameState = GameState.FISHING;
+
+            locomotionManager.enabled = false; // 이동 비활성화
+            smoothLocomotion.enabled = false;
+
+            playerRotation.enabled = false; // 회전 비활성화
+        }
+
+        /// <summary>
+        /// 사망 상태 
+        /// </summary>
+        private void DieState()
+        {
+            gameState = GameState.DIE;
 
             locomotionManager.enabled = false; // 이동 비활성화
             smoothLocomotion.enabled = false;

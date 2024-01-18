@@ -35,6 +35,8 @@ public class CameraControl : MonoBehaviour
 
     public float changeAlphaTime = default;
 
+    public int mapTypeCheck = default;
+
     // 지도 카메라 참조
     private Camera mapCamera = default;
     // 지도상에서 정보를 출력중인 표식을 체크
@@ -55,7 +57,7 @@ public class CameraControl : MonoBehaviour
     // 워프 포인트 체크 UI 내의 커서 값
     private int checkPointInfoCursor = default;
     // 1 번째 봄 맵 상, 하, 좌, 우 카메라 한계값
-    private float[] map01LimitCamera = new float[4];
+    private float[,] mapLimitCamera = new float[4, 4];
 
     private int warpOrder = default;
 
@@ -70,17 +72,39 @@ public class CameraControl : MonoBehaviour
         warpOrder = 0;
         changeAlphaCount = 0.05f;
         changeAlphaTime = 0.04f;
+        mapTypeCheck = 0;
 
-        map01LimitCamera[0] = 1460f;
-        map01LimitCamera[1] = 765f;
-        map01LimitCamera[2] = 690f;
-        map01LimitCamera[3] = 1270f;
+        // 봄 지도의 카메라 한계값
+        mapLimitCamera[0, 0] = 1460f;
+        mapLimitCamera[0, 1] = 765f;
+        mapLimitCamera[0, 2] = 690f;
+        mapLimitCamera[0, 3] = 1270f;
+        // 여름 지도의 카메라 한계값
+        mapLimitCamera[1, 0] = 1300f;
+        mapLimitCamera[1, 1] = 625f;
+        mapLimitCamera[1, 2] = 1730f;
+        mapLimitCamera[1, 3] = 2310f;
+        // 가을 지도의 카메라 한계값
+        mapLimitCamera[2, 0] = 2845f;
+        mapLimitCamera[2, 1] = 2150f;
+        mapLimitCamera[2, 2] = 695f;
+        mapLimitCamera[2, 3] = 1275f;
+        // 겨울 지도의 카메라 한계값
+        mapLimitCamera[3, 0] = 2850f;
+        mapLimitCamera[3, 1] = 2150f;
+        mapLimitCamera[3, 2] = 1710f;
+        mapLimitCamera[3, 3] = 2290f;
     }     // Awake()
 
     void Start()
     {
         mapCamera = GetComponent<Camera>();
     }     // Start()
+
+    public void CheckMapType(int type)
+    {
+        mapTypeCheck = type;
+    }     // CheckMapType()
 
     // 지도 카메라를 움직이는 방향키 값을 구분하는 함수
     public void MoveMap(int arrowType)
@@ -176,55 +200,47 @@ public class CameraControl : MonoBehaviour
             // 카메라 움직이는 키 값에 따라 카메라 위치값을 변경시킴
             if (moveCamera[0] == true)
             {
-                moveCount[1] += speed;
-
-                //if (mapCamera.transform.position.z >= map01LimitCamera[0])
-                //{
-                //    moveCount[1] = map01LimitCamera[0];
-                //}
-                //else
-                //{
-                //    moveCount[1] += speed;
-                //}
+                if (mapCamera.transform.position.z >= mapLimitCamera[mapTypeCheck, 0])
+                {
+                    moveCount[1] = mapLimitCamera[mapTypeCheck, 0];
+                }
+                else
+                {
+                    moveCount[1] += speed;
+                }
             }
             else if (moveCamera[1] == true)
             {
-                moveCount[1] -= speed;
-
-                //if (mapCamera.transform.position.z <= map01LimitCamera[1])
-                //{
-                //    moveCount[1] = map01LimitCamera[1];
-                //}
-                //else
-                //{
-                //    moveCount[1] -= speed;
-                //}
+                if (mapCamera.transform.position.z <= mapLimitCamera[mapTypeCheck, 1])
+                {
+                    moveCount[1] = mapLimitCamera[mapTypeCheck, 1];
+                }
+                else
+                {
+                    moveCount[1] -= speed;
+                }
             }
             else if (moveCamera[2] == true)
             {
-                moveCount[0] -= speed;
-
-                //if (mapCamera.transform.position.x <= map01LimitCamera[2])
-                //{
-                //    moveCount[0] = map01LimitCamera[2];
-                //}
-                //else
-                //{
-                //    moveCount[0] -= speed;
-                //}
+                if (mapCamera.transform.position.x <= mapLimitCamera[mapTypeCheck, 2])
+                {
+                    moveCount[0] = mapLimitCamera[mapTypeCheck, 2];
+                }
+                else
+                {
+                    moveCount[0] -= speed;
+                }
             }
             else if (moveCamera[3] == true)
             {
-                moveCount[0] += speed;
-
-                //if (mapCamera.transform.position.x >= map01LimitCamera[3])
-                //{
-                //    moveCount[0] = map01LimitCamera[3];
-                //}
-                //else
-                //{
-                //    moveCount[0] += speed;
-                //}
+                if (mapCamera.transform.position.x >= mapLimitCamera[mapTypeCheck, 3])
+                {
+                    moveCount[0] = mapLimitCamera[mapTypeCheck, 3];
+                }
+                else
+                {
+                    moveCount[0] += speed;
+                }
             }
 
             // 변경된 위치값을 지도상의 카메라의 위치에 대입함

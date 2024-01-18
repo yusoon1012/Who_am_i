@@ -32,5 +32,7 @@ public class VRIFTool_Shovel : MonoBehaviour
         audioSource.Play();
         _dirt.transform.localScale /= 2;
         _dirt.GetComponent<VRIFMap_DirtFile>().AddDestroy(); // 파괴 횟수 증가 
+
+        QuestManager_Jun.instance.CheckClear("삽");
     }
 }
