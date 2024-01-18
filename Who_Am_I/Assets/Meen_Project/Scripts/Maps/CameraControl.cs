@@ -176,47 +176,55 @@ public class CameraControl : MonoBehaviour
             // 카메라 움직이는 키 값에 따라 카메라 위치값을 변경시킴
             if (moveCamera[0] == true)
             {
-                if (mapCamera.transform.position.z >= map01LimitCamera[0])
-                {
-                    moveCount[1] = map01LimitCamera[0];
-                }
-                else
-                {
-                    moveCount[1] += speed;
-                }
+                moveCount[1] += speed;
+
+                //if (mapCamera.transform.position.z >= map01LimitCamera[0])
+                //{
+                //    moveCount[1] = map01LimitCamera[0];
+                //}
+                //else
+                //{
+                //    moveCount[1] += speed;
+                //}
             }
             else if (moveCamera[1] == true)
             {
-                if (mapCamera.transform.position.z <= map01LimitCamera[1])
-                {
-                    moveCount[1] = map01LimitCamera[1];
-                }
-                else
-                {
-                    moveCount[1] -= speed;
-                }
+                moveCount[1] -= speed;
+
+                //if (mapCamera.transform.position.z <= map01LimitCamera[1])
+                //{
+                //    moveCount[1] = map01LimitCamera[1];
+                //}
+                //else
+                //{
+                //    moveCount[1] -= speed;
+                //}
             }
             else if (moveCamera[2] == true)
             {
-                if (mapCamera.transform.position.x <= map01LimitCamera[2])
-                {
-                    moveCount[0] = map01LimitCamera[2];
-                }
-                else
-                {
-                    moveCount[0] -= speed;
-                }
+                moveCount[0] -= speed;
+
+                //if (mapCamera.transform.position.x <= map01LimitCamera[2])
+                //{
+                //    moveCount[0] = map01LimitCamera[2];
+                //}
+                //else
+                //{
+                //    moveCount[0] -= speed;
+                //}
             }
             else if (moveCamera[3] == true)
             {
-                if (mapCamera.transform.position.x >= map01LimitCamera[3])
-                {
-                    moveCount[0] = map01LimitCamera[3];
-                }
-                else
-                {
-                    moveCount[0] += speed;
-                }
+                moveCount[0] += speed;
+
+                //if (mapCamera.transform.position.x >= map01LimitCamera[3])
+                //{
+                //    moveCount[0] = map01LimitCamera[3];
+                //}
+                //else
+                //{
+                //    moveCount[0] += speed;
+                //}
             }
 
             // 변경된 위치값을 지도상의 카메라의 위치에 대입함

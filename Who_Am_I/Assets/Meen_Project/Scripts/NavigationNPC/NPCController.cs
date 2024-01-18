@@ -66,6 +66,21 @@ public class NPCController : MonoBehaviour
         return dialog;
     }     // ReadingDialogs()
 
+    public void PrintDialog(string npcName, string dialog)
+    {
+        playerTf.GetComponent<UIController>().uiController = 12;
+
+        // 대화 창 오브젝트를 활성화함
+        dialogObj.gameObject.SetActive(true);
+        // 대화 창 이름을 가져온 대화 정보에서 NPC 이름으로 출력함
+        dialogNameText.text = string.Format("{0}", npcName);
+        // 대화 창 내용을 가져온 대화 정보에서 대화 순서를 참고하여 출력함
+        dialogContentsText.text = string.Format("{0}", dialog);
+
+        // 대화 창 출력이 완료된 이후 Next 텍스트가 출력되기 전까지 딜레이 시간을 진행하는 코루틴 함수를 실행
+        StartCoroutine(DialogDelay());
+    }     // PrintDialogs()
+
     // NPC 와 대화중일 때 전용 "확인" 키 정보를 확인하는 함수
     public void InputController()
     {

@@ -2,6 +2,7 @@ using OVR.OpenVR;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MapControl : MonoBehaviour
 {
@@ -18,25 +19,55 @@ public class MapControl : MonoBehaviour
     // 지도 카메라 트랜스폼
     public Transform mapCameraTf;
     // 지도 체크 포인트 마크 트랜스폼
-    public Transform[] onMapWarpTf = new Transform[3];
-    // 0 : 실제 지형 트랜스폼
-    // 1 : 지도 지형 트랜스폼
-    public Transform[] mapSizeCheck = new Transform[2];
+    public Transform[] onMapWarpTf = new Transform[16];
+    //// 0 : 실제 지형 트랜스폼
+    //// 1 : 지도 지형 트랜스폼
+    //public Transform[] mapSizeCheck = new Transform[2];
     // 지도 메뉴얼 오브젝트
     public GameObject mapManualObj;
 
     // 플레이어와 지도 카메라의 움직임 구분값
     public int moveCheck { get; set; } = default;
-    
+
+    public int moveMapCheck { get; set; } = default;
+
+    #region 봄 지도 초기 설정
+
     // 실제 지형과 지도 지형의 배치된 거리 차이 값
-    private float[] dragMap = new float[2];
+    private float[] dragMap_spring = new float[2];
     // 실제 지형과 지도 지형의 X, Z 축 배율 차이
-    private float[] multipleMapSize = new float[2];
+    private float[] multipleMapSize_spring = new float[2];
     // 실제 지형과 지도 지형의 X, Z 축 거리 차이
-    private float[] distanceMapSize = new float[2];
+    private float[] distanceMapSize_spring = new float[2];
+
+    #endregion 봄 지도 초기 설정
+
+    #region 여름 지도 초기 설정
+
+    // 실제 지형과 지도 지형의 배치된 거리 차이 값
+    private float[] dragMap_summer = new float[2];
+    // 실제 지형과 지도 지형의 X, Z 축 배율 차이
+    private float[] multipleMapSize_summer = new float[2];
+    // 실제 지형과 지도 지형의 X, Z 축 거리 차이
+    private float[] distanceMapSize_summer = new float[2];
+
+    #endregion 여름 지도 초기 설정
+
+    #region 가을 지도 초기 설정
+
+    private float[] dragMap_autumn = new float[2];
+
+    private float[] multipleMapSize_autumn = new float[2];
+
+    private float[] distanceMapSize_autumn = new float[2];
+
+    private float[] pivotAutumnSize = new float[2];
+
+    #endregion 가을 지도 초기 설정
+
     // 미리 지정한 체크 포인트 위치 값 배열 (X, Z)
-    private float[] checkPointPosX = new float[10];
-    private float[] checkPointPosZ = new float[10];
+    private float[] checkPointPosX = new float[16];
+    private float[] checkPointPosZ = new float[16];
 
     // 스크린 컨트롤러 트랜스폼
     //public Transform screenControllerTf;
@@ -45,25 +76,84 @@ public class MapControl : MonoBehaviour
     //// 체크 포인트들의 워프 지점을 저장하기 위한 딕셔너리
     //Dictionary<int, Vector3> checkPointDic = new Dictionary<int, Vector3>();
 
+    // 현재 있는 씬을 알 수 있는 방법 : SceneManager.GetActiveScene().name
+
     void Awake()
     {
         checkPointPosX[0] = 23.31f;
         checkPointPosX[1] = -34.68f;
+        checkPointPosX[2] = -47.4f;
+        checkPointPosX[3] = -15.24f;
+        checkPointPosX[4] = 65.64f;
+        checkPointPosX[5] = 3399.905f;
+        checkPointPosX[6] = 3237.66f;
+        checkPointPosX[7] = 3366.08f;
+        checkPointPosX[8] = 3420.412f;
+        checkPointPosX[9] = 3438f;
+        checkPointPosX[10] = 3373.37f;
+        checkPointPosX[11] = 3360.22f;
+
         checkPointPosZ[0] = -15.27f;
         checkPointPosZ[1] = 13.08f;
+        checkPointPosZ[2] = 11.8f;
+        checkPointPosZ[3] = 78.45f;
+        checkPointPosZ[4] = 28.918f;
+        checkPointPosZ[5] = 1900.497f;
+        checkPointPosZ[6] = 1897.05f;
+        checkPointPosZ[7] = 1855.31f;
+        checkPointPosZ[8] = 1902.941f;
+        checkPointPosZ[9] = 1887.455f;
+        checkPointPosZ[10] = 1794.83f;
+        checkPointPosZ[11] = 1713.06f;
 
         moveCheck = 0;
+        moveMapCheck = 0;
+
+        #region 봄 지도 초기 설정
 
         // 실제 지형과 지도 이미지의 실제 거리 차이
-        dragMap[0] = 1000f;
-        dragMap[1] = 1000f;
-
+        dragMap_spring[0] = 1000f;
+        dragMap_spring[1] = 1000f;
         // 실제 지형과 지도 이미지의 축적 배율
-        multipleMapSize[0] = 4.03f;
-        multipleMapSize[1] = 6.2f;
-        // 실제 지형과 지도 이미지의 중심 축 이동 배율 값
-        distanceMapSize[0] = 9.92f;
-        distanceMapSize[1] = 36.66f;
+        multipleMapSize_spring[0] = 4.03f;
+        multipleMapSize_spring[1] = 6.2f;
+        // 실제 지형과 지도 이미지의 중심 축 이동 배율 값 (x 축 음수, z 축 양수)
+        distanceMapSize_spring[0] = 9.92f;
+        distanceMapSize_spring[1] = 36.66f;
+
+        #endregion 봄 지도 초기 설정
+
+        #region 여름 지도 초기 설정
+
+        // 실제 지형과 지도 이미지의 실제 거리 차이
+        dragMap_summer[0] = 2000f;
+        dragMap_summer[1] = 1000f;
+        // 실제 지형과 지도 이미지의 축적 배율
+        multipleMapSize_summer[0] = 1.45f;
+        multipleMapSize_summer[1] = 2.99f;
+        // 실제 지형과 지도 이미지의 중심 축 이동 배율 값 (x 축 양수, z 축 음수)
+        distanceMapSize_summer[0] = 13.79f;
+        distanceMapSize_summer[1] = 8.36f;
+
+        #endregion 여름 지도 초기 설정
+
+        #region 가을 지도 초기 설정
+
+        // 실제 지형과 지도 이미지의 실제 거리 차이
+        dragMap_autumn[0] = 1000f;
+        dragMap_autumn[1] = 2500f;
+        // 실제 지형과 지도 이미지의 축적 배율
+        multipleMapSize_autumn[0] = 1.82f;
+        multipleMapSize_autumn[1] = 2.92f;
+        // 실제 지형과 지도 이미지의 중심 축 이동 배율 값 (x 축 음수, z 축 음수)
+        distanceMapSize_autumn[0] = 10.98f;
+        distanceMapSize_autumn[1] = 109.58f;
+        // 가을 지도에서만 실제 맵에서 중심축이 3371 / 1850
+        pivotAutumnSize[0] = 3371f;
+        pivotAutumnSize[1] = 1850f;
+        //pivotAutumnSize[1] = 1850f;
+
+        #endregion 가을 지도 초기 설정
     }     // Awake()
 
     void Start()
@@ -73,31 +163,71 @@ public class MapControl : MonoBehaviour
         onMapQuestTf.GetComponent<MapMarkInfo>().StartInfoSetting("진행 가능한 퀘스트", false, 0);
 
         // 체크포인트들의 정보를 저장하고, 맵 상의 체크포인트 위치값을 계산하여 배치하는 함수를 실행
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < 2; i++)
         {
             Vector3 saveCheckPointPos = new Vector3(checkPointPosX[i], 5f, checkPointPosZ[i]);
 
             onMapWarpTf[i].GetComponent<MapMarkInfo>().StartInfoSetting("활성화된 체크 포인트", true, i);
-            SettingOnMapCheckPoint(i, saveCheckPointPos);
+            SettingOnMapCheckPoint(i, saveCheckPointPos, 0);
 
             //checkPointDic.Add(i + 1, saveCheckPointPos);
         }
 
+        for (int j = 2; j < 5; j++)
+        {
+            Vector3 saveCheckPointPos2 = new Vector3(checkPointPosX[j], 5f, checkPointPosZ[j]);
+
+            onMapWarpTf[j].GetComponent<MapMarkInfo>().StartInfoSetting("활성화된 체크 포인트", true, j);
+            SettingOnMapCheckPoint(j, saveCheckPointPos2, 1);
+        }
+
+        for (int n = 5; n < 12; n++)
+        {
+            Vector3 saveCheckPointPos3 = new Vector3(checkPointPosX[n], 5f, checkPointPosZ[n]);
+
+            onMapWarpTf[n].GetComponent<MapMarkInfo>().StartInfoSetting("활성화된 체크 포인트", true, n);
+            SettingOnMapCheckPoint(n, saveCheckPointPos3, 2);
+        }
         //AccountMapSize();
     }     // Start()
 
     // 게임 시작 시 맵 상의 체크포인트 위치값을 계산하여 배치하는 함수
-    private void SettingOnMapCheckPoint(int count, Vector3 checkPointPos)
+    private void SettingOnMapCheckPoint(int count, Vector3 checkPointPos, int mapType)
     {
         float[] countPos = new float[2];
 
-        // 실제 지형과 지도상의 배율, 거리값을 계산하여 실제 위치값을 계산하여 값을 내보내는 함수에 X 축 위치값을 계산하여 가져옴
-        CountDistanceMap(checkPointPos.x, 0, out countPos[0]);
-        // 실제 지형과 지도상의 배율, 거리값을 계산하여 실제 위치값을 계산하여 값을 내보내는 함수에 Z 축 위치값을 계산하여 가져옴
-        CountDistanceMap(checkPointPos.z, 1, out countPos[1]);
+        switch (mapType)
+        {
+            case 0:
+                // 실제 지형과 지도상의 배율, 거리값을 계산하여 실제 위치값을 계산하여 값을 내보내는 함수에 X 축 위치값을 계산하여 가져옴
+                CountDistanceMap(checkPointPos.x, 0, 0, out countPos[0]);
+                // 실제 지형과 지도상의 배율, 거리값을 계산하여 실제 위치값을 계산하여 값을 내보내는 함수에 Z 축 위치값을 계산하여 가져옴
+                CountDistanceMap(checkPointPos.z, 1, 0, out countPos[1]);
 
-        // 지도상의 체크포인트 위치를 실제 맵의 체크포인트 위치와 동기화
-        onMapWarpTf[count].position = new Vector3(countPos[0], 50f, countPos[1]);
+                // 지도상의 체크포인트 위치를 실제 맵의 체크포인트 위치와 동기화
+                onMapWarpTf[count].position = new Vector3(countPos[0], 50f, countPos[1]);
+                break;
+            case 1:
+                // 실제 지형과 지도상의 배율, 거리값을 계산하여 실제 위치값을 계산하여 값을 내보내는 함수에 X 축 위치값을 계산하여 가져옴
+                CountDistanceMap(checkPointPos.x, 0, 1, out countPos[0]);
+                // 실제 지형과 지도상의 배율, 거리값을 계산하여 실제 위치값을 계산하여 값을 내보내는 함수에 Z 축 위치값을 계산하여 가져옴
+                CountDistanceMap(checkPointPos.z, 1, 1, out countPos[1]);
+
+                // 지도상의 체크포인트 위치를 실제 맵의 체크포인트 위치와 동기화
+                onMapWarpTf[count].position = new Vector3(countPos[0], 50f, countPos[1]);
+                break;
+            case 2:
+                // 실제 지형과 지도상의 배율, 거리값을 계산하여 실제 위치값을 계산하여 값을 내보내는 함수에 X 축 위치값을 계산하여 가져옴
+                CountDistanceMap(checkPointPos.x, 0, 2, out countPos[0]);
+                // 실제 지형과 지도상의 배율, 거리값을 계산하여 실제 위치값을 계산하여 값을 내보내는 함수에 Z 축 위치값을 계산하여 가져옴
+                CountDistanceMap(checkPointPos.z, 1, 2, out countPos[1]);
+
+                // 지도상의 체크포인트 위치를 실제 맵의 체크포인트 위치와 동기화
+                onMapWarpTf[count].position = new Vector3(countPos[0], 50f, countPos[1]);
+                break;
+            default:
+                break;
+        }
     }     // SettingOnMapCheckPoint()
 
     // 지도를 열고 UI 를 활성화 하는 함수
@@ -119,6 +249,7 @@ public class MapControl : MonoBehaviour
     // 지도를 열 때 지도상의 카메라의 위치를 초기화 시키는 함수
     private void ResetCamera()
     {
+        CheckMapType();
         // 지도상의 플레이어 표식 위치를 실제 플레이어 위치에 기반해 계산하여 위치를 변경하는 함수를 실행
         OnMapPlayerSetting();
 
@@ -128,60 +259,163 @@ public class MapControl : MonoBehaviour
         mapCameraTf.GetComponent<Rigidbody>().velocity = Vector3.zero;
     }     // ResetCamera()
 
+    private void CheckMapType()
+    {
+        string sceneName = SceneManager.GetActiveScene().name;
+
+        if (sceneName == "Meen_SpringScene")
+        {
+            moveMapCheck = 1;
+        }
+        else
+        {
+            moveMapCheck = 0;
+        }
+    }
+
     // 지도를 활성화할 때 지도상의 플레이어 표식 위치를 실제 플레이어 위치에 기반해 계산하여 위치를 변경하는 함수
     private void OnMapPlayerSetting()
     {
         float[] countPosition = new float[2];
 
         // 실제 지형과 지도상의 배율, 거리값을 계산하여 실제 위치값을 계산하여 값을 내보내는 함수에 X 축 위치값을 계산하여 가져옴
-        CountDistanceMap(playerTf.position.x, 0, out countPosition[0]);
+        CountDistanceMap(playerTf.position.x, 0, moveMapCheck, out countPosition[0]);
         // 실제 지형과 지도상의 배율, 거리값을 계산하여 실제 위치값을 계산하여 값을 내보내는 함수에 Z 축 위치값을 계산하여 가져옴
-        CountDistanceMap(playerTf.position.z, 1, out countPosition[1]);
+        CountDistanceMap(playerTf.position.z, 1, moveMapCheck, out countPosition[1]);
 
         // 지도상의 플레이어 위치를 실제 맵의 플레이어 위치와 동기화
         onMapPlayerTf.position = new Vector3(countPosition[0], 50f, countPosition[1]);
     }     // OnMapPlayerSetting()
 
     // 실제 지형과 지도상의 배율, 거리값을 계산하여 실제 위치값을 계산하여 값을 내보내는 함수
-    private float CountDistanceMap(float pos, int dir, out float countPos)
+    private float CountDistanceMap(float pos, int dir, int mapType, out float countPos)
     {
         float count = 0f;
-        // X 축, Z 축 계산 구분
-        switch (dir)
-        {
-            // X 축
-            case 0:
-                // 실제 맵상에 X 축 위치값이 양수 일 때
-                if (pos >= 0)
-                {
-                    count = (pos * multipleMapSize[dir]) - distanceMapSize[dir];
-                }
-                // 실제 맵상에 X 축 위치값이 음수 일 때
-                else
-                {
-                    count = (pos * multipleMapSize[dir]) + distanceMapSize[dir];
-                }
-                break;
-            // Z 축
-            case 1:
-                // 실제 맵상에 Z 축 위치값이 양수 일 때
-                if (pos >= 0)
-                {
-                    count = (pos * multipleMapSize[dir]) + distanceMapSize[dir];
-                }
-                // 실제 맵상에 Z 축 위치값이 음수 일 때
-                else
-                {
-                    count = (pos * multipleMapSize[dir]) - distanceMapSize[dir];
-                }
-                break;
-            default:
-                count = 0f;
-                break;
-        }
 
-        // 계산된 결과에 실제 맵과 지도맵의 거리 차이값을 더해줌
-        countPos = dragMap[dir] + count;
+        // 봄 지도 축적 계산
+        if (mapType == 0)
+        {
+            // X 축, Z 축 계산 구분
+            switch (dir)
+            {
+                // X 축
+                case 0:
+                    // 실제 맵상에 X 축 위치값이 양수 일 때
+                    if (pos >= 0)
+                    {
+                        count = (pos * multipleMapSize_spring[dir]) - distanceMapSize_spring[dir];
+                    }
+                    // 실제 맵상에 X 축 위치값이 음수 일 때
+                    else
+                    {
+                        count = (pos * multipleMapSize_spring[dir]) + distanceMapSize_spring[dir];
+                    }
+                    break;
+                // Z 축
+                case 1:
+                    // 실제 맵상에 Z 축 위치값이 양수 일 때
+                    if (pos >= 0)
+                    {
+                        count = (pos * multipleMapSize_spring[dir]) + distanceMapSize_spring[dir];
+                    }
+                    // 실제 맵상에 Z 축 위치값이 음수 일 때
+                    else
+                    {
+                        count = (pos * multipleMapSize_spring[dir]) - distanceMapSize_spring[dir];
+                    }
+                    break;
+                default:
+                    count = 0f;
+                    break;
+            }
+
+            // 계산된 결과에 실제 맵과 지도맵의 거리 차이값을 더해줌
+            countPos = dragMap_spring[dir] + count;
+        }
+        // 여름 지도 축적 계산
+        else if (mapType == 1)
+        {
+            // X 축, Z 축 계산 구분
+            switch (dir)
+            {
+                // X 축
+                case 0:
+                    // 실제 맵상에 X 축 위치값이 양수 일 때
+                    if (pos >= 0)
+                    {
+                        count = (pos * multipleMapSize_summer[dir]) + distanceMapSize_summer[dir];
+                    }
+                    // 실제 맵상에 X 축 위치값이 음수 일 때
+                    else
+                    {
+                        count = (pos * multipleMapSize_summer[dir]) - distanceMapSize_summer[dir];
+                    }
+                    break;
+                // Z 축
+                case 1:
+                    // 실제 맵상에 Z 축 위치값이 양수 일 때
+                    if (pos >= 0)
+                    {
+                        count = (pos * multipleMapSize_summer[dir]) - distanceMapSize_summer[dir];
+                    }
+                    // 실제 맵상에 Z 축 위치값이 음수 일 때
+                    else
+                    {
+                        count = (pos * multipleMapSize_summer[dir]) + distanceMapSize_summer[dir];
+                    }
+                    break;
+                default:
+                    count = 0f;
+                    break;
+            }
+
+            // 계산된 결과에 실제 맵과 지도맵의 거리 차이값을 더해줌
+            countPos = dragMap_summer[dir] + count;
+        }
+        else if (mapType == 2)
+        {
+            float disPos = pos - pivotAutumnSize[dir];
+            // X 축, Z 축 계산 구분
+            switch (dir)
+            {
+                // X 축
+                case 0:
+                    // 실제 맵상에 X 축 위치값이 양수 일 때
+                    if (disPos >= 0)
+                    {
+                        count = (disPos * multipleMapSize_autumn[dir]) - distanceMapSize_autumn[dir];
+                    }
+                    // 실제 맵상에 X 축 위치값이 음수 일 때
+                    else
+                    {
+                        count = (disPos * multipleMapSize_autumn[dir]) + distanceMapSize_autumn[dir];
+                    }
+                    break;
+                // Z 축
+                case 1:
+                    // 실제 맵상에 Z 축 위치값이 양수 일 때
+                    if (pos >= 0)
+                    {
+                        count = (disPos * multipleMapSize_autumn[dir]) + distanceMapSize_autumn[dir];
+                    }
+                    // 실제 맵상에 Z 축 위치값이 음수 일 때
+                    else
+                    {
+                        count = (disPos * multipleMapSize_autumn[dir]) + distanceMapSize_autumn[dir];
+                    }
+                    break;
+                default:
+                    count = 0f;
+                    break;
+            }
+
+            // 계산된 결과에 실제 맵과 지도맵의 거리 차이값을 더해줌
+            countPos = dragMap_autumn[dir] + count;
+        }
+        else
+        {
+            countPos = 0;
+        }
         
         return countPos;
     }     // CountDistanceMap()

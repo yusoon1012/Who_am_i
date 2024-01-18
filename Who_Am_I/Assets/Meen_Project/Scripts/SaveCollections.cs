@@ -6,6 +6,8 @@ public class SaveCollections : MonoBehaviour
 {
     // 컬렉션 정보 트랜스폼
     private Transform collectionInfoTf = default;
+
+    private Transform mainObjTf = default;
     // 컬렉션 타이틀들의 달성 여부 체크
     private bool[] collectionGroupCheck = new bool[10];
     // 컬렉션 타이틀을 달성하기 위한 조건 아이템들 목록
@@ -13,37 +15,49 @@ public class SaveCollections : MonoBehaviour
     // 컬렉션 타이틀을 달성하기 위한 조건 아이템들 갯수
     private int[] collectionItemMaxNum = new int[10];
     // 컬렉션 타이틀의 이름 정보 목록
-    private string[] titleName = new string[10];
+    private string[] titleName = new string[12];
     // 컬렉션 타이틀의 정보 목록
     private string[] titleInfo = new string[10];
     // 컬렉션 타이틀의 효과 정보 목록
-    private string[] titleEffect = new string[10];
+    private string[] titleEffect = new string[12];
     
     // 컬렉션 타이틀을 달성하기 위한 조건 아이템들 달성 여부 체크 딕셔너리
     Dictionary<string, bool> collectionItemDic = new Dictionary<string, bool>();
 
     void Start()
     {
+        mainObjTf = GetComponent<Transform>().transform;
         collectionInfoTf = GetComponent<Transform>().transform;
 
-        collectionItemDic.Add("고기", false);
-        collectionItemDic.Add("딸기", false);
-        collectionItemDic.Add("우유", false);
+        titleName[10] = "Empty";
+        titleName[11] = "Empty";
+        titleEffect[10] = "Empty";
+        titleEffect[11] = "Empty";
 
-        collectionItemCheck[0, 0] = "고기";
-        collectionItemCheck[0, 1] = "딸기";
-        collectionItemCheck[0, 2] = "우유";
+        //collectionItemDic.Add("고기", false);
+        //collectionItemDic.Add("딸기", false);
+        //collectionItemDic.Add("우유", false);
 
-        collectionItemMaxNum[0] = 3;
+        //collectionItemCheck[0, 0] = "고기";
+        //collectionItemCheck[0, 1] = "딸기";
+        //collectionItemCheck[0, 2] = "우유";
 
-        titleName[0] = "아이템 수집가";
-        titleInfo[0] = "당신은 모든 아이템을 수집하고 싶은 도전 의식이 있습니다!";
-        titleEffect[0] = "포만감 최대치 증가";
+        //collectionItemMaxNum[0] = 3;
+        //titleName[0] = "아이템 수집가";
+        //titleEffect[0] = "포만감 최대치 증가";
     }     // Start()
 
-    public void SettingCollectionInfo()
+    public void SettingTitleInfo(string title, string note, int downCount, int count)
     {
+        titleName[count] = title;
+        titleEffect[count] = note;
+        collectionItemMaxNum[count] = downCount;
+    }     // SettingTitleInfo()
 
+    public void SettingCollectionInfo(string name, int groupNum, int countNum)
+    {
+        collectionItemDic.Add(name, false);
+        collectionItemCheck[groupNum, countNum] = name;
     }     // SettingCollectionInfo()
 
     // 아이템을 획득할 때 마다 컬렉션을 목록을 체크하여 컬렉션에 등록되어 있지 않으면 등록하는 함수
@@ -124,6 +138,17 @@ public class SaveCollections : MonoBehaviour
         return collectionCheck;
     }     // ReturnCollectionItems()
 
+    ////* After Fix : 컬렉션 정보 불러오기 기능
+    //public string[] AllReturnCollectionItems(out string[] collections)
+    //{
+    //    foreach (KeyValuePair<string, bool> encyclopediaInfos in collectionItemDic)
+    //    {
+
+    //    }
+
+    //    return collections;
+    //}     // AllReturnCollectionItems()
+
     // 컬렉션 타이들의 정보를 내보내는 함수
     public string ReturnTitleInfo(int count, int type, out string titleInfo_)
     {
@@ -135,12 +160,12 @@ public class SaveCollections : MonoBehaviour
                 break;
             case 1:
                 // 참조된 값이 1 이면 타이틀의 정보를 내보냄
-                titleInfo_ = titleInfo[count];
-                break;
-            case 2:
-                // 참조된 값이 2 면 타이틀의 효과 정보를 내보냄
                 titleInfo_ = titleEffect[count];
                 break;
+            //case 2:
+            //    // 참조된 값이 2 면 타이틀의 효과 정보를 내보냄
+            //    titleInfo_ = titleEffect[count];
+            //    break;
             default:
                 titleInfo_ = null;
                 break;
