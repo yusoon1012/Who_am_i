@@ -43,8 +43,8 @@ public class VRIFSceneManager : MonoBehaviour
 
     public class SeasonName
     {
-        public static string spring { get; private set; } = "M_Spring_Scene"; // TODO: 이후 수정 필요 
-        public static string summer { get; private set; } = "M_Summer_Scene";
+        public static string spring { get; private set; } = "Main_Spring"; // TODO: 이후 수정 필요 
+        public static string summer { get; private set; } = "Main_Summer";
         public static string fall { get; private set; } = "Fall_Scene";
         public static string winter { get; private set; } = "Winter_Scene";
         public static string passage { get; private set; } = "M_Passage_Scene"; // 로딩씬
@@ -69,25 +69,28 @@ public class VRIFSceneManager : MonoBehaviour
         playerRotation = playerController.GetComponent<PlayerRotation>();
 
         // <Meen Change>
-        //TestSetting();
-        
+        FirstSetting();
+
         /// <Point> SceneManager를 통한 씬 오픈이라면 일단 작동한다. 
         SceneManager.sceneLoaded += PlayerSetting; // 씬 전환이 완벽히 이뤄지면 해당 이벤트가 발생한다. 
     }
 
     // <Meen Change>
-    ///// <summary>
-    ///// 타이틀씬 연결 전에 쓸 임시 세팅 메서드
-    ///// </summary>
-    //private void TestSetting()
-    //{ 
-    //    Transform birthPos = GameObject.FindGameObjectWithTag("BirthPos").transform;
+    /// <summary>
+    /// 타이틀씬 연결 전에 쓸 임시 세팅 메서드
+    /// </summary>
+    private void FirstSetting()
+    {
+        if (GameObject.FindGameObjectWithTag("BirthPos") != null)
+        {
+            Transform birthPos = GameObject.FindGameObjectWithTag("BirthPos").transform;
 
-    //    characterController.enabled = false;
-    //    playerController.position = birthPos.position;
-    //    playerController.rotation = birthPos.rotation;
-    //    characterController.enabled = true;
-    //}
+            characterController.enabled = false;
+            playerController.position = birthPos.position;
+            playerController.rotation = birthPos.rotation;
+            characterController.enabled = true;
+        }
+    }
 
     // if (Input.GetKeyDown(KeyCode.R)) { LoadCheckPoint("Summer", 2); } // 체크포인트를 이용한 이동 예시 
     // if (Input.GetKeyDown(KeyCode.L)) { StartCoroutine(LoadHallScene("Summer")); } // 로딩통로를 이용한 이동 예시 
@@ -125,18 +128,22 @@ public class VRIFSceneManager : MonoBehaviour
         {
             case "Spring":
                 sceneName = SeasonName.spring;
+                ClearWinterEffect();
                 break;
 
             case "Summer":
                 sceneName = SeasonName.summer;
+                ClearWinterEffect();
                 break;
 
             case "Fall":
                 sceneName = SeasonName.fall;
+                ClearWinterEffect();
                 break;
 
             case "Winter":
                 sceneName = SeasonName.winter;
+                WinterEffect(); // 겨울 패널티 발생 
                 break;
         }
 
@@ -227,18 +234,22 @@ public class VRIFSceneManager : MonoBehaviour
         {
             case "Spring":
                 regionName = SeasonName.spring;
+                ClearWinterEffect();
                 break;
 
             case "Summer":
                 regionName = SeasonName.summer;
+                ClearWinterEffect();
                 break;
 
             case "Fall":
                 regionName = SeasonName.fall;
+                ClearWinterEffect();
                 break;
 
             case "Winter":
                 regionName = SeasonName.winter;
+                WinterEffect(); // 겨울 패널티 발생
                 break;
         }
 
@@ -289,5 +300,21 @@ public class VRIFSceneManager : MonoBehaviour
         locomotionManager.enabled = true; // 플레이어 위치시킨 후 이동 재활성화
         smoothLocomotion.enabled = true;
         playerRotation.enabled = true; // 회전 재활성화
+    }
+
+    /// <summary>
+    /// 겨울이 아닌 다른 맵에 진입시 패널티 제거
+    /// </summary>
+    private void ClearWinterEffect()
+    {
+        VRIFStatusSystem.Instance.hungerTimer = VRIFStatusSystem.Instance.hungerTimer_Origin;
+    }
+
+    /// <summary>
+    /// 겨울 맵에 진입시 패널티 발생
+    /// </summary>
+    private void WinterEffect()
+    {
+        VRIFStatusSystem.Instance.hungerTimer = VRIFStatusSystem.Instance.winterHungerTimer;
     }
 }

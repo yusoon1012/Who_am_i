@@ -36,6 +36,9 @@ public class VRIFTool_NerfGun : MonoBehaviour
     // Audio Source
     private AudioSource audioSource = default;
 
+    // 대상 사냥감
+    private GameObject prey = default;
+
     private void Awake()
     {
         if (Instance == null)
@@ -61,7 +64,9 @@ public class VRIFTool_NerfGun : MonoBehaviour
     private void Start()
     {
         trajectory.positionCount = 2; // 궤적의 포인트는 두 개 
-        VRIFInputSystem.Instance.slowMode += ActivateSlowTime; 
+
+        VRIFInputSystem.Instance.slowMode += ActivateSlowTime;
+        vrifAction.Player.RightTrigger.performed += ctx => Shoot();
 
         audioSource = GetComponent<AudioSource>();
     }
@@ -89,14 +94,11 @@ public class VRIFTool_NerfGun : MonoBehaviour
                 pointer.position = hit.point;
                 trajectoryPos[1] = pointer.position;
 
-                if (vrifAction.Player.RightTrigger.triggered || testAction.Test.Click.triggered)
-                {
-                    GameObject prey = hit.transform.gameObject;
-                    Shoot(prey);
-                }
+                prey = hit.transform.gameObject;
             }
             else // 어느 경우에도 해당하지 않을때
             {
+                prey = null;
                 ClearTrajectory();
             }
         }
@@ -119,13 +121,13 @@ public class VRIFTool_NerfGun : MonoBehaviour
     /// <summary>
     /// 총을 발사한다. 
     /// </summary>
-    private void Shoot(GameObject _prey)
+    private void Shoot()
     {
-        if (_prey.layer == LayerMask.NameToLayer("Animal"))
+        if ((prey != null) && (prey.layer == LayerMask.NameToLayer("Animal")))
         {
-            if (_prey.GetComponent<Animal>())
+            if (prey.GetComponent<Animal>())
             {
-                _prey.GetComponent<Animal>().Hit(1); // 1만큼 데미지
+                prey.GetComponent<Animal>().Hit(1); // 1만큼 데미지
                 QuestManager_Jun.instance.CheckClear("Animal");
 
                 //QuestManager_Jun.instance.CheckClear(_prey.GetComponent<Animal>().data.name); // TODO: 수정 후 오픈 (현재 private이라 접근 불가)

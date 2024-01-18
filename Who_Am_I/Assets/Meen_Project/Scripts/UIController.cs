@@ -62,6 +62,10 @@ public class UIController : MonoBehaviour
         mainObjTf.GetComponent<Inventory>().AddInventory("너프건", 1);
         mainObjTf.GetComponent<Inventory>().AddInventory("곤충 채집망", 1);
         mainObjTf.GetComponent<Inventory>().AddInventory("낚시대", 1);
+
+        // <Solbin> A키 매핑 
+        vrifAction.Player.UI_Click.performed += ctx => OnOffControl(0);
+        // ===
     }     // Start()
 
     void Update()
@@ -160,10 +164,6 @@ public class UIController : MonoBehaviour
         // 모든 뒤로가기 키 입력 값
         else if (Input.GetKeyDown(KeyCode.X) || vrifAction.Player.UI_Exit.triggered) // <Solbin> Exit Menu
         {
-            // <Solbin> 선택 키 감 개선 (키 매핑이 풀리는 문제가 있어 이곳에 삽입)
-            vrifAction.Player.UI_Click.performed += ctx => OnOffControl(0);
-            // <Solbin> ===
-
             OnOffControl(1);
 
             //if (vrifStateSystem.gameState == VRIFStateSystem.GameState.UI) // <Solbin> UI 상태일때
