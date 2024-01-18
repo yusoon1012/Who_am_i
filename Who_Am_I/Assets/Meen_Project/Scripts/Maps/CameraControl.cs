@@ -61,6 +61,8 @@ public class CameraControl : MonoBehaviour
 
     private int warpOrder = default;
 
+    private float[,] pivotMaps = new float[4, 2];
+
     //// 지도상의 플레이어 트랜스폼
     //public Transform onMapPlayerTf;
 
@@ -73,6 +75,19 @@ public class CameraControl : MonoBehaviour
         changeAlphaCount = 0.05f;
         changeAlphaTime = 0.04f;
         mapTypeCheck = 0;
+
+        // 봄 지도의 중심점 좌표
+        pivotMaps[0, 0] = 1000f;
+        pivotMaps[0, 1] = 1000f;
+        // 여름 지도의 중심점 좌표
+        pivotMaps[1, 0] = 2000f;
+        pivotMaps[1, 1] = 1000f;
+        // 가을 지도의 중심점 좌표
+        pivotMaps[2, 0] = 1000f;
+        pivotMaps[2, 1] = 2500f;
+        // 겨울 지도의 중심점 좌표
+        pivotMaps[3, 0] = 2000f;
+        pivotMaps[3, 1] = 2500f;
 
         // 봄 지도의 카메라 한계값
         mapLimitCamera[0, 0] = 1460f;
@@ -461,4 +476,44 @@ public class CameraControl : MonoBehaviour
     {
         mapCamera.orthographicSize = 150f;
     }     // EndMapCamera()
+
+    public void ChangeMaps(int arrowType)
+    {
+        int changeMap = 0;
+
+        switch (arrowType)
+        {
+            case 2:
+                if (mapTypeCheck == 0)
+                {
+                    changeMap = 3;
+                }
+                else
+                {
+                    changeMap = mapTypeCheck - 1;
+                }
+                break;
+            case 3:
+                if (mapTypeCheck == 3)
+                {
+                    changeMap = 0;
+                }
+                else
+                {
+                    changeMap = mapTypeCheck + 1;
+                }
+                break;
+            default:
+                break;
+        }
+
+        ChangeCamera(changeMap);
+    }     // ChangeMaps()
+
+    private void ChangeCamera(int mapType)
+    {
+        mapCamera.transform.position = new Vector3(pivotMaps[mapType, 0], 500f, pivotMaps[mapType, 1]);
+
+        mapTypeCheck = mapType;
+    }     // ChangeCamera()
 }

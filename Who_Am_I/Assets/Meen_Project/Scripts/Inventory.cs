@@ -1040,19 +1040,21 @@ public class Inventory : MonoBehaviour
             // 사용한 음식의 응가 게이지 증가량
             int foodPooGauge = itemInfomation.pooGauge;
 
-            switch (foodEffectType)
-            {
-                // 음식 효과 타입이 1 이면
-                case 1:
-                    playerStatusScript.GetFood(foodSatietyGauge, foodPooGauge);
-                    break;
-                // 음식 효과 타입이 2 이면
-                case 2:
-                    //* 음식 효과 타입이 2 면 기능 추가 예정
-                    break;
-                default:
-                    break;
-            }
+            playerStatusScript.GetFood(foodSatietyGauge, foodPooGauge);
+
+            //switch (foodEffectType)
+            //{
+            //    // 음식 효과 타입이 1 이면
+            //    case 1:
+                    
+            //        break;
+            //    // 음식 효과 타입이 2 이면
+            //    case 2:
+            //        //* 음식 효과 타입이 2 면 기능 추가 예정
+            //        break;
+            //    default:
+            //        break;
+            //}
         }
     }     // UseFoods()
 

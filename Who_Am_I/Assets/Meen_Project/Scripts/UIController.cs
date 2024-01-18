@@ -172,6 +172,11 @@ public class UIController : MonoBehaviour
             //    vrifStateSystem.ChangeState(VRIFStateSystem.GameState.NORMAL); // <Solbin> NORMAL 상태로 전환
             //}
         }
+        //* TODO : VR 컨트롤러에서 Y 키를 눌렀을 때 작동되는 기능
+        else if (Input.GetKeyDown(KeyCode.A))
+        {
+            InputYKeyDown();
+        }
         // 모든 두번째 상, 하, 좌, 우 키보드 키 입력 값
         else if (Input.GetKeyDown(KeyCode.Keypad8) || vrifAction.Player.RightController.ReadValue<Vector2>().y >= joystickInput)
         {
@@ -272,6 +277,14 @@ public class UIController : MonoBehaviour
 
     #region DirectionControl()
 
+    private void InputYKeyDown()
+    {
+        if (uiController == 12)
+        {
+            DialogManager.instance.InputDialog();
+        }
+    }
+
     // 모든 UI 에서 방향키 입력을 받아 전달하는 함수
     public void DirectionControl(int arrowType)
     {
@@ -359,7 +372,12 @@ public class UIController : MonoBehaviour
                 mainObjTf.GetComponent<Dictionary>().OtherChangeOrder(arrowType);
                 break;
             case 10:
-                if (arrowType == 0 || arrowType == 1) { mapCameraTf.GetComponent<CameraControl>().CheckInCamera(arrowType); }
+                if (arrowType == 2 || arrowType == 3)
+                {
+                    mapCameraTf.GetComponent<CameraControl>().ChangeMaps(arrowType);
+                }
+
+                //if (arrowType == 0 || arrowType == 1) { mapCameraTf.GetComponent<CameraControl>().CheckInCamera(arrowType); }
                 break;
             default:
                 break;
@@ -428,9 +446,6 @@ public class UIController : MonoBehaviour
                     break;
                 case 11:
                     mapCameraTf.GetComponent<CameraControl>().SelectCheckPointButton();
-                    break;
-                case 12:
-                    DialogManager.instance.InputDialog();
                     break;
                 case 13:
                     uiController = 4;

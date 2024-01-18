@@ -111,6 +111,21 @@ public class SaveCollections : MonoBehaviour
             // 해당 컬렉션 타이들의 달성을 완료 상태로 변경
             collectionGroupCheck[itemNum] = true;
 
+            switch (itemNum)
+            {
+                case 0:
+                    VRIFStatusSystem.Instance.GetPizza();
+                    break;
+                case 1:
+                    VRIFStatusSystem.Instance.GetYuja();
+                    break;
+                case 2:
+                    VRIFStatusSystem.Instance.GetMushroomBulgogi();
+                    break;
+                default:
+                    break;
+            }
+
             Debug.LogFormat("컬렉션 {0} 그룹 완성!", itemNum);
         }
     }     // CheckCollectionGroup()
