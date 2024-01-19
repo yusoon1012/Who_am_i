@@ -237,7 +237,7 @@ public class VRIFTool_FishingRod : MonoBehaviour
                 if (!checkOne)
                 {
                     checkOne = true;
-                    QuestManager_Jun.instance.CheckClear("1"); // 낚시 성공 int값 보내기 
+                    QuestManager_Jun.instance.CheckClear("Fishing"); // 낚시 성공 int값 보내기 
                 }
 
                 fishingEvent?.Invoke(this, EventArgs.Empty); // 낚시 완료 이벤트 발생

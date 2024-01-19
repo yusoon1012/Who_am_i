@@ -190,17 +190,13 @@ public class Npc : MonoBehaviour
         QuestManager_Jun.instance.SetCurrentQuestState(QuestState_Jun.ACCEPTED);
         QuestManager_Jun.instance.SetCurrentQuestInterface();
         QuestManager_Jun.instance.QuestCompensation();
-        Debug.Log("부름");
         QuestManager_Jun.instance.CallEvent();
     }
 
     private void SetNpcTalk(string _text)
     {
-        DialogManager.instance.PrintDialog(this.name, _text);
-        //GameManager.instance.player.GetComponent<Inventory>().AddInventory(_text,)
-        // TODO 경민이형 과 상호작용해서 대화문 출력
-        // 이때 STRING 과 NPC 이름 보낸다.
-        // 잘생긴 준오가 요상한 경민이형의 스크립트 다이얼로그 꺼주는 스크립트 제작
+        DialogManager.instance.PrintText(this.name, _text);
+
         Debug.Log(_text);
     }
     #endregion
@@ -223,11 +219,8 @@ public class Npc : MonoBehaviour
             player = null;
 
             StopAllCoroutine();
+            DialogManager.instance.NonPrintText();
         }
     }
-    #endregion
-
-    #region CustomSet
-    
     #endregion
 }

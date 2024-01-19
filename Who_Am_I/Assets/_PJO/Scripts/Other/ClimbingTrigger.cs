@@ -10,7 +10,7 @@ public class ClimbingTrigger : MonoBehaviour
         {
             if (this.name == QuestManager_Jun.instance.currentQuest.ToString())
             {
-                QuestManager_Jun.instance.CheckClear("등반");
+                QuestManager_Jun.instance.CheckClear("Climbing");
             }
         }
     }

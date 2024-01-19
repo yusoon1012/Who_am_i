@@ -69,7 +69,7 @@ public class QuestManager_Jun : MonoBehaviour
             stringTable["Goal_Main_Quest_0001"],
             new List<int> { 1 },
             new List<int> { 0 },
-            default,
+            null,
             questTable["10001"]["REWARD"],
             questTable["10001"]["MBTIVALUE1"],
             questTable["10001"]["MBTIVALUE2"],
@@ -133,7 +133,7 @@ public class QuestManager_Jun : MonoBehaviour
             stringTable["Goal_Main_Quest_0005"],
             new List<int> { 1 },
             new List<int> { 0 },
-            default,
+            null,
             questTable["10005"]["REWARD"],
             null,
             null,
@@ -213,7 +213,7 @@ public class QuestManager_Jun : MonoBehaviour
             stringTable["Goal_Main_Quest_0010"],
             new List<int> { 1 },
             new List<int> { 0 },
-            default,
+            null,
             questTable["10010"]["REWARD"],
             null,
             null,
@@ -229,7 +229,7 @@ public class QuestManager_Jun : MonoBehaviour
             stringTable["Goal_Main_Quest_0011"],
             new List<int> { 1 },
             new List<int> { 0 },
-            default,
+            null,
             questTable["10011"]["REWARD"],
             questTable["10011"]["MBTIVALUE1"],
             questTable["10011"]["MBTIVALUE2"],
@@ -245,7 +245,7 @@ public class QuestManager_Jun : MonoBehaviour
             stringTable["Goal_Main_Quest_0012"],
             new List<int> { 3 },
             new List<int> { 0 },
-            default,
+            null,
             questTable["10012"]["REWARD"],
             questTable["10012"]["MBTIVALUE1"],
             questTable["10012"]["MBTIVALUE2"],
@@ -261,7 +261,7 @@ public class QuestManager_Jun : MonoBehaviour
             stringTable["Goal_Main_Quest_0013"],
             new List<int> { 3, 3 },
             new List<int> { 0, 0 },
-            default,
+            null,
             questTable["10013"]["REWARD"],
             questTable["10013"]["MBTIVALUE1"],
             questTable["10013"]["MBTIVALUE2"],
@@ -277,7 +277,7 @@ public class QuestManager_Jun : MonoBehaviour
             stringTable["Goal_Main_Quest_0014"],
             new List<int> { 1 },
             new List<int> { 0 },
-            default,
+            null,
             questTable["10014"]["REWARD"],
             questTable["10014"]["MBTIVALUE1"],
             questTable["10014"]["MBTIVALUE2"],
@@ -293,7 +293,7 @@ public class QuestManager_Jun : MonoBehaviour
             stringTable["Goal_Main_Quest_0015"],
             new List<int> { 1 },
             new List<int> { 0 },
-            default,
+            null,
             questTable["10015"]["REWARD"],
             null,
             null,
@@ -309,7 +309,7 @@ public class QuestManager_Jun : MonoBehaviour
             stringTable["Goal_Main_Quest_0016"],
             new List<int> { 1 },
             new List<int> { 0 },
-            default,
+            null,
             questTable["10016"]["REWARD"],
             questTable["10016"]["MBTIVALUE1"],
             questTable["10016"]["MBTIVALUE2"],
@@ -373,7 +373,7 @@ public class QuestManager_Jun : MonoBehaviour
             stringTable["Goal_Main_Quest_0020"],
             new List<int> { 1 },
             new List<int> { 0 },
-            default,
+            null,
             questTable["10020"]["REWARD"],
             null,
             null,
@@ -389,7 +389,7 @@ public class QuestManager_Jun : MonoBehaviour
             stringTable["Goal_Main_Quest_0021"],
             new List<int> { 1 },
             new List<int> { 0 },
-            default,
+            null,
             questTable["10021"]["REWARD"],
             null,
             null,
@@ -432,7 +432,7 @@ public class QuestManager_Jun : MonoBehaviour
         string _questGoal,
         List<int> _targetValues,
         List<int> _currentValues,
-        bool _isMBTIConditions,
+        bool? _isMBTIConditions,
         string _compensationItem,
         string _trueMBTI,
         string _falseMBTI,
@@ -504,7 +504,7 @@ public class QuestManager_Jun : MonoBehaviour
     public void QuestCompensation()
     {
         GameManager.instance.player.GetComponent<Inventory>().AddInventory(questList[currentQuest].compensationItem, 1);
-        GameManager.instance.AddMBTI(questList[currentQuest].isMBTIConditions ?
+        GameManager.instance.AddMBTI(questList[currentQuest].isMBTIConditions == true ?
             questList[currentQuest].trueMBTI : questList[currentQuest].falseMBTI);
 
         switch (currentQuest)
@@ -524,10 +524,13 @@ public class QuestManager_Jun : MonoBehaviour
     // 현재 진행중인 퀘스트가 완료 가능한지 체크
     public bool CheckQuestCompensation()
     {
-        if (questList[currentQuest].currentProgress != QuestState_Jun.PROGRESSED) { return false; }
-        if (questList[currentQuest].isMBTIConditions == default) { return false; }
-        if (ItemCheck() == false) { return false; }
+        Debug.Log(questList[currentQuest].isMBTIConditions);
 
+        if (questList[currentQuest].currentProgress != QuestState_Jun.PROGRESSED) { Debug.Log("0번쨰 문제"); return false; }
+        if (questList[currentQuest].isMBTIConditions == null) { Debug.Log("1번쨰 문제"); return false; }
+        if (ItemCheck() == false) { Debug.Log("2번쨰 문제"); return false; }
+
+        Debug.Log("문제없음");
         return true;
     }
 
@@ -578,38 +581,40 @@ public class QuestManager_Jun : MonoBehaviour
 
         switch (currentQuest)
         {
-            case 1: if (_text == "딸기") { CustomValue(0, 5); } break;
-            case 2: if (_text == "오리") { CustomValue(0, 5); } break;
+            case 1: if (_text == "Strawberry") { CustomValue(0, 5); } break;
+            case 2: if (_text == "Hog") { CustomValue(0, 5); } break;
             case 3: if (_text == "송이 불고기") { CustomValue(0, 1); } break;
-            case 5: if (_text == "물고기") { CustomValue(0, 5); } break;
+            case 5: if (_text == "Fishing") { CustomValue(0, 5); } break;
             case 6: if (_text == "삽") { CustomValue(0, 1); } break;
-            case 8: if (_text == "보물") { CustomValue(0, 5); } break;
-            case 10: if (_text == "등반") { CustomValue(0, 1); } break;
-            case 11: if (_text == "고구마") { CustomValue(0, 3); } break;
+            case 8: if (_text == "Matsutake") { CustomValue(0, 5); } break;
+            case 10: if (_text == "Climbing") { CustomValue(0, 1); } break;
+            case 11: if (_text == "SweetPotato") { CustomValue(0, 3); } break;
             case 12:
                 switch (_text)
                 {
-                    case "버팔로": CustomValue(0, 3); break;
-                    case "곰": CustomValue(0, 3); break;
-                    case "물고기": CustomValue(1, 3); break;
+                    case "Buffalo": CustomValue(0, 3); break;
+                    case "Bear": CustomValue(0, 3); break;
+                    case "Fishing": CustomValue(1, 3); break;
                 }
                 break;
-            case 13: if (_text == "대추") { CustomValue(0, 1); } break;
+            case 13: if (_text == "Jujube") { CustomValue(0, 1); } break;
             case 15: if (_text == "대추차") { CustomValue(0, 1); } break;
             case 17:
                 switch (_text)
                 {
-                    case "블루 베리": CustomValue(0, 1); break;
-                    case "대추": CustomValue(0, 1); break;
-                    case "무": CustomValue(0, 1); break;
-                    case "꿀": CustomValue(0, 1); break;
-                    case "물고기": CustomValue(1, 2); break;
-                    case "순록": CustomValue(2, 3); break;
-                    case "염소": CustomValue(2, 3); break;
+                    case "Blueberry": CustomValue(0, 1); break;
+                    case "Jujube": CustomValue(0, 1); break;
+                    case "Radish": CustomValue(0, 1); break;
+                    case "Honey": CustomValue(0, 1); break;
+                    case "Fishing": CustomValue(1, 2); break;
+                    case "Reindeer": CustomValue(2, 3); break;
+                    case "Goat": CustomValue(2, 3); break;
                 }
                 break;
-            case 18: if (_text == "등반") { CustomValue(0, 1); } break;
+            case 18: if (_text == "Climbing") { CustomValue(0, 1); } break;
         }
+
+        Debug.Log(questList[currentQuest].currentValues[0]);
     }
 
     public bool CustomCaseValue(bool _isValueInteraction, string _id)
@@ -722,7 +727,7 @@ public class QuestManager_Jun : MonoBehaviour
 
     private void CustomBool()
     {
-        if (questList[currentQuest].isMBTIConditions == default)
+        if (questList[currentQuest].isMBTIConditions == null)
         { questList[currentQuest].isMBTIConditions = true; }
         else if (questList[currentQuest].isMBTIConditions == true)
         { questList[currentQuest].isMBTIConditions = false; }

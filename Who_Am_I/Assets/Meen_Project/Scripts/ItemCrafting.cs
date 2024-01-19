@@ -821,7 +821,8 @@ public class ItemCrafting : MonoBehaviour
             // 아이템 매니저에서 일회성 제작을 완료한 상태로 변경하는 함수를 실행함
             ItemManager.instance.ChangeDiaposableCrafting(craftingName);
         }
-        
+
+        QuestManager_Jun.instance.CheckClear(craftingName);
         Debug.LogFormat("{0} : {1} 개 제작 완료", craftingName, craftingStackNum);
 
         CheckPage();

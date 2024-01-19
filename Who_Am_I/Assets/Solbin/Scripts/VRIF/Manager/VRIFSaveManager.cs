@@ -32,7 +32,7 @@ public class SerializableQuestJun
     public string questGoal;              
     public List<int> targetValues;        
     public List<int> currentValues;       
-    public bool isMBTIConditions;         
+    public bool? isMBTIConditions;         
     public string compensationItem;       
     public string trueMBTI;               
     public string falseMBTI;              

@@ -28,6 +28,38 @@ public class DialogManager : MonoBehaviour
         }
     }     // Awake()
 
+    #region Junoh: Refactor
+    private void Start()
+    {
+        InitializationSetup();
+    }
+
+    private void InitializationSetup()
+    {
+        mainObjTf.GetComponent<UIController>().uiController = 12;
+    }
+
+    public void PrintText(string _name, string _dialog)
+    {
+        ActivePrint(true);
+
+        // 대화 창 이름을 가져온 대화 정보에서 NPC 이름으로 출력함
+        dialogNpcNameText.text = string.Format("{0}", _name);
+        // 대화 창 내용을 가져온 대화 정보에서 대화 순서를 참고하여 출력함
+        dialogText.text = string.Format("{0}", _dialog);
+    }
+
+    public void NonPrintText()
+    {
+        ActivePrint(false);
+    }
+
+    private void ActivePrint(bool _isActive)
+    {
+        dialogObj.gameObject.SetActive(_isActive);
+    }
+    #endregion
+
     public void PrintDialog(string name, string dialog)
     {
         if (nextDialogCheck == true) { return; }

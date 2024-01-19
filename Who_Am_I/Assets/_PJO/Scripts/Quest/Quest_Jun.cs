@@ -17,7 +17,7 @@ public class Quest_Jun : ScriptableObject
     public string questGoal;                   // 퀘스트 목적
     public List<int> targetValues;             // 목표 값
     public List<int> currentValues;            // 현재 값
-    public bool isMBTIConditions;              // MBTI 조건에 충족 했는지
+    public bool? isMBTIConditions;             // MBTI 조건에 충족 했는지
     public string compensationItem;            // 보상 아이템
     public string trueMBTI;                    // MBTI 조건에 충족 했을때 증가할 값
     public string falseMBTI;                   // MBTI 조건에 충족하지 못했을때 증가할 값
