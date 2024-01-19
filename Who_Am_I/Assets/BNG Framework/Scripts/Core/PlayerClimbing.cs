@@ -80,6 +80,9 @@ namespace BNG {
         public event EventHandler rightClimbingEvent;
         // <Solbin> VRIFStateSystem
         [SerializeField] private VRIFStateSystem vrifStateSystem = default;
+
+        [Header("UI Controller")]
+        [SerializeField] private UIController uiController = default;
         // <Solbin> ===
 
         // Start is called before the first frame update
@@ -315,6 +318,8 @@ namespace BNG {
         public void onReleasedClimbable() 
         {
             VRIFStateSystem.Instance.ChangeState(VRIFStateSystem.GameState.NORMAL);
+
+            uiController.Remapping();
 
             // Reset back to our original values
             if (smoothLocomotion) {

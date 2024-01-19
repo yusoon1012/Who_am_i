@@ -9,7 +9,7 @@ public class MapMarkInfo : MonoBehaviour
     // 지도상의 표식 워프 가능 여부를 저장
     public bool isWarpCheck { get; set; } = false;
     // 지도상의 워프 지점 순서 저장
-    public int warpCheckCount { get; set; } = default;
+    public int warpCheckCount = default;
     
     // 게임 시작 시 표식 정보를 저장하는 함수
     public void StartInfoSetting(string markInfo, bool warpCheck, int warpCount)

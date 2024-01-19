@@ -65,6 +65,8 @@ public class UIController : MonoBehaviour
 
         // <Solbin> A키 매핑 
         vrifAction.Player.UI_Click.performed += ctx => OnOffControl(0);
+        // <Solbin> X키 매핑 
+        vrifAction.Player.UI_Exit.performed += ctx => OnOffControl(1);
         // <Solbin> Y키 매핑
         vrifAction.Player.Interaction.performed += ctx => InputYKeyDown();
         // ===
@@ -75,6 +77,8 @@ public class UIController : MonoBehaviour
         if (inputDelay) { return; } // <Solbin> 입력 딜레이 중 입력 금지
 
         UpdateFunction();
+
+        if (Input.GetKeyDown(KeyCode.N)) { Remapping(); }
     }     // Update()
 
     #region UpdateFunction()
@@ -121,16 +125,16 @@ public class UIController : MonoBehaviour
         }
 
         // <Meen Change>
-        //else // <Solbin> VR에서의 GetKeyUp 역할
-        //{
-        //    if (uiController == 10)
-        //    {
-        //        KeyUpDirectionControl(0);
-        //        KeyUpDirectionControl(1);
-        //        KeyUpDirectionControl(2);
-        //        KeyUpDirectionControl(3);
-        //    }
-        //}
+        else // <Solbin> VR에서의 GetKeyUp 역할
+        {
+            if (uiController == 10)
+            {
+                KeyUpDirectionControl(0);
+                KeyUpDirectionControl(1);
+                KeyUpDirectionControl(2);
+                KeyUpDirectionControl(3);
+            }
+        }
         // 모든 업 키 기능
         // 모든 상, 하, 좌, 우 키보드 키 입력 종료 값
 
@@ -164,12 +168,12 @@ public class UIController : MonoBehaviour
             OnOffControl(0);
         }
         // 모든 뒤로가기 키 입력 값
-        else if (Input.GetKeyDown(KeyCode.X) || vrifAction.Player.UI_Exit.triggered) // <Solbin> Exit Menu
+        else if (Input.GetKeyDown(KeyCode.X)) // <Solbin> Exit Menu
         {
             OnOffControl(1);
 
             // <Solbin> A키 재매핑 
-            vrifAction.Player.UI_Click.performed += ctx => OnOffControl(0);
+            //vrifAction.Player.UI_Click.performed += ctx => OnOffControl(0);
 
             //if (vrifStateSystem.gameState == VRIFStateSystem.GameState.UI) // <Solbin> UI 상태일때
             //{
@@ -286,7 +290,7 @@ public class UIController : MonoBehaviour
     {
         if (uiController == 12)
         {
-            vrifAction.Player.Interaction.performed += ctx => InputYKeyDown();
+            //vrifAction.Player.Interaction.performed += ctx => InputYKeyDown();
 
             DialogManager.instance.InputDialog();
         }
@@ -916,6 +920,17 @@ public class UIController : MonoBehaviour
     // <Solbin>
     private void ClearInputDelay() { inputDelay = false; }
     // <Solbin> ===
+
+    public void Remapping()
+    {
+        // <Solbin> A키 매핑 
+        vrifAction.Player.UI_Click.performed += ctx => OnOffControl(0);
+        // <Solbin> X키 매핑 
+        vrifAction.Player.UI_Exit.performed += ctx => OnOffControl(1);
+        // <Solbin> Y키 매핑
+        vrifAction.Player.Interaction.performed += ctx => InputYKeyDown();
+        // ===
+    }
 
 }     // Update()
 

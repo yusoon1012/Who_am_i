@@ -212,48 +212,55 @@ public class MapControl : MonoBehaviour
         {
             Vector3 saveCheckPointPos = new Vector3(checkPointPosX[i], 5f, checkPointPosZ[i]);
 
-            // 봄 지도의 체크 포인트 순서
-            if (i < 2)
-            {
-                // 봄 지도의 체크 포인트들의 정보를 저장하고, 맵 상의 체크 포인트 위치값을 계산하여 배치하는 함수를 실행
-                for (int q = 0; q < 2; q++)
-                {
-                    onMapWarpTf[i].GetComponent<MapMarkInfo>().StartInfoSetting("활성화된 체크 포인트", true, q);
-                    SettingOnMapCheckPoint(i, saveCheckPointPos, 0);
-
-                    //checkPointDic.Add(i + 1, saveCheckPointPos);
-                }
-            }
-            // 여름 지도의 체크 포인트 순서
-            else if (i >= 2 && i < 5)
-            {
-                // 여름 지도의 체크 포인트들의 정보를 저장하고, 맵 상의 체크 포인트 위치값을 계산하여 배치하는 함수를 실행
-                for (int w = 0; w < 3; w++)
-                {
-                    onMapWarpTf[i].GetComponent<MapMarkInfo>().StartInfoSetting("활성화된 체크 포인트", true, w);
-                    SettingOnMapCheckPoint(i, saveCheckPointPos, 1);
-                }
-            }
-            // 가을 지도의 체크 포인트 순서
-            else if (i >= 5 && i < 12)
-            {
-                // 가을 지도의 체크 포인트들의 정보를 저장하고, 맵 상의 체크 포인트 위치값을 계산하여 배치하는 함수를 실행
-                for (int e = 0; e < 7; e++)
-                {
-                    onMapWarpTf[i].GetComponent<MapMarkInfo>().StartInfoSetting("활성화된 체크 포인트", true, e);
-                    SettingOnMapCheckPoint(i, saveCheckPointPos, 2);
-                }
-            }
-            else if (i >= 12)
-            {
-                // 가을 지도의 체크 포인트들의 정보를 저장하고, 맵 상의 체크 포인트 위치값을 계산하여 배치하는 함수를 실행
-                for (int r = 0; r < 4; r++)
-                {
-                    onMapWarpTf[i].GetComponent<MapMarkInfo>().StartInfoSetting("활성화된 체크 포인트", true, r);
-                    SettingOnMapCheckPoint(i, saveCheckPointPos, 3);
-                }
-            }
+            SettingOnMapCheckPoint(i, saveCheckPointPos, 0);
         }
+
+        //for (int i = 0; i < 16; i++)
+        //{
+        //    Vector3 saveCheckPointPos = new Vector3(checkPointPosX[i], 5f, checkPointPosZ[i]);
+
+        //    // 봄 지도의 체크 포인트 순서
+        //    if (i < 2)
+        //    {
+        //        // 봄 지도의 체크 포인트들의 정보를 저장하고, 맵 상의 체크 포인트 위치값을 계산하여 배치하는 함수를 실행
+        //        for (int q = 0; q < 2; q++)
+        //        {
+        //            onMapWarpTf[i].GetComponent<MapMarkInfo>().StartInfoSetting("활성화된 체크 포인트", true, q);
+        //            SettingOnMapCheckPoint(i, saveCheckPointPos, 0);
+
+        //            //checkPointDic.Add(i + 1, saveCheckPointPos);
+        //        }
+        //    }
+        //    // 여름 지도의 체크 포인트 순서
+        //    else if (i >= 2 && i < 5)
+        //    {
+        //        // 여름 지도의 체크 포인트들의 정보를 저장하고, 맵 상의 체크 포인트 위치값을 계산하여 배치하는 함수를 실행
+        //        for (int w = 0; w < 3; w++)
+        //        {
+        //            onMapWarpTf[i].GetComponent<MapMarkInfo>().StartInfoSetting("활성화된 체크 포인트", true, w);
+        //            SettingOnMapCheckPoint(i, saveCheckPointPos, 1);
+        //        }
+        //    }
+        //    // 가을 지도의 체크 포인트 순서
+        //    else if (i >= 5 && i < 12)
+        //    {
+        //        // 가을 지도의 체크 포인트들의 정보를 저장하고, 맵 상의 체크 포인트 위치값을 계산하여 배치하는 함수를 실행
+        //        for (int e = 0; e < 7; e++)
+        //        {
+        //            onMapWarpTf[i].GetComponent<MapMarkInfo>().StartInfoSetting("활성화된 체크 포인트", true, e);
+        //            SettingOnMapCheckPoint(i, saveCheckPointPos, 2);
+        //        }
+        //    }
+        //    else if (i >= 12)
+        //    {
+        //        // 가을 지도의 체크 포인트들의 정보를 저장하고, 맵 상의 체크 포인트 위치값을 계산하여 배치하는 함수를 실행
+        //        for (int r = 0; r < 4; r++)
+        //        {
+        //            onMapWarpTf[i].GetComponent<MapMarkInfo>().StartInfoSetting("활성화된 체크 포인트", true, r);
+        //            SettingOnMapCheckPoint(i, saveCheckPointPos, 3);
+        //        }
+        //    }
+        //}
 
         //moveMapCheck = 1;
         //mapCameraTf.GetComponent<CameraControl>().CheckMapType(moveMapCheck);

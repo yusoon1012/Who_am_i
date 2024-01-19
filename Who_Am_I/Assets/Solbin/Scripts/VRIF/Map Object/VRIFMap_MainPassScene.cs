@@ -9,7 +9,8 @@ public class VRIFMap_MainPassScene : MonoBehaviour
         Spring, 
         Summer,
         Fall,
-        Winter
+        Winter,
+        Temple
     }
 
     [Header("이동할 계절")]
@@ -44,6 +45,10 @@ public class VRIFMap_MainPassScene : MonoBehaviour
 
                     case Season.Winter:
                         seasonName = "Winter";
+                        break;
+
+                    case Season.Temple:
+                        seasonName = "Temple";
                         break;
                 }
 

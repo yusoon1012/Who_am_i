@@ -86,8 +86,7 @@ public class VRIFTool_DragonflyNet : MonoBehaviour
                 }
             }
 
-            Debug.Log(getherDic[getherName]);
-            inventory.AddInventory(getherDic[getherName], 1); // 인벤토리로 보냄
+            inventory.AddInventory(getherName, 1); // 인벤토리로 보냄
 
             Destroy(target); // 테스트용
             gatheringEvent?.Invoke(this, EventArgs.Empty);

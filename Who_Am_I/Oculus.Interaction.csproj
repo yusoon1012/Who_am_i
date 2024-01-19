@@ -153,9 +153,9 @@
     <Compile Include="Assets\Oculus\Interaction\Runtime\Scripts\Interaction\Core\ActiveStateTracker.cs" />
     <Compile Include="Assets\Oculus\Interaction\Runtime\Scripts\Interaction\Core\ActiveStateToggle.cs" />
     <Compile Include="Assets\Oculus\Interaction\Runtime\Scripts\Interaction\Models\HandGrab\HandGrabResult.cs" />
+    <Compile Include="Assets\Oculus\Interaction\Runtime\Scripts\Input\Hands\DataModifiers\LastKnownGoodHand.cs" />
     <Compile Include="Assets\Oculus\Interaction\Runtime\Scripts\Interaction\Models\Snap\ListSnapPoseDelegate.cs" />
     <Compile Include="Assets\Oculus\Interaction\Runtime\Scripts\Unity\UnityInfo.cs" />
-    <Compile Include="Assets\Oculus\Interaction\Runtime\Scripts\Input\Hands\DataModifiers\LastKnownGoodHand.cs" />
     <Compile Include="Assets\Oculus\Interaction\Runtime\Scripts\Interaction\Core\IInteractable.cs" />
     <Compile Include="Assets\Oculus\Interaction\Runtime\Scripts\Unity\Input\InputMouseButton.cs" />
     <Compile Include="Assets\Oculus\Interaction\Runtime\Scripts\Interaction\Models\UseGrab\IHandGrabUseDelegate.cs" />
@@ -311,8 +311,8 @@
     <Compile Include="Assets\Oculus\Interaction\Runtime\Scripts\Input\Controllers\ControllerPrimitives.cs" />
     <Compile Include="Assets\Oculus\Interaction\Runtime\Scripts\Interaction\Models\Snap\SnapInteractable.cs" />
     <Compile Include="Assets\Oculus\Interaction\Runtime\Scripts\Interaction\Core\UpdateDriverGroup.cs" />
-    <Compile Include="Assets\Oculus\Interaction\Runtime\Scripts\PoseDetection\FingerFeatureStateProvider.cs" />
     <Compile Include="Assets\Oculus\Interaction\Runtime\Scripts\Interaction\Models\Locomotion\Visuals\LocomotionGateUnityEventWrapper.cs" />
+    <Compile Include="Assets\Oculus\Interaction\Runtime\Scripts\PoseDetection\FingerFeatureStateProvider.cs" />
     <Compile Include="Assets\Oculus\Interaction\Runtime\Scripts\Input\IButton.cs" />
     <Compile Include="Assets\Oculus\Interaction\Runtime\Scripts\Grab\SnapSurfaces\ColliderGrabSurface.cs" />
     <Compile Include="Assets\Oculus\Interaction\Runtime\Scripts\Interaction\Core\CollisionInteractionRegistry.cs" />
@@ -393,9 +393,9 @@
     <Compile Include="Assets\Oculus\Interaction\Runtime\Scripts\Interaction\Models\HandGrab\HandGrabInteractableDataCollection.cs" />
     <Compile Include="Assets\Oculus\Interaction\Runtime\Scripts\Unity\Input\InputButton.cs" />
     <Compile Include="Assets\Oculus\Interaction\Runtime\Scripts\Interaction\Models\Ray\Visuals\RayInteractorDebugPolylineGizmos.cs" />
+    <Compile Include="Assets\Oculus\Interaction\Runtime\Scripts\Grab\Visuals\HandGrabStateVisual.cs" />
     <Compile Include="Assets\Oculus\Interaction\Runtime\Scripts\Interaction\Models\Ray\Visuals\RayInteractorPinchVisual.cs" />
     <Compile Include="Assets\Oculus\Interaction\Runtime\Scripts\Interaction\Surfaces\PlaneSurface.cs" />
-    <Compile Include="Assets\Oculus\Interaction\Runtime\Scripts\Grab\Visuals\HandGrabStateVisual.cs" />
     <Compile Include="Assets\Oculus\Interaction\Runtime\Scripts\Interaction\Models\DistanceHandGrab\DistanceHandGrabInteractor.cs" />
     <Compile Include="Assets\Oculus\Interaction\Runtime\Scripts\Selection\Hands\HandPointerPose.cs" />
     <Compile Include="Assets\Oculus\Interaction\Runtime\Scripts\Extensions\VectorExtensions.cs" />
@@ -442,8 +442,8 @@
     <Compile Include="Assets\Oculus\Interaction\Runtime\Scripts\Interaction\Pointable\PointableElement.cs" />
     <Compile Include="Assets\Oculus\Interaction\Runtime\Scripts\Input\Controllers\Controller.cs" />
     <Compile Include="Assets\Oculus\Interaction\Runtime\Scripts\Interaction\Core\InteractableGroupView.cs" />
-    <Compile Include="Assets\Oculus\Interaction\Runtime\Scripts\PoseDetection\FeatureStateProvider.cs" />
     <Compile Include="Assets\Oculus\Interaction\Runtime\Scripts\Interaction\Models\Ray\Visuals\RayInteractorDebugGizmos.cs" />
+    <Compile Include="Assets\Oculus\Interaction\Runtime\Scripts\PoseDetection\FeatureStateProvider.cs" />
     <Compile Include="Assets\Oculus\Interaction\Runtime\Scripts\DistanceGrab\DistantPointDetector.cs" />
     <Compile Include="Assets\Oculus\Interaction\Runtime\Scripts\Input\Hands\HandJointsCache.cs" />
     <Compile Include="Assets\Oculus\Interaction\Runtime\Scripts\Interaction\Surfaces\BoundsClipper.cs" />

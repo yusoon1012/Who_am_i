@@ -13,8 +13,8 @@ public class VRIFSceneManager : MonoBehaviour
 {
     public static VRIFSceneManager Instance;
 
-    [Header("XR Rig Advanced")]
-    [SerializeField] private GameObject xrRigPlayer = default;
+    [Header("Player_Group")]
+    [SerializeField] private GameObject player_Group = default;
 
     [Header("Player Controller")]
     [SerializeField] private Transform playerController = default;
@@ -47,12 +47,13 @@ public class VRIFSceneManager : MonoBehaviour
         public static string summer { get; private set; } = "Summer";
         public static string fall { get; private set; } = "Demo_ExteriorOnly_Optimized";
         public static string winter { get; private set; } = "Winter";
+        public static string temple { get; private set; } = "Temple";
         public static string passage { get; private set; } = "M_Passage_Scene"; // 로딩씬
     }
 
     protected void Awake()
     {
-        DontDestroyOnLoad(xrRigPlayer); // 플레이어 파괴 금지 
+        DontDestroyOnLoad(player_Group); // 플레이어 파괴 금지 
 
         if (Instance == null)
         {
@@ -145,6 +146,11 @@ public class VRIFSceneManager : MonoBehaviour
                 sceneName = SeasonName.winter;
                 WinterEffect(); // 겨울 패널티 발생 
                 break;
+
+            case "Temple":
+                sceneName = SeasonName.temple;
+                ClearWinterEffect();
+                break;
         }
 
         AsyncOperation mainOperation = SceneManager.LoadSceneAsync(sceneName);
@@ -192,6 +198,7 @@ public class VRIFSceneManager : MonoBehaviour
         else if (inRegion.Contains("Summer")) { inRegion = "Summer"; }
         else if (inRegion.Contains("Fall")) { inRegion = "Fall"; }
         else if (inRegion.Contains("Winter")) { inRegion = "Winter"; }
+        else if (inRegion.Contains("Temple")) { inRegion = "Temple"; }
 
         if (inRegion == _region) // 현 지역과 체크포인트 지역이 같으면
         {
@@ -250,6 +257,11 @@ public class VRIFSceneManager : MonoBehaviour
             case "Winter":
                 regionName = SeasonName.winter;
                 WinterEffect(); // 겨울 패널티 발생
+                break;
+
+            case "Temple":
+                regionName = SeasonName.temple;
+                ClearWinterEffect();
                 break;
         }
 
@@ -316,5 +328,10 @@ public class VRIFSceneManager : MonoBehaviour
     private void WinterEffect()
     {
         VRIFStatusSystem.Instance.hungerTimer = VRIFStatusSystem.Instance.winterHungerTimer;
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.N)) { SameRegion(0); }
     }
 }
