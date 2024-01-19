@@ -65,9 +65,6 @@ public class VRIFPlayerItem : MonoBehaviour
         { "Citron", "유자"},
         { "Honey", "꿀"},
         { "Jujube", "대추"},
-
-
-        // TODO: 추가 처리 필요 
     };
 
     private void Start()
