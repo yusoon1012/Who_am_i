@@ -29,16 +29,6 @@ public class DialogManager : MonoBehaviour
     }     // Awake()
 
     #region Junoh: Refactor
-    private void Start()
-    {
-        InitializationSetup();
-    }
-
-    private void InitializationSetup()
-    {
-        mainObjTf.GetComponent<UIController>().uiController = 12;
-    }
-
     public void PrintText(string _name, string _dialog)
     {
         ActivePrint(true);

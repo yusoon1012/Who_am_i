@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using BNG;
-using Unity.VisualScripting;
 using System;
 
 public class VRIFTool_FishingBobber : MonoBehaviour

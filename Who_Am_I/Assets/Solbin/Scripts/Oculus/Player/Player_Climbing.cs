@@ -5,7 +5,6 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.XR;
 using UnityEngine.InputSystem;
-using Unity.VisualScripting;
 using System;
 
 public class Player_Climbing : MonoBehaviour

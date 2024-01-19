@@ -1,37 +1,36 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class Tool_SlingShot : MonoBehaviour
 {
-    #region ÇÊµå
-    private LineRenderer whiteString; // ½ÃÀ§ ¶óÀÎ·»´õ·¯
+    #region í•„ë“œ
+    private LineRenderer whiteString; // ì‹œìœ„ ë¼ì¸ë Œë”ëŸ¬
     [SerializeField] private Transform left = default;
-    [SerializeField] private Transform middle = default; // »õÃÑ ½ÃÀ§
+    [SerializeField] private Transform middle = default; // ìƒˆì´ ì‹œìœ„
     [SerializeField] private Transform right = default;
 
-    [SerializeField] private OVRGrabbable middle_Grabbable = default; // »õÃÑ ½ÃÀ§ Grabbable.cs
-    [SerializeField] private Transform originMiddlePos = default; // ½ÃÀ§ÀÇ º»·¡ À§Ä¡
-    [SerializeField] private Transform poiner = default; // Æ÷ÀÎÅÍ(Å©·Î½º Çì¾î)
-    [SerializeField] private LineRenderer trajectory = default; // »õÃÑ ±ËÀû
+    [SerializeField] private OVRGrabbable middle_Grabbable = default; // ìƒˆì´ ì‹œìœ„ Grabbable.cs
+    [SerializeField] private Transform originMiddlePos = default; // ì‹œìœ„ì˜ ë³¸ë˜ ìœ„ì¹˜
+    [SerializeField] private Transform poiner = default; // í¬ì¸í„°(í¬ë¡œìŠ¤ í—¤ì–´)
+    [SerializeField] private LineRenderer trajectory = default; // ìƒˆì´ ê¶¤ì 
 
 
     private float distance = 8.5f;
-    private bool aimingPrey = false; // µ¿¹° Á¶ÁØ ¿©ºÎ
+    private bool aimingPrey = false; // ë™ë¬¼ ì¡°ì¤€ ì—¬ë¶€
     #endregion
 
     private void Start()
     {
         whiteString = GetComponent<LineRenderer>();
-        whiteString.positionCount = 3; // »ç¿ëÇÒ Æ÷ÀÎÆ®´Â µÎ °³   
+        whiteString.positionCount = 3; // ì‚¬ìš©í•  í¬ì¸íŠ¸ëŠ” ë‘ ê°œ   
 
-        trajectory.positionCount = 2; // ±ËÀû¿¡ »ç¿ëÇÒ Æ÷ÀÎÆ®´Â µÎ °³ 
+        trajectory.positionCount = 2; // ê¶¤ì ì— ì‚¬ìš©í•  í¬ì¸íŠ¸ëŠ” ë‘ ê°œ 
     }
 
     /// <summary>
-    /// ½ÃÀ§ ±×¸®±â
+    /// ì‹œìœ„ ê·¸ë¦¬ê¸°
     /// </summary>
     private void DrawString()
     {
@@ -41,22 +40,22 @@ public class Tool_SlingShot : MonoBehaviour
     }
 
     /// <summary>
-    /// ½ÃÀ§ º¹¿ø
+    /// ì‹œìœ„ ë³µì›
     /// </summary>
     private void RestoreMiddle()
     {
-        // TODO: ÀÚ¿¬½º·´°Ô ¹ß»çÇÏµµ·Ï ¼öÁ¤ ¿äÇÔ
+        // TODO: ìì—°ìŠ¤ëŸ½ê²Œ ë°œì‚¬í•˜ë„ë¡ ìˆ˜ì • ìš”í•¨
         middle.position = originMiddlePos.position;
-        // Æ÷ÀÎÅÍ ¿ÀºêÁ§Æ® Ç®·Î
+        // í¬ì¸í„° ì˜¤ë¸Œì íŠ¸ í’€ë¡œ
         poiner.position = PlayerSystem.poolPos;
-        // ±ËÀû º»À§Ä¡·Î
+        // ê¶¤ì  ë³¸ìœ„ì¹˜ë¡œ
         trajectory.SetPosition(0, PlayerSystem.poolPos);
         trajectory.SetPosition(1, PlayerSystem.poolPos);
     }
 
     private void Aiming()
     {
-        Vector3 shootDir = originMiddlePos.position - middle.position; // ½ÃÀ§¸¦ ´ç±ä À§Ä¡ - ½ÃÀ§ º»À§Ä¡
+        Vector3 shootDir = originMiddlePos.position - middle.position; // ì‹œìœ„ë¥¼ ë‹¹ê¸´ ìœ„ì¹˜ - ì‹œìœ„ ë³¸ìœ„ì¹˜
         trajectory.SetPosition(0, middle.position);
 
         Ray ray = new Ray(middle.position, shootDir);
@@ -71,7 +70,7 @@ public class Tool_SlingShot : MonoBehaviour
 
     private void Shoot()
     {
-        Debug.Log("¹ß»ç!");
+        Debug.Log("ë°œì‚¬!");
 
         if (aimingPrey)
         {
@@ -81,15 +80,15 @@ public class Tool_SlingShot : MonoBehaviour
 
     private void Update()
     {
-        DrawString(); // ½ÃÀ§¸¦ ±×¸°´Ù
+        DrawString(); // ì‹œìœ„ë¥¼ ê·¸ë¦°ë‹¤
 
-        if (!middle_Grabbable.isGrabbed) { RestoreMiddle(); } // ½ÃÀ§¸¦ ´ç±âÁö ¾ÊÀº »óÅÂ
+        if (!middle_Grabbable.isGrabbed) { RestoreMiddle(); } // ì‹œìœ„ë¥¼ ë‹¹ê¸°ì§€ ì•Šì€ ìƒíƒœ
 
-        if (middle_Grabbable.isGrabbed) // ½ÃÀ§¸¦ ´ç±ä »óÅÂ
+        if (middle_Grabbable.isGrabbed) // ì‹œìœ„ë¥¼ ë‹¹ê¸´ ìƒíƒœ
         {
             Aiming();
 
-            if (!middle_Grabbable.isGrabbed) // ½ÃÀ§¸¦ ³õÀ¸¸é
+            if (!middle_Grabbable.isGrabbed) // ì‹œìœ„ë¥¼ ë†“ìœ¼ë©´
             {
                 Shoot();
             } 

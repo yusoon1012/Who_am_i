@@ -9,7 +9,6 @@ using Firebase.Extensions;
 using UnityEngine.SceneManagement;
 using System.Runtime.CompilerServices;
 using UnityEngine.UI;
-using Unity.VisualScripting;
 
 public class AuthManager : MonoBehaviour
 {

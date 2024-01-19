@@ -1,22 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class Tool_Shavel : MonoBehaviour
 {
-    // ÇÃ·¹ÀÌ¾î
+    // í”Œë ˆì´ì–´
     private GameObject player = default;
     // User System Manager
     [SerializeField]private GameObject userSystemManager = default;
-    // ¾ÆÀÌÅÛ ½Ã½ºÅÛ
+    // ì•„ì´í…œ ì‹œìŠ¤í…œ
     ItemSystem itemSystem = default;
 
     private Vector3 rightVel = default;
 
     private void Start()
     {
-        player = GameObject.Find("===Player==="); // TODO: ÃßÈÄ ¹®Á¦°¡ µÉ ¼ö ÀÖÀ¸´Ï ¼öÁ¤ ¿äÇÔ. 
+        player = GameObject.Find("===Player==="); // TODO: ì¶”í›„ ë¬¸ì œê°€ ë  ìˆ˜ ìˆìœ¼ë‹ˆ ìˆ˜ì • ìš”í•¨. 
         itemSystem = userSystemManager.GetComponent<ItemSystem>();
     }
 
@@ -27,17 +26,17 @@ public class Tool_Shavel : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Crop")) // ÀÛ¹° Äİ¶óÀÌ´õ¿¡ Á¢ÃËÇÑ »óÅÂ¿¡¼­
+        if (other.CompareTag("Crop")) // ì‘ë¬¼ ì½œë¼ì´ë”ì— ì ‘ì´‰í•œ ìƒíƒœì—ì„œ
         {
-            if (rightVel.y >= 0.3f) // À§·Î »ğÁú
+            if (rightVel.y >= 0.3f) // ìœ„ë¡œ ì‚½ì§ˆ
             {
-                GetCrop(); // ÀÛ¹°À» ¾ò´Â´Ù. 
+                GetCrop(); // ì‘ë¬¼ì„ ì–»ëŠ”ë‹¤. 
             }
         }
     }
 
     private void GetCrop()
     {
-        // TODO: ¹«½¼ ÀÛ¹°À» ¾ò´ÂÁö Ãß°¡µÇ¾î¾ß ÇÑ´Ù. 
+        // TODO: ë¬´ìŠ¨ ì‘ë¬¼ì„ ì–»ëŠ”ì§€ ì¶”ê°€ë˜ì–´ì•¼ í•œë‹¤. 
     }
 }

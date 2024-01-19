@@ -43,10 +43,10 @@ public class VRIFSceneManager : MonoBehaviour
 
     public class SeasonName
     {
-        public static string spring { get; private set; } = "Main_Spring"; // TODO: 이후 수정 필요 
-        public static string summer { get; private set; } = "Main_Summer";
-        public static string fall { get; private set; } = "Fall_Scene";
-        public static string winter { get; private set; } = "Winter_Scene";
+        public static string spring { get; private set; } = "Spring";
+        public static string summer { get; private set; } = "Summer";
+        public static string fall { get; private set; } = "Demo_ExteriorOnly_Optimized";
+        public static string winter { get; private set; } = "Winter";
         public static string passage { get; private set; } = "M_Passage_Scene"; // 로딩씬
     }
 

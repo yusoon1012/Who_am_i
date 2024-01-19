@@ -1,10 +1,8 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.IO;
 using UnityEngine.UI;
-using UnityEditor.Experimental.GraphView;
 
 /// <summary>
 /// 타이틀 => 새로운 게임, 이어하기, 종료하기 연결 
