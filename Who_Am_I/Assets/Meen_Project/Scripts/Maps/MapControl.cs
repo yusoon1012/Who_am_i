@@ -208,11 +208,36 @@ public class MapControl : MonoBehaviour
         onMapPlayerTf.GetComponent<MapMarkInfo>().StartInfoSetting("현재 위치", false, 0);
         onMapQuestTf.GetComponent<MapMarkInfo>().StartInfoSetting("진행 가능한 퀘스트", false, 0);
 
-        for (int i = 0; i < 16; i++)
+        for (int i = 0; i < 2; i++)
         {
             Vector3 saveCheckPointPos = new Vector3(checkPointPosX[i], 5f, checkPointPosZ[i]);
 
+            onMapWarpTf[i].GetComponent<MapMarkInfo>().StartInfoSetting("활성화된 체크 포인트", true, i);
             SettingOnMapCheckPoint(i, saveCheckPointPos, 0);
+        }
+
+        for (int j = 2; j < 5; j++)
+        {
+            Vector3 saveCheckPointPos2 = new Vector3(checkPointPosX[j], 5f, checkPointPosZ[j]);
+
+            onMapWarpTf[j].GetComponent<MapMarkInfo>().StartInfoSetting("활성화된 체크 포인트", true, j - 2);
+            SettingOnMapCheckPoint(j, saveCheckPointPos2, 1);
+        }
+
+        for (int k = 5; k < 12; k++)
+        {
+            Vector3 saveCheckPointPos3 = new Vector3(checkPointPosX[k], 5f, checkPointPosZ[k]);
+
+            onMapWarpTf[k].GetComponent<MapMarkInfo>().StartInfoSetting("활성화된 체크 포인트", true, k - 5);
+            SettingOnMapCheckPoint(k, saveCheckPointPos3, 2);
+        }
+
+        for (int n = 12; n < 16; n++)
+        {
+            Vector3 saveCheckPointPos4 = new Vector3(checkPointPosX[n], 5f, checkPointPosZ[n]);
+
+            onMapWarpTf[n].GetComponent<MapMarkInfo>().StartInfoSetting("활성화된 체크 포인트", true, n - 12);
+            SettingOnMapCheckPoint(n, saveCheckPointPos4, 3);
         }
 
         //for (int i = 0; i < 16; i++)
