@@ -203,19 +203,21 @@ public class VRIFPlayerItem : MonoBehaviour
         // 퀘스트로 아이템 이름 보내기
         QuestManager_Jun.instance.CheckClear(item_.name);
 
+        string itemName = default;
 
         foreach (var itemKey in itemDic.Keys)
         {
             if (item_.name.Contains(itemKey)) // 위 아이템 딕셔너리의 키를 포함하면
             {
-                name = itemDic[itemKey]; // 한글로 변환 (키에 해당하는 값)
-                Debug.Log("이름: " + name);
+                itemName = itemDic[itemKey]; // 한글로 변환 (키에 해당하는 값)
             }
         }
 
-        inventory.AddInventory(name, 1); // 인벤토리에 추가 
+        Debug.Log("받으려는 것: " + itemName);
 
-        StartCoroutine(PrintUI(name));
+        inventory.AddInventory(itemName, 1); // 인벤토리에 추가 
+
+        StartCoroutine(PrintUI(itemName));
 
         if (!item_.transform.GetComponentInChildren<VRIFItem_RespawnHelper>()) // 만약 리스폰 헬퍼가 없는 아이템이며 코드 끝까지 처리되지 않았다면
         {

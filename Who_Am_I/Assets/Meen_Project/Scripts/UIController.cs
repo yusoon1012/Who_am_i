@@ -65,6 +65,8 @@ public class UIController : MonoBehaviour
 
         // <Solbin> A키 매핑 
         vrifAction.Player.UI_Click.performed += ctx => OnOffControl(0);
+        // <Solbin> Y키 매핑
+        vrifAction.Player.Interaction.performed += ctx => InputYKeyDown();
         // ===
     }     // Start()
 
@@ -173,7 +175,7 @@ public class UIController : MonoBehaviour
             //}
         }
         //* TODO : VR 컨트롤러에서 Y 키를 눌렀을 때 작동되는 기능
-        else if (Input.GetKeyDown(KeyCode.A))
+        else if (Input.GetKeyDown(KeyCode.C))
         {
             InputYKeyDown();
         }
