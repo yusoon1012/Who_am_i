@@ -25,14 +25,25 @@ public class VRIFMap_CropStretch : MonoBehaviour
         {
             if (vrifMap_Crop.hand.CompareTag("Left") && VRIFInputSystem.Instance.lGrab >= 0.5f && !oneCheck)
             {
-                oneCheck = true;
-                vrifMap_Crop.hp -= 1;
+                PullLeaf(); // 잎을 잡아당겼을 때
             }
             else if (vrifMap_Crop.hand.CompareTag("Right") && VRIFInputSystem.Instance.rGrab >= 0.5f && !oneCheck)
             {
-                oneCheck = true;
-                vrifMap_Crop.hp -= 1;
+                PullLeaf(); // 잎을 잡아당겼을 때
             }
         }
     }
+
+    /// <summary>
+    /// 잎을 잡아당겼을 때
+    /// </summary>
+    private void PullLeaf()
+    {
+        oneCheck = true;
+        vrifMap_Crop.hp -= 1;
+
+        Invoke("ClearOneCheck", 0.5f);
+    }
+
+    private void ClearOneCheck() { oneCheck = false; }
 }

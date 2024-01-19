@@ -12,7 +12,7 @@ public class VRIFMap_Crop : MonoBehaviour
 
     [Header("잎의 Bone 위치")]
     [Tooltip("잎이 늘어나게 되는 Armature 위치")]
-    [SerializeField] private Transform leafBone = default;
+    public Transform leafBone = default;
     // 위 Bone의 원래 위치 
     private Vector3 leafOriginPos = default;
 
