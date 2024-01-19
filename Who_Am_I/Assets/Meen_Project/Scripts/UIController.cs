@@ -250,7 +250,7 @@ public class UIController : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.Alpha2))
         {
-            mainObjTf.GetComponent<Inventory>().AddInventory("우유", 1);
+            mainObjTf.GetComponent<Inventory>().AddInventory("땅콩", 1);
         }
         else if (Input.GetKeyDown(KeyCode.Alpha3))
         {

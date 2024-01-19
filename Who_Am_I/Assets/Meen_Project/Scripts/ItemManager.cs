@@ -34,7 +34,7 @@ public class ItemManager : MonoBehaviour
     public Transform createItemDataTf;
 
     // 아이템마다 등록된 아이콘 이미지 목록
-    public Image[] itemImages = new Image[63];
+    public Image[] itemImages = new Image[64];
 
     // 인벤토리에 저장되어 있는 모든 아이템 수
     private int itemCount = default;
@@ -1028,11 +1028,11 @@ public class ItemManager : MonoBehaviour
 
     #endregion 크래프팅 기능
 
-    // Fix : 데이터 베이스에 추가할 예정
-    public void SendDataTest(string itemType, string itemName, int stack)
-    {
-        // 데이터 베이스 함수에 추가할 예정
-    }
+    //// Fix : 데이터 베이스에 추가할 예정
+    //public void SendDataTest(string itemType, string itemName, int stack)
+    //{
+    //    // 데이터 베이스 함수에 추가할 예정
+    //}
 
     public bool QuestLootItemCheck(string itemName, int itemType, int lootCount, out bool lootCheck)
     {
@@ -1106,4 +1106,16 @@ public class ItemManager : MonoBehaviour
 
         return collectionInfo;
     }     // ReturnCollectionInfo()
+
+    public bool CheckCollectionItems(string name)
+    {
+        if (collectionItems.ContainsKey(name))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }     // CheckCollectionItems()
 }

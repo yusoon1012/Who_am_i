@@ -34,6 +34,10 @@ public class CreateItemData : MonoBehaviour
         ItemManager.instance.itemDataBase.Add("고기", new Items018());
         ItemManager.instance.itemDataBase.Add("생선", new Items019());
         ItemManager.instance.itemDataBase.Add("달걀", new Items020());
+        ItemManager.instance.itemDataBase.Add("꽃샘 마을 증표", new Items053());
+        ItemManager.instance.itemDataBase.Add("바다 마을 증표", new Items054());
+        ItemManager.instance.itemDataBase.Add("단풍 마을 증표", new Items055());
+        ItemManager.instance.itemDataBase.Add("눈꽃 마을 증표", new Items056());
 
         ReadStuffCSVFiles();
 

@@ -444,8 +444,29 @@ public class CameraControl : MonoBehaviour
     // 체크 포인트 빠른 이동 기능을 실행하는 함수
     private void FunctionCheckPoint()
     {
+        string mapName = " ";
+
+        // 현재 보고있는 지도 타입을 체크
+        switch (mapTypeCheck)
+        {
+            case 0:
+                mapName = "Spring";
+                break;
+            case 1:
+                mapName = "Summer";
+                break;
+            case 2:
+                mapName = "Fall";
+                break;
+            case 3:
+                mapName = "Winter";
+                break;
+            default:
+                break;
+        }
+
         // 체크 포인트 빠른 이동 기능 클래스의 함수를 실행함
-        VRIFSceneManager.Instance.LoadCheckPoint("Spring", warpOrder);
+        VRIFSceneManager.Instance.LoadCheckPoint(mapName, warpOrder);
 
         Debug.LogFormat("빠른 이동 체크포인트 번호 : {0}", warpOrder);
         Debug.Log("빠른 이동 기능 구현 후 지도 UI 모두 종료");
