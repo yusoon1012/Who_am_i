@@ -173,7 +173,7 @@ public class UIController : MonoBehaviour
             //}
         }
         //* TODO : VR 컨트롤러에서 Y 키를 눌렀을 때 작동되는 기능
-        else if (Input.GetKeyDown(KeyCode.A))
+        else if (Input.GetKeyDown(KeyCode.C))
         {
             InputYKeyDown();
         }
@@ -245,7 +245,7 @@ public class UIController : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.Alpha2))
         {
-            mainObjTf.GetComponent<Inventory>().AddInventory("우유", 1);
+            mainObjTf.GetComponent<Inventory>().AddInventory("땅콩", 1);
         }
         else if (Input.GetKeyDown(KeyCode.Alpha3))
         {

@@ -38,6 +38,8 @@ public class Inventory : MonoBehaviour
     public GameObject inventory;
     // 퀵슬롯 UI 트랜스폼
     public Transform quickSlotTf;
+
+    public Transform collectionInfoTf;
     // 아이템 버리기 안내 창 오브젝트
     public GameObject dropItemInfo;
     // 아이템 버리기 선택 버튼 UI
@@ -163,9 +165,28 @@ public class Inventory : MonoBehaviour
     // 아이템 매니저의 인벤토리에 아이템이 없을 때 새로운 아이템을 추가하고, 아이템이 있을 시 갯수를 중첩시키는 함수
     public void AddInventory(string itemName, int num)
     {
+        // 획득한 아이템이 컬렉션 목록에 존재하는 아이템인지 체크
+        if (ItemManager.instance.CheckCollectionItems(itemName))
+        {
+            // 컬렉션 목록에 존재하는 아이템이면 컬렉션에 추가를 실행
+            collectionInfoTf.GetComponent<SaveCollections>().CheckCollection(itemName, num);
+
+            if (itemName == "피자" || itemName == "유자차" || itemName == "송이 불고기")
+            {
+                FunctionAddItems(itemName, num);
+            }
+        }
+        else
+        {
+            FunctionAddItems(itemName, num);
+        }
+    }     // AddInventory()
+
+    private void FunctionAddItems(string itemName_, int num_)
+    {
         ItemsMain itemInfo = new ItemsMain();
 
-        ItemManager.instance.InventoryAdd(itemName, num, out itemInfo);
+        ItemManager.instance.InventoryAdd(itemName_, num_, out itemInfo);
 
         if (lookInventory == true)
         {
@@ -173,7 +194,7 @@ public class Inventory : MonoBehaviour
 
             ControlInventory();
         }
-    }     // AddInventory()
+    }     // FunctionAddItems()
 
     #endregion 아이템 획득 기능
 

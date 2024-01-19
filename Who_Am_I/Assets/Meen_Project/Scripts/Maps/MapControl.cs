@@ -204,43 +204,55 @@ public class MapControl : MonoBehaviour
 
     void Start()
     {
-        //// 현재 플레이어 위치와 진행 가능한 퀘스트 표식들의 정보를 저장
-        //onMapPlayerTf.GetComponent<MapMarkInfo>().StartInfoSetting("현재 위치", false, 0);
-        //onMapQuestTf.GetComponent<MapMarkInfo>().StartInfoSetting("진행 가능한 퀘스트", false, 0);
+        // 현재 플레이어 위치와 진행 가능한 퀘스트 표식들의 정보를 저장
+        onMapPlayerTf.GetComponent<MapMarkInfo>().StartInfoSetting("현재 위치", false, 0);
+        onMapQuestTf.GetComponent<MapMarkInfo>().StartInfoSetting("진행 가능한 퀘스트", false, 0);
 
-        //// 체크포인트들의 정보를 저장하고, 맵 상의 체크포인트 위치값을 계산하여 배치하는 함수를 실행
-        //for (int i = 0; i < 2; i++)
+        //for (int i = 0; i < 16; i++)
         //{
         //    Vector3 saveCheckPointPos = new Vector3(checkPointPosX[i], 5f, checkPointPosZ[i]);
 
-        //    onMapWarpTf[i].GetComponent<MapMarkInfo>().StartInfoSetting("활성화된 체크 포인트", true, i);
-        //    SettingOnMapCheckPoint(i, saveCheckPointPos, 0);
+        //    // 봄 지도의 체크 포인트 순서
+        //    if (i < 2)
+        //    {
+        //        // 봄 지도의 체크 포인트들의 정보를 저장하고, 맵 상의 체크 포인트 위치값을 계산하여 배치하는 함수를 실행
+        //        for (int q = 0; q < 2; q++)
+        //        {
+        //            onMapWarpTf[i].GetComponent<MapMarkInfo>().StartInfoSetting("활성화된 체크 포인트", true, q);
+        //            SettingOnMapCheckPoint(i, saveCheckPointPos, 0);
 
-        //    //checkPointDic.Add(i + 1, saveCheckPointPos);
-        //}
-
-        //for (int j = 2; j < 5; j++)
-        //{
-        //    Vector3 saveCheckPointPos2 = new Vector3(checkPointPosX[j], 5f, checkPointPosZ[j]);
-
-        //    onMapWarpTf[j].GetComponent<MapMarkInfo>().StartInfoSetting("활성화된 체크 포인트", true, j);
-        //    SettingOnMapCheckPoint(j, saveCheckPointPos2, 1);
-        //}
-
-        //for (int n = 5; n < 12; n++)
-        //{
-        //    Vector3 saveCheckPointPos3 = new Vector3(checkPointPosX[n], 5f, checkPointPosZ[n]);
-
-        //    onMapWarpTf[n].GetComponent<MapMarkInfo>().StartInfoSetting("활성화된 체크 포인트", true, n);
-        //    SettingOnMapCheckPoint(n, saveCheckPointPos3, 2);
-        //}
-
-        //for (int m = 12; m < 16; m++)
-        //{
-        //    Vector3 saveCheckPointPos4 = new Vector3(checkPointPosX[m], 5f, checkPointPosZ[m]);
-
-        //    onMapWarpTf[m].GetComponent<MapMarkInfo>().StartInfoSetting("활성화된 체크 포인트", true, m);
-        //    SettingOnMapCheckPoint(m, saveCheckPointPos4, 3);
+        //            //checkPointDic.Add(i + 1, saveCheckPointPos);
+        //        }
+        //    }
+        //    // 여름 지도의 체크 포인트 순서
+        //    else if (i >= 2 && i < 5)
+        //    {
+        //        // 여름 지도의 체크 포인트들의 정보를 저장하고, 맵 상의 체크 포인트 위치값을 계산하여 배치하는 함수를 실행
+        //        for (int w = 0; w < 3; w++)
+        //        {
+        //            onMapWarpTf[i].GetComponent<MapMarkInfo>().StartInfoSetting("활성화된 체크 포인트", true, w);
+        //            SettingOnMapCheckPoint(i, saveCheckPointPos, 1);
+        //        }
+        //    }
+        //    // 가을 지도의 체크 포인트 순서
+        //    else if (i >= 5 && i < 12)
+        //    {
+        //        // 가을 지도의 체크 포인트들의 정보를 저장하고, 맵 상의 체크 포인트 위치값을 계산하여 배치하는 함수를 실행
+        //        for (int e = 0; e < 7; e++)
+        //        {
+        //            onMapWarpTf[i].GetComponent<MapMarkInfo>().StartInfoSetting("활성화된 체크 포인트", true, e);
+        //            SettingOnMapCheckPoint(i, saveCheckPointPos, 2);
+        //        }
+        //    }
+        //    else if (i >= 12)
+        //    {
+        //        // 가을 지도의 체크 포인트들의 정보를 저장하고, 맵 상의 체크 포인트 위치값을 계산하여 배치하는 함수를 실행
+        //        for (int r = 0; r < 4; r++)
+        //        {
+        //            onMapWarpTf[i].GetComponent<MapMarkInfo>().StartInfoSetting("활성화된 체크 포인트", true, r);
+        //            SettingOnMapCheckPoint(i, saveCheckPointPos, 3);
+        //        }
+        //    }
         //}
 
         //moveMapCheck = 1;
@@ -317,14 +329,24 @@ public class MapControl : MonoBehaviour
     private void ResetCamera()
     {
         CheckMapType();
-        // 지도상의 플레이어 표식 위치를 실제 플레이어 위치에 기반해 계산하여 위치를 변경하는 함수를 실행
-        OnMapPlayerSetting();
 
-        // 지도 카메라의 위치를 지도상의 플레이어 위치로 이동
-        mapCameraTf.position = new Vector3(onMapPlayerTf.position.x, mapCameraTf.position.y, onMapPlayerTf.position.z);
-        //mapCameraTf.position = new Vector3(2000f, mapCameraTf.position.y, 1000f);
+        if (moveMapCheck < 4)
+        {
+            // 지도상의 플레이어 표식 위치를 실제 플레이어 위치에 기반해 계산하여 위치를 변경하는 함수를 실행
+            OnMapPlayerSetting();
 
-        mapCameraTf.GetComponent<Rigidbody>().velocity = Vector3.zero;
+            // 지도 카메라의 위치를 지도상의 플레이어 위치로 이동
+            mapCameraTf.position = new Vector3(onMapPlayerTf.position.x, mapCameraTf.position.y, onMapPlayerTf.position.z);
+            //mapCameraTf.position = new Vector3(2000f, mapCameraTf.position.y, 1000f);
+
+            mapCameraTf.GetComponent<Rigidbody>().velocity = Vector3.zero;
+        }
+        else if (moveMapCheck == 4)
+        {
+            ExitMap();
+            mainObjTf.GetComponent<MainMenu>().DisconnectMenu();
+            mainObjTf.GetComponent<UIController>().uiController = 1;
+        }
     }     // ResetCamera()
 
     private void CheckMapType()
