@@ -143,6 +143,7 @@ GameObject:
   - component: {fileID: 2648510017592743987}
   - component: {fileID: 2648510017592743996}
   - component: {fileID: 278422573730698490}
+  - component: {fileID: -2002617792628117599}
   m_Layer: 10
   m_Name: Butterfly1
   m_TagString: Untagged
@@ -318,6 +319,18 @@ LODGroup:
     renderers:
     - renderer: {fileID: 2677536769490462668}
   m_Enabled: 1
+--- !u!114 &-2002617792628117599
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2650984594408901650}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 611919c0e9e0be647b0f058f68087657, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2651025257388013578
 GameObject:
   m_ObjectHideFlags: 0

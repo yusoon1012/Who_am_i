@@ -1213,6 +1213,7 @@ GameObject:
   - component: {fileID: 8301956908132248853}
   - component: {fileID: 8301956908132248851}
   - component: {fileID: 8184985005279664049}
+  - component: {fileID: -7887710740360898958}
   m_Layer: 10
   m_Name: Beetle1
   m_TagString: Untagged
@@ -1392,6 +1393,18 @@ LODGroup:
     renderers:
     - renderer: {fileID: 8326352506612349168}
   m_Enabled: 1
+--- !u!114 &-7887710740360898958
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8242303649537150864}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 611919c0e9e0be647b0f058f68087657, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8242339033293760362
 GameObject:
   m_ObjectHideFlags: 0

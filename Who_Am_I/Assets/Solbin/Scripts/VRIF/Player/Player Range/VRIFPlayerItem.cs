@@ -65,9 +65,6 @@ public class VRIFPlayerItem : MonoBehaviour
         { "Citron", "유자"},
         { "Honey", "꿀"},
         { "Jujube", "대추"},
-
-
-        // TODO: 추가 처리 필요 
     };
 
     private void Start()
@@ -212,8 +209,6 @@ public class VRIFPlayerItem : MonoBehaviour
                 itemName = itemDic[itemKey]; // 한글로 변환 (키에 해당하는 값)
             }
         }
-
-        Debug.Log("받으려는 것: " + itemName);
 
         inventory.AddInventory(itemName, 1); // 인벤토리에 추가 
 

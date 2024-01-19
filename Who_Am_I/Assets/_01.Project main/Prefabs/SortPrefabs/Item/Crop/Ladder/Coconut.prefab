@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5834377104327464471}
   - component: {fileID: 5834377104327464468}
   - component: {fileID: 5834377104327464469}
+  - component: {fileID: -2083938133666176602}
   m_Layer: 10
   m_Name: Coconut
   m_TagString: Untagged
@@ -154,6 +155,18 @@ MonoBehaviour:
   UseCustomInspector: 1
   lastFlickTime: 0
   FlickForce: 1
+--- !u!114 &-2083938133666176602
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5473882770330875847}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 611919c0e9e0be647b0f058f68087657, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7217424185304848605
 GameObject:
   m_ObjectHideFlags: 0
