@@ -168,6 +168,9 @@ public class UIController : MonoBehaviour
         {
             OnOffControl(1);
 
+            // <Solbin> A키 재매핑 
+            vrifAction.Player.UI_Click.performed += ctx => OnOffControl(0);
+
             //if (vrifStateSystem.gameState == VRIFStateSystem.GameState.UI) // <Solbin> UI 상태일때
             //{
             //    OnOffControl(1);
@@ -283,6 +286,8 @@ public class UIController : MonoBehaviour
     {
         if (uiController == 12)
         {
+            vrifAction.Player.Interaction.performed += ctx => InputYKeyDown();
+
             DialogManager.instance.InputDialog();
         }
     }

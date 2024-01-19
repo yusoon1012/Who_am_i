@@ -253,7 +253,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c2df0c3096da4134abab729b9e0592f9, type: 2}
+  - {fileID: 2100000, guid: 3d9fe13c2f7125c41b077d0fb4743243, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -306,6 +306,7 @@ GameObject:
   - component: {fileID: 4937155083752072813}
   - component: {fileID: 4937155083752072809}
   - component: {fileID: 2942011829157307186}
+  - component: {fileID: 9026549771349805600}
   m_Layer: 10
   m_Name: Frog1
   m_TagString: Untagged
@@ -469,6 +470,18 @@ LODGroup:
     renderers:
     - renderer: {fileID: 4937155083765380936}
   m_Enabled: 1
+--- !u!114 &9026549771349805600
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4937155083751782988}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 611919c0e9e0be647b0f058f68087657, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4937155083751782990
 GameObject:
   m_ObjectHideFlags: 0

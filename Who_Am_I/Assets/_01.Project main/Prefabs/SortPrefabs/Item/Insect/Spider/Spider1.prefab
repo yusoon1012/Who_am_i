@@ -1880,6 +1880,7 @@ GameObject:
   - component: {fileID: 8932573343649365567}
   - component: {fileID: 8932573343649365564}
   - component: {fileID: 6010303255996917606}
+  - component: {fileID: 1369832178872085238}
   m_Layer: 10
   m_Name: Spider1
   m_TagString: Untagged
@@ -2043,6 +2044,18 @@ LODGroup:
     renderers:
     - renderer: {fileID: 4528774725411040348}
   m_Enabled: 1
+--- !u!114 &1369832178872085238
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8123702687358755975}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 611919c0e9e0be647b0f058f68087657, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8191840805542474185
 GameObject:
   m_ObjectHideFlags: 0

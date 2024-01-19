@@ -126,6 +126,7 @@ GameObject:
   - component: {fileID: 1664513229006994707}
   - component: {fileID: 1664513229006994711}
   - component: {fileID: 1664074916361654132}
+  - component: {fileID: 6085125295647282230}
   m_Layer: 10
   m_Name: Frog2
   m_TagString: Untagged
@@ -289,6 +290,18 @@ LODGroup:
     renderers:
     - renderer: {fileID: 1664513228995128374}
   m_Enabled: 1
+--- !u!114 &6085125295647282230
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1664513229006692658}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 611919c0e9e0be647b0f058f68087657, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1664513229006692660
 GameObject:
   m_ObjectHideFlags: 0

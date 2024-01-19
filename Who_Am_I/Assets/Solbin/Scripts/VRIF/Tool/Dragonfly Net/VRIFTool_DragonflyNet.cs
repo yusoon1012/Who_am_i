@@ -39,6 +39,21 @@ public class VRIFTool_DragonflyNet : MonoBehaviour
     // 채집 완료 이벤트
     public event EventHandler gatheringEvent;
 
+    [Header("Inventory")]
+    [SerializeField] private Inventory inventory = default;
+
+    private Dictionary<string, string> getherDic = new Dictionary<string, string>()
+    {
+        { "Butterfly2", "나리 나비"},
+        { "Butterfly1", "달래 나비"},
+        { "Frog1", "하늘 개구리"},
+        { "Frog2", "들판 개구리"},
+        { "Spider2", "이삭 거미"},
+        { "Spider1", "낙엽 거미"},
+        { "Beetle1", "싸락 사슴벌레"},
+        { "Beetle2", "어스름 사슴벌레"}
+    };
+
     private void Awake()
     {
         if (Instance == null)
@@ -60,6 +75,19 @@ public class VRIFTool_DragonflyNet : MonoBehaviour
         if (dirCheck)
         {
             GameObject target = targetChild_.transform.parent.gameObject; // 채집할 게임 오브젝트
+
+            string getherName = default;
+
+            foreach (var getherKey in getherDic.Keys) // 일치하는 키값 있는지 확인 
+            {
+                if (target.name.Contains(getherKey))
+                {
+                    getherName = getherDic[getherKey];
+                }
+            }
+
+            Debug.Log(getherDic[getherName]);
+            inventory.AddInventory(getherDic[getherName], 1); // 인벤토리로 보냄
 
             Destroy(target); // 테스트용
             gatheringEvent?.Invoke(this, EventArgs.Empty);

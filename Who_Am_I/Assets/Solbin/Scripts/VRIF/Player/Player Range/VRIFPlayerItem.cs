@@ -210,8 +210,6 @@ public class VRIFPlayerItem : MonoBehaviour
             }
         }
 
-        Debug.Log("받으려는 것: " + itemName);
-
         inventory.AddInventory(itemName, 1); // 인벤토리에 추가 
 
         StartCoroutine(PrintUI(itemName));
