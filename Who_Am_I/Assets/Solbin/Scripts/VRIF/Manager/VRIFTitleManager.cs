@@ -28,6 +28,11 @@ public class VRIFTitleManager : MonoBehaviour
     [Tooltip("암전 효과를 위한 Dark Canvas - Black Image")]
     [SerializeField] private Image blackImage = default;
 
+    [Header("오디오")]
+    public AudioClip titleClip = default;
+    public AudioClip exitClip = default;
+    private AudioSource audioSource = default;
+
     // 이어하기 선택 여부
     private bool isContinue = false;
 
@@ -43,6 +48,11 @@ public class VRIFTitleManager : MonoBehaviour
 
     private void Start()
     {
+        audioSource = transform.GetComponent<AudioSource>();
+        audioSource.clip = titleClip;
+        audioSource.loop = true;
+        audioSource.Play();
+
         saveFolderPath = Path.Combine(Application.dataPath, saveFolderName); // 저장 폴더 경로
 
         if (!Directory.Exists(saveFolderPath)) // 저장 폴더 경로에 저장 폴더가 존재하지 않으면
@@ -72,6 +82,7 @@ public class VRIFTitleManager : MonoBehaviour
     private IEnumerator LoadNewGame()
     {
         blackImage.enabled = true;
+        audioSource.Stop();
 
         SaveData saveData = new SaveData();
 
@@ -124,6 +135,7 @@ public class VRIFTitleManager : MonoBehaviour
     private IEnumerator LoadSaveScene(SaveData saveData_)
     {
         blackImage.enabled = true;
+        audioSource.Stop();
 
         AsyncOperation mainOperation = SceneManager.LoadSceneAsync(saveData_.sceneName); // 저장되어 있던 씬 이름
         mainOperation.allowSceneActivation = false;
@@ -199,6 +211,8 @@ public class VRIFTitleManager : MonoBehaviour
     public void ClickExit()
     {
         blackImage.enabled = true; // 암전 효과
+        audioSource.Stop();
+        audioSource.PlayOneShot(exitClip);
 
         Application.Quit(); // 애플리케이션 종료 
     }

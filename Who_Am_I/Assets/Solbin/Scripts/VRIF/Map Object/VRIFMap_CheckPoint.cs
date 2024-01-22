@@ -18,6 +18,11 @@ public class VRIFMap_CheckPoint : MonoBehaviour
 
     [Header("자식: Teleport Position")]
     [SerializeField] Transform teleport = default;
+
+    [Header("오디오")]
+    public AudioClip saveClip = default;
+    private AudioSource audioSource = default;
+
     // 빠른 이동 좌표 
     public Vector3 teleportPosition { get; private set; }
 
@@ -26,6 +31,8 @@ public class VRIFMap_CheckPoint : MonoBehaviour
 
     private void Start()
     {
+        audioSource = transform.GetComponent<AudioSource>();
+
         cpArray = FindObjectsOfType<VRIFMap_CheckPoint>(); // 체크포인트 개수 대로 배열 생성 ? 필요한가?
 
         if (!activated)
@@ -59,6 +66,8 @@ public class VRIFMap_CheckPoint : MonoBehaviour
         {
             cp.activated = false; // 체크포인트 전부 비활성화
         }
+
+        audioSource.PlayOneShot(saveClip);
 
         activated = true; // 해당 체크포인트만 활성화
 
