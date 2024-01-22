@@ -27,6 +27,17 @@ public class VRIFSceneManager : MonoBehaviour
     [Tooltip("CC가 position값을 덮어쓰기 때문에 비활성화 필요")]
     [SerializeField] private CharacterController characterController = default;
 
+    [Header("오디오")]
+    public AudioClip mapTeleportClip = default;
+    private AudioSource audioSource = default;
+
+    [Header("BGM Clip")]
+    public AudioClip springClip = default;
+    public AudioClip summerClip = default;
+    public AudioClip fallClip = default;
+    public AudioClip winterClip = default;
+    public AudioClip templeClip = default;
+
     // 플레이어 이동/회전 컴포넌트
     private LocomotionManager locomotionManager = default;
     private SmoothLocomotion smoothLocomotion = default;
@@ -37,9 +48,6 @@ public class VRIFSceneManager : MonoBehaviour
     // 메인씬 오픈을 위한 임시 Operation
     private AsyncOperation tempOperation = default;
 
-    [Header("오디오")]
-    public AudioClip mapTeleportClip = default;
-    private AudioSource audioSource = default;
 
     public class SeasonName
     {
@@ -72,8 +80,18 @@ public class VRIFSceneManager : MonoBehaviour
         // <Meen Change>
         FirstSetting();
 
+        string currentScene = SceneManager.GetActiveScene().name;
+
+        if (currentScene.Contains("Spring"))
+        {
+            audioSource.clip = springClip;
+            audioSource.loop = true;
+            audioSource.Play();
+        }
+
         /// <Point> SceneManager를 통한 씬 오픈이라면 일단 작동한다. 
         SceneManager.sceneLoaded += PlayerSetting; // 씬 전환이 완벽히 이뤄지면 해당 이벤트가 발생한다. 
+        SceneManager.sceneLoaded += BGMSetting;
     }
 
     // <Meen Change>
@@ -315,6 +333,40 @@ public class VRIFSceneManager : MonoBehaviour
     }
 
     /// <summary>
+    /// 씬 완료 이벤트를 구독하고 있다. (BGM 재생)
+    /// </summary>
+    private void BGMSetting(Scene scene, LoadSceneMode mode)
+    {
+        string currentScene = SceneManager.GetActiveScene().name;
+
+        switch(currentScene)
+        {
+            case var sceneName when sceneName.Contains("Spring"):
+                audioSource.clip = springClip;
+                break;
+            case var sceneName when sceneName.Contains("Summer"):
+                audioSource.clip = summerClip;
+                break;
+            case var sceneName when sceneName.Contains("Autumn"):
+                audioSource.clip = fallClip;
+                break;
+            case var sceneName when sceneName.Contains("Winter"):
+                audioSource.clip = winterClip;
+                break;
+            case var sceneName when sceneName.Contains("Temple"):
+                audioSource.clip = templeClip;
+                break;
+        }
+
+        audioSource.loop = true;
+
+        if (audioSource.clip != null)
+        {
+            audioSource.Play();
+        }
+    }
+
+    /// <summary>
     /// 겨울이 아닌 다른 맵에 진입시 패널티 제거
     /// </summary>
     private void ClearWinterEffect()
@@ -328,10 +380,5 @@ public class VRIFSceneManager : MonoBehaviour
     private void WinterEffect()
     {
         VRIFStatusSystem.Instance.hungerTimer = VRIFStatusSystem.Instance.winterHungerTimer;
-    }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.N)) { SameRegion(0); }
     }
 }

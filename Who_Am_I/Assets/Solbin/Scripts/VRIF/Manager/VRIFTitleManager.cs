@@ -15,15 +15,14 @@ public class VRIFTitleManager : MonoBehaviour
     private string saveFolderName = "SaveFolder";
     // 저장 폴더 경로
     private string saveFolderPath = default;
-
     // 실 저장 경로 (저장 폴더 경로 + json 폴더의 이름)
     private string savePath = default;
 
+    // 봄 씬 이름
+    private string springSceneName = "Spring";
+
     [Header("이어하기 버튼")]
     public Button continueButton = default;
-
-    // 봄 씬 이름
-    private string springSceneName = "M_Spring_Scene";
 
     [Header("Black Image")]
     [Tooltip("암전 효과를 위한 Dark Canvas - Black Image")]
@@ -72,6 +71,8 @@ public class VRIFTitleManager : MonoBehaviour
     /// </summary>
     private IEnumerator LoadNewGame()
     {
+        blackImage.enabled = true;
+
         SaveData saveData = new SaveData();
 
         if (File.Exists(savePath)) // 기존 세이브 파일이 존재한다면
@@ -116,35 +117,13 @@ public class VRIFTitleManager : MonoBehaviour
     }
 
     /// <summary>
-    /// 씬 로드를 가리기 위한 이펙트 
-    /// </summary>
-    private IEnumerator DarkEffect()
-    {
-        WaitForEndOfFrame endOfFrame = new WaitForEndOfFrame(); // 프레임 대기 
-
-        Color blackColor = blackImage.color;
-
-        while (blackColor.a < 1)
-        {
-            blackColor.a += 0.1f;
-
-            if (blackColor.a >= 1)
-            {
-                break;
-            }
-
-            yield return endOfFrame;
-        }
-    }
-
-    /// <summary>
     /// 저장된 json 로딩 후 세팅
     /// </summary>
     /// <param name="saveData_">저장된 json에서 읽어온 데이터</param>
     /// <returns></returns>
     private IEnumerator LoadSaveScene(SaveData saveData_)
     {
-        //loadingCanvas.SetActive(true); // 로딩캔버스 활성화
+        blackImage.enabled = true;
 
         AsyncOperation mainOperation = SceneManager.LoadSceneAsync(saveData_.sceneName); // 저장되어 있던 씬 이름
         mainOperation.allowSceneActivation = false;
@@ -177,10 +156,6 @@ public class VRIFTitleManager : MonoBehaviour
         VRIFGameManager.Instance.playerDir = saveData_.playerDir;
 
         VRIFGameManager.Instance.PlayerSetting(); // 저장 정보 로드 후 세팅
-
-        // TODO: AddInventory로 인벤토리 세팅, 
-
-        // loadingCanvas.SetActive(false); // 로딩 캔버스 비활성화
     }
 
     public void QuestSetting()
@@ -217,11 +192,15 @@ public class VRIFTitleManager : MonoBehaviour
     }
     #endregion
 
+    #region 종료하기
     /// <summary>
     /// '종료' 클릭
     /// </summary>
     public void ClickExit()
     {
+        blackImage.enabled = true; // 암전 효과
+
         Application.Quit(); // 애플리케이션 종료 
     }
+    #endregion
 }

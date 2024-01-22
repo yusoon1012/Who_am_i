@@ -45,13 +45,13 @@ public class VRIFGameManager : MonoBehaviour
         {
             Instance = this;
         }
+        else { Debug.LogError("<Solbin> Delete Another Player"); }
 
         grabberArray[0] = leftGrabber;
         grabberArray[1] = rightGrabber;
     }
 
     #region 시작: VRIFSaveManager에서 정보를 받아 세팅
-    // TODO: 추후 이 메소드는 삭제되고 SceneManager에서 birthPoint로 관리하게 된다. 
     public void PlayerSetting()
     {
         // VRIFSaveManager에서 playerPos와 playerDir을 먼저 세팅한다.
