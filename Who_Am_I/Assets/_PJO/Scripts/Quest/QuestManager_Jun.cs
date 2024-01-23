@@ -512,13 +512,23 @@ public class QuestManager_Jun : MonoBehaviour
             case 4: ActiveObject(Define.SPRING_STONE); break;
             case 9: ActiveObject(Define.SUMMER_STONE); break;
             case 14: ActiveObject(Define.AUTUMN_STONE); break;
-            case 19: ActiveObject(Define.WINTER_STONE);  stringTable["Quest_Main_Npc_Script_0393"] = GameManager.instance.SetMBTI(); break;
+            case 19:
+                ActiveObject(Define.WINTER_STONE);
+                InactiveObject(Define.DOOR_WOOD_DOUBLE_LEFT);
+                InactiveObject(Define.DOOR_WOOD_DOUBLE_RIGHT);
+                stringTable["Quest_Main_Npc_Script_0393"] = GameManager.instance.SetMBTI();
+                break;
         }
     }
 
     private void ActiveObject(string _name)
     {
         GameObject.Find(_name).SetActive(true);
+    }
+
+    private void InactiveObject(string _name)
+    {
+        GameObject.Find(_name).SetActive(false);
     }
 
     // 현재 진행중인 퀘스트가 완료 가능한지 체크

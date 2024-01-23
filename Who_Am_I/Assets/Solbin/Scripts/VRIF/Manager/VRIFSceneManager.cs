@@ -53,7 +53,7 @@ public class VRIFSceneManager : MonoBehaviour
     {
         public static string spring { get; private set; } = "Spring";
         public static string summer { get; private set; } = "Summer";
-        public static string fall { get; private set; } = "Demo_ExteriorOnly_Optimized";
+        public static string fall { get; private set; } = "Autumn";
         public static string winter { get; private set; } = "Winter";
         public static string temple { get; private set; } = "Temple";
         public static string passage { get; private set; } = "M_Passage_Scene"; // 로딩씬
