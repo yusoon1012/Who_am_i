@@ -4,8 +4,8 @@ public class Decimation : MonoBehaviour
 {
     #region Attribute members
     [SerializeField]
-    private GameObject targetObject;
+    private GameObject propertyTargetObject;
     [SerializeField]
-    private float trianglePercent;
+    private float propertyTrianglePercent;
     #endregion
 }

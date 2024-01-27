@@ -4,10 +4,10 @@ public class AddVertexObject : MonoBehaviour
 {
     #region Attribute members
     [SerializeField]
-    private GameObject targetObject;
+    private GameObject propertyTargetObject;
     [SerializeField]
-    private GameObject saveParent;
+    private GameObject propertySaveParent;
     [SerializeField]
-    private float height = 1.0f;
+    private float propertyExceptionHeight = 1.0f;
     #endregion
 }

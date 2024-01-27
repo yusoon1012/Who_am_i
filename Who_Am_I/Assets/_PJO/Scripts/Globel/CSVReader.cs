@@ -6,6 +6,13 @@ public static class CSVReader
     private const char DELIMITER = ',';      // CSV 파일에서 사용하는 구분자
     private const char LINE = '\n';          // CSV 파일에서 사용하는 라인 구분자
 
+    /// <summary>
+    /// CSV 파일을 읽어와 데이터를 아래 형식으로 저장하는 딕셔너리를 반환하는 메서드
+    /// KEY     VALUE
+    /// KEY     VALUE
+    /// KEY     VALUE
+    /// </summary>
+    /// <param name="_csvFileName">CSV파일명</param>
     public static Dictionary<string, string> ReadCSVKeyString(string _csvFileName)
     {
         Dictionary<string, string> dataDictionary = new Dictionary<string, string>();
@@ -46,6 +53,13 @@ public static class CSVReader
         return dataDictionary;
     }
 
+    /// <summary>
+    /// CSV 파일을 읽어와 데이터를 아래 형식으로 저장하는 딕셔너리를 반환하는 메서드
+    /// KEY/KEY     KEY         KEY
+    /// KEY         VALUE       VALUE
+    /// KEY         VALUE       VALUE
+    /// </summary>
+    /// <param name="_csvFileName">CSV파일명</param>
     public static Dictionary<string, Dictionary<string, string>> ReadCSVKeyDictionary(string _csvFileName)
     {
         Dictionary<string, Dictionary<string, string>> dataDictionary = new Dictionary<string, Dictionary<string, string>>();
@@ -95,6 +109,13 @@ public static class CSVReader
         return dataDictionary;
     }
 
+    /// <summary>
+    /// CSV 파일을 읽어와 데이터를 아래 형식으로 저장하는 딕셔너리를 반환하는 메서드
+    /// KEY         KEY         KEY         ... INDEX(0)
+    /// VALUE       VALUE       VALUE       ... INDEX(1)
+    /// VALUE       VALUE       VALUE       ... INDEX(2)
+    /// </summary>
+    /// <param name="_csvFileName">CSV파일명</param>
     public static Dictionary<string, List<string>> ReadCSVKeyList(string _csvFileName)
     {
         Dictionary<string, List<string>> dataDictionary = new Dictionary<string, List<string>>();

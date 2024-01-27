@@ -3,13 +3,12 @@ using UnityEngine;
 
 public enum QuestState_Jun
 {
-    NOTACCEPTED,
-    ACCEPTED,
-    PROGRESSED,
-    COMPLETED
+    NOTACCEPTED,        // 받을 수 없는 상태
+    ACCEPTED,           // 받을 수 있는 상태
+    PROGRESSED,         // 진행중
+    COMPLETED           // 완료
 }
 
-[CreateAssetMenu(fileName = "Quest", menuName = "Quest System/Quest")]
 public class Quest_Jun : ScriptableObject
 {
     public QuestState_Jun currentProgress;     // 퀘스트 현재 진행상황

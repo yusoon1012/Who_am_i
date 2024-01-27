@@ -52,19 +52,19 @@ public class Animal : MonoBehaviour
 
     private void InitializationGameObject()
     {
-        dropItem = GFunc.GetGameObjectToList(GameManager.instance.items, data.drop);
+        dropItem = GFunc.GetObjectToList(GameManager.instance.items, data.drop);
     }
 
     private void InitializationComponents()
     {
         nav = gameObject.GetComponent<NavMeshAgent>() ? gameObject.GetComponent<NavMeshAgent>() : null;
-        anis = GFunc.GetChildComponentList<Animator>(this.gameObject);
+        anis = GFunc.GetChildObjectComponentToList<Animator>(this.gameObject);
     }
 
     private bool HasNullReference()
     {
-        if (nav == null) { GFunc.SubmitNonFindText(this.gameObject, typeof(NavMeshAgent)); return true; }
-        if (anis == null) { GFunc.SubmitNonFindText(this.gameObject, typeof(Animator)); return true; }
+        if (nav == null) { GFunc.DebugNonFindComponent(this.gameObject, typeof(NavMeshAgent)); return true; }
+        if (anis == null) { GFunc.DebugNonFindComponent(this.gameObject, typeof(Animator)); return true; }
 
         return false;
     }
@@ -185,7 +185,7 @@ public class Animal : MonoBehaviour
         GameObject newObject = Instantiate(dropItem, transform.position + Vector3.up, Quaternion.identity);
 
         Rigidbody newRig = newObject.GetComponent<Rigidbody>() ? newObject.GetComponent<Rigidbody>() : null;
-        if (newRig == null) { GFunc.SubmitNonFindText(newObject, typeof(Rigidbody)); return; }
+        if (newRig == null) { GFunc.DebugNonFindComponent(newObject, typeof(Rigidbody)); return; }
 
         Vector3 direction = Quaternion.Euler(0, GFunc.RandomValueInt(0, 360), 0) * Vector3.forward;
         direction.Normalize();

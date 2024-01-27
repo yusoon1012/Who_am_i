@@ -5,23 +5,29 @@ using UnityEngine;
 [CustomEditor(typeof(SaveMesh))]
 public class SaveMeshEditor : Editor
 {
+    #region members
+
     #region Property members
-    SerializedProperty targetObject;        // 메쉬를 저장할 오브젝트
-    SerializedProperty meshName;            // 저장할 때 이름
+    SerializedProperty propertyTargetObject;    // 메쉬를 저장할 오브젝트
+    SerializedProperty propertyMeshName;        // 저장할 때 이름
     #endregion
 
     #region private members
-    private MeshFilter targetMeshFilter;    // 메쉬를 저장할 오브젝트의 메쉬 필터
-    private Mesh targetMesh;                // 메쉬를 저장할 오브젝트의 메쉬
-    private string PATH;                    // 저장 위치
+    private GameObject targetObject;            // 메쉬를 저장할 오브젝트
+    private MeshFilter targetMeshFilter;        // 메쉬를 저장할 오브젝트의 메쉬 필터
+    private Mesh targetMesh;                    // 메쉬를 저장할 오브젝트의 메쉬
+    private string meshName;                    // 저장할 때 이름
+    private string path;                        // 저장 위치
+    #endregion
+
     #endregion
 
     #region Editor default
     private void OnEnable()
     {
         // 프로퍼티 초기화
-        targetObject = serializedObject.FindProperty("targetObject");
-        meshName = serializedObject.FindProperty("meshName");
+        propertyTargetObject = serializedObject.FindProperty("propertyTargetObject");
+        propertyMeshName = serializedObject.FindProperty("propertyMeshName");
     }
 
     public override void OnInspectorGUI()
@@ -30,9 +36,9 @@ public class SaveMeshEditor : Editor
         serializedObject.Update();
 
         // 인스펙터에 변수를 편집 가능한 필드로 표시
-        EditorGUILayout.PropertyField(targetObject, new GUIContent("저장할 오브젝트"));
-        EditorGUILayout.PropertyField(meshName, new GUIContent("저장될 메쉬 이름"));
-        
+        EditorGUILayout.PropertyField(propertyTargetObject, new GUIContent("메쉬를 저장할 오브젝트"));
+        EditorGUILayout.PropertyField(propertyMeshName, new GUIContent("저장할 때 이름"));
+
         // "Apply" 버튼 클릭시 메쉬 저장
         if (GUILayout.Button("Apply"))
         {
@@ -48,33 +54,50 @@ public class SaveMeshEditor : Editor
     // 초기 데이터 초기화 메서드
     private void EditorStart()
     {
+        InitializationObjects();
         InitializationComponents();
-        if (HasNullReference()) { return; }
+        InitializationValue();
+        if (HasNullReference())
+        { GFunc.DebugError(typeof(SaveMeshEditor)); return; }
         InitializationSetup();
 
         EditorSaveMesh();
     }
 
+    // 초기 오브젝트 초기화 메서드
+    private void InitializationObjects()
+    {
+        targetObject = GEFunc.GetPropertyGameObject(propertyTargetObject);
+    }
+
     // 초기 컴포넌트 초기화 메서드
     private void InitializationComponents()
     {
-        targetMeshFilter = GFuncE.SetComponent<MeshFilter>(targetObject);
+        targetMeshFilter = targetObject.GetComponent<MeshFilter>() ? targetObject.GetComponent<MeshFilter>() : null;
         targetMesh = targetMeshFilter.sharedMesh != null ? targetMeshFilter.sharedMesh : null;
+    }
+
+    // 초기 값 초기화 메서드
+    private void InitializationValue()
+    {
+        meshName = GEFunc.GetPropertyString(propertyMeshName);
     }
 
     // Null 체크
     private bool HasNullReference()
     {
-        if (targetMeshFilter == null) { GFuncE.SubmitNonFindText(targetObject, typeof(MeshFilter)); return true; }
-        if (targetMesh == null) { GFuncE.SubmitNonFindText(targetObject, typeof(Mesh)); return true; }
+        if (targetObject == null) { GEFunc.DebugNonFind(propertyTargetObject, SerializedPropertyType.ObjectReference); return true; }
+        if (targetMeshFilter == null) { GEFunc.DebugNonFindComponent(propertyTargetObject, typeof(MeshFilter)); return true; }
+        if (targetMesh == null) { GEFunc.DebugNonFindComponent(propertyTargetObject, typeof(Mesh)); return true; }
+        if (meshName == default) { GEFunc.DebugNonFind(propertyMeshName, SerializedPropertyType.String); return true; }
 
         return false;
     }
 
-    // 초기 값 설정 메서드
+    // 초기 설정 메서드
     private void InitializationSetup()
     {
-        PATH = $"Assets/_Meshes/{meshName.stringValue}.asset";
+        path = $"Assets/_Meshes/{meshName}.asset";
     }
     #endregion
 
@@ -83,13 +106,13 @@ public class SaveMeshEditor : Editor
     private void EditorSaveMesh()
     {
         // targetMesh를 path에 지정된 경로에 새로운 에셋으로 생성
-        AssetDatabase.CreateAsset(targetMesh, PATH);
+        AssetDatabase.CreateAsset(targetMesh, path);
         // 에셋 데이터베이스를 저장
         AssetDatabase.SaveAssets();
         // 에셋 데이터베이스를 설정
         AssetDatabase.Refresh();
         // 저장완료 표시
-        Debug.Log("Mesh saved successfully. Path: " + PATH);
+        Debug.Log("Mesh saved successfully. Path: " + path);
     }
     #endregion
 }

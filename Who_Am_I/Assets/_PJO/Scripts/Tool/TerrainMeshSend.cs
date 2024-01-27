@@ -4,8 +4,8 @@ public class TerrainMeshSend : MonoBehaviour
 {
     #region Attribute members
     [SerializeField]
-    private GameObject pushObject;
+    private GameObject propertyPushObject;
     [SerializeField]
-    private GameObject pullObject;
+    private GameObject propertyPullObject;
     #endregion
 }

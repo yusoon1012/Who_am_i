@@ -4,8 +4,8 @@ public class MeshController : MonoBehaviour
 {
     #region Attribute members
     [SerializeField]
-    private GameObject targetObject;
+    private GameObject propertyTargetObject;
     [SerializeField]
-    private int verticesValue;
+    private int propertyVerticesValue;
     #endregion
 }

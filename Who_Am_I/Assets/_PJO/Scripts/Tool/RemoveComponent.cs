@@ -4,8 +4,8 @@ public class RemoveComponent : MonoBehaviour
 {
     #region Attribute members
     [SerializeField]
-    private GameObject targetObject;
+    private GameObject propertyTargetObject;
     [SerializeField]
-    private string componentTypeName;
+    private string propertyComponentTypeName;
     #endregion
 }

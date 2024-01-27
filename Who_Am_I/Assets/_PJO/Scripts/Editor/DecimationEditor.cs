@@ -5,8 +5,8 @@ using System.Linq;
 
 /*      Decimation Algorithm
  *      
- *      폴리곤을 제거하여 메쉬의 크기를 줄이는 방법
- *      폴리곤의 면적을 기준으로 사용
+ *      트라이앵글을 제거하여 메쉬의 크기를 줄이는 방법
+ *      트라이앵글의 면적을 기준으로 사용
  */
 
 // 에디터 스크립트로 선언하겠다는 어트리뷰트
@@ -16,29 +16,31 @@ public class DecimationEditor : Editor
     #region members
 
     #region Property members
-    SerializedProperty targetObject;        // 타겟 오브젝트
-    SerializedProperty trianglePercent;     // 폴리곤 비율
+    SerializedProperty propertyTargetObject;        // 타겟 오브젝트
+    SerializedProperty propertyTrianglePercent;     // 트라이앵글 비율
     #endregion
 
     #region private members
+    private GameObject targetObject;                // 타겟 오브젝트
+    private float trianglePercent;                  // 트라이앵글 비율
     private MeshFilter targetMeshFilter;            // 타겟 오브젝트의 메쉬 필터
     private Mesh targetMesh;                        // 타겟 오브젝트의 메쉬
     private Mesh copyMesh;                          // 타겟 오브젝트의 복사본
-    private int maxTriangleLength;                  // 비율에 기반한 최대 폴리곤 개수
+    private int maxTriangleLength;                  // 비율에 기반한 최대 트라이앵글 갯수
     private List<Vector3> newVerties;               // 수정된 새로운 정점을 저장
-    private List<int> newTriangles;                 // 수정된 새로운 폴리곤을 저장
-    private Dictionary<int, float> trianglesValue;  // 폴리곤의 면적을 저장
-    private List<Triangle> trianglesData;           // 폴리곤 데이터를 저장
+    private List<int> newTriangles;                 // 수정된 새로운 트라이앵글을 저장
+    private Dictionary<int, float> trianglesValue;  // 트라이앵글의 면적을 저장
+    private List<Triangle> trianglesData;           // 트라이앵글 데이터를 저장
     #endregion
 
     #region struct members
-    private struct Triangle
+    private struct Triangle                         // 각 트라이앵글 데이터를 저장할 구조체
     {
         public Vector3 v0;
         public Vector3 v1;
         public Vector3 v2;
         public int index;
-    }       // 각 폴리곤 데이터를 저장할 구조체
+    }
     #endregion
 
     #endregion
@@ -47,8 +49,8 @@ public class DecimationEditor : Editor
     private void OnEnable()
     {
         // 프로퍼티 초기화
-        targetObject = serializedObject.FindProperty("targetObject");
-        trianglePercent = serializedObject.FindProperty("trianglePercent");
+        propertyTargetObject = serializedObject.FindProperty("propertyTargetObject");
+        propertyTrianglePercent = serializedObject.FindProperty("propertyTrianglePercent");
     }
 
     public override void OnInspectorGUI()
@@ -57,8 +59,8 @@ public class DecimationEditor : Editor
         serializedObject.Update();
 
         // 인스펙터에 변수를 편집 가능한 필드로 표시
-        EditorGUILayout.PropertyField(targetObject, new GUIContent("타겟 오브젝트"));
-        EditorGUILayout.PropertyField(trianglePercent, new GUIContent("폴리곤 퍼센트"));
+        EditorGUILayout.PropertyField(propertyTargetObject, new GUIContent("타겟 오브젝트"));
+        EditorGUILayout.PropertyField(propertyTrianglePercent, new GUIContent("트라이앵글 비율"));
 
         // "Apply" 버튼 클릭시 메쉬 최적화
         if (GUILayout.Button("Apply"))
@@ -75,61 +77,78 @@ public class DecimationEditor : Editor
     // 초기 데이터 초기화 메서드
     private void EditorStart()
     {
+        InitializationObjects();
         InitializationComponents();
-        if (HasNullReference()) { return; }
-        InitializationNew();
+        InitializationValue();
+        if (HasNullReference())
+        { GFunc.DebugError(typeof(DecimationEditor)); return; }
+        InitializationInstance();
         InitializationSetup();
 
         EditorDecimation();
     }
 
+    // 초기 오브젝트 초기화 메서드
+    private void InitializationObjects()
+    {
+        targetObject = GEFunc.GetPropertyGameObject(propertyTargetObject);
+    }
+
     // 초기 컴포넌트 초기화 메서드
     private void InitializationComponents()
     {
-        targetMeshFilter = GFuncE.SetComponent<MeshFilter>(targetObject);
+        targetMeshFilter = targetObject.GetComponent<MeshFilter>() ? targetObject.GetComponent<MeshFilter>() : null;
         targetMesh = targetMeshFilter.sharedMesh != null ? targetMeshFilter.sharedMesh : null;
+    }
+
+    // 초기 값 초기화 메서드
+    private void InitializationValue()
+    {
+        trianglePercent = GEFunc.GetPropertyFloat(propertyTrianglePercent);
     }
 
     // Null 체크
     private bool HasNullReference()
     {
-        if (targetMeshFilter == null) { GFuncE.SubmitNonFindText(targetObject, typeof(MeshFilter)); return true; }
-        if (targetMesh == null) { GFuncE.SubmitNonFindText(targetObject, typeof(Mesh)); return true; }
+        if (targetObject == null) { GEFunc.DebugNonFind(propertyTargetObject, SerializedPropertyType.ObjectReference); return true; }
+        if (targetMeshFilter == null) { GEFunc.DebugNonFindComponent(propertyTargetObject, typeof(MeshFilter)); return true; }
+        if (targetMesh == null) { GEFunc.DebugNonFindComponent(propertyTargetObject, typeof(Mesh)); return true; }
+        if (trianglePercent == default) { GEFunc.DebugNonFind(propertyTrianglePercent, SerializedPropertyType.Float); return true; }
 
         return false;
     }
 
-    // 초기 배열, 리스트, 딕션어리 생성
-    private void InitializationNew()
+    // 초기 인스턴스 생성 메서드
+    private void InitializationInstance()
     {
         newTriangles = new List<int>();
         newVerties = new List<Vector3>();
     }
 
-    // 초기 값 설정 메서드
+    // 초기 설정 메서드
     private void InitializationSetup()
     {
-        copyMesh = GFuncE.CopyMesh(targetMesh);
+        copyMesh = GFunc.CopyMesh(targetMesh);
         newVerties.AddRange(copyMesh.vertices);
         newTriangles.AddRange(copyMesh.triangles);
-        maxTriangleLength = Mathf.FloorToInt(CalculateVertiesPercent());
+        maxTriangleLength = Mathf.FloorToInt(CalculateTrianglePercent());
         SetTriangleData(copyMesh, out trianglesData, out trianglesValue);
     }
 
-    // 몇 퍼센트 감소할지 정하는 메서드
-    private float CalculateVertiesPercent()
+    // 트라이앵글을 몇 퍼센트 감소할지 정하는 메서드
+    private float CalculateTrianglePercent()
     {
-        return copyMesh.triangles.Length * (trianglePercent.floatValue * 0.01f);
+        return copyMesh.triangles.Length * (trianglePercent * 0.01f);
     }
 
-    // 폴리곤 정보를 담은 List, Dictionary 초기화 메서드
-    private void SetTriangleData(Mesh _mesh, out List<Triangle> _trianglesData, out Dictionary<int, float> _trianglesValue)
+    // 트라이앵글 정보를 담은 인스턴스 초기화 메서드
+    private void SetTriangleData(Mesh mesh, out List<Triangle> trianglesData, out Dictionary<int, float> trianglesValue)
     {
-        _trianglesData = new List<Triangle>();
-        _trianglesValue = new Dictionary<int, float>();
+        trianglesData = new List<Triangle>();
+        trianglesValue = new Dictionary<int, float>();
 
-        int[] triangles = _mesh.triangles;
-        Vector3[] vertices = _mesh.vertices;
+        int[] triangles = mesh.triangles;
+        Vector3[] vertices = mesh.vertices;
 
         for (int i = 0, j = 0; i < triangles.Length; i += 3, j++)
         {
@@ -141,27 +160,27 @@ public class DecimationEditor : Editor
             Vector3 v1 = vertices[i1];
             Vector3 v2 = vertices[i2];
 
-            _trianglesData.Add(new Triangle { v0 = v0, v1 = v1, v2 = v2, index = j });
+            trianglesData.Add(new Triangle { v0 = v0, v1 = v1, v2 = v2, index = j });
         }
 
-        foreach (Triangle triangle in _trianglesData)
+        foreach (Triangle triangle in trianglesData)
         {
-            _trianglesValue[triangle.index] = CalculateTriangleArea(triangle.v0, triangle.v1, triangle.v2);
+            trianglesValue[triangle.index] = CalculateTriangleArea(triangle.v0, triangle.v1, triangle.v2);
         }
     }
 
-    // 폴리곤 면적을 계산하는 메서드
-    private float CalculateTriangleArea(Vector3 _v0, Vector3 _v1, Vector3 _v2)
+    // 트라이앵글 면적을 계산하는 메서드
+    private float CalculateTriangleArea(Vector3 v0, Vector3 v1, Vector3 v2)
     {
-        // 삼각형의 세 변의 길이
-        float a = Vector3.Distance(_v0, _v1);
-        float b = Vector3.Distance(_v1, _v2);
-        float c = Vector3.Distance(_v2, _v0);
+        // 트라이앵글의 세 변의 길이
+        float a = Vector3.Distance(v0, v1);
+        float b = Vector3.Distance(v1, v2);
+        float c = Vector3.Distance(v2, v0);
 
-        // 삼각형의 반 둘레
+        // 트라이앵글의 반 둘레
         float s = (a + b + c) / 2;
 
-        // 헤론의 공식을 사용하여 삼각형의 면적 계산
+        // 헤론의 공식을 사용하여 트라이앵글의 면적 계산
         float area = Mathf.Sqrt(s * (s - a) * (s - b) * (s - c));
 
         return area;
@@ -169,11 +188,12 @@ public class DecimationEditor : Editor
     #endregion
 
     #region Editor function start
-    // 면적이 가장 작은 폴리곤을 찾아 지우는 메서드
+    // 면적이 가장 작은 트라이앵글을 찾아 지우는 메서드
     private void EditorDecimation()
     {
         for (int i = 0; maxTriangleLength <= copyMesh.triangles.Length; i++)
         {
+            // 면적이 작은 순서(i)에 맞는 인덱스 찾기
             int minIndex = trianglesValue.OrderBy(kv => kv.Value).Skip(i).First().Key;
             Vector3 newPosition = CalculateTriangleCenter(trianglesData[minIndex].v0, trianglesData[minIndex].v1, trianglesData[minIndex].v2);
 
@@ -187,8 +207,8 @@ public class DecimationEditor : Editor
         SetMesh();
     }
 
-    // 지울 폴리곤에 해당하는 정점을 해당 폴리곤 중점으로 이동시키는 메서드
-    private void SetVertices(int _minIndex, Vector3 _newPosition)
+    // 지울 트라이앵글에 해당하는 정점을 해당 트라이앵글 중점으로 이동시키는 메서드
+    private void SetVertices(int minIndex, Vector3 newPosition)
     {
         for (int i = 0; i < newTriangles.Count; i += 3)
         {
@@ -198,15 +218,15 @@ public class DecimationEditor : Editor
             {
                 Vector3 vertex = newVerties[vertexIndex];
 
-                if (IsPointInsideTriangle(vertex, trianglesData[_minIndex]))
+                if (IsPointInsideTriangle(vertex, trianglesData[minIndex]))
                 {
-                    newVerties[vertexIndex] = _newPosition;
+                    newVerties[vertexIndex] = newPosition;
                 }
             }
         }
     }
 
-    // 폴리곤의 면적이 0과 가까울 경우 해당 폴리곤을 제거하는 메서드
+    // 트라이앵글의 면적이 0과 가까울 경우 해당 트라이앵글을 제거하는 메서드
     private int[] RemoveTriangles()
     {
         List<Vector3> newVerticesList = new List<Vector3>(newVerties);
@@ -231,25 +251,26 @@ public class DecimationEditor : Editor
                 newTrianglesList.RemoveAt(i);
                 newTrianglesList.RemoveAt(i);
 
-                i -= 3; // 삼각형이 제거되었으므로 인덱스 조정
+                // 트라이앵글이 제거되었으므로 인덱스 조정
+                i -= 3; 
             }
         }
 
         return newTrianglesList.ToArray();
     }
 
-    // 삼각형에 포함되는 정점이 있는지 확인하는 메서드
-    private bool IsPointInsideTriangle(Vector3 _point, Triangle _triangle)
+    // 트라이앵글에 포함되는 정점이 있는지 확인하는 메서드
+    private bool IsPointInsideTriangle(Vector3 point, Triangle triangle)
     {
-        return _point == _triangle.v0 || _point == _triangle.v1 || _point == _triangle.v2;
+        return point == triangle.v0 || point == triangle.v1 || point == triangle.v2;
     }
 
-    // 삼각형의 중심 좌표를 알아내는 메서드
-    private Vector3 CalculateTriangleCenter(Vector3 _v0, Vector3 _v1, Vector3 _v2)
+    // 트라이앵글의 중심 좌표를 알아내는 메서드
+    private Vector3 CalculateTriangleCenter(Vector3 v0, Vector3 v1, Vector3 v2)
     {
-        float cX = (_v0.x + _v1.x + _v2.x) / 3f;
-        float cY = (_v0.y + _v1.y + _v2.y) / 3f;
-        float cZ = (_v0.z + _v1.z + _v2.z) / 3f;
+        float cX = (v0.x + v1.x + v2.x) / 3f;
+        float cY = (v0.y + v1.y + v2.y) / 3f;
+        float cZ = (v0.z + v1.z + v2.z) / 3f;
 
         return new Vector3(cX, cY, cZ);
     }

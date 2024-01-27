@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
@@ -6,25 +7,31 @@ using UnityEngine;
 [CustomEditor(typeof(TerrainMeshSend))]
 public class TerrainMeshSendEditor : Editor
 {
+    #region members
+
     #region Property members
-    SerializedProperty pushObject;      // 정보를 보내는 오브젝트
-    SerializedProperty pullObject;      // 정보를 받을 오브젝트
+    SerializedProperty propertyPushObject;      // 정보를 보내는 오브젝트
+    SerializedProperty propertyPullObject;      // 정보를 받을 오브젝트
     #endregion
 
     #region private members
-    private Terrain pushTerrain;            // 정보를 보낼 오브젝트의 Terrain
-    private MeshFilter pullMeshFilter;      // 정보를 받을 오브젝트의 메쉬 필터
-    private Mesh pullMesh;                  // 정보를 받을 오브젝트의 메쉬
-    private Mesh copyMesh;                  // 정보를 받을 오브젝트의 메쉬 복사본
-    private List<Vector3> newVerties;       // 수정된 새로운 정점을 저장할 리스트
+    private GameObject pushObject;              // 정보를 보내는 오브젝트
+    private Terrain pushTerrain;                // 정보를 보내는 오브젝트의 터레인
+    private GameObject pullObject;              // 정보를 받을 오브젝트
+    private MeshFilter pullMeshFilter;          // 정보를 받을 오브젝트의 메쉬 필터
+    private Mesh pullMesh;                      // 정보를 받을 오브젝트의 메쉬
+    private Mesh copyMesh;                      // 정보를 받을 오브젝트의 메쉬 복사본
+    private List<Vector3> newVerties;           // 수정된 새로운 정점을 저장할 리스트
+    #endregion
+
     #endregion
 
     #region Editor default
     private void OnEnable()
     {
         // 프로퍼티 초기화
-        pushObject = serializedObject.FindProperty("pushObject");
-        pullObject = serializedObject.FindProperty("pullObject");
+        propertyPushObject = serializedObject.FindProperty("propertyPushObject");
+        propertyPullObject = serializedObject.FindProperty("propertyPullObject");
     }
 
     public override void OnInspectorGUI()
@@ -33,8 +40,8 @@ public class TerrainMeshSendEditor : Editor
         serializedObject.Update();
 
         // 인스펙터에 변수를 편집 가능한 필드로 표시
-        EditorGUILayout.PropertyField(pushObject, new GUIContent("보낼 오브젝트"));
-        EditorGUILayout.PropertyField(pullObject, new GUIContent("받을 오브젝트"));
+        EditorGUILayout.PropertyField(propertyPushObject, new GUIContent("정보를 보내는 오브젝트"));
+        EditorGUILayout.PropertyField(propertyPullObject, new GUIContent("정보를 받을 오브젝트"));
 
         // "Apply" 버튼 클릭시 매쉬 바꾸기
         if (GUILayout.Button("Apply"))
@@ -51,36 +58,53 @@ public class TerrainMeshSendEditor : Editor
     // 초기 데이터 초기화 메서드
     private void EditorStart()
     {
+        InitializationObjects();
         InitializationComponents();
-        if (HasNullReference()) { return; }
-        InitializationNew();
+        if (HasNullReference())
+        { GFunc.DebugError(typeof(TargetMeshSendEditor)); return; }
+        InitializationInstance();
+        InitializationSetup();
 
         EditorTerrainMeshSend();
+    }
+
+    // 초기 오브젝트 초기화 메서드
+    private void InitializationObjects()
+    {
+        pushObject = GEFunc.GetPropertyGameObject(propertyPushObject);
+        pullObject = GEFunc.GetPropertyGameObject(propertyPullObject);
     }
 
     // 초기 컴포넌트 초기화 메서드
     private void InitializationComponents()
     {
-        pushTerrain = GFuncE.SetComponent<Terrain>(pushObject);
-        pullMeshFilter = GFuncE.SetComponent<MeshFilter>(pullObject);
+        pushTerrain = pushObject.GetComponent<Terrain>() ? pushObject.GetComponent<Terrain>() : null;
+        pullMeshFilter = pullObject.GetComponent<MeshFilter>() ? pullObject.GetComponent<MeshFilter>() : null;
         pullMesh = pullMeshFilter.sharedMesh != null ? pullMeshFilter.sharedMesh : null;
-        copyMesh = GFuncE.CopyMesh(pullMesh);
     }
 
     // Null 체크
     private bool HasNullReference()
     {
-        if (pushObject == null) { GFuncE.SubmitNonFindText(pushObject, typeof(Terrain)); return true; }
-        if (pullMeshFilter == null) { GFuncE.SubmitNonFindText(pullObject, typeof(MeshFilter)); return true; }
-        if (pullMesh == null) { GFuncE.SubmitNonFindText(pullObject, typeof(Mesh)); return true; }
-       
+        if (pushObject == null) { GEFunc.DebugNonFind(propertyPushObject, SerializedPropertyType.ObjectReference); return true; }
+        if (pushTerrain == null) { GEFunc.DebugNonFindComponent(propertyPushObject, typeof(Terrain)); return true; }
+        if (pullObject == null) { GEFunc.DebugNonFind(propertyPullObject, SerializedPropertyType.ObjectReference); return true; }
+        if (pullMeshFilter == null) { GEFunc.DebugNonFindComponent(propertyPullObject, typeof(MeshFilter)); return true; }
+        if (pullMesh == null) { GEFunc.DebugNonFindComponent(propertyPullObject, typeof(Mesh)); return true; }
+
         return false;
     }
 
-    // 초기 배열, 리스트, 딕션어리 생성
-    private void InitializationNew()
+    // 초기 인스턴스 생성 메서드
+    private void InitializationInstance()
     {
         newVerties = new List<Vector3>();
+    }
+
+    // 초기 설정 메서드
+    private void InitializationSetup()
+    {
+        copyMesh = GFunc.CopyMesh(pullMesh);
     }
     #endregion
 
@@ -100,6 +124,7 @@ public class TerrainMeshSendEditor : Editor
         {
             // 월드 좌표로 변환된 정점 위치 계산
             Vector4 worldPos = pullMeshFilter.transform.localToWorldMatrix * vertice;
+
             Vector3 newVertices = vertice;
 
             // 복사본 정점의 y좌표를 해당 월드 좌표에서의 높이로 수정
@@ -111,7 +136,7 @@ public class TerrainMeshSendEditor : Editor
         return newVerties.ToArray();
     }
 
-    // Mesh의 데이터를 재계산하고 적용하는 메서드
+    // 변경된 메쉬 적용
     private void SetMesh()
     {
         copyMesh.RecalculateNormals();

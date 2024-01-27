@@ -5,24 +5,32 @@ using UnityEngine;
 [CustomEditor(typeof(MeshController))]
 public class MeshControllerEditor : Editor
 {
+    #region members
+
     #region Property members
-    SerializedProperty targetObject;            // 변경할 오브젝트
-    SerializedProperty verticesValue;           // 몇 등분할지를 정하는 변수
+    SerializedProperty propertyTargetObject;        // 변경할 오브젝트
+    SerializedProperty propertyVerticesValue;       // 몇 등분할지를 정하는 변수
     #endregion
 
     #region private members
-    private MeshFilter targetMeshFilter;        // 변경할 오브젝트의 메쉬 필터
-    private Mesh targetMesh;                    // 변경할 오브젝트의 메쉬
-    private Mesh copyMesh;                      // targetObject의 메쉬 복사본
-    private Mesh primitiveMesh;                 // Unity에서 기본적으로 제공하는 오브젝트의 메쉬
+    private GameObject targetObject;                // 변경할 오브젝트
+    private MeshFilter targetMeshFilter;            // 변경할 오브젝트의 메쉬 필터
+    private Mesh targetMesh;                        // 변경할 오브젝트의 메쉬
+    private Mesh copyMesh;                          // 변경할 오브젝트의 메쉬 복사본
+    private GameObject primitiveObject;             // Unity에서 기본적으로 제공하는 오브젝트
+    private MeshFilter primitiveMeshFilter;         // Unity에서 기본적으로 제공하는 오브젝트의 메쉬 필터
+    private Mesh primitiveMesh;                     // Unity에서 기본적으로 제공하는 오브젝트의 메쉬
+    private int verticesValue;                      // 몇 등분할지를 정하는 변수
+    #endregion
+
     #endregion
 
     #region Editor default
     private void OnEnable()
     {
         // 프로퍼티 초기화
-        targetObject = serializedObject.FindProperty("targetObject");
-        verticesValue = serializedObject.FindProperty("verticesValue");
+        propertyTargetObject = serializedObject.FindProperty("propertyTargetObject");
+        propertyVerticesValue = serializedObject.FindProperty("propertyVerticesValue");
     }
 
     public override void OnInspectorGUI()
@@ -31,8 +39,8 @@ public class MeshControllerEditor : Editor
         serializedObject.Update();
 
         // 인스펙터에 변수를 편집 가능한 필드로 표시
-        EditorGUILayout.PropertyField(targetObject, new GUIContent("해당 오브젝트"));
-        EditorGUILayout.PropertyField(verticesValue, new GUIContent("등분 갯수"));
+        EditorGUILayout.PropertyField(propertyTargetObject, new GUIContent("변경할 오브젝트"));
+        EditorGUILayout.PropertyField(propertyVerticesValue, new GUIContent("몇 등분할지를 정하는 변수"));
 
         // "Apply" 버튼 클릭시 정점을 늘림
         if (GUILayout.Button("Apply"))
@@ -53,48 +61,60 @@ public class MeshControllerEditor : Editor
 
     #region Editor Initialization and Setup
     // 초기 데이터 초기화 메서드
-    private void EditorStart(bool _isApply)
+    private void EditorStart(bool isApply)
     {
+        InitializationObjects();
         InitializationComponents();
-        if (HasNullReference()) { return; }
+        InitializationValue();
+        if (HasNullReference())
+        { GFunc.DebugError(typeof(MeshControllerEditor)); return; }
         InitializationSetup();
 
-        if (_isApply) { EditorMeshController(); }
+        if (isApply) { EditorMeshController(); }
+    }
+
+    // 초기 오브젝트 초기화 메서드
+    private void InitializationObjects()
+    {
+        targetObject = GEFunc.GetPropertyGameObject(propertyTargetObject);
+        primitiveObject = GFunc.PrimitiveObject(PrimitiveType.Plane);
     }
 
     // 초기 컴포넌트 초기화 메서드
     private void InitializationComponents()
     {
-        targetMeshFilter = GFuncE.SetComponent<MeshFilter>(targetObject);
+        targetMeshFilter = targetObject.GetComponent<MeshFilter>() ? targetObject.GetComponent<MeshFilter>() : null;
         targetMesh = targetMeshFilter.sharedMesh != null ? targetMeshFilter.sharedMesh : null;
-        copyMesh = GFuncE.CopyMesh(targetMesh);
-        primitiveMesh = GetPrimitiveMesh();
+        primitiveMeshFilter = primitiveObject.GetComponent<MeshFilter>() ? primitiveObject.GetComponent<MeshFilter>() : null;
+        primitiveMesh = primitiveMeshFilter.sharedMesh != null ? primitiveMeshFilter.sharedMesh : null;
     }
 
-    // Unity에서 기본으로 제공하는 Plane메쉬를 가져오는 메서드
-    private Mesh GetPrimitiveMesh()
+    // 초기 값 초기화 메서드
+    private void InitializationValue()
     {
-        GameObject primitiveObject = GFuncE.PrimitiveObject(PrimitiveType.Plane);
-        MeshFilter primitiveMeshFilter = GFuncE.SetComponent<MeshFilter>(primitiveObject);
-
-        DestroyImmediate(primitiveObject);
-
-        return primitiveMeshFilter.sharedMesh;
+        verticesValue = GEFunc.GetPropertyInteger(propertyVerticesValue);
     }
 
     // Null 체크
     private bool HasNullReference()
     {
-        if (targetMeshFilter == null) { GFuncE.SubmitNonFindText(targetObject, typeof(MeshFilter)); return true; }
-        if (targetMesh == null) { GFuncE.SubmitNonFindText(targetObject, typeof(Mesh)); return true; }
+        if (targetObject == null) { GEFunc.DebugNonFind(propertyTargetObject, SerializedPropertyType.ObjectReference); return true; }
+        if (targetMeshFilter == null) { GEFunc.DebugNonFindComponent(propertyTargetObject, typeof(MeshFilter)); return true; }
+        if (targetMesh == null) { GEFunc.DebugNonFindComponent(propertyTargetObject, typeof(Mesh)); return true; }
+        if (primitiveObject == null) { GFunc.DebugNonFindPrimitiveType(PrimitiveType.Plane); }
+        if (primitiveMeshFilter == null) { GFunc.DebugNonFindComponent(primitiveObject, typeof(MeshFilter)); return true; }
+        if (primitiveMesh == null) { GFunc.DebugNonFindComponent(primitiveObject, typeof(Mesh)); return true; }
+        if (verticesValue == default) { GEFunc.DebugNonFind(propertyVerticesValue, SerializedPropertyType.Integer); return true; }
 
         return false;
     }
 
-    // 초기 값 설정 메서드
+    // 초기 설정 메서드
     private void InitializationSetup()
     {
         targetMeshFilter.sharedMesh = primitiveMesh;
+        copyMesh = GFunc.CopyMesh(primitiveMesh);
+        DestroyImmediate(primitiveObject);
     }
     #endregion
 
@@ -102,12 +122,12 @@ public class MeshControllerEditor : Editor
     // 정점을 특정 갯수로 나누는 메서드
     private void EditorMeshController()
     {
-        // 제곱근을 저장
+        // Unity에서 기본적으로 제공하는 Plane의 제곱근 저장
         // ex) Unity가 기본적으로 제공하는 Plane의 Vertice 총 개수는 11 * 11 = 121 이므로 root 에는 11이 저장된다.
         int root = Mathf.FloorToInt(Mathf.Sqrt(copyMesh.vertices.Length));
-        // 새로 변화될 vertice 개수 설정
+        // 새로 변화될 정점 개수 설정
         // ex) verticesValue에 2가 들어갔을 경우 root(11) * 2 - 1 이므로 setRoot 에는 21값이 저장된다.
-        int setRoot = (root - 1) * verticesValue.intValue + 1;
+        int setRoot = (root - 1) * verticesValue + 1;
 
         Vector3[,] doubleArrayVertices = SetDoubleArrayVertices(root, setRoot);
 
@@ -117,23 +137,23 @@ public class MeshControllerEditor : Editor
         SetMesh();
     }
 
-    // 2차원 배열로 정의된 새로운 Vertice의 위치를 설정하는 메서드
-    private Vector3[,] SetDoubleArrayVertices(int _rootValue, int _setRootValue)
+    // 2차원 배열로 정의된 새로운 정점의 위치를 설정하는 메서드
+    private Vector3[,] SetDoubleArrayVertices(int rootValue, int setRootValue)
     {
-        Vector3[,] newDoubleArray = new Vector3[_setRootValue, _setRootValue];
+        Vector3[,] newDoubleArray = new Vector3[setRootValue, setRootValue];
 
         Vector3 startPosition = copyMesh.vertices[0];
         Vector3 endPosition = copyMesh.vertices[copyMesh.vertices.Length - 1];
 
-        for (int i = 0; i < _setRootValue; i++)
+        for (int i = 0; i < setRootValue; i++)
         {
-            for (int j = 0; j < _setRootValue; j++)
+            for (int j = 0; j < setRootValue; j++)
             {
                 // startPosition, endPosition 이용해 좌표 생성
                 newDoubleArray[j, i] =
-                        new Vector3(Mathf.Lerp(startPosition.x, endPosition.x, (float)j / (float)(verticesValue.intValue * (_rootValue - 1))),
+                        new Vector3(Mathf.Lerp(startPosition.x, endPosition.x, (float)j / (float)(verticesValue * (rootValue - 1))),
                         0.0f,
-                        Mathf.Lerp(startPosition.z, endPosition.z, (float)i / (float)(verticesValue.intValue * (_rootValue - 1))));
+                        Mathf.Lerp(startPosition.z, endPosition.z, (float)i / (float)(verticesValue * (rootValue - 1))));
             }
         }
 
@@ -141,36 +161,36 @@ public class MeshControllerEditor : Editor
     }
 
     // 2차원 배열을 1차원 배열로 변환하는 메서드
-    private Vector3[] ConvertArray2DTo1D(Vector3[,] _doubleArray, int _value)
+    private Vector3[] ConvertArray2DTo1D(Vector3[,] doubleArray, int value)
     {
-        Vector3[] newSingleArray = new Vector3[_value * _value];
+        Vector3[] newSingleArray = new Vector3[value * value];
 
-        for (int i = 0; i < _value; i++)
+        for (int i = 0; i < value; i++)
         {
-            for (int j = 0; j < _value; j++)
+            for (int j = 0; j < value; j++)
             {
-                newSingleArray[i * _value + j] = _doubleArray[j, i];
+                newSingleArray[i * value + j] = doubleArray[j, i];
             }
         }
 
         return newSingleArray;
     }
 
-    // 새로운 Triangle 정보를 설정하는 메서드
-    private int[] SetTriangles(int _value)
+    // 새로운 트라이앵글 정보를 설정하는 메서드
+    private int[] SetTriangles(int value)
     {
-        int setTrianglesCount = (_value - 1) * (_value - 1) * 2;
+        int setTrianglesCount = (value - 1) * (value - 1) * 2;
         int[] setTriangles = new int[setTrianglesCount * 3];
         int currentIndex = 0;
 
-        for (int y = 0; y < _value - 1; y++)
+        for (int y = 0; y < value - 1; y++)
         {
-            for (int x = 0; x < _value - 1; x++)
+            for (int x = 0; x < value - 1; x++)
             {
                 // 정점 Position 설정
-                int topLeft = y * _value + x;
+                int topLeft = y * value + x;
                 int topRight = topLeft + 1;
-                int bottomLeft = (y + 1) * _value + x;
+                int bottomLeft = (y + 1) * value + x;
                 int bottomRight = bottomLeft + 1;
 
                 // 첫 번째 삼각형
@@ -183,14 +203,15 @@ public class MeshControllerEditor : Editor
                 setTriangles[currentIndex + 4] = bottomRight;
                 setTriangles[currentIndex + 5] = topLeft;
 
-                currentIndex += 6; // 다음 삼각형 인덱스로 이동
+                // 다음 삼각형 인덱스로 이동
+                currentIndex += 6;
             }
         }
 
         return setTriangles;
     }
 
-    // Mesh의 데이터를 재계산하고 적용하는 메서드
+    // 변경된 메쉬 적용
     private void SetMesh()
     {
         copyMesh.RecalculateBounds();

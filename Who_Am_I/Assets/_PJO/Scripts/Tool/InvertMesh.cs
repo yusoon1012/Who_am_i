@@ -4,6 +4,6 @@ public class InvertMesh : MonoBehaviour
 {
     #region Attribute members
     [SerializeField]
-    private GameObject targetObject;
+    private GameObject propertyTargetObject;
     #endregion
 }

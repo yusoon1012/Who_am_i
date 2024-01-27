@@ -4,8 +4,8 @@ public class SaveMesh : MonoBehaviour
 {
     #region Attribute members
     [SerializeField]
-    private GameObject targetObject;
+    private GameObject propertyTargetObject;
     [SerializeField]
-    private string meshName;
+    private string propertyMeshName;
     #endregion
 }

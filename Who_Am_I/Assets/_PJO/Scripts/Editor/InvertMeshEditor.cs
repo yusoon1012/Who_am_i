@@ -5,21 +5,26 @@ using UnityEditor;
 [CustomEditor(typeof(InvertMesh))]
 public class InvertMeshEditor : Editor
 {
+    #region members
+
     #region Property members
-    SerializedProperty targetObject;            // 메쉬를 뒤집을 오브젝트
+    SerializedProperty propertyTargetObject;    // 메쉬를 뒤집을 오브젝트
     #endregion
 
     #region private members
-    private MeshFilter targetMeshFilter;        // 해당 오브젝트의 메쉬 필터
-    private Mesh targetMesh;                    // 해당 오브젝트의 메쉬
-    private Mesh copyMesh;                      // targetObject의 메쉬 복사본
+    private GameObject targetObject;            // 메쉬를 뒤집을 오브젝트
+    private MeshFilter targetMeshFilter;        // 메쉬를 뒤집을 오브젝트의 메쉬 필터
+    private Mesh targetMesh;                    // 메쉬를 뒤집을 오브젝트의 메쉬
+    private Mesh copyMesh;                      // 메쉬를 뒤집을 오브젝트의 메쉬 복사본
+    #endregion
+
     #endregion
 
     #region Editor default
     private void OnEnable()
     {
         // 프로퍼티 초기화
-        targetObject = serializedObject.FindProperty("targetObject");
+        propertyTargetObject = serializedObject.FindProperty("propertyTargetObject");
     }
 
     public override void OnInspectorGUI()
@@ -28,7 +33,7 @@ public class InvertMeshEditor : Editor
         serializedObject.Update();
 
         // 인스펙터에 변수를 편집 가능한 필드로 표시
-        EditorGUILayout.PropertyField(targetObject, new GUIContent("뒤집을 오브젝트"));
+        EditorGUILayout.PropertyField(propertyTargetObject, new GUIContent("메쉬를 뒤집을 오브젝트"));
 
         // "Apply" 버튼 클릭시 메쉬를 뒤집음
         if (GUILayout.Button("Apply"))
@@ -45,6 +50,7 @@ public class InvertMeshEditor : Editor
     // 초기 데이터 초기화 메서드
     private void EditorStart()
     {
+        InitializationObjects();
         InitializationComponents();
         if (HasNullReference()) { return; }
         InitializationSetup();
@@ -52,26 +58,33 @@ public class InvertMeshEditor : Editor
         EditorInvertMesh();
     }
 
+    // 초기 오브젝트 초기화 메서드
+    private void InitializationObjects()
+    {
+        targetObject = GEFunc.GetPropertyGameObject(propertyTargetObject);
+    }
+
     // 초기 컴포넌트 초기화 메서드
     private void InitializationComponents()
     {
-        targetMeshFilter = GFuncE.SetComponent<MeshFilter>(targetObject);
-        targetMesh = targetMeshFilter.sharedMesh != null ? targetMeshFilter.sharedMesh : null;  
+        targetMeshFilter = targetObject.GetComponent<MeshFilter>() ? targetObject.GetComponent<MeshFilter>() : null;
+        targetMesh = targetMeshFilter.sharedMesh != null ? targetMeshFilter.sharedMesh : null;
     }
 
     // Null 체크
     private bool HasNullReference()
     {
-        if (targetMeshFilter == null) { GFuncE.SubmitNonFindText(targetObject, typeof(MeshFilter)); return true; }
-        if (targetMesh == null) { GFuncE.SubmitNonFindText(targetObject, typeof(Mesh)); return true; }
-
+        if (targetObject == null) { GEFunc.DebugNonFind(propertyTargetObject, SerializedPropertyType.ObjectReference); return true; }
+        if (targetMeshFilter == null) { GEFunc.DebugNonFindComponent(propertyTargetObject, typeof(MeshFilter)); return true; }
+        if (targetMesh == null) { GEFunc.DebugNonFindComponent(propertyTargetObject, typeof(Mesh)); return true; }
+        
         return false;
     }
 
-    // 초기 값 설정 메서드
+    // 초기 설정 메서드
     private void InitializationSetup()
     {
-        copyMesh = GFuncE.CopyMesh(targetMesh);
+        copyMesh = GFunc.CopyMesh(targetMesh);
     }
     #endregion
 
@@ -85,7 +98,7 @@ public class InvertMeshEditor : Editor
         SetMesh();
     }
 
-    // Mesh의 폴리곤 법선을 역으로 변경하는 메서드
+    // 메쉬의 법선을 역으로 변경하는 메서드
     private Vector3[] InvertNormals()
     {
         Vector3[] normals = copyMesh.normals;
@@ -98,7 +111,7 @@ public class InvertMeshEditor : Editor
         return normals;
     }
 
-    // 폴리곤을 뒤집는 메서드
+    // 트라이앵글을 뒤집는 메서드
     private int[] SwapTriangles()
     {
         int[] triangles = copyMesh.triangles;
