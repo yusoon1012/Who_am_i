@@ -58,10 +58,6 @@ namespace BNG
             {
                 Instance = this;
             }
-            else
-            {
-                Destroy(gameObject);
-            }
         }
 
         private void Start()
